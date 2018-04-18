@@ -1,0 +1,49 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-stack.yml
+    kompose.version: 1.9.0 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: matrix-synapse-db
+  name: matrix-synapse-db
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: matrix-synapse-db
+    spec:
+      containers:
+      - env:
+        - name: POSTGRES_DB
+          valueFrom:
+            configMapKeyRef:
+              key: POSTGRES_DB
+              name: matrix-synapse-db-secrets-matrix-synapse-db-env
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              key: POSTGRES_PASSWORD
+              name: matrix-synapse-db-secrets-matrix-synapse-db-env
+        - name: POSTGRES_USER
+          valueFrom:
+            configMapKeyRef:
+              key: POSTGRES_USER
+              name: matrix-synapse-db-secrets-matrix-synapse-db-env
+        image: postgres:10
+        name: matrix-synapse-db
+        resources: {}
+        volumeMounts:
+        - mountPath: /var/lib/postgresql/data
+          name: matrix-synapse-db-claim0
+      restartPolicy: Always
+      volumes:
+      - name: matrix-synapse-db-claim0
+        persistentVolumeClaim:
+          claimName: matrix-synapse-db-claim0
+status: {}

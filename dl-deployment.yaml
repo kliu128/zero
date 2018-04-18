@@ -1,0 +1,40 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-stack.yml
+    kompose.version: 1.9.0 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: dl
+  name: dl
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: dl
+    spec:
+      containers:
+      - image: nginx
+        name: dl
+        resources: {}
+        volumeMounts:
+        - mountPath: /usr/share/nginx/html
+          name: dl-claim0
+        - mountPath: /etc/nginx/conf.d
+          name: dl-claim1
+          readOnly: true
+      restartPolicy: Always
+      volumes:
+      - name: dl-claim0
+        persistentVolumeClaim:
+          claimName: dl-claim0
+      - name: dl-claim1
+        persistentVolumeClaim:
+          claimName: dl-claim1
+          readOnly: true
+status: {}

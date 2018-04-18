@@ -1,0 +1,43 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-stack.yml
+    kompose.version: 1.9.0 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: calibre
+  name: calibre
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: calibre
+    spec:
+      containers:
+      - env:
+        - name: PGID
+          value: "100"
+        - name: PUID
+          value: "1000"
+        image: linuxserver/calibre-web
+        name: calibre
+        resources: {}
+        volumeMounts:
+        - mountPath: /config
+          name: calibre-claim0
+        - mountPath: /books
+          name: calibre-claim1
+      restartPolicy: Always
+      volumes:
+      - name: calibre-claim0
+        persistentVolumeClaim:
+          claimName: calibre-claim0
+      - name: calibre-claim1
+        persistentVolumeClaim:
+          claimName: calibre-claim1
+status: {}

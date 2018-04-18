@@ -1,0 +1,38 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-stack.yml
+    kompose.version: 1.9.0 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: gitlab-runner
+  name: gitlab-runner
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: gitlab-runner
+    spec:
+      containers:
+      - image: gitlab/gitlab-runner
+        name: gitlab-runner
+        resources: {}
+        volumeMounts:
+        - mountPath: /etc/gitlab-runner
+          name: gitlab-runner-claim0
+        - mountPath: /var/run/docker.sock
+          name: gitlab-runner-claim1
+      restartPolicy: Always
+      volumes:
+      - name: gitlab-runner-claim0
+        persistentVolumeClaim:
+          claimName: gitlab-runner-claim0
+      - name: gitlab-runner-claim1
+        persistentVolumeClaim:
+          claimName: gitlab-runner-claim1
+status: {}

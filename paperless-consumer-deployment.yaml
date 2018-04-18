@@ -1,0 +1,61 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-stack.yml
+    kompose.version: 1.9.0 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: paperless-consumer
+  name: paperless-consumer
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: paperless-consumer
+    spec:
+      containers:
+      - args:
+        - document_consumer
+        env:
+        - name: PAPERLESS_OCR_LANGUAGES
+          valueFrom:
+            configMapKeyRef:
+              key: PAPERLESS_OCR_LANGUAGES
+              name: paperless-consumer-secrets-paperless-env
+        - name: PAPERLESS_OCR_THREADS
+          valueFrom:
+            configMapKeyRef:
+              key: PAPERLESS_OCR_THREADS
+              name: paperless-consumer-secrets-paperless-env
+        - name: PAPERLESS_PASSPHRASE
+          valueFrom:
+            configMapKeyRef:
+              key: PAPERLESS_PASSPHRASE
+              name: paperless-consumer-secrets-paperless-env
+        image: danielquinn/paperless
+        name: paperless-consumer
+        resources: {}
+        volumeMounts:
+        - mountPath: /usr/src/paperless/data
+          name: paperless-consumer-claim0
+        - mountPath: /usr/src/paperless/media
+          name: paperless-consumer-claim1
+        - mountPath: /consume
+          name: paperless-consumer-claim2
+      restartPolicy: Always
+      volumes:
+      - name: paperless-consumer-claim0
+        persistentVolumeClaim:
+          claimName: paperless-consumer-claim0
+      - name: paperless-consumer-claim1
+        persistentVolumeClaim:
+          claimName: paperless-consumer-claim1
+      - name: paperless-consumer-claim2
+        persistentVolumeClaim:
+          claimName: paperless-consumer-claim2
+status: {}

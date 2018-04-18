@@ -1,0 +1,38 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-stack.yml
+    kompose.version: 1.9.0 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: dumpcerts
+  name: dumpcerts
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: dumpcerts
+    spec:
+      containers:
+      - image: deluca/dumpcerts
+        name: dumpcerts
+        resources: {}
+        volumeMounts:
+        - mountPath: /in/acme.json
+          name: dumpcerts-claim0
+        - mountPath: /out
+          name: dumpcerts-claim1
+      restartPolicy: Always
+      volumes:
+      - name: dumpcerts-claim0
+        persistentVolumeClaim:
+          claimName: dumpcerts-claim0
+      - name: dumpcerts-claim1
+        persistentVolumeClaim:
+          claimName: dumpcerts-claim1
+status: {}

@@ -1,0 +1,31 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-stack.yml
+    kompose.version: 1.9.0 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: blog
+  name: blog
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: blog
+    spec:
+      containers:
+      - env:
+        - name: WORDPRESS_DB_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              key: WORDPRESS_DB_PASSWORD
+              name: blog-secrets-blog-env
+        image: wordpress
+        name: blog
+        resources: {}
+      restartPolicy: Always
+status: {}

@@ -1,0 +1,43 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-stack.yml
+    kompose.version: 1.9.0 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: nextcloud
+  name: nextcloud
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: nextcloud
+    spec:
+      containers:
+      - image: nextcloud
+        name: nextcloud
+        resources: {}
+        volumeMounts:
+        - mountPath: /var/www/html/data
+          name: nextcloud-claim0
+        - mountPath: /var/www/html/config
+          name: nextcloud-claim1
+        - mountPath: /var/www/html/custom_apps
+          name: nextcloud-claim2
+      restartPolicy: Always
+      volumes:
+      - name: nextcloud-claim0
+        persistentVolumeClaim:
+          claimName: nextcloud-claim0
+      - name: nextcloud-claim1
+        persistentVolumeClaim:
+          claimName: nextcloud-claim1
+      - name: nextcloud-claim2
+        persistentVolumeClaim:
+          claimName: nextcloud-claim2
+status: {}

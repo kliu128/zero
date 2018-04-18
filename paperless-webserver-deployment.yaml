@@ -1,0 +1,68 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-stack.yml
+    kompose.version: 1.9.0 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: paperless-webserver
+  name: paperless-webserver
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: paperless-webserver
+    spec:
+      containers:
+      - args:
+        - runserver
+        - --insecure
+        - --noreload
+        - 0.0.0.0:8000
+        env:
+        - name: PAPERLESS_OCR_LANGUAGES
+          valueFrom:
+            configMapKeyRef:
+              key: PAPERLESS_OCR_LANGUAGES
+              name: paperless-webserver-secrets-paperless-env
+        - name: PAPERLESS_OCR_THREADS
+          valueFrom:
+            configMapKeyRef:
+              key: PAPERLESS_OCR_THREADS
+              name: paperless-webserver-secrets-paperless-env
+        - name: PAPERLESS_PASSPHRASE
+          valueFrom:
+            configMapKeyRef:
+              key: PAPERLESS_PASSPHRASE
+              name: paperless-webserver-secrets-paperless-env
+        image: danielquinn/paperless
+        livenessProbe:
+          exec:
+            command:
+            - curl
+            - -f
+            - http://localhost:8000/admin/login
+          failureThreshold: 5
+          periodSeconds: 30
+          timeoutSeconds: 10
+        name: paperless-webserver
+        resources: {}
+        volumeMounts:
+        - mountPath: /usr/src/paperless/data
+          name: paperless-webserver-claim0
+        - mountPath: /usr/src/paperless/media
+          name: paperless-webserver-claim1
+      restartPolicy: Always
+      volumes:
+      - name: paperless-webserver-claim0
+        persistentVolumeClaim:
+          claimName: paperless-webserver-claim0
+      - name: paperless-webserver-claim1
+        persistentVolumeClaim:
+          claimName: paperless-webserver-claim1
+status: {}

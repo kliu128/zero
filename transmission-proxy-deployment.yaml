@@ -1,0 +1,30 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-stack.yml
+    kompose.version: 1.9.0 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: transmission-proxy
+  name: transmission-proxy
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: transmission-proxy
+    spec:
+      containers:
+      - env:
+        - name: upstream_server_address
+          value: transmission:9091
+        image: goodguide/nginx-application-proxy
+        name: transmission-proxy
+        resources: {}
+      nodeSelector:
+        kubernetes.io/hostname: rem
+      restartPolicy: Always
+status: {}
