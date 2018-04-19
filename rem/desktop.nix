@@ -82,7 +82,7 @@
   nixpkgs.config.packageOverrides = pkgs: rec {
     factorio = pkgs.factorio.override {
       username = "Pneumaticat";
-      password = "***REMOVED***";
+      password = builtins.readFile ./secrets/factorio-password.txt;
     };
     wine = pkgs.wine.override {
       wineRelease = "staging";
