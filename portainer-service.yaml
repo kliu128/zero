@@ -6,7 +6,7 @@ metadata:
     kompose.version: 1.9.0 (HEAD)
   creationTimestamp: null
   labels:
-    io.kompose.service: portainer
+    k8s-app: portainer
   name: portainer
 spec:
   ports:
@@ -14,6 +14,6 @@ spec:
     port: 9000
     targetPort: 9000
   selector:
-    io.kompose.service: portainer
+    k8s-app: portainer
 status:
   loadBalancer: {}

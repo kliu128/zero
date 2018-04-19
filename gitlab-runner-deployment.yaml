@@ -6,7 +6,7 @@ metadata:
     kompose.version: 1.9.0 (HEAD)
   creationTimestamp: null
   labels:
-    io.kompose.service: gitlab-runner
+    k8s-app: gitlab-runner
   name: gitlab-runner
 spec:
   replicas: 1
@@ -16,7 +16,7 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        io.kompose.service: gitlab-runner
+        k8s-app: gitlab-runner
     spec:
       containers:
       - image: gitlab/gitlab-runner

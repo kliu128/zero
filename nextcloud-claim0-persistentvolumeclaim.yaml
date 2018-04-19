@@ -3,7 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   creationTimestamp: null
   labels:
-    io.kompose.service: nextcloud-claim0
+    k8s-app: nextcloud-claim0
   name: nextcloud-claim0
 spec:
   accessModes:

@@ -6,7 +6,7 @@ metadata:
     kompose.version: 1.9.0 (HEAD)
   creationTimestamp: null
   labels:
-    io.kompose.service: mail
+    k8s-app: mail
   name: mail
 spec:
   ports:
@@ -23,6 +23,6 @@ spec:
     port: 993
     targetPort: 993
   selector:
-    io.kompose.service: mail
+    k8s-app: mail
 status:
   loadBalancer: {}

@@ -3,7 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   creationTimestamp: null
   labels:
-    io.kompose.service: superliminal-claim0
+    k8s-app: superliminal-claim0
   name: superliminal-claim0
 spec:
   accessModes:

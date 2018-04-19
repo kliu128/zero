@@ -6,7 +6,7 @@ metadata:
     kompose.version: 1.9.0 (HEAD)
   creationTimestamp: null
   labels:
-    io.kompose.service: jackett
+    k8s-app: jackett
   name: jackett
 spec:
   replicas: 1
@@ -16,7 +16,7 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        io.kompose.service: jackett
+        k8s-app: jackett
     spec:
       containers:
       - env:

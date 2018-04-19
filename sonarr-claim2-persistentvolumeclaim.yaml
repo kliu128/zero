@@ -3,7 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   creationTimestamp: null
   labels:
-    io.kompose.service: sonarr-claim2
+    k8s-app: sonarr-claim2
   name: sonarr-claim2
 spec:
   accessModes:

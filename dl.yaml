@@ -6,7 +6,7 @@ metadata:
     kompose.version: 1.9.0 (HEAD)
   creationTimestamp: null
   labels:
-    io.kompose.service: dl
+    k8s-app: dl
   name: dl
 spec:
   replicas: 1
@@ -16,25 +16,45 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        io.kompose.service: dl
+        k8s-app: dl
     spec:
       containers:
       - image: nginx
-        name: dl
         resources: {}
         volumeMounts:
         - mountPath: /usr/share/nginx/html
-          name: dl-claim0
+          name: dl-files
         - mountPath: /etc/nginx/conf.d
-          name: dl-claim1
+          name: dl-config
           readOnly: true
       restartPolicy: Always
       volumes:
-      - name: dl-claim0
+      - name: dl-config
         persistentVolumeClaim:
           claimName: dl-claim0
-      - name: dl-claim1
-        persistentVolumeClaim:
-          claimName: dl-claim1
-          readOnly: true
+      - name: dl-files
+        hostPath:
+          path: /mnt/storage/Kevin/Incoming
+          type: Directory
 status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-stack.yml
+    kompose.version: 1.9.0 (HEAD)
+  creationTimestamp: null
+  labels:
+    k8s-app: dl
+  name: dl
+spec:
+  clusterIP: None
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80
+  selector:
+    k8s-app: dl
+status:
+  loadBalancer: {}

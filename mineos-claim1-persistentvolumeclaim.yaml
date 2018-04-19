@@ -3,7 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   creationTimestamp: null
   labels:
-    io.kompose.service: mineos-claim1
+    k8s-app: mineos-claim1
   name: mineos-claim1
 spec:
   accessModes:

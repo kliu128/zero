@@ -6,7 +6,7 @@ metadata:
     kompose.version: 1.9.0 (HEAD)
   creationTimestamp: null
   labels:
-    io.kompose.service: matrix-synapse
+    k8s-app: matrix-synapse
   name: matrix-synapse
 spec:
   ports:
@@ -14,6 +14,6 @@ spec:
     port: 8448
     targetPort: 8448
   selector:
-    io.kompose.service: matrix-synapse
+    k8s-app: matrix-synapse
 status:
   loadBalancer: {}

@@ -3,7 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   creationTimestamp: null
   labels:
-    io.kompose.service: turnserver-claim0
+    k8s-app: turnserver-claim0
   name: turnserver-claim0
 spec:
   accessModes:

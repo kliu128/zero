@@ -6,7 +6,7 @@ metadata:
     kompose.version: 1.9.0 (HEAD)
   creationTimestamp: null
   labels:
-    io.kompose.service: turnserver
+    k8s-app: turnserver
   name: turnserver
 spec:
   replicas: 1
@@ -16,7 +16,7 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        io.kompose.service: turnserver
+        k8s-app: turnserver
     spec:
       containers:
       - image: spreed/turnserver

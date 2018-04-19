@@ -6,7 +6,7 @@ metadata:
     kompose.version: 1.9.0 (HEAD)
   creationTimestamp: null
   labels:
-    io.kompose.service: traefik
+    k8s-app: traefik
   name: traefik
 spec:
   ports:
@@ -17,6 +17,6 @@ spec:
     port: 443
     targetPort: 443
   selector:
-    io.kompose.service: traefik
+    k8s-app: traefik
 status:
   loadBalancer: {}

@@ -6,7 +6,7 @@ metadata:
     kompose.version: 1.9.0 (HEAD)
   creationTimestamp: null
   labels:
-    io.kompose.service: nextcloud
+    k8s-app: nextcloud
   name: nextcloud
 spec:
   replicas: 1
@@ -16,7 +16,7 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        io.kompose.service: nextcloud
+        k8s-app: nextcloud
     spec:
       containers:
       - image: nextcloud
@@ -29,6 +29,12 @@ spec:
           name: nextcloud-claim1
         - mountPath: /var/www/html/custom_apps
           name: nextcloud-claim2
+      - env:
+        - name: domain
+          value: cloud\.potatofrom\.space
+        image: collabora/code
+        name: collabora-code
+        resources: {}
       restartPolicy: Always
       volumes:
       - name: nextcloud-claim0

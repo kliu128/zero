@@ -6,7 +6,7 @@ metadata:
     kompose.version: 1.9.0 (HEAD)
   creationTimestamp: null
   labels:
-    io.kompose.service: geth
+    k8s-app: geth
   name: geth
 spec:
   ports:
@@ -14,6 +14,6 @@ spec:
     port: 8545
     targetPort: 8545
   selector:
-    io.kompose.service: geth
+    k8s-app: geth
 status:
   loadBalancer: {}

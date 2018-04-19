@@ -3,7 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   creationTimestamp: null
   labels:
-    io.kompose.service: portainer-claim0
+    k8s-app: portainer-claim0
   name: portainer-claim0
 spec:
   accessModes:

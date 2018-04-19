@@ -6,7 +6,7 @@ metadata:
     kompose.version: 1.9.0 (HEAD)
   creationTimestamp: null
   labels:
-    io.kompose.service: superliminal
+    k8s-app: superliminal
   name: superliminal
 spec:
   replicas: 1
@@ -16,7 +16,7 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        io.kompose.service: superliminal
+        k8s-app: superliminal
     spec:
       containers:
       - image: kirovair/superliminal

@@ -3,7 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   creationTimestamp: null
   labels:
-    io.kompose.service: traefik-claim1
+    k8s-app: traefik-claim1
   name: traefik-claim1
 spec:
   accessModes:

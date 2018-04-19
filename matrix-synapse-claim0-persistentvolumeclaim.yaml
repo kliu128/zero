@@ -3,7 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   creationTimestamp: null
   labels:
-    io.kompose.service: matrix-synapse-claim0
+    k8s-app: matrix-synapse-claim0
   name: matrix-synapse-claim0
 spec:
   accessModes:

@@ -3,7 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   creationTimestamp: null
   labels:
-    io.kompose.service: calibre-claim0
+    k8s-app: calibre-claim0
   name: calibre-claim0
 spec:
   accessModes:

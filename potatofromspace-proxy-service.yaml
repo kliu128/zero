@@ -6,7 +6,7 @@ metadata:
     kompose.version: 1.9.0 (HEAD)
   creationTimestamp: null
   labels:
-    io.kompose.service: potatofromspace-proxy
+    k8s-app: potatofromspace-proxy
   name: potatofromspace-proxy
 spec:
   clusterIP: None
@@ -15,6 +15,6 @@ spec:
     port: 55555
     targetPort: 0
   selector:
-    io.kompose.service: potatofromspace-proxy
+    k8s-app: potatofromspace-proxy
 status:
   loadBalancer: {}

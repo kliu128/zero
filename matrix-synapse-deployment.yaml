@@ -6,7 +6,7 @@ metadata:
     kompose.version: 1.9.0 (HEAD)
   creationTimestamp: null
   labels:
-    io.kompose.service: matrix-synapse
+    k8s-app: matrix-synapse
   name: matrix-synapse
 spec:
   replicas: 1
@@ -16,7 +16,7 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        io.kompose.service: matrix-synapse
+        k8s-app: matrix-synapse
     spec:
       containers:
       - image: avhost/docker-matrix

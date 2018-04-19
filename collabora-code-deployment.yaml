@@ -6,7 +6,7 @@ metadata:
     kompose.version: 1.9.0 (HEAD)
   creationTimestamp: null
   labels:
-    io.kompose.service: collabora-code
+    k8s-app: collabora-code
   name: collabora-code
 spec:
   replicas: 1
@@ -15,14 +15,9 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        io.kompose.service: collabora-code
+        k8s-app: collabora-code
     spec:
       containers:
-      - env:
-        - name: domain
-          value: cloud\.potatofrom\.space
-        image: collabora/code
-        name: collabora-code
-        resources: {}
+      
       restartPolicy: Always
 status: {}

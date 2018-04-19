@@ -3,7 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   creationTimestamp: null
   labels:
-    io.kompose.service: paperless-webserver-claim0
+    k8s-app: paperless-webserver-claim0
   name: paperless-webserver-claim0
 spec:
   accessModes:

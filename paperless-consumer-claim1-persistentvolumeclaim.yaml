@@ -3,7 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   creationTimestamp: null
   labels:
-    io.kompose.service: paperless-consumer-claim1
+    k8s-app: paperless-consumer-claim1
   name: paperless-consumer-claim1
 spec:
   accessModes:

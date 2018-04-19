@@ -3,7 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   creationTimestamp: null
   labels:
-    io.kompose.service: riot-web-claim0
+    k8s-app: riot-web-claim0
   name: riot-web-claim0
 spec:
   accessModes:

@@ -6,7 +6,7 @@ metadata:
     kompose.version: 1.9.0 (HEAD)
   creationTimestamp: null
   labels:
-    io.kompose.service: riot-web
+    k8s-app: riot-web
   name: riot-web
 spec:
   replicas: 1
@@ -16,7 +16,7 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        io.kompose.service: riot-web
+        k8s-app: riot-web
     spec:
       containers:
       - image: avhost/docker-matrix-riot

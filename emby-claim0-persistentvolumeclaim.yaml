@@ -3,7 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   creationTimestamp: null
   labels:
-    io.kompose.service: emby-claim0
+    k8s-app: emby-claim0
   name: emby-claim0
 spec:
   accessModes:

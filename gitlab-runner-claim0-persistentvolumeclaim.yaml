@@ -3,7 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   creationTimestamp: null
   labels:
-    io.kompose.service: gitlab-runner-claim0
+    k8s-app: gitlab-runner-claim0
   name: gitlab-runner-claim0
 spec:
   accessModes:

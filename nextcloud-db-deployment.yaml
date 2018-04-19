@@ -6,7 +6,7 @@ metadata:
     kompose.version: 1.9.0 (HEAD)
   creationTimestamp: null
   labels:
-    io.kompose.service: nextcloud-db
+    k8s-app: nextcloud-db
   name: nextcloud-db
 spec:
   replicas: 1
@@ -16,7 +16,7 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        io.kompose.service: nextcloud-db
+        k8s-app: nextcloud-db
     spec:
       containers:
       - env:

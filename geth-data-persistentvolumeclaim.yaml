@@ -3,7 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   creationTimestamp: null
   labels:
-    io.kompose.service: geth-data
+    k8s-app: geth-data
   name: geth-data
 spec:
   accessModes:

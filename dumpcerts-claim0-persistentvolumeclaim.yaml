@@ -3,7 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   creationTimestamp: null
   labels:
-    io.kompose.service: dumpcerts-claim0
+    k8s-app: dumpcerts-claim0
   name: dumpcerts-claim0
 spec:
   accessModes:

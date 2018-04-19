@@ -3,7 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   creationTimestamp: null
   labels:
-    io.kompose.service: zoneminder-claim1
+    k8s-app: zoneminder-claim1
   name: zoneminder-claim1
 spec:
   accessModes:

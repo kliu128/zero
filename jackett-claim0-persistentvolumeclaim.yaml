@@ -3,7 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   creationTimestamp: null
   labels:
-    io.kompose.service: jackett-claim0
+    k8s-app: jackett-claim0
   name: jackett-claim0
 spec:
   accessModes:

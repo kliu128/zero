@@ -6,7 +6,7 @@ metadata:
     kompose.version: 1.9.0 (HEAD)
   creationTimestamp: null
   labels:
-    io.kompose.service: dumpcerts
+    k8s-app: dumpcerts
   name: dumpcerts
 spec:
   replicas: 1
@@ -16,7 +16,7 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        io.kompose.service: dumpcerts
+        k8s-app: dumpcerts
     spec:
       containers:
       - image: deluca/dumpcerts

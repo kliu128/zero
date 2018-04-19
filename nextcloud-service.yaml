@@ -6,15 +6,15 @@ metadata:
     kompose.version: 1.9.0 (HEAD)
   creationTimestamp: null
   labels:
-    io.kompose.service: nextcloud
+    k8s-app: nextcloud
   name: nextcloud
 spec:
   clusterIP: None
   ports:
-  - name: headless
-    port: 55555
+  - name: http
+    port: 80
     targetPort: 0
   selector:
-    io.kompose.service: nextcloud
+    k8s-app: nextcloud
 status:
   loadBalancer: {}
