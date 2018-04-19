@@ -26,9 +26,9 @@
       deployment.hasFastConnection = true;
 
       imports = [
+        ./common/docker.nix
         ./otto/hw.nix
-        ./common/kubernetes-common.nix
-        ./common/kubernetes-node.nix
+        ./otto/nfs.nix
       ];
 
       networking.hostName = "otto";
@@ -41,17 +41,15 @@
       deployment.hasFastConnection = true;
 
       imports = [
+        ./common/docker.nix
         ./rem/backups.nix
         ./rem/desktop.nix
-        ./rem/docker.nix
         ./rem/hw.nix
         ./rem/kindle.nix
         ./rem/nfs.nix
         ./rem/nix.nix
         ./rem/vfio.nix
         ./rem/zsh.nix
-        ./common/kubernetes-common.nix
-        ./common/kubernetes-master.nix
       ];
 
       networking.hostName = "rem";
