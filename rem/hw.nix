@@ -14,12 +14,19 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.supportedFilesystems = [ "bcachefs" "btrfs" "ext4" ];
   boot.earlyVconsoleSetup = true;
+  # Reduce disk load
   services.journald.extraConfig = "Storage=volatile";
   boot.kernelPackages = pkgs.linuxPackages_testing_bcachefs;
 
   services.earlyoom = {
     enable = true;
     freeMemThreshold = 3; # ~500M / 20G
+  };
+  zramSwap = {
+    enable = true;
+    # Since kernel 3.15+, multiple devices are no longer needed for max perf
+    # See https://github.com/NixOS/nixpkgs/pull/39155
+    numDevices = 1;
   };
 
   # Freeness (that is, not.)
