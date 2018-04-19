@@ -12,7 +12,6 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.initrd.availableKernelModules = [ "ehci_pci" "ahci" "xhci_pci" "usb_storage" "usbhid" "sd_mod" "sr_mod" ];
   boot.kernelModules = [ "kvm-intel" ];
-  boot.extraModulePackages = [ ];
   boot.supportedFilesystems = [ "bcachefs" "btrfs" "ext4" ];
   boot.earlyVconsoleSetup = true;
   services.journald.extraConfig = "Storage=volatile";
@@ -161,7 +160,7 @@
   };
 
   systemd.tmpfiles.rules = [
-    # Auto-make filesystems that nixos doesn't make
+    # Auto-make mount folders for filesystems that NixOS doesn't handle directly
     "d /mnt/storage 0755 root root -"
   ];
 
@@ -175,12 +174,9 @@
     device = "/swap";
     size = 4096;
   } ];
-  services.udev.extraRules = ''
-    ACTION=="add|change", KERNEL=="sd*[!0-9]|sr*", ATTR{queue/scheduler}="bfq"
-  '';
 
-  nix.maxJobs = lib.mkDefault 8;
-
+  # Reset keyboard on bootup (Pok3r)
+  # Otherwise keys get dropped, for some reason
   systemd.services.keyboard-reset = {
     description = "Keyboard Reset";
     script = ''

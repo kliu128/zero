@@ -3,6 +3,7 @@
 {
   virtualisation.libvirtd.enable = true;
   boot.kernelParams = [ "intel_iommu=on" ];
+  # Use vfio-pci for NVIDIA GTX 770
   boot.extraModprobeConfig = ''
     options vfio-pci ids=10de:1184,10de:0e0a
   '';
@@ -23,9 +24,11 @@
       "/dev/rtc","/dev/hpet", "/dev/vfio/vfio"
     ]
   '';
+  # Allow kevin to manage libvirt
   users.extraUsers.kevin.extraGroups = [ "libvirtd" ];
 
   # Samba
+  # For file sharing between Windows VM and host
   services.samba.enable = true;
   services.samba.syncPasswordsByPam = true;
   services.samba.nsswins = true;

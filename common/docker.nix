@@ -3,6 +3,8 @@
 {
   virtualisation.docker.enable = true;
   virtualisation.docker.autoPrune.enable = true;
+  # Incompatible with Docker swarm, and causes a bunch of errors on computer
+  # shutdown when enabled.
   virtualisation.docker.liveRestore = false;
   systemd.services.docker.restartIfChanged = false;
   users.extraUsers.kevin.extraGroups = [ "docker" ];
