@@ -60,7 +60,7 @@
     # Desktop applications
     android-studio atom calibre chromium clementineUnfree codeblocks discord electron-cash emacs gnome3.gedit gnome3.nautilus filezilla firefox gpodder hexchat jetbrains.idea-community jetbrains.pycharm-community libreoffice-fresh liferea mate.atril mkvtoolnix mpv multimc pavucontrol simple-scan slack spectacle thunderbird transmission_gtk transmission_remote_gtk vlc vscode wineStaging winetricks youtube-dl
     # Development
-    helm gcc gdb gnumake
+    gcc gdb gnumake
     # Games
     steam steam-run-native
     # Desktop theme
