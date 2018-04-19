@@ -18,7 +18,7 @@
       serviceAccountKeyFile = "/var/lib/kubernetes/certs/kube-service-accounts.pem";
     };
     etcd = {
-      servers = [ "http://192.168.1.5:2379" ];
+      servers = [ "https://192.168.1.5:2379" ];
       certFile = "/var/lib/kubernetes/certs/etcd-client.pem";
       keyFile = "/var/lib/kubernetes/certs/etcd-client-key.pem";
     };
@@ -26,9 +26,9 @@
       server = "https://192.168.1.5:6443";
     };
     kubelet = {
+      # Different on each machine - see secrets
       tlsCertFile = "/var/lib/kubernetes/certs/kubelet.pem";
       tlsKeyFile = "/var/lib/kubernetes/certs/kubelet-key.pem";
-      hostname = "${config.networking.hostName}.${config.networking.domain}";
       kubeconfig = {
         certFile = "/var/lib/kubernetes/certs/apiserver-client-kubelet.pem";
         keyFile = "/var/lib/kubernetes/certs/apiserver-client-kubelet-key.pem";
