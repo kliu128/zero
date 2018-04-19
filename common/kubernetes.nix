@@ -56,4 +56,7 @@
     flannel.enable = true;
     addons.dashboard.enable = true;
   };
+  networking.firewall.allowedTCPPorts = [
+    # Kubernetes - kubelet, etcd, apiserver
+    10250 2379 2380 6443 ];
 }

@@ -23,4 +23,22 @@
       "/dev/rtc","/dev/hpet", "/dev/vfio/vfio"
     ]
   '';
+  users.extraUsers.kevin.extraGroups = [ "libvirtd" ];
+
+  # Samba
+  services.samba.enable = true;
+  services.samba.syncPasswordsByPam = true;
+  services.samba.nsswins = true;
+  services.samba.shares = {
+    storage = {
+      browseable = "yes";
+      comment = "Public samba share.";
+      "guest ok" = "yes";
+      path = "/mnt/storage";
+      "read only" = false;
+      "acl allow execute always" = true; # Allow executing EXEs
+    };
+  };
+  networking.firewall.allowedTCPPorts = [ 139 445 ];
+  networking.firewall.allowedUDPPorts = [ 137 138 ];
 }
