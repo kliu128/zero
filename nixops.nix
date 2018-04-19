@@ -8,11 +8,16 @@
     enableRollback = true;
   };
   
-  defaults.imports = [
-    ./common/firewall.nix
-    ./common/ssh.nix
-    ./common/users.nix
-  ];
+  defaults = {
+    imports = [
+      ./common/firewall.nix
+      ./common/ssh.nix
+      ./common/users.nix
+    ];
+
+    networking.domain = "potatofrom.space";
+    time.timeZone = "America/New_York";
+  };
 
   otto =
     { config, pkgs, lib, ... }:
@@ -22,7 +27,11 @@
 
       imports = [
         ./otto/hw.nix
+        ./common/kubernetes-common.nix
+        ./common/kubernetes-node.nix
       ];
+
+      networking.hostName = "otto";
     };
 
   rem =
@@ -41,14 +50,11 @@
         ./rem/nix.nix
         ./rem/vfio.nix
         ./rem/zsh.nix
-        ./common/kubernetes.nix
+        ./common/kubernetes-common.nix
+        ./common/kubernetes-master.nix
       ];
 
-      networking.hostName = "rem"; # Define your hostname
-      networking.domain = "potatofrom.space";
-      
-      # Set your time zone.
-      time.timeZone = "America/New_York";
+      networking.hostName = "rem";
 
       # This value determines the NixOS release with which your system is to be
       # compatible, in order to avoid breaking some software such as database
