@@ -36,7 +36,7 @@
     exports = ''
       /srv/nfs *.lan(rw,fsid=0,async,no_root_squash,crossmnt)
       /srv/nfs/books *.lan(rw,fsid=100,async,insecure,nohide,no_root_squash)
-      /srv/nfs/docker *.lan(rw,nohide,async,fsid=101,insecure,no_root_squash,subtree_check)
+      /srv/nfs/docker *.lan(rw,nohide,async,fsid=101,insecure,no_root_squash)
       /srv/nfs/incoming *.lan(rw,fsid=102,async,nohide,insecure,no_root_squash)
       /srv/nfs/movies *.lan(rw,fsid=103,async,nohide,insecure,no_root_squash)
       /srv/nfs/mineos-backups *.lan(rw,fsid=104,async,nohide,insecure,no_root_squash)
