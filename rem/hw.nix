@@ -16,6 +16,8 @@
   boot.earlyVconsoleSetup = true;
   # Reduce disk load
   services.journald.extraConfig = "Storage=volatile";
+  boot.kernelParams = [ "scsi_mod.use_blk_mq=Y" ];
+
   boot.kernelPackages = pkgs.linuxPackages_testing_bcachefs;
 
   services.earlyoom = {
