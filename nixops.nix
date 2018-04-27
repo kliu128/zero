@@ -27,6 +27,8 @@
 
       imports = [
         ./common/docker.nix
+        ./common/kubernetes-common.nix
+        ./common/kubernetes-node.nix
         ./otto/hw.nix
         ./otto/nfs.nix
       ];
@@ -42,6 +44,8 @@
 
       imports = [
         ./common/docker.nix
+        ./common/kubernetes-common.nix
+        ./common/kubernetes-master.nix
         ./rem/backups.nix
         ./rem/desktop.nix
         ./rem/hw.nix
