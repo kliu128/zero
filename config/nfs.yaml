@@ -1,0 +1,39 @@
+---
+apiVersion: helm.integrations.flux.weave.works/v1alpha
+kind: FluxHelmRelease
+metadata:
+  name: nfs-provisioner
+  namespace: kube-system
+  labels:
+    chart: nfs-server-provisioner
+spec:
+  chartGitPath: nfs-server-provisioner
+  releaseName: nfs-provisioner
+  values:
+    nodeSelector:
+      kubernetes.io/hostname: rem
+    persistence:
+      enabled: true
+      storageClass: "-"
+      size: 200Gi
+    storageClass:
+      defaultClass: true
+    
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: data-nfs-server-provisioner-0
+  labels:
+    type: local
+spec:
+  claimRef:
+    namespace: kube-system
+    name: data-nfs-server-provisioner-0
+  storageClassName: manual
+  capacity:
+    storage: 200Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/srv/kubes"

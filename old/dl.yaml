@@ -31,7 +31,7 @@ spec:
       volumes:
       - name: dl-config
         persistentVolumeClaim:
-          claimName: dl-claim0
+          claimName: dl-config-claim
       - name: dl-files
         hostPath:
           path: /mnt/storage/Kevin/Incoming
@@ -58,3 +58,18 @@ spec:
     k8s-app: dl
 status:
   loadBalancer: {}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s-app: dl
+  name: dl-config-claim
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+status: {}
