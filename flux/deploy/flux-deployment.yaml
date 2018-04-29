@@ -42,7 +42,6 @@ spec:
         - name: git-keygen
           mountPath: /var/fluxd/keygen # to match image's ~/.ssh/config
         args:
-
         # if you deployed memcached in a different namespace to flux,
         # or with a different service name, you can supply these
         # following two arguments to tell fluxd how to connect to it.
