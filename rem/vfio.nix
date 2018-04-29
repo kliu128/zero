@@ -29,14 +29,13 @@
 
   # Samba
   # For file sharing between Windows VM and host
-  services.samba.enable = true;
-  services.samba.syncPasswordsByPam = true;
-  services.samba.nsswins = true;
-  services.samba.shares = {
-    storage = {
+  services.samba = {
+    enable = true;
+    syncPasswordsByPam = true;
+    nsswins = true;
+    shares.storage = {
       browseable = "yes";
       comment = "Public samba share.";
-      "guest ok" = "yes";
       path = "/mnt/storage";
       "read only" = false;
       "acl allow execute always" = true; # Allow executing EXEs
