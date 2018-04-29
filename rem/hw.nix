@@ -151,6 +151,9 @@
     mode = "400";
     source = ../secrets/keys/keyfile-parity0.bin;
   };
+  # Add UAS module to initramfs
+  # Required for Seagate Backup Plus hub
+  boot.initrd.kernelModules = [ "uas" ];
 
   systemd.services.storage = {
     enable = true;

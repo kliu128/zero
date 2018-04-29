@@ -9,8 +9,6 @@
   '';
   boot.kernelModules = [ "vfio" "vfio_iommu_type1" "vfio_pci" "vfio_virqfd" ];
   boot.blacklistedKernelModules = [ "nouveau" ];
-  # UAS for the Seagate Backup Plus Hub
-  boot.initrd.kernelModules = [ "uas" ];
   # For evdev passthrough
   virtualisation.libvirtd.qemuVerbatimConfig = ''
     namespaces = []
