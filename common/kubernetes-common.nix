@@ -58,6 +58,7 @@
     };
     flannel.enable = true;
     addons.dashboard.enable = true;
+    addons.dns.enable = true;
   };
   networking.firewall.allowedTCPPorts = [
     # Kubernetes - kubelet, etcd, apiserver
