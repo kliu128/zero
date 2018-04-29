@@ -23,13 +23,13 @@ spec:
 kind: PersistentVolume
 apiVersion: v1
 metadata:
-  name: data-nfs-server-provisioner-0
+  name: data-nfs-provisioner-nfs-server-provisioner-0
   labels:
     type: local
 spec:
   claimRef:
     namespace: kube-system
-    name: data-nfs-server-provisioner-0
+    name: data-nfs-provisioner-nfs-server-provisioner-0
   storageClassName: manual
   capacity:
     storage: 200Gi
