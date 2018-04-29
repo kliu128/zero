@@ -1,25 +1,3 @@
-kind: Service
-apiVersion: v1
-metadata:
-  annotations:
-    flux.weave.works/automated: "true"
-  name: nfs-provisioner
-  labels:
-    k8s-app: nfs-provisioner
-spec:
-  ports:
-    - name: nfs
-      port: 2049
-    - name: mountd
-      port: 20048
-    - name: rpcbind
-      port: 111
-    - name: rpcbind-udp
-      port: 111
-      protocol: UDP
-  selector:
-    app: nfs-provisioner
----
 kind: Deployment
 apiVersion: extensions/v1beta1
 metadata:
@@ -35,7 +13,7 @@ spec:
     spec:
       containers:
         - name: nfs-provisioner
-          image: quay.io/kubernetes_incubator/nfs-provisioner:v1.0.8
+          image: quay.io/kubernetes_incubator/nfs-provisioner:v1.0.9
           ports:
             - name: nfs
               containerPort: 2049
