@@ -5,7 +5,7 @@
   networking.firewall.allowedUDPPorts = [ 111 2049 ];
   fileSystems."/srv/nfs/books" = {
     device = "/mnt/storage/Kevin/Literature/eBooks";
-    options = [ "bind" "x-systemd.after=storage.service" "x-systemd.requires=storage.service" ];
+    options = [ "bind" "x-systemd.after=storage.service" ];
   };
   fileSystems."/srv/nfs/docker" = {
     device = "/srv/docker-share";
@@ -13,23 +13,23 @@
   };
   fileSystems."/srv/nfs/incoming" = {
     device = "/mnt/storage/Kevin/Incoming";
-    options = [ "bind" "x-systemd.after=storage.service" "x-systemd.requires=storage.service" ];
+    options = [ "bind" "x-systemd.after=storage.service" ];
   };
   fileSystems."/srv/nfs/movies" = {
     device = "/mnt/storage/Kevin/Videos/Movies";
-    options = [ "bind" "x-systemd.after=storage.service" "x-systemd.requires=storage.service" ];
+    options = [ "bind" "x-systemd.after=storage.service" ];
   };
   fileSystems."/srv/nfs/tv-shows" = {
     device = ''/mnt/storage/Kevin/Videos/TV\040Shows'';
-    options = [ "bind" "x-systemd.after=storage.service" "x-systemd.requires=storage.service" ];
+    options = [ "bind" "x-systemd.after=storage.service" ];
   };
   fileSystems."/srv/nfs/mineos-backups" = {
     device = "/mnt/storage/Kevin/Computing/Data/MineOS/backups";
-    options = [ "bind" "x-systemd.after=storage.service" "x-systemd.requires=storage.service" ];
+    options = [ "bind" "x-systemd.after=storage.service" ];
   };
   fileSystems."/srv/nfs/zoneminder" = {
     device = "/mnt/storage/Kevin/Computing/Data/ZoneMinder";
-    options = [ "bind" "x-systemd.after=storage.service" "x-systemd.requires=storage.service" ];
+    options = [ "bind" "x-systemd.after=storage.service" ];
   };
   services.nfs.server = {
     enable = true;
