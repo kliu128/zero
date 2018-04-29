@@ -57,6 +57,7 @@ spec:
         # replace (at least) the following URL
         - '--git-url=git@gitlab.com:Pneumaticat/zero-config.git'
         - '--git-branch=master'
+        - '--git-path=config'
 
         # include these next two to connect to an "upstream" service
         # (e.g., Weave Cloud). The token is particular to the service.
