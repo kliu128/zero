@@ -1,6 +1,8 @@
 kind: Service
 apiVersion: v1
 metadata:
+  annotations:
+    flux.weave.works/automated: "true"
   name: nfs-provisioner
   labels:
     k8s-app: nfs-provisioner
