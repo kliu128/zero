@@ -24,12 +24,6 @@
     enable = true;
     freeMemThreshold = 3; # ~500M / 20G
   };
-  zramSwap = {
-    enable = true;
-    # Since kernel 3.15+, multiple devices are no longer needed for max perf
-    # See https://github.com/NixOS/nixpkgs/pull/39155
-    numDevices = 1;
-  };
 
   # Freeness (that is, not.)
   hardware.enableRedistributableFirmware = true; # for amdgpu
