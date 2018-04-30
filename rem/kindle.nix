@@ -15,7 +15,7 @@
     '';
     serviceConfig.DynamicUser = true;
   };
-  users.extraUsers.kindle = {
+  users.users.kindle = {
     shell = pkgs.bash;
     description = "Kindle Status User";
     openssh.authorizedKeys.keys = [
