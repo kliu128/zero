@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: memcached
-        image: memcached:1-alpine
+        image: memcached:1
         imagePullPolicy: IfNotPresent
         args:
         - -m 64    # Maximum memory to use, in megabytes. 64MB is default.
