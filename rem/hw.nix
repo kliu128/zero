@@ -14,8 +14,6 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.supportedFilesystems = [ "bcachefs" "btrfs" "ext4" ];
   boot.earlyVconsoleSetup = true;
-  # Reduce disk load
-  services.journald.extraConfig = "Storage=volatile";
   boot.kernelParams = [ "scsi_mod.use_blk_mq=Y" ];
 
   boot.kernelPackages = pkgs.linuxPackages_testing_bcachefs;
