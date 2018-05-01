@@ -24,21 +24,4 @@
   '';
   # Allow kevin to manage libvirt
   users.extraUsers.kevin.extraGroups = [ "libvirtd" ];
-
-  # Samba
-  # For file sharing between Windows VM and host
-  services.samba = {
-    enable = true;
-    syncPasswordsByPam = true;
-    nsswins = true;
-    shares.storage = {
-      browseable = "yes";
-      comment = "Public samba share.";
-      path = "/mnt/storage";
-      "read only" = false;
-      "acl allow execute always" = true; # Allow executing EXEs
-    };
-  };
-  networking.firewall.allowedTCPPorts = [ 139 445 ];
-  networking.firewall.allowedUDPPorts = [ 137 138 ];
 }
