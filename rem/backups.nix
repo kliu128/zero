@@ -14,6 +14,10 @@
                 "$dest"
       done
     '';
+    serviceConfig = {
+      CPUSchedulingPolicy = "idle";
+      IOSchedulingClass = "idle";
+    };
     startAt = "daily";
   };
   systemd.services.gsuite-backup = {
@@ -125,6 +129,10 @@
     '';
     wants = [ "storage.service" ];
     after = [ "storage.service" ];
+    serviceConfig = {
+      CPUSchedulingPolicy = "idle";
+      IOSchedulingClass = "idle";
+    };
     unitConfig.RequiresMountsFor = [ "/" ];
     startAt = "daily";
   };
