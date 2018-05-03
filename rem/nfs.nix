@@ -24,7 +24,7 @@
     options = [ "bind" "x-systemd.after=storage.service" ];
   };
   fileSystems."/srv/nfs/mineos-backups" = {
-    device = "/mnt/storage/Kevin/Computing/Data/MineOS/backups";
+    device = "/mnt/storage/Kevin/Backups/Minecraft/Current";
     options = [ "bind" "x-systemd.after=storage.service" ];
   };
   fileSystems."/srv/nfs/zoneminder" = {
