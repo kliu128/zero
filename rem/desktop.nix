@@ -64,13 +64,17 @@
     # Games
     dolphinEmuMaster steam steam-run-native
     # Desktop theme
-    arc-theme papirus-icon-theme
+    arc-theme papirus-icon-theme libsForQt5.qtstyleplugins
     # VM
     nixops virtmanager
   ];
   environment.variables = {
     "GPODDER_HOME" = "/home/kevin/.config/gPodder";
     "GPODDER_DOWNLOAD_DIR" = "/mnt/storage/Kevin/Audio/Podcasts";
+    # Use GTK style (from qtstyleplugins)
+    "QT_QPA_PLATFORMTHEME" = "gtk2";
+    # Use system Qt theme for Calibre
+    "CALIBRE_USE_SYSTEM_THEME" = "true";
   };
 
   # Audio
