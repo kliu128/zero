@@ -26,7 +26,7 @@
       deployment.hasFastConnection = true;
 
       imports = [
-        ./common/docker.nix
+        ./modules/docker.nix
         ./otto/hw.nix
         ./otto/nfs.nix
       ];
@@ -41,7 +41,7 @@
       deployment.hasFastConnection = true;
 
       imports = [
-        ./common/docker.nix
+        ./modules/docker.nix
         ./rem/backups.nix
         ./rem/desktop.nix
         ./rem/hw.nix
