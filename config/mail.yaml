@@ -11,6 +11,9 @@ spec:
     - name: smtp
       port: 25
       targetPort: smtp
+    - name: imap
+      port: 143
+      targetPort: imap
     - name: smtp-auth
       port: 587
       targetPort: smtp-auth
@@ -41,11 +44,19 @@ spec:
           ports:
             - name: smtp
               containerPort: 25
+            - name: imap
+              containerPort: 143
             - name: smtp-auth
               containerPort: 587
             - name: imap-secure
               containerPort: 993
           env:
+            - name: SSL_TYPE
+              value: 'manual'
+            - name: SSL_CERT_PATH
+              value: '/etc/ssl/mailserver/tls.crt'
+            - name: SSL_KEY_PATH
+              value: '/etc/ssl/mailserver/tls.key'
             - name: ONE_DIR
               value: '1'
           volumeMounts:
@@ -84,6 +95,9 @@ spec:
               mountPath: /var/mail
             - name: state
               mountPath: /var/mail-state
+            - name: tls
+              mountPath: /etc/ssl/mailserver
+              readOnly: true
       volumes:
         - name: config
           configMap:
@@ -100,6 +114,9 @@ spec:
         - name: state
           persistentVolumeClaim:
             claimName: mailserver-state-claim
+        - name: tls
+          secret:
+            secretName: mailserver.tls
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -130,3 +147,25 @@ spec:
     requests:
       storage: 5Gi
 status: {}
+---
+kind: Ingress
+apiVersion: extensions/v1beta1
+metadata:
+  name: mailserver
+  labels:
+    app: mailserver
+  annotations:
+    kubernetes.io/tls-acme: 'true'
+spec:
+  rules:
+    - host: example.com
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: default-backend
+              servicePort: 80
+  tls:
+    - secretName: mailserver.tls
+      hosts:
+        - potatofrom.space

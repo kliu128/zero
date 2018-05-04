@@ -1,0 +1,64 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mc
+spec:
+  selector:
+    app: mc
+  ports:
+  - name: minecraft
+    targetPort: 25565
+    port: 25565
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: minecraft
+spec:
+  template:
+    metadata:
+      labels:
+        app: mc
+    spec:
+      containers:
+        - command: [/bin/sh]
+          name: mc
+          args: ["-c", "cd /data; java -jar forge-1.12.2-14.23.3.2670-universal.jar -Xmx4G -Xms4G -XX:+UseG1GC -Dsun.rmi.dgc.server.gcInterval=2147483646 -XX:+UnlockExperimental
+VMOptions -XX:G1NewSizePercent=20 -XX:G1ReservePercent=20 -XX:MaxGCPauseMillis=50 -XX:G1HeapRegionSize=32M"]
+          image: openjdk:alpine
+          ports:
+            - containerPort: 25565
+              name: minecraft
+          volumeMounts:
+            - name: data
+              mountPath: /data
+            - name: backups
+              mountPath: /backups
+      nodeSelector:
+        kubernetes.io/hostname: rem
+      securityContext:
+        # nobody user
+        runAsUser: 65534
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: mc-data
+        - name: backups
+          hostPath:
+            path: /mnt/storage/Kevin/Backups/Minecraft/Current
+            type: Directory
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    app: mc
+  name: mc-data
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+status: {}
