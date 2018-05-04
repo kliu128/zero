@@ -29,10 +29,8 @@ spec:
           image: avhost/docker-matrix
           ports:
             - containerPort: 8008
-              hostPort: 8008
               name: http
             - containerPort: 8448
-              hostPort: 8448
               name: https
           volumeMounts:
             - name: config

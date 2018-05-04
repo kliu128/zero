@@ -40,13 +40,10 @@ spec:
           image: tvial/docker-mailserver
           ports:
             - name: smtp
-              hostPort: 25
               containerPort: 25
             - name: smtp-auth
-              hostPort: 587
               containerPort: 587
             - name: imap-secure
-              hostPort: 993
               containerPort: 993
           env:
             - name: ONE_DIR

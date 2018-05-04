@@ -1,0 +1,12 @@
+controller:
+  nodeSelector:
+    kubernetes.io/hostname: rem
+  hostNetwork: true
+rbac:
+  create: true
+tcp:
+  22: default/gitlab:22
+  25: default/mailserver:25
+  587: default/mailserver:587
+  993: default/mailserver:993
+  8448: default/matrix:8448
