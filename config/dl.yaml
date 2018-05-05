@@ -76,6 +76,10 @@ metadata:
     kubernetes.io/tls-acme: 'true'
   name: dl
 spec:
+  tls:
+    - secretName: dl-tls
+      hosts:
+        - dl.potatofrom.space
   rules:
   - host: dl.potatofrom.space
     http:
