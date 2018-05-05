@@ -6,6 +6,9 @@ spec:
   selector:
     app: matrix
   ports:
+  - name: http
+    targetPort: 8008
+    port: 8008
   - name: https
     targetPort: 8448
     port: 8448
@@ -609,3 +612,23 @@ data:
     root:
         level: WARN
         handlers: [console]
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/tls-acme: 'true'
+  name: matrix
+spec:
+  tls:
+    - secretName: matrix-tls
+      hosts:
+        - potatofrom.space
+  rules:
+  - host: potatofrom.space
+    http:
+      paths:
+      - path: /_matrix
+        backend:
+          serviceName: matrix
+          servicePort: 8008

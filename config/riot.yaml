@@ -1,0 +1,65 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: riot
+spec:
+  selector:
+    app: riot
+  ports:
+  - name: http
+    targetPort: 80
+    port: 80
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: riot
+spec:
+  template:
+    metadata:
+      labels:
+        app: riot
+    spec:
+      containers:
+        - image: avhost/docker-matrix-riot
+          name: riot-web
+          resources: {}
+          volumeMounts:
+          - mountPath: /data
+            name: config
+      restartPolicy: Always
+      volumes:
+        - name: config
+          configMap:
+            name: riot-config
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: riot-config
+  labels:
+    app: riot
+data:
+  riot.im.conf: |
+    -p 80
+    -A 0.0.0.0
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/tls-acme: 'true'
+  name: riot
+spec:
+  tls:
+    - secretName: riot-tls
+      hosts:
+        - riot.potatofrom.space
+  rules:
+  - host: riot.potatofrom.space
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: riot
+          servicePort: 80
