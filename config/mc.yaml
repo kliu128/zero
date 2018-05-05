@@ -39,6 +39,7 @@ VMOptions -XX:G1NewSizePercent=20 -XX:G1ReservePercent=20 -XX:MaxGCPauseMillis=5
           stdin: true
       nodeSelector:
         kubernetes.io/hostname: rem
+      hostNetwork: true
       securityContext:
         # nobody user
         runAsUser: 65534

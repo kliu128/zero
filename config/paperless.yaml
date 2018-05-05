@@ -1,0 +1,133 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: paperless
+spec:
+  selector:
+    app: paperless
+  ports:
+  - name: http
+    targetPort: 8000
+    port: 8000
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: paperless
+spec:
+  template:
+    metadata:
+      labels:
+        app: paperless
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: rem
+      containers:
+        # Main paperless server
+        - name: webserver
+          image: danielquinn/paperless
+          args:
+            - runserver
+            - --insecure
+            - --noreload
+            - 0.0.0.0:8000
+          envFrom:
+            - secretRef:
+                name: paperless-passphrase
+            - configMapRef:
+                name: paperless-config
+          ports:
+            - containerPort: 8000
+              name: http
+          volumeMounts:
+            - name: data
+              mountPath: /usr/src/paperless/data
+            - name: media
+              mountPath: /usr/src/paperless/media
+        - name: consume
+          args:
+          - document_consumer
+          envFrom:
+            - secretRef:
+                name: paperless-passphrase
+            - configMapRef:
+                name: paperless-config
+          image: danielquinn/paperless
+          volumeMounts:
+            - name: data
+              mountPath: /usr/src/paperless/data
+            - name: media
+              mountPath: /usr/src/paperless/media
+            - name: consume
+              mountPath: /consume
+      volumes:
+        # Stores SSL keys, media_store
+        - name: data
+          persistentVolumeClaim:
+            claimName: paperless-data
+        - name: media
+          persistentVolumeClaim:
+            claimName: paperless-media
+        - name: consume
+          hostPath:
+            path: /srv/docker-share/paperless_consume
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: paperless-config
+  labels:
+    app: paperless
+data:
+  PAPERLESS_OCR_THREADS: '4'
+  PAPERLESS_OCR_LANGUAGES: ''
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    app: paperless
+  name: paperless-data
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+status: {}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    app: paperless
+  name: paperless-media
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+status: {}
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/tls-acme: 'true'
+  name: paperless
+spec:
+  tls:
+    - secretName: paperless-tls
+      hosts:
+        - paperless.potatofrom.space
+  rules:
+  - host: paperless.potatofrom.space
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: paperless
+          servicePort: 8000
