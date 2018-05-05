@@ -34,6 +34,9 @@ VMOptions -XX:G1NewSizePercent=20 -XX:G1ReservePercent=20 -XX:MaxGCPauseMillis=5
               mountPath: /data
             - name: backups
               mountPath: /backups
+          # Allow for attaching
+          tty: true
+          stdin: true
       nodeSelector:
         kubernetes.io/hostname: rem
       securityContext:
