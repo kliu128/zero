@@ -44,7 +44,7 @@ spec:
             - name: data
               mountPath: /data2
         - name: db
-          image: postgres:10-alpine
+          image: postgres
           ports:
             - containerPort: 5342
               name: postgres
@@ -153,7 +153,7 @@ data:
     pid_file: /data2/homeserver.pid
 
     # Whether to serve a web client from the HTTP/HTTPS root resource.
-    web_client: True
+    web_client: false
 
     # The public-facing base URL for the client API (not including _matrix/...)
     public_baseurl: https://potatofrom.space/
@@ -191,7 +191,7 @@ data:
 
         # Use the X-Forwarded-For (XFF) header as the client IP and not the
         # actual client IP.
-        x_forwarded: false
+        x_forwarded: true
 
         # List of HTTP resources to serve on this listener.
         resources:
@@ -216,7 +216,7 @@ data:
         bind_addresses: ['0.0.0.0']
         type: http
 
-        x_forwarded: false
+        x_forwarded: true
 
         resources:
           - names: [client, webclient]
