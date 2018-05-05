@@ -42,6 +42,9 @@ spec:
               value: '/etc/ssl/mailserver/tls.key'
             - name: ONE_DIR
               value: '1'
+          envFrom:
+            - secretRef:
+                name: mailserver.mailgun-relayhost
           securityContext:
             capabilities:
               add:
@@ -75,14 +78,10 @@ spec:
             - name: opendkim-keys
               mountPath: /tmp/docker-mailserver/opendkim/keys
               readOnly: true
-            - name: mailgun-auth
-              subPath: sasl_passwd
-              mountPath: /tmp/docker-mailserver/sasl_passwd
-              readOnly: true
             - name: data
               mountPath: /var/mail
-            #- name: state
-            #  mountPath: /var/mail-state
+            - name: state
+              mountPath: /var/mail-state
             - name: tls
               mountPath: /etc/ssl/mailserver
               readOnly: true
@@ -93,9 +92,6 @@ spec:
         - name: opendkim-keys
           secret:
             secretName: mailserver.opendkim.keys
-        - name: mailgun-auth
-          secret:
-            secretName: mailserver.mailgun-auth
         - name: data
           persistentVolumeClaim:
             claimName: mailserver-data-claim
