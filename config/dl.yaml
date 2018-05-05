@@ -1,0 +1,86 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: dl
+  name: dl
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: dl
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: rem
+      containers:
+      - image: nginx
+        name: nginx
+        resources: {}
+        volumeMounts:
+        - mountPath: /usr/share/nginx/html
+          name: files
+        - mountPath: /etc/nginx/conf.d/custom.conf
+          name: config
+          subPath: custom.conf
+          readOnly: true
+      restartPolicy: Always
+      volumes:
+      - name: config
+        configMap:
+          name: dl-config
+      - name: files
+        hostPath:
+          path: /mnt/storage/Kevin/Incoming
+          type: Directory
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: dl
+  name: dl
+spec:
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80
+  selector:
+    app: dl
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: dl-config
+  labels:
+    app: dl
+data:
+  # Enable autoindex
+  custom.conf:
+    autoindex on;
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    # type of authentication
+    nginx.ingress.kubernetes.io/auth-type: basic
+    # name of the secret that contains the user/password definitions
+    nginx.ingress.kubernetes.io/auth-secret: dl-auth
+    # message to display with an appropriate context why the authentication is required
+    nginx.ingress.kubernetes.io/auth-realm: "Authentication Required - dl"
+    kubernetes.io/tls-acme: 'true'
+  name: dl
+spec:
+  rules:
+  - host: dl.potatofrom.space
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: dl
+          servicePort: 80
