@@ -1,0 +1,10 @@
+dependencies:
+  - name: cert-manager
+    version: 0.2.10
+    repository: "@stable"
+  - name: nginx-ingress
+    version: 0.17.2
+    repository: "@stable"
+  - name: wordpress
+    version: 1.0.5
+    repository: "@stable"

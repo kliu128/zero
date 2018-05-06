@@ -1,0 +1,12 @@
+dependencies:
+- name: cert-manager
+  repository: https://kubernetes-charts.storage.googleapis.com
+  version: 0.2.10
+- name: nginx-ingress
+  repository: https://kubernetes-charts.storage.googleapis.com
+  version: 0.17.2
+- name: wordpress
+  repository: https://kubernetes-charts.storage.googleapis.com
+  version: 1.0.5
+digest: sha256:473dedbeaf379c61b806932388eb663b4cdf3dd80051fbd30c0a0d4375e99212
+generated: 2018-05-06T08:44:56.356777597-04:00
