@@ -33,3 +33,6 @@ wordpress:
         annotations:
           kubernetes.io/tls-acme: true
         tlsSecret: wordpress-tls3
+  mariadb:
+    enabled: true
+    image: bitnami/mariadb:10.2.14
