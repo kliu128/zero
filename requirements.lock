@@ -2,11 +2,17 @@ dependencies:
 - name: cert-manager
   repository: https://kubernetes-charts.storage.googleapis.com
   version: 0.2.10
+- name: gitlab-omnibus
+  repository: https://charts.gitlab.io
+  version: 0.1.37
+- name: heapster
+  repository: https://kubernetes-charts.storage.googleapis.com
+  version: 0.2.10
 - name: nginx-ingress
   repository: https://kubernetes-charts.storage.googleapis.com
   version: 0.17.2
 - name: wordpress
   repository: https://kubernetes-charts.storage.googleapis.com
   version: 1.0.5
-digest: sha256:473dedbeaf379c61b806932388eb663b4cdf3dd80051fbd30c0a0d4375e99212
-generated: 2018-05-06T08:44:56.356777597-04:00
+digest: sha256:153e120ab1972eb08091b433ecdb8b4f8b2b692add0d84d80eb56acf898add73
+generated: 2018-05-06T14:55:01.609068043-04:00
