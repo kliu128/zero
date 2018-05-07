@@ -24,10 +24,8 @@
     export PATH=$HOME/.cargo/bin:$PATH:$HOME/bin:$HOME/Android/Sdk/ndk-bundle:$HOME/Android/Sdk/platform-tools:$HOME/.npm-global/bin:$HOME/.local/bin:$HOME/.local/var/npm/bin
     export EDITOR="emacsclient "
     alias emacs="$EDITOR "
-
-    print-to-the-freaking-color-printer() {
-        gs -q -dBATCH -dSAFER -dQUIET -dNOPAUSE -sPAPERSIZE=a4 -r600x600 -sDEVICE=pamcmyk32 -sOutputFile=- "$1" | foo2hbpl1 | nc dell3d0572.lan 9100
-    }
+    
+    alias k=kubectl
 
     # MOTD
     print -P "Welcome to \e[1m\e[36m$(hostnamectl --pretty) (Arch Linux)%F{reset_color}\e[0m\!"
