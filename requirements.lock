@@ -8,11 +8,14 @@ dependencies:
 - name: heapster
   repository: https://kubernetes-charts.storage.googleapis.com
   version: 0.2.10
+- name: lamp
+  repository: https://kubernetes-charts.storage.googleapis.com
+  version: 0.1.5
 - name: nginx-ingress
   repository: https://kubernetes-charts.storage.googleapis.com
   version: 0.17.2
 - name: wordpress
   repository: https://kubernetes-charts.storage.googleapis.com
   version: 1.0.5
-digest: sha256:153e120ab1972eb08091b433ecdb8b4f8b2b692add0d84d80eb56acf898add73
-generated: 2018-05-06T14:55:01.609068043-04:00
+digest: sha256:ae399a4daec657e1d0912df0a0abeb71b29045727783114460cb36637397e091
+generated: 2018-05-06T15:09:04.411855928-04:00

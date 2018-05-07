@@ -8,6 +8,26 @@ gitlab-omnibus:
 heapster:
   rbac:
     create: true
+nextcloud:
+  ingress:
+    enabled: true
+    domain: cloud.potatofrom.space
+    ssl: true
+    annotations:
+      kubernetes.io/tls-acme: 'true'
+  mysql:
+    repository: mariadb
+    tag: latest
+    sockets: false
+    user: nextcloud
+    database: nextcloud
+  php:
+    repository: nextcloud
+    tag: fpm
+    persistentSubpaths:
+      - custom_apps
+      - config
+      - data
 nginx-ingress:
   controller:
     nodeSelector:
