@@ -1,0 +1,62 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: cups
+  name: cups
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: cups
+    spec:
+      hostNetwork: true
+      nodeSelector:
+        kubernetes.io/hostname: rem
+      containers:
+      - image: pneumaticat/cups
+        name: cups
+        env:
+          - name: CUPSADMIN
+            value: kevin
+        envFrom:
+          - secretRef:
+              name: cups-password
+        resources: {}
+        volumeMounts:
+        - mountPath: /config
+          name: config
+      restartPolicy: Always
+      volumes:
+      - name: config
+        persistentVolumeClaim:
+          claimName: cups-config
+status: {}
+---
+kind: Secret
+apiVersion: v1
+metadata:
+  name: cups-password
+  labels:
+    app: cups
+type: Opaque
+stringData:
+  CUPSPASSWORD: {{ .Values.cups.password }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    app: cups
+  name: cups-config
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+status: {}
