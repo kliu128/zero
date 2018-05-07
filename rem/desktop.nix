@@ -58,15 +58,15 @@
     # System tools
     i7z atop bcachefs-tools beets borgbackup cointop cowsay ctop dnsutils file fortune docker_compose git-crypt gitAndTools.gitFull gnupg hdparm htop iftop iotop python python3 libva-full lm_sensors lolcat looking-glass-client lzip mpw nheko oh-my-zsh openjdk python36Packages.tvnamer rclone restic rustup screen smartmontools snapraid spectre-meltdown-checker stress-ng telnet tmux tree uptimed vim vnstat wget unar
     # Desktop applications
-    android-studio arduino atom calibre chromium clementine codeblocks discord electron-cash emacs gnome3.gedit gnome3.nautilus filezilla firefox gpodder hexchat jetbrains.idea-community jetbrains.pycharm-community libreoffice-fresh liferea mate.atril mkvtoolnix mpv multimc pavucontrol simple-scan slack spectacle thunderbird transmission_gtk transmission_remote_gtk vlc vscode wine winetricks youtube-dl
+    android-studio arduino atom calibre chromium clementine codeblocks discord electron-cash emacs gnome3.gedit gnome3.gnome-disk-utility gnome3.nautilus filezilla firefox gpodder hexchat jetbrains.idea-community jetbrains.pycharm-community libreoffice-fresh liferea mate.atril mkvtoolnix mpv multimc pavucontrol simple-scan slack spectacle thunderbird transmission_gtk transmission_remote_gtk vlc vscode wine winetricks youtube-dl
     # Development
     gcc gdb gnumake
     # Games
     dolphinEmuMaster steam steam-run-native
     # Desktop theme
     arc-theme papirus-icon-theme libsForQt5.qtstyleplugins
-    # VM
-    nixops virtmanager
+    # VM and DevOps
+    kubernetes-helm nixops virtmanager
   ];
   environment.variables = {
     "GPODDER_HOME" = "/home/kevin/.config/gPodder";
