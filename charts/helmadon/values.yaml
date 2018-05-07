@@ -1,4 +1,4 @@
-image: "gargron/mastodon:v1.2.1"
+image: "gargron/mastodon:v2.3.3"
 
 ## postgres image repository
 ## postgres image version
@@ -31,7 +31,7 @@ dbName: "postgres"
 dbPort: 5432
 
 postgresql:
-    postgresPassword: changeme
+  postgresPassword: changeme
 
 
 # Federation
