@@ -24,9 +24,11 @@ spec:
         image: {{ .Values.image | quote }}
         imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
         args: ["bundle", "exec", "rails", "db:migrate"]
-        env:
-{{ include "mastodon.shared_env" . | indent 8 }}
-{{ include "mastodon.env_secrets" . | indent 8 }}
+        envFrom:
+          - secretRef:
+              name: {{ template "fullname" . }}-secrets
+          - configMapRef:
+              name: {{ template "fullname" . }}-config
         resources:
 {{ toYaml .Values.resources | indent 10 }}
         volumeMounts:
@@ -34,10 +36,15 @@ spec:
           mountPath: /mastodon/public/assets
         - name: web-system
           mountPath: /mastodon/public/system
+        - name: web-packs
+          mountPath: /mastodon/public/packs
       volumes:
       - name: web-assets
         persistentVolumeClaim:
           claimName: {{ .Values.persistence.existingAssetsClaim | default (include "fullname" .) }}-web-assets
+      - name: web-packs
+        persistentVolumeClaim:
+          claimName: {{ .Values.persistence.existingPacksClaim | default (include "fullname" .) }}-web-packs
       - name: web-system
         persistentVolumeClaim:
           claimName: {{ .Values.persistence.existingSystemClaim | default (include "fullname" .) }}-web-system
@@ -68,20 +75,27 @@ spec:
         image: {{ .Values.image | quote }}
         imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
         args: ["bundle", "exec", "rails", "assets:precompile"]
-        env:
-{{ include "mastodon.shared_env" . | indent 8 }}
-{{ include "mastodon.env_secrets" . | indent 8 }}
+        envFrom:
+          - secretRef:
+              name: {{ template "fullname" . }}-secrets
+          - configMapRef:
+              name: {{ template "fullname" . }}-config
         resources:
 {{ toYaml .Values.resources | indent 10 }}
         volumeMounts:
         - name: web-assets
           mountPath: /mastodon/public/assets
+        - name: web-packs
+          mountPath: /mastodon/public/packs
         - name: web-system
           mountPath: /mastodon/public/system
       volumes:
       - name: web-assets
         persistentVolumeClaim:
           claimName: {{ .Values.persistence.existingAssetsClaim | default (include "fullname" .) }}-web-assets
+      - name: web-packs
+        persistentVolumeClaim:
+          claimName: {{ .Values.persistence.existingPacksClaim | default (include "fullname" .) }}-web-packs
       - name: web-system
         persistentVolumeClaim:
           claimName: {{ .Values.persistence.existingSystemClaim | default (include "fullname" .) }}-web-system

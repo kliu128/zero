@@ -1,4 +1,4 @@
-apiVersion: batch/v2alpha1
+apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
   # Unique key of the Job instance
@@ -22,20 +22,27 @@ spec:
             image: {{ .Values.image | quote }}
             imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
             args: ["bundle", "exec", "rake", "mastodon:daily"]
-            env:
-{{ include "mastodon.shared_env" . | indent 12 }}
-{{ include "mastodon.env_secrets" . | indent 12 }}
+            envFrom:
+              - secretRef:
+                  name: {{ template "fullname" . }}-secrets
+              - configMapRef:
+                  name: {{ template "fullname" . }}-config
             resources:
 {{ toYaml .Values.resources | indent 14 }}
             volumeMounts:
             - name: web-assets
               mountPath: /mastodon/public/assets
+            - name: web-packs
+              mountPath: /mastodon/public/packs
             - name: web-system
               mountPath: /mastodon/public/system
           volumes:
           - name: web-assets
             persistentVolumeClaim:
               claimName: {{ .Values.persistence.existingAssetsClaim | default (include "fullname" .) }}-web-assets
+          - name: web-packs
+            persistentVolumeClaim:
+              claimName: {{ .Values.persistence.existingPacksClaim | default (include "fullname" .) }}-web-packs
           - name: web-system
             persistentVolumeClaim:
               claimName: {{ .Values.persistence.existingSystemClaim | default (include "fullname" .) }}-web-system

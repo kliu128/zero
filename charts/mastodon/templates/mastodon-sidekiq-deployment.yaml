@@ -1,9 +1,9 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: {{ template "fullname" . }}-streaming
+  name: {{ template "fullname" . }}-sidekiq
   labels:
-    app: {{ template "fullname" . }}-streaming
+    app: {{ template "fullname" . }}-sidekiq
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
@@ -11,19 +11,19 @@ spec:
   template:
     metadata:
       labels:
-        app: {{ template "fullname" . }}-streaming
+        app: {{ template "fullname" . }}-sidekiq
     spec:
       containers:
-      - name: {{ template "fullname" . }}-streaming
+      - name: {{ template "fullname" . }}-sidekiq
         image: {{ .Values.image | quote }}
         imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
-        args: ["npm", "run", "start"]
-        env:
-{{ include "mastodon.shared_env" . | indent 8 }}
-{{ include "mastodon.env_secrets" . | indent 8 }}
-        ports:
-        - name: streaming
-          containerPort: 4000
+        args: ["bundle", "exec", "sidekiq", "-q", "default", "-q", "mailers", "-q", "pull", "-q", "push"]
+        
+        envFrom:
+          - secretRef:
+              name: {{ template "fullname" . }}-secrets
+          - configMapRef:
+              name: {{ template "fullname" . }}-config
         livenessProbe:
              exec:
                command:
@@ -40,3 +40,10 @@ spec:
              periodSeconds: 3
         resources:
 {{ toYaml .Values.resources | indent 10 }}
+        volumeMounts:
+        - name: web-system
+          mountPath: /mastodon/public/system
+      volumes:
+      - name: web-system
+        persistentVolumeClaim:
+          claimName: {{ .Values.persistence.existingSystemClaim | default (include "fullname" .) }}-web-system
