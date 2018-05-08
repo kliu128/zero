@@ -82,8 +82,8 @@
     path = [ pkgs.borgbackup ];
     script = ''
       set -xeuo pipefail
-      repo="/mnt/emergency-backup/borg"
-      export BORG_PASSPHRASE='***REMOVED***'
+      repo="/mnt/emergency-backup/emergency-borg"
+      export BORG_PASSPHRASE='${builtins.readFile ../secrets/emergency-borg-password.txt}'
       borg create "$repo::{hostname}-documents-{utcnow}" /mnt/storage/Kevin/Personal/Documents \
           --verbose --progress --stats \
           --compression lzma
@@ -117,7 +117,7 @@
     path = [ pkgs.borgbackup ];
     script = ''
       set -xeuo pipefail
-      export BORG_PASSPHRASE='***REMOVED***'
+      export BORG_PASSPHRASE='${builtins.readFile ../secrets/storage-borg-password.txt}'
       borg create -v --progress --stats \
           --one-file-system \
           --exclude 'sh:/home/*/.cache/*' \

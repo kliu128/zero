@@ -39,10 +39,10 @@
     };
   
   # Backup filesystems
-  #fileSystems."/mnt/emergency-backup" = {
-  #  device = "/dev/disk/by-partuuid/81155ad9-01";
-  #  fsType = "bcachefs";
-  #};
+  fileSystems."/mnt/emergency-backup" = {
+    device = "/dev/disk/by-uuid/df38ed6d-7404-4065-bd2e-aed453f9c34e";
+    fsType = "ext4";
+  };
 
   fileSystems."/var/lib/libvirt/images" = {
     device = "/dev/mapper/vms";
