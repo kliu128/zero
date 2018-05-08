@@ -15,8 +15,6 @@
   boot.supportedFilesystems = [ "btrfs" "ext4" ];
   boot.earlyVconsoleSetup = true;
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-
   services.earlyoom = {
     enable = true;
     freeMemThreshold = 3; # ~500M / 20G
