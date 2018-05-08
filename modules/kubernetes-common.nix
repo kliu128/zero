@@ -16,6 +16,7 @@
       kubeletClientCertFile = "/var/lib/kubernetes/certs/kubelet-client.pem";
       kubeletClientKeyFile = "/var/lib/kubernetes/certs/kubelet-client-key.pem";
       serviceAccountKeyFile = "/var/lib/kubernetes/certs/kube-service-accounts.pem";
+      extraOpts = "--target-ram-mb 1000"; # limit ram usage to 1 GB max
     };
     etcd = {
       servers = [ "https://192.168.1.5:2379" ];
