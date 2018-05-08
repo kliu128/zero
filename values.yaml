@@ -16,6 +16,7 @@ mastodon:
     tls: true
     domain: fedi.potatofrom.space
   postgresql:
+    imageTag: latest
     postgresUser: mastodon
     postgresDatabase: mastodon
   config:
