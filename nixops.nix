@@ -30,7 +30,6 @@
         ./modules/kubernetes-common.nix
         ./modules/kubernetes-node.nix
         ./otto/hw.nix
-        ./otto/nfs.nix
       ];
 
       networking.hostName = "otto";
@@ -50,7 +49,6 @@
         ./rem/desktop.nix
         ./rem/hw.nix
         ./rem/kindle.nix
-        ./rem/nfs.nix
         ./rem/nix.nix
         ./rem/samba.nix
         ./rem/vfio.nix
@@ -60,7 +58,8 @@
       networking.hostName = "rem";
 
       # Options as Kubernetes entry node
-      networking.firewall.allowedTCPPorts = [ 25 80 143 443 587 993 8448 25565 ];
+      networking.firewall.allowedTCPPorts = [
+        25 80 143 443 587 993 8448 25565 ];
 
       # This value determines the NixOS release with which your system is to be
       # compatible, in order to avoid breaking some software such as database

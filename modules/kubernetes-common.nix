@@ -63,4 +63,5 @@
   networking.firewall.allowedTCPPorts = [
     # Kubernetes - kubelet, etcd, apiserver
     10250 2379 2380 6443 ];
+  services.nfs.server.enable = true;
 }

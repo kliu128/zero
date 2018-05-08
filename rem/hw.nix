@@ -12,11 +12,10 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.initrd.availableKernelModules = [ "ehci_pci" "ahci" "xhci_pci" "usb_storage" "usbhid" "sd_mod" "sr_mod" ];
   boot.kernelModules = [ "kvm-intel" ];
-  boot.supportedFilesystems = [ "bcachefs" "btrfs" "ext4" ];
+  boot.supportedFilesystems = [ "btrfs" "ext4" ];
   boot.earlyVconsoleSetup = true;
-  boot.kernelParams = [ "scsi_mod.use_blk_mq=Y" ];
 
-  boot.kernelPackages = pkgs.linuxPackages_testing_bcachefs;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   services.earlyoom = {
     enable = true;
@@ -40,10 +39,10 @@
     };
   
   # Backup filesystems
-  fileSystems."/mnt/emergency-backup" = {
-    device = "/dev/disk/by-partuuid/81155ad9-01";
-    fsType = "bcachefs";
-  };
+  #fileSystems."/mnt/emergency-backup" = {
+  #  device = "/dev/disk/by-partuuid/81155ad9-01";
+  #  fsType = "bcachefs";
+  #};
 
   fileSystems."/var/lib/libvirt/images" = {
     device = "/dev/mapper/vms";
