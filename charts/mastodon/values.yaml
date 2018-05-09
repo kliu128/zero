@@ -36,4 +36,4 @@ secretConfig: {}
 ingress:
   enabled: false
   tls: false
-  domain: localhost
+  # ingress domain determined by LOCAL_DOMAIN and WEB_DOMAIN

@@ -14,7 +14,6 @@ mastodon:
   ingress:
     enabled: true
     tls: true
-    domain: fedi.potatofrom.space
   postgresql:
     imageTag: latest
     postgresUser: mastodon
