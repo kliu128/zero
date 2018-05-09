@@ -18,26 +18,11 @@ spec:
         image: {{ .Values.image | quote }}
         imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
         args: ["bundle", "exec", "sidekiq", "-q", "default", "-q", "mailers", "-q", "pull", "-q", "push"]
-        
         envFrom:
           - secretRef:
               name: {{ template "fullname" . }}-secrets
           - configMapRef:
               name: {{ template "fullname" . }}-config
-        livenessProbe:
-             exec:
-               command:
-               - echo
-               - "this is not a very good healthcheck"
-             initialDelaySeconds: 60
-             periodSeconds: 3
-        readinessProbe:
-             exec:
-               command:
-               - echo
-               - "this is not a very good healthcheck"
-             initialDelaySeconds: 3
-             periodSeconds: 3
         resources:
 {{ toYaml .Values.resources | indent 10 }}
         volumeMounts:
