@@ -36,6 +36,12 @@ spec:
                 name: paperless-passphrase
             - configMapRef:
                 name: paperless-config
+          livenessProbe:
+            httpGet:
+              path: /admin/login/
+              port: 8000
+            initialDelaySeconds: 30
+            periodSeconds: 3
           ports:
             - containerPort: 8000
               name: http

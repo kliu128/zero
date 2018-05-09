@@ -22,6 +22,12 @@ spec:
             value: America/New_York
           image: linuxserver/sonarr
           name: sonarr
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8989
+            initialDelaySeconds: 30
+            periodSeconds: 3
           ports:
             - containerPort: 8989
           resources: {}
