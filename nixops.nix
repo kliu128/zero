@@ -62,7 +62,7 @@
 
       # Options as Kubernetes entry node
       networking.firewall.allowedTCPPorts = [
-        25 80 143 443 587 993 8448 25565 ];
+        22 25 80 143 443 587 993 8448 25565 ];
 
       # This value determines the NixOS release with which your system is to be
       # compatible, in order to avoid breaking some software such as database
