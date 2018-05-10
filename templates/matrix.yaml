@@ -33,7 +33,7 @@ spec:
             httpGet:
               path: /_matrix/client/versions
               port: 8008
-            initialDelaySeconds: 30
+            initialDelaySeconds: 120
             periodSeconds: 3
           ports:
             - containerPort: 8008
