@@ -28,7 +28,10 @@ spec:
       containers:
         # Main matrix server
         - name: synapse
-          image: avhost/docker-matrix
+          env:
+            - name: SYNAPSE_CACHE_FACTOR
+              value: '0.75'
+          image: avhost/docker-matrix:v0.28.1
           livenessProbe:
             httpGet:
               path: /_matrix/client/versions
