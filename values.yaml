@@ -1,10 +1,6 @@
 cert-manager:
   ingressShim:
     extraArgs: [--default-issuer-name=letsencrypt-prod, --default-issuer-kind=ClusterIssuer]
-gitlab-omnibus:
-  baseDomain: potatofrom.space
-  legoEmail: kevin@potatofrom.space
-  provider: ""
 heapster:
   rbac:
     create: true
@@ -237,7 +233,7 @@ nginx-ingress:
   rbac:
     create: true
   tcp:
-    22: default/gitlab:22
+    22: default/gitea:22
     8448: default/matrix:8448
 wordpress:
   ingress:
