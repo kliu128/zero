@@ -35,9 +35,11 @@ spec:
     spec:
       serviceAccount: nfs-provisioner
       terminationGracePeriodSeconds: 0
+      nodeSelector:
+        kubernetes.io/hostname: rem
       containers:
         - name: nfs-provisioner
-          image: quay.io/kubernetes_incubator/nfs-provisioner:v1.0.8
+          image: quay.io/kubernetes_incubator/nfs-provisioner:v1.0.9
           ports:
             - name: nfs
               containerPort: 2049
