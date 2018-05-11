@@ -76,7 +76,8 @@ spec:
             claimName: paperless-media
         - name: consume
           hostPath:
-            path: /srv/docker-share/paperless_consume
+            path: /srv/paperless-consume
+            type: Directory
 ---
 kind: ConfigMap
 apiVersion: v1
