@@ -34,7 +34,8 @@ spec:
               path: /_matrix/client/versions
               port: 8008
             initialDelaySeconds: 120
-            periodSeconds: 3
+            periodSeconds: 30
+            timeoutSeconds: 15
           ports:
             - containerPort: 8008
               name: http
