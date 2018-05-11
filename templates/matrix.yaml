@@ -28,9 +28,6 @@ spec:
       containers:
         # Main matrix server
         - name: synapse
-          env:
-            - name: SYNAPSE_CACHE_FACTOR
-              value: '0.75'
           image: avhost/docker-matrix:v0.28.1
           livenessProbe:
             httpGet:
@@ -627,6 +624,10 @@ kind: Ingress
 metadata:
   annotations:
     kubernetes.io/tls-acme: 'true'
+    nginx.ingress.kubernetes.io/proxy-body-size: 100m
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "14400"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "14400"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "14400"
   name: matrix
 spec:
   tls:
