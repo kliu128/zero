@@ -3,6 +3,9 @@
 {
   # Kubernetes
   services.kubernetes.roles = [ "node" "master" ];
+  # Force Kubernetes API server to restart every hour
+  # Gets rid of a seeming memory leak
+  systemd.services.kube-apiserver.serviceConfig.WatchDogSec = 3600;
   services.etcd = {
     enable = true;
     listenClientUrls = [ "https://0.0.0.0:2379" ];

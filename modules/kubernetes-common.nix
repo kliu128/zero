@@ -16,7 +16,6 @@
       kubeletClientCertFile = "/var/lib/kubernetes/certs/kubelet-client.pem";
       kubeletClientKeyFile = "/var/lib/kubernetes/certs/kubelet-client-key.pem";
       serviceAccountKeyFile = "/var/lib/kubernetes/certs/kube-service-accounts.pem";
-      extraOpts = "--target-ram-mb 1000"; # limit ram usage to 1 GB max
     };
     etcd = {
       servers = [ "https://192.168.1.5:2379" ];
@@ -34,8 +33,9 @@
         certFile = "/var/lib/kubernetes/certs/apiserver-client-kubelet.pem";
         keyFile = "/var/lib/kubernetes/certs/apiserver-client-kubelet-key.pem";
       };
-      # Disable swap, and make it so that pods aren't evacuated from nodes due 
+      # Disable swap warning, and make it so that pods aren't evacuated from nodes due 
       # to low disk space (I like running my computers to the edge :D)
+      # Also remove crash because of huge pages features (see https://github.com/kubernetes/kubernetes/issues/58296)
       extraOpts = "--fail-swap-on=false --eviction-soft=nodefs.available<2% --eviction-hard=nodefs.available<1% --eviction-soft-grace-period=nodefs.available=1m30s --feature-gates=HugePages=false";
     };
     controllerManager = {
