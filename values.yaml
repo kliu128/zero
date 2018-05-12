@@ -203,8 +203,6 @@ mastodon:
     # SAML_UID_ATTRIBUTE: "urn:oid:0.9.2342.19200300.100.1.1"
     # SAML_ATTRIBUTES_STATEMENTS_VERIFIED: 
     # SAML_ATTRIBUTES_STATEMENTS_VERIFIED_EMAIL: 
-
-
 nextcloud:
   ingress:
     enabled: true

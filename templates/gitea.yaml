@@ -13,8 +13,6 @@ spec:
       labels:
         app: gitea
     spec:
-      nodeSelector:
-        kubernetes.io/hostname: rem
       containers:
       - image: gitea/gitea:1.4.1
         name: gitea
