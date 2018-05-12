@@ -1,0 +1,90 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: zoneminder
+  name: zoneminder
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: zoneminder
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: rem
+      containers:
+      - env:
+          - name: PHP_TZ
+            value: America/New_York
+        image: linuxserver/zoneminder:64
+        name: zoneminder
+        resources: {}
+        volumeMounts:
+        - mountPath: /data/zoneminder
+          name: data
+        - mountPath: /data/database
+          name: database
+      restartPolicy: Always
+      volumes:
+      - name: data
+        hostPath:
+          path: /mnt/storage/Kevin/Computing/Data/ZoneMinder
+          type: Directory
+      - name: database
+        persistentVolumeClaim:
+          claimName: zoneminder-database
+status: {}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    app: zoneminder
+  name: zoneminder-database
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+status: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: zoneminder
+  name: zoneminder
+spec:
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80
+  selector:
+    app: zoneminder
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/tls-acme: 'true'
+  name: zoneminder
+spec:
+  tls:
+    - secretName: zoneminder-tls
+      hosts:
+        - zm.potatofrom.space
+  rules:
+  - host: zm.potatofrom.space
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: zoneminder
+          servicePort: 80
