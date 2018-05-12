@@ -84,7 +84,8 @@ metadata:
     storageclass.kubernetes.io/is-default-class: 'true'
   name: nfs
 parameters:
-  mountOptions: vers=4.1
+  # actually vers=4 but Helm is meme
+  mountOptions: vers=3
 provisioner: potatofrom.space/nfs
 reclaimPolicy: Retain
 ---
