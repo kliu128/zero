@@ -67,14 +67,15 @@ spec:
           persistentVolumeClaim:
             claimName: sonarr-config
         - name: sonarr-data
-          persistentVolumeClaim:
-            claimName: sonarr-data
+          hostPath:
+            path: /mnt/storage/Kevin/Incoming
+            type: Directory
         - name: jackett-config
           persistentVolumeClaim:
             claimName: jackett-config
         - name: tv
           hostPath:
-            path: /mnt/storage/Kevin/Incoming
+            path: /mnt/storage/Kevin/Videos/TV Shows
             type: Directory
 status: {}
 ---
@@ -117,21 +118,6 @@ spec:
         backend:
           serviceName: sonarr
           servicePort: 8989
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  creationTimestamp: null
-  labels:
-    app: sonarr
-  name: sonarr-data
-spec:
-  accessModes:
-  - ReadWriteOnce
-  resources:
-    requests:
-      storage: 20Gi
-status: {}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
