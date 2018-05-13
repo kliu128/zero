@@ -80,8 +80,6 @@ spec:
               readOnly: true
             - name: data
               mountPath: /var/mail
-            - name: state
-              mountPath: /var/mail-state
             - name: tls
               mountPath: /etc/ssl/mailserver
               readOnly: true
@@ -95,9 +93,6 @@ spec:
         - name: data
           persistentVolumeClaim:
             claimName: mailserver-data-claim
-        - name: state
-          persistentVolumeClaim:
-            claimName: mailserver-state-claim
         - name: tls
           secret:
             secretName: mailserver.tls
@@ -115,21 +110,6 @@ spec:
   resources:
     requests:
       storage: 20Gi
-status: {}
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  creationTimestamp: null
-  labels:
-    app: mailserver
-  name: mailserver-state-claim
-spec:
-  accessModes:
-  - ReadWriteOnce
-  resources:
-    requests:
-      storage: 5Gi
 status: {}
 ---
 kind: Ingress
