@@ -1,4 +1,4 @@
-image: "gargron/mastodon:v2.4.0rc1"
+image: "gargron/mastodon:latest"
 
 ## Persistence for assets and system
 persistence:
