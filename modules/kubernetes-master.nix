@@ -4,9 +4,9 @@
   # Kubernetes
   services.kubernetes.roles = [ "node" "master" ];
 
-  # Force Kubernetes API server to restart every hour
+  # Force Kubernetes API server to restart every 5 min
   # Gets rid of a seeming memory leak
-  systemd.services.kube-apiserver.serviceConfig.WatchDogSec = 3600;
+  systemd.services.kube-apiserver.serviceConfig.WatchDogSec = 360;
 
   # Make kube-scheduler restart on failure (for some reason it crashes)
   systemd.services.kube-scheduler.serviceConfig.Restart = "always";
