@@ -1,0 +1,33 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: turnserver
+  name: turnserver
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: turnserver
+    spec:
+      hostNetwork: true
+      nodeSelector:
+        kubernetes.io/hostname: rem
+      containers:
+      - image: spreed/turnserver
+        name: turnserver
+        resources: {}
+        volumeMounts:
+        - mountPath: /srv/config
+          name: config
+          subPath: config
+          readOnly: true
+      restartPolicy: Always
+      volumes:
+      - name: config
+        secret:
+          secretName: turnserver-config
+status: {}
