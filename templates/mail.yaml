@@ -15,6 +15,10 @@ spec:
       hostNetwork: true
       nodeSelector:
         kubernetes.io/hostname: rem
+      securityContext:
+        capabilities:
+          add:
+            - NET_ADMIN
       containers:
         - name: mailserver
           image: tvial/docker-mailserver:release-v6.0.0
@@ -31,6 +35,8 @@ spec:
             - name: ENABLE_CLAMAV
               value: '1'
             - name: ENABLE_SPAMASSASSIN
+              value: '1'
+            - name: ENABLE_FAIL2BAN
               value: '1'
             - name: OVERRIDE_HOSTNAME
               value: mail.potatofrom.space
