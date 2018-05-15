@@ -10,7 +10,7 @@ releases:
       - ./values/nginx-ingress.yaml
   - name: kubecfg
     namespace: default
-    chart: ./kubecfg
+    chart: ./charts/kubecfg
     values:
       - ./values/kubecfg.yaml
       - ./values/kubecfg.secret.yaml
