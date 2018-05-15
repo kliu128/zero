@@ -15,6 +15,10 @@ spec:
     spec:
       containers:
       - image: gitea/gitea:1.4.1
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 3000
         name: gitea
         resources: {}
         volumeMounts:
