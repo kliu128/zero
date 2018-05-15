@@ -70,7 +70,4 @@
 
   # Make kube-scheduler restart on failure (for some reason it crashes)
   systemd.services.kube-scheduler.serviceConfig.Restart = "always";
-
-  # OOM kill apiserver over 2000 MB
-  systemd.services.kube-apiserver.serviceConfig.MemoryMax = "2G";
 }
