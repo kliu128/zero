@@ -2,6 +2,12 @@ controller:
   nodeSelector:
     kubernetes.io/hostname: rem
   hostNetwork: true
+  config:
+    server-tokens: "false"
+    hsts: "true"
+    hsts-include-subdomains: "true"
+    hsts-max-age: "31557600"
+    hsts-preload: "true"
 rbac:
   create: true
 tcp:
