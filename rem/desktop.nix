@@ -66,7 +66,7 @@
     # Desktop theme
     arc-theme papirus-icon-theme libsForQt5.qtstyleplugins
     # VM and DevOps
-    kubernetes-helm nixops virtmanager
+    helmfile kubernetes-helm nixops virtmanager
   ];
   environment.variables = {
     "GPODDER_HOME" = "/home/kevin/.config/gPodder";
