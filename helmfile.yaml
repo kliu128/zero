@@ -1,0 +1,7 @@
+releases:
+  - name: kubecfg
+    namespace: default
+    chart: ./kubecfg
+    values:
+      - ./values/kubecfg.yaml
+      - ./values/kubecfg.secret.yaml
