@@ -1,6 +1,3 @@
-cert-manager:
-  ingressShim:
-    extraArgs: [--default-issuer-name=letsencrypt-prod, --default-issuer-kind=ClusterIssuer]
 heapster:
   rbac:
     create: true

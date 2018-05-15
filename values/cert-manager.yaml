@@ -1,0 +1,2 @@
+ingressShim:
+  extraArgs: [--default-issuer-name=letsencrypt-prod, --default-issuer-kind=ClusterIssuer]

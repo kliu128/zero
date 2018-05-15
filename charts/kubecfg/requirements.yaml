@@ -1,7 +1,4 @@
 dependencies:
-  - name: cert-manager
-    version: 0.2.10
-    repository: "@stable"
   - name: heapster
     version: 0.2.10
     repository: "@stable"

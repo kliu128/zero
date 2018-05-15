@@ -1,7 +1,4 @@
 dependencies:
-- name: cert-manager
-  repository: https://kubernetes-charts.storage.googleapis.com
-  version: 0.2.10
 - name: heapster
   repository: https://kubernetes-charts.storage.googleapis.com
   version: 0.2.10
@@ -11,5 +8,5 @@ dependencies:
 - name: wordpress
   repository: https://kubernetes-charts.storage.googleapis.com
   version: 1.0.5
-digest: sha256:68c517dc2ecee9b788e0bd7c1395d96307753541098237c1dd3e1914926aa6b8
-generated: 2018-05-15T17:06:34.854230552-04:00
+digest: sha256:f4cf7cc8ffb2b335ae801726f6454ba22ce3b6417154a7c4eba4e2adbba636c3
+generated: 2018-05-15T18:27:53.470677716-04:00
