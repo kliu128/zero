@@ -16,15 +16,9 @@ spec:
     spec:
       nodeSelector:
         kubernetes.io/hostname: rem
-      initContainers:
-        - name: delete-perms-txt
-          image: busybox
-          command: ['sh', '-c', 'rm /config/perms.txt || true']
-          volumeMounts:
-            - mountPath: /config
-              name: config
       containers:
         - image: nvllsvm/emby-unlocked
+          command: ['/bin/bash', '-c', 'rm /config/perms.txt || true; /root/init.sh']
           env:
             - name: PGID
               value: "100"
