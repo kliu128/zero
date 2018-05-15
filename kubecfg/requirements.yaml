@@ -9,9 +9,6 @@ dependencies:
     version: 0.1.5
     repository: "@stable"
     alias: nextcloud
-  - name: nginx-ingress
-    version: 0.17.2
-    repository: "@stable"
   - name: wordpress
     version: 1.0.5
     repository: "@stable"

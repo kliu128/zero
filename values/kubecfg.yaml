@@ -223,16 +223,6 @@ nextcloud:
       - custom_apps
       - config
       - data
-nginx-ingress:
-  controller:
-    nodeSelector:
-      kubernetes.io/hostname: rem
-    hostNetwork: true
-  rbac:
-    create: true
-  tcp:
-    22: default/gitea:22
-    8448: default/matrix:8448
 wordpress:
   ingress:
     enabled: true

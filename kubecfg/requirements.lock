@@ -8,11 +8,8 @@ dependencies:
 - name: lamp
   repository: https://kubernetes-charts.storage.googleapis.com
   version: 0.1.5
-- name: nginx-ingress
-  repository: https://kubernetes-charts.storage.googleapis.com
-  version: 0.17.2
 - name: wordpress
   repository: https://kubernetes-charts.storage.googleapis.com
   version: 1.0.5
-digest: sha256:d8413871077b268a925bcd77e872e14e370b640593ebe9f42e8a3ecdeb833fb4
-generated: 2018-05-10T17:34:26.103194935-04:00
+digest: sha256:68c517dc2ecee9b788e0bd7c1395d96307753541098237c1dd3e1914926aa6b8
+generated: 2018-05-15T17:06:34.854230552-04:00
