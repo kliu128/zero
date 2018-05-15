@@ -16,7 +16,9 @@
       kubeletClientCertFile = "/var/lib/kubernetes/certs/kubelet-client.pem";
       kubeletClientKeyFile = "/var/lib/kubernetes/certs/kubelet-client-key.pem";
       serviceAccountKeyFile = "/var/lib/kubernetes/certs/kube-service-accounts.pem";
+      extraOpts = "--target-ram-mb 500";
     };
+
     etcd = {
       servers = [ "https://192.168.1.5:2379" ];
       certFile = "/var/lib/kubernetes/certs/etcd-client.pem";
@@ -65,4 +67,10 @@
     # Kubernetes - kubelet, etcd, apiserver
     10250 2379 2380 6443 ];
   services.nfs.server.enable = true;
+
+  # Make kube-scheduler restart on failure (for some reason it crashes)
+  systemd.services.kube-scheduler.serviceConfig.Restart = "always";
+
+  # OOM kill apiserver over 2000 MB
+  systemd.services.kube-apiserver.serviceConfig.MemoryMax = "2G";
 }
