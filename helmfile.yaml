@@ -16,6 +16,12 @@ releases:
     chart: stable/cert-manager
     values:
       - ./values/cert-manager.yaml
+  - name: gitlab
+    namespace: gitlab
+    chart: ./charts/gitlab
+    values:
+      - ./values/gitlab.yaml
+      - ./values/gitlab.secret.yaml
   - name: kubecfg
     namespace: default
     chart: ./charts/kubecfg
