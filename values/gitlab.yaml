@@ -10,7 +10,11 @@ global:
     user_name: gitlab@potatofrom.space
     password:
       secret: gitlab-smtp
+      key: password
     starttls_auto: true
+    openssl_verify_mode: none
+  email:
+    from: gitlab@potatofrom.space
   time_zone: America/New_York
 certmanager:
   install: false

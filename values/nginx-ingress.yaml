@@ -11,5 +11,5 @@ controller:
 rbac:
   create: true
 tcp:
-  22: default/gitea:22
+  22: gitlab/gitlab-gitlab-shell:22
   8448: default/matrix:8448
