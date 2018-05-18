@@ -39,7 +39,7 @@ spec:
         kubernetes.io/hostname: rem
       containers:
         - name: nfs-provisioner
-          image: quay.io/kubernetes_incubator/nfs-provisioner:v1.0.9
+          image: pneumaticat/nfs-provisioner:latest
           ports:
             - name: nfs
               containerPort: 2049
