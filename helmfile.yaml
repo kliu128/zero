@@ -22,6 +22,12 @@ releases:
     values:
       - ./values/gitlab.yaml
       - ./values/gitlab.secret.yaml
+  - name: mastodon
+    namespace: mastodon
+    chart: ./charts/mastodon
+    values:
+      - ./values/mastodon.yaml
+      - ./values/mastodon.secret.yaml
   - name: kubecfg
     namespace: default
     chart: ./charts/kubecfg
