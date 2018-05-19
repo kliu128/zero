@@ -16,7 +16,7 @@
       kubeletClientCertFile = "/var/lib/kubernetes/certs/kubelet-client.pem";
       kubeletClientKeyFile = "/var/lib/kubernetes/certs/kubelet-client-key.pem";
       serviceAccountKeyFile = "/var/lib/kubernetes/certs/kube-service-accounts.pem";
-      extraOpts = "--target-ram-mb 500";
+      extraOpts = "--target-ram-mb 5";
     };
 
     etcd = {
