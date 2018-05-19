@@ -8,9 +8,9 @@ releases:
     chart: stable/nginx-ingress
     values:
       - ./values/nginx-ingress.yaml
-  - name: nfs-provisioner
+  - name: nfs-client-provisioner
     namespace: kube-system
-    chart: ./charts/nfs-provisioner
+    chart: ./charts/nfs-client-provisioner
   - name: cert-manager
     namespace: kube-system
     chart: stable/cert-manager
