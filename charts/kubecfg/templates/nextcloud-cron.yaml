@@ -1,0 +1,17 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: nextcloud-cron
+spec:
+  # Run every 15 minutes
+  schedule: "*/15 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: webcron
+            image: appropriate/curl:latest
+            args:
+            - "https://cloud.potatofrom.space/cron.php"
+          restartPolicy: OnFailure
