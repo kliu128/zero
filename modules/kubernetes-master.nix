@@ -3,6 +3,7 @@
 {
   # Kubernetes
   services.kubernetes.roles = [ "node" "master" ];
+  systemd.services.kube-apiserver.serviceConfig.MemoryHigh = "2G";
 
   services.etcd = {
     enable = true;
