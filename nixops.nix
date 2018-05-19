@@ -52,6 +52,7 @@
         ./rem/hw.nix
         ./rem/kindle.nix
         ./rem/netconsole.nix
+        ./rem/nfs.nix
         ./rem/nix.nix
         ./rem/samba.nix
         ./rem/vfio.nix

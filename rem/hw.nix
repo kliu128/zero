@@ -13,6 +13,7 @@
   boot.initrd.availableKernelModules = [ "ehci_pci" "ahci" "xhci_pci" "usb_storage" "usbhid" "sd_mod" "sr_mod" ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.supportedFilesystems = [ "btrfs" "ext4" ];
+  boot.kernelParams = [ "scsi_mod.use_blk_mq=Y" ];
   boot.earlyVconsoleSetup = true;
 
   # Freeness (that is, not.)
