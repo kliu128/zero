@@ -3,3 +3,5 @@ kind: StorageClass
 metadata:
   name: nfs-client
 provisioner: potatofrom.space/nfs-client # or choose another name, must match deployment's env PROVISIONER_NAME'
+parameters:
+  mountOptions: vers=4.2
