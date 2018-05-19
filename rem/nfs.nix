@@ -1,6 +1,6 @@
 {
-  networking.firewall.allowedTCPPorts = [ 111 2049 20048 ];
-  networking.firewall.allowedUDPPorts = [ 111 2049 20048 ];
+  networking.firewall.allowedTCPPorts = [ 111 2049 4000 4001 4002 20048 ];
+  networking.firewall.allowedUDPPorts = [ 111 2049 4000 4001 4002 20048 ];
   
   fileSystems."/srv/nfs/books" = {
     device = "/mnt/storage/Kevin/Literature/eBooks";
@@ -28,6 +28,9 @@
   };
   services.nfs.server = {
     enable = true;
+    statdPort = 4000;
+    lockdPort = 4001;
+    mountdPort = 4002;
     exports = ''
       /srv/nfs *.lan(rw,fsid=0,async,no_root_squash,crossmnt)
       /srv/nfs/books *.lan(rw,fsid=100,async,insecure,nohide,no_root_squash)
