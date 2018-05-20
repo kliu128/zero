@@ -6,6 +6,7 @@ releases:
   - name: nginx-ingress
     namespace: kube-system
     chart: stable/nginx-ingress
+    version: 0.19.2
     values:
       - ./values/nginx-ingress.yaml
   - name: nfs-client-provisioner
@@ -14,6 +15,7 @@ releases:
   - name: cert-manager
     namespace: kube-system
     chart: stable/cert-manager
+    version: 0.2.10
     values:
       - ./values/cert-manager.yaml
   - name: gitlab
