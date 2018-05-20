@@ -17,8 +17,7 @@ spec:
       nodeSelector:
         kubernetes.io/hostname: rem
       containers:
-        - image: nvllsvm/emby-unlocked
-          command: ['/bin/bash', '-c', 'rm /config/perms.txt || true; /root/init.sh']
+        - image: nvllsvm/emby-unlocked:latest
           env:
             - name: PGID
               value: "100"
