@@ -35,7 +35,8 @@ spec:
             - name: X-Forwarded-Proto
               value: "https"
           initialDelaySeconds: 60
-          periodSeconds: 3
+          periodSeconds: 10
+          timeoutSeconds: 5
         readinessProbe:
           httpGet:
             path: /about
@@ -44,7 +45,8 @@ spec:
             - name: X-Forwarded-Proto
               value: "https"
           initialDelaySeconds: 3
-          periodSeconds: 3
+          periodSeconds: 10
+          timeoutSeconds: 5
         resources:
 {{ toYaml .Values.resources | indent 10 }}
         volumeMounts:

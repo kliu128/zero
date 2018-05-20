@@ -27,19 +27,5 @@ spec:
         ports:
         - name: streaming
           containerPort: 4000
-        livenessProbe:
-             exec:
-               command:
-               - echo
-               - "this is not a very good healthcheck"
-             initialDelaySeconds: 60
-             periodSeconds: 3
-        readinessProbe:
-             exec:
-               command:
-               - echo
-               - "this is not a very good healthcheck"
-             initialDelaySeconds: 3
-             periodSeconds: 3
         resources:
 {{ toYaml .Values.resources | indent 10 }}
