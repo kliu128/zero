@@ -25,15 +25,13 @@ spec:
       labels:
         app: matrix
     spec:
-      nodeSelector:
-        kubernetes.io/hostname: otto
       containers:
         # Main matrix server
         - name: synapse
           env:
             - name: SYNAPSE_CACHE_FACTOR
               value: '0.75'
-          image: avhost/docker-matrix:v0.28.1
+          image: avhost/docker-matrix:v0.29.0
           livenessProbe:
             httpGet:
               path: /_matrix/client/versions
@@ -46,6 +44,10 @@ spec:
               name: http
             - containerPort: 8448
               name: https
+          resources:
+            requests:
+              cpu: 0.5
+              memory: 1Gi
           volumeMounts:
             - name: config
               subPath: homeserver.yaml
