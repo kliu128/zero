@@ -35,6 +35,8 @@
       ];
 
       networking.hostName = "otto";
+
+      system.nixos.stateVersion = "unstable";
     };
 
   rem =
@@ -69,6 +71,6 @@
       # compatible, in order to avoid breaking some software such as database
       # servers. You should change this only after NixOS release notes say you
       # should.
-      system.stateVersion = "unstable"; # Did you read the comment?
+      system.nixos.stateVersion = "unstable"; # Did you read the comment?
     };
 }
