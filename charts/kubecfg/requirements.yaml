@@ -2,10 +2,6 @@ dependencies:
   - name: heapster
     version: 0.2.10
     repository: "@stable"
-  - name: lamp
-    version: 0.1.5
-    repository: "@stable"
-    alias: nextcloud
   - name: wordpress
     version: 1.0.5
     repository: "@stable"

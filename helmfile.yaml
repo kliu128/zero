@@ -30,6 +30,12 @@ releases:
     values:
       - ./values/mastodon.yaml
       - ./values/mastodon.secret.yaml
+  - name: nextcloud
+    namespace: default
+    chart: ./charts/nextcloud
+    values:
+      - ./values/nextcloud.yaml
+      - ./values/nextcloud.secret.yaml
   - name: kubecfg
     namespace: default
     chart: ./charts/kubecfg

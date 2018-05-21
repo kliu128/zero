@@ -1,0 +1,23 @@
+{{- $fullName := include "nextcloud.fullname" . -}}
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: {{ $fullName }}-cron
+  labels:
+    app: {{ template "nextcloud.name" . }}
+    chart: {{ template "nextcloud.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  # Run every 15 minutes
+  schedule: "*/15 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: webcron
+            image: appropriate/curl:latest
+            args:
+            - "https://{{ .Values.lamp.ingress.domain }}/cron.php"
+          restartPolicy: OnFailure

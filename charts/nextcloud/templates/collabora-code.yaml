@@ -1,0 +1,50 @@
+{{- $fullName := include "nextcloud.fullname" . -}}
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ $fullName }}-collabora-code
+  labels:
+    app: {{ template "nextcloud.name" . }}
+    chart: {{ template "nextcloud.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: collabora-code
+    spec:
+      containers:
+      - image: collabora/code
+        env:
+          - name: domain
+            value: {{ .Values.lamp.ingress.domain | replace "." "\\." | quote }}
+        name: code
+        securityContext:
+          capabilities:
+            add:
+              - MKNOD
+        resources: {}
+      restartPolicy: Always
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $fullName }}-collabora-code
+  labels:
+    app: {{ template "nextcloud.name" . }}
+    chart: {{ template "nextcloud.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  ports:
+  - name: http
+    port: 9980
+    targetPort: 9980
+  selector:
+    app: collabora-code

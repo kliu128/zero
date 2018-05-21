@@ -1,0 +1,40 @@
+{{- if .Values.collabora.ingress.enabled -}}
+{{- $fullName := include "nextcloud.fullname" . -}}
+{{- $ingressPath := .Values.collabora.ingress.path -}}
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ $fullName }}-collabora-code
+  labels:
+    app: {{ template "nextcloud.name" . }}
+    chart: {{ template "nextcloud.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+{{- with .Values.collabora.ingress.annotations }}
+  annotations:
+    nginx.ingress.kubernetes.io/secure-backends: "true"
+    nginx.ingress.kubernetes.io/server-snippet: "proxy_ssl_verify off;"
+{{ toYaml . | indent 4 }}
+{{- end }}
+spec:
+{{- if .Values.collabora.ingress.tls }}
+  tls:
+  {{- range .Values.collabora.ingress.tls }}
+    - hosts:
+      {{- range .hosts }}
+        - {{ . }}
+      {{- end }}
+      secretName: {{ .secretName }}
+  {{- end }}
+{{- end }}
+  rules:
+  {{- range .Values.collabora.ingress.hosts }}
+    - host: {{ . }}
+      http:
+        paths:
+          - path: {{ $ingressPath }}
+            backend:
+              serviceName: {{ $fullName }}-collabora-code
+              servicePort: http
+  {{- end }}
+{{- end }}
