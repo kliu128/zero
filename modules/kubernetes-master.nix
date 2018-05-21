@@ -3,9 +3,6 @@
 {
   # Kubernetes
   services.kubernetes.roles = [ "node" "master" ];
-  systemd.services.kube-apiserver.serviceConfig.MemoryHigh = "2G";
-  systemd.services.kube-apiserver.serviceConfig.WatchdogSec = "300";
-  systemd.services.kube-controller-manager.serviceConfig.WatchdogSec = "600";
 
   services.etcd = {
     enable = true;
