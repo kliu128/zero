@@ -6,7 +6,7 @@ releases:
   - name: nginx-ingress
     namespace: kube-system
     chart: stable/nginx-ingress
-    version: 0.19.2
+    version: ^0.19.2
     values:
       - ./values/nginx-ingress.yaml
   - name: nfs-client-provisioner
@@ -15,7 +15,7 @@ releases:
   - name: cert-manager
     namespace: kube-system
     chart: stable/cert-manager
-    version: 0.2.10
+    version: ^0.2.10
     values:
       - ./values/cert-manager.yaml
   - name: gitlab
@@ -36,6 +36,13 @@ releases:
     values:
       - ./values/nextcloud.yaml
       - ./values/nextcloud.secret.yaml
+  - name: wordpress
+    namespace: default
+    chart: stable/wordpress
+    version: ^1.0.7
+    values:
+      - ./values/wordpress.yaml
+      - ./values/wordpress.secret.yaml
   - name: kubecfg
     namespace: default
     chart: ./charts/kubecfg
