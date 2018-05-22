@@ -19,13 +19,13 @@ releases:
     values:
       - ./values/cert-manager.yaml
   - name: gitlab
-    namespace: gitlab
+    namespace: default
     chart: ./charts/gitlab
     values:
       - ./values/gitlab.yaml
       - ./values/gitlab.secret.yaml
   - name: mastodon
-    namespace: mastodon
+    namespace: default
     chart: ./charts/mastodon
     values:
       - ./values/mastodon.yaml

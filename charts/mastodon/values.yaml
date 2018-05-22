@@ -22,7 +22,6 @@ postgresql:
   # Also include postgres password here
   postgresUser: changeme
   postgresPassword: changeme
-  nameOverride: mastodon-postgresql
 redis:
   usePassword: false
   master:

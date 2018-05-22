@@ -4,7 +4,7 @@ kind: ConfigMap
 metadata:
   name: {{ template "fullname" . }}-config
 data:
-  DB_HOST: {{ .Release.Name }}-mastodon-postgresql
+  DB_HOST: {{ .Release.Name }}-postgresql
   DB_NAME: {{ .Values.postgresql.postgresDatabase | quote }}
   DB_PORT: {{ .Values.postgresql.service.port | quote }}
   REDIS_HOST: {{ .Release.Name }}-redis
