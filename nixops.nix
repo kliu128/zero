@@ -31,7 +31,6 @@
         ./modules/kubernetes-common.nix
         ./modules/kubernetes-node.nix
         ./otto/hw.nix
-        ./otto/netconsole.nix
       ];
 
       networking.hostName = "otto";
@@ -53,7 +52,6 @@
         ./rem/desktop.nix
         ./rem/hw.nix
         ./rem/kindle.nix
-        ./rem/netconsole.nix
         ./rem/nfs.nix
         ./rem/nix.nix
         ./rem/samba.nix
