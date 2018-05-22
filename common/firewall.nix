@@ -5,4 +5,6 @@
   # More specific port allowances are configured in other files.
   networking.firewall.enable = true;
   networking.firewall.allowPing = true;
+  # Stop log spam
+  networking.firewall.logRefusedConnections = false;
 }
