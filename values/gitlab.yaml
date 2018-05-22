@@ -21,6 +21,10 @@ certmanager:
 certmanager-issuer:
   email: kevin@potatofrom.space
 gitlab:
+  gitlab-runner:
+    runners:
+      privileged: true
+
   # Use Community Edition
   migrations:
     image:
