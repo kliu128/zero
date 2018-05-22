@@ -27,7 +27,4 @@
   } ];
 
   nix.maxJobs = lib.mkDefault 4;
-
-  # Ignore power key - seems to trigger unexpectedly
-  services.logind.extraConfig = "HandlePowerKey=ignore";
 }
