@@ -17,6 +17,10 @@ spec:
           volumeMounts:
             - mountPath: /app/data
               name: data
+              subPath: data
+            - mountPath: /app/cogs
+              name: data
+              subPath: cogs
       restartPolicy: Always
       volumes:
         - name: data
