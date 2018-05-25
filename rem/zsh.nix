@@ -28,7 +28,7 @@
     alias k=kubectl
 
     # MOTD
-    print -P "Welcome to \e[1m\e[36m$(hostnamectl --pretty) (Arch Linux)%F{reset_color}\e[0m\!"
+    print -P "Welcome to \e[1m\e[36mRem%F{reset_color}\e[0m\!"
     print -P "   Kernel: $(uname -r) ($(uname -v))%F{reset_color}"
     # show system status
     systemctl status | head -n 5 | tail -n 4
