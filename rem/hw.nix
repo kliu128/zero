@@ -16,6 +16,11 @@
   boot.kernelParams = [ "scsi_mod.use_blk_mq=Y" ];
   boot.earlyVconsoleSetup = true;
 
+  services.earlyoom = {
+    enable = true;
+    freeMemThreshold = 3; # ~500M / 20G
+  };
+
   # Freeness (that is, not.)
   hardware.enableRedistributableFirmware = true; # for amdgpu
   nixpkgs.config.allowUnfree = true;
@@ -171,7 +176,6 @@
     device = "/swap";
     size = 4096;
   } ];
-  zramSwap.enable = true;
 
   # Reset keyboard on bootup (Pok3r)
   # Otherwise keys get dropped, for some reason
