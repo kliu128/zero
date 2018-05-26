@@ -39,3 +39,5 @@ nginx:
   enabled: false
 postgresql:
   existingSecret: gitlab-postgresql-password
+prometheus:
+  install: false
