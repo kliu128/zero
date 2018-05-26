@@ -34,6 +34,8 @@ spec:
         - image: mariadb:latest
           name: db
           env:
+            # These values are literally hardcoded in quantumobject/zoneminder
+            # (ugh), so no need to really keep them private
             - name: MYSQL_USER
               value: zmuser
             - name: MYSQL_PASSWORD
@@ -54,6 +56,9 @@ spec:
             claimName: zoneminder-data
         - name: capture
           hostPath:
+            # Use /mnt/data3 instead of /mnt/storage because ZoneMinder
+            # misbehaves when running on top of MergerFS and fails to store
+            # events
             path: /mnt/data3/Kevin/Computing/Data/ZoneMinder
         - name: shm
           emptyDir:
