@@ -58,7 +58,7 @@
     # System tools
     i7z atop bcachefs-tools beets borgbackup cointop cowsay ctop dnsutils file fortune docker_compose  gnupg hdparm htop iftop iotop python python3 libva-full lm_sensors lolcat looking-glass-client lzip mpw nheko oh-my-zsh openjdk python36Packages.tvnamer rclone restic rustup screen smartmontools snapraid spectre-meltdown-checker stress-ng telnet tmux tree uptimed vim vnstat wget unar
     # Desktop applications
-    android-studio arduino atom calibre chromium clementine codeblocks discord electron-cash emacs gnome3.gedit gnome3.gnome-disk-utility gnome3.nautilus filezilla firefox gpodder hexchat jetbrains.idea-community jetbrains.pycharm-community libreoffice-fresh liferea mate.atril mkvtoolnix mpv multimc pavucontrol simple-scan slack spectacle thunderbird transmission_gtk transmission_remote_gtk vlc vscode wine winetricks youtube-dl
+    android-studio arduino atom calibre cantata chromium clementine codeblocks discord electron-cash emacs gnome3.gedit gnome3.gnome-disk-utility gnome3.nautilus filezilla firefox gpodder hexchat jetbrains.idea-community jetbrains.pycharm-community libreoffice-fresh liferea mate.atril mkvtoolnix mpv multimc pavucontrol simple-scan slack spectacle thunderbird transmission_gtk transmission_remote_gtk vlc vscode wine winetricks youtube-dl
     # Development
     bfg-repo-cleaner gcc gdb git-crypt gitAndTools.gitFull gnumake
     # Games
@@ -102,4 +102,19 @@
 
   hardware.bluetooth.enable = true;
   users.extraUsers.kevin.extraGroups = [ "input" "sway" "wireshark" ];
+
+  services.mpd = {
+    enable = true;
+    user = "kevin";
+    group = "users";
+    musicDirectory = "/mnt/storage/Kevin/Audio/Music";
+    extraConfig = ''
+      audio_output {
+        type    "pulse"
+        name    "Local MPD"
+        server  "127.0.0.1"
+      }
+    '';
+  };
+  hardware.pulseaudio.tcp.enable = true;
 }
