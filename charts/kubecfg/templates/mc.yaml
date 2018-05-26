@@ -21,11 +21,41 @@ spec:
         app: mc
     spec:
       containers:
-        - command: [/bin/sh]
-          name: mc
-          args: ["-c", "cd /data; java -jar forge-1.12.2-14.23.3.2670-universal.jar -Xmx4G -Xms4G -XX:+UseG1GC -Dsun.rmi.dgc.server.gcInterval=2147483646 -XX:+UnlockExperimental
-VMOptions -XX:G1NewSizePercent=20 -XX:G1ReservePercent=20 -XX:MaxGCPauseMillis=50 -XX:G1HeapRegionSize=32M"]
-          image: openjdk:alpine
+        - name: mc
+          image: itzg/minecraft-server:latest
+          env:
+            # Accept Mojang EULA (required)
+            - name: EULA
+              value: "TRUE"
+            # Set Minecraft version and opts
+            - name: TYPE
+              value: FORGE
+            - name: FORGEVERSION
+              value: "14.23.3.2670"
+            - name: VERSION
+              value: "1.12.2"
+            - name: MEMORY
+              value: 4G
+            - name: JVM_OPTS
+              value: "-XX:+UseG1GC -Dsun.rmi.dgc.server.gcInterval=2147483646 -XX:+UnlockExperimentalVMOptions -XX:G1NewSizePercent=20 -XX:G1ReservePercent=20 -XX:MaxGCPauseMillis=50 -XX:G1HeapRegionSize=32M"
+            # Minecraft config
+            - name: ALLOW_FLIGHT
+              value: "TRUE"
+            - name: DIFFICULTY
+              value: hard
+            - name: OPS
+              value: Ajaxi,dardahar
+            - name: ENABLE_QUERY
+              value: "TRUE"
+            - name: ANNOUNCE_PLAYER_ACHIEVEMENTS
+              value: "TRUE"
+            - name: MOTD
+              value: "Saucymods Modern Skyblock 3"
+          livenessProbe:
+            exec:
+              command: [mcstatus, localhost, ping]
+            initialDelaySeconds: 300
+            periodSeconds: 5
           ports:
             - containerPort: 25565
               name: minecraft
@@ -40,9 +70,6 @@ VMOptions -XX:G1NewSizePercent=20 -XX:G1ReservePercent=20 -XX:MaxGCPauseMillis=5
       nodeSelector:
         kubernetes.io/hostname: rem
       hostNetwork: true
-      securityContext:
-        # nobody user
-        runAsUser: 65534
       volumes:
         - name: data
           persistentVolumeClaim:
