@@ -36,8 +36,6 @@ spec:
               value: "1.12.2"
             - name: MEMORY
               value: 4G
-            - name: JVM_OPTS
-              value: "-XX:+UseG1GC -Dsun.rmi.dgc.server.gcInterval=2147483646 -XX:+UnlockExperimentalVMOptions -XX:G1NewSizePercent=20 -XX:G1ReservePercent=20 -XX:MaxGCPauseMillis=50 -XX:G1HeapRegionSize=32M"
             # Minecraft config
             - name: ALLOW_FLIGHT
               value: "TRUE"
