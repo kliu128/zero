@@ -33,7 +33,7 @@ spec:
           env:
             - name: SYNAPSE_CACHE_FACTOR
               value: '0.75'
-          image: avhost/docker-matrix:v0.29.0
+          image: avhost/docker-matrix:v0.30.0
           livenessProbe:
             httpGet:
               path: /_matrix/client/versions
