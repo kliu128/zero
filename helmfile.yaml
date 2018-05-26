@@ -1,6 +1,8 @@
 repositories:
   - name: stable
     url: https://kubernetes-charts.storage.googleapis.com
+  - name: coreos
+    url: https://s3-eu-west-1.amazonaws.com/coreos-charts/stable/
 
 releases:
   - name: nginx-ingress
@@ -18,6 +20,14 @@ releases:
     version: ^0.2.10
     values:
       - ./values/cert-manager.yaml
+  - name: prometheus-operator
+    namespace: monitoring
+    chart: coreos/prometheus-operator
+  - name: kube-prometheus
+    namespace: monitoring
+    chart: coreos/kube-prometheus
+    values:
+      - ./values/kube-prometheus.yaml
   - name: gitlab
     namespace: default
     chart: ./charts/gitlab
