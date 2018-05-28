@@ -31,7 +31,7 @@ spec:
             - name: TYPE
               value: FORGE
             - name: FORGEVERSION
-              value: "14.23.3.2702"
+              value: "14.23.3.2670"
             - name: VERSION
               value: "1.12.2"
             - name: MEMORY
