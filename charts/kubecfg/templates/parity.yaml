@@ -15,10 +15,10 @@ spec:
         app: parity
     spec:
       nodeSelector:
-        kubernetes.io/hostname: otto
+        kubernetes.io/hostname: rem
       containers:
       - image: parity/parity:beta
-        args: [-d, /data, --jsonrpc-interface, all, --jsonrpc-cors, '*', --jsonrpc-apis, safe]
+        args: [-d, /data, --jsonrpc-interface, all, --jsonrpc-cors, '*', --jsonrpc-apis, safe, --no-ancient-blocks]
         name: parity
         resources: {}
         volumeMounts:
@@ -27,9 +27,23 @@ spec:
       restartPolicy: Always
       volumes:
       - name: data
-        hostPath:
-          path: /var/lib/parity
-          type: DirectoryOrCreate
+        persistentVolumeClaim:
+          claimName: parity-data
+status: {}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    app: parity
+  name: parity-data
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Gi
 status: {}
 ---
 apiVersion: v1
