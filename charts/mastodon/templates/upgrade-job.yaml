@@ -1,0 +1,44 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  # Unique key of the Job instance
+  name: {{ template "fullname" . }}-upgrade
+  labels:
+    app: {{ template "fullname" . }}
+    heritage: {{.Release.Service | quote }}
+    release: {{.Release.Name | quote }}
+    chart: "{{.Chart.Name}}-{{.Chart.Version}}"
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: {{ template "fullname" . }}-daily
+        image: {{ .Values.image | quote }}
+        imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
+        command: [/bin/sh]
+        args: ["-c", "rake db:migrate; rake assets:precompile"]
+        envFrom:
+          - secretRef:
+              name: {{ template "fullname" . }}-secrets
+          - configMapRef:
+              name: {{ template "fullname" . }}-config
+        resources:
+{{ toYaml .Values.resources | indent 10 }}
+        volumeMounts:
+        - name: web-assets
+          mountPath: /mastodon/public/assets
+        - name: web-packs
+          mountPath: /mastodon/public/packs
+        - name: web-system
+          mountPath: /mastodon/public/system
+      volumes:
+      - name: web-assets
+        persistentVolumeClaim:
+          claimName: {{ .Values.persistence.existingAssetsClaim | default (include "fullname" .) }}-web-assets
+      - name: web-packs
+        persistentVolumeClaim:
+          claimName: {{ .Values.persistence.existingPacksClaim | default (include "fullname" .) }}-web-packs
+      - name: web-system
+        persistentVolumeClaim:
+          claimName: {{ .Values.persistence.existingSystemClaim | default (include "fullname" .) }}-web-system
