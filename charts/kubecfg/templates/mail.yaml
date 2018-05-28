@@ -48,9 +48,17 @@ spec:
               value: '1'
             - name: TLS_LEVEL
               value: intermediate # TLS v1-1.2 + broad compatibility
+              # Required for Nextcloud compatibility
           envFrom:
             - secretRef:
                 name: mailserver.mailgun-relayhost
+          resources:
+            requests:
+              memory: 500Mi
+              cpu: 500m
+            limits:
+              memory: 500Mi
+              cpu: 500m
           securityContext:
             capabilities:
               add:

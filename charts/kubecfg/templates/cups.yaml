@@ -13,9 +13,6 @@ spec:
       labels:
         app: cups
     spec:
-      hostNetwork: true
-      nodeSelector:
-        kubernetes.io/hostname: rem
       containers:
       - image: pneumaticat/cups
         name: cups
@@ -25,7 +22,13 @@ spec:
         envFrom:
           - secretRef:
               name: cups-password
-        resources: {}
+        resources:
+          limits:
+            memory: 100Mi
+            cpu: 1000m
+          requests:
+            memory: 10Mi
+            cpu: 50m
         volumeMounts:
         - mountPath: /config
           name: config
@@ -45,6 +48,20 @@ metadata:
 type: Opaque
 stringData:
   CUPSPASSWORD: {{ .Values.cups.password }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: cups
+  name: cups
+spec:
+  ports:
+  - name: http
+    port: 631
+    targetPort: 631
+  selector:
+    app: cups
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
