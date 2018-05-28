@@ -18,7 +18,7 @@ spec:
         kubernetes.io/hostname: otto
       containers:
       - image: parity/parity:beta
-        args: [-d, /data, --jsonrpc-interface, all, --jsonrpc-cors, '*', --jsonrcpc-apis, safe]
+        args: [-d, /data, --jsonrpc-interface, all, --jsonrpc-cors, '*', --jsonrpc-apis, safe]
         name: parity
         resources: {}
         volumeMounts:
