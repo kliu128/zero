@@ -20,6 +20,10 @@
     enable = true;
     freeMemThreshold = 3; # ~500M / 20G
   };
+  # Occasionally crashes with the message:
+  # > Could not convert number: Numerical result out of range
+  # So just have it restart afterward.
+  systemd.services.earlyoom.serviceConfig.Restart = "always";
 
   # Freeness (that is, not.)
   hardware.enableRedistributableFirmware = true; # for amdgpu
@@ -176,6 +180,9 @@
     device = "/swap";
     size = 4096;
   } ];
+  services.udev.extraRules = ''
+    ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/scheduler}="kyber"
+  '';
 
   # Reset keyboard on bootup (Pok3r)
   # Otherwise keys get dropped, for some reason
