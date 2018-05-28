@@ -49,6 +49,8 @@ spec:
               value: "TRUE"
             - name: MOTD
               value: "Saucymods Modern Skyblock 3"
+            - name: JVM_OPTS
+              value: -Dfml.queryResult=confirm
           livenessProbe:
             exec:
               command: [mcstatus, localhost, ping]
