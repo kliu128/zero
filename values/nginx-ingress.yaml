@@ -13,3 +13,4 @@ rbac:
 tcp:
   22: default/gitlab-gitlab-shell:22
   8448: default/matrix:8448
+  8545: default/parity:8545

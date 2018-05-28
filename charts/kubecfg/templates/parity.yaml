@@ -1,0 +1,48 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: parity
+  name: parity
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: parity
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: otto
+      containers:
+      - image: parity/parity:beta
+        args: [-d, /data, --jsonrpc-interface, all, --jsonrpc-cors, '*', --jsonrcpc-apis, safe]
+        name: parity
+        resources: {}
+        volumeMounts:
+        - mountPath: /data
+          name: data
+      restartPolicy: Always
+      volumes:
+      - name: data
+        hostPath:
+          path: /var/lib/parity
+          type: DirectoryOrCreate
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: parity
+  name: parity
+spec:
+  ports:
+  - name: jsonrpc
+    port: 8545
+    targetPort: 8545
+  selector:
+    app: parity
+---
