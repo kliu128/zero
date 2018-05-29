@@ -23,8 +23,8 @@
     options = [ "bind" "x-systemd.after=storage.service" ];
   };
   fileSystems."/srv/nfs/zoneminder" = {
-    device = "/mnt/storage/Kevin/Computing/Data/ZoneMinder";
-    options = [ "bind" "x-systemd.after=storage.service" ];
+    device = "/mnt/data3/Kevin/Computing/Data/ZoneMinder";
+    options = [ "bind" ];
   };
   services.nfs.server = {
     enable = true;
