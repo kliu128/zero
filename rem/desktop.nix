@@ -28,6 +28,8 @@
     package = pkgs.i3-gaps;
     extraPackages = with pkgs; [ blueman compton conky dunst i3lock nitrogen redshift rofi system-config-printer scrot xautolock xcape xorg.xmodmap termite udiskie ];
   };
+  services.xserver.desktopManager.plasma5.enable = true;
+
   programs.gnupg.agent.enable = true;
   security.pam.services.login.enableKwallet = true;
 
@@ -71,8 +73,6 @@
   environment.variables = {
     "GPODDER_HOME" = "/home/kevin/.config/gPodder";
     "GPODDER_DOWNLOAD_DIR" = "/mnt/storage/Kevin/Audio/Podcasts";
-    # Use GTK style (from qtstyleplugins)
-    "QT_QPA_PLATFORMTHEME" = "gtk2";
     # Use system Qt theme for Calibre
     "CALIBRE_USE_SYSTEM_THEME" = "true";
   };
