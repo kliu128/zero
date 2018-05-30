@@ -64,7 +64,9 @@
   };
   networking.firewall.allowedTCPPorts = [
     # Kubernetes - kubelet, etcd, apiserver
-    10250 2379 2380 6443 ];
+    10250 2379 2380 6443
+    # Node Exporter
+    9100 ];
   services.nfs.server.enable = true;
 
   # Make kube-scheduler restart on failure (for some reason it crashes)
