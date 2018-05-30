@@ -25,22 +25,10 @@ spec:
       labels:
         app: matrix
     spec:
-      nodeSelector:
-        kubernetes.io/hostname: otto
       containers:
         # Main matrix server
         - name: synapse
-          env:
-            - name: SYNAPSE_CACHE_FACTOR
-              value: '0.75'
           image: avhost/docker-matrix:v0.30.0
-          livenessProbe:
-            httpGet:
-              path: /_matrix/client/versions
-              port: 8008
-            initialDelaySeconds: 120
-            periodSeconds: 30
-            timeoutSeconds: 15
           ports:
             - containerPort: 8008
               name: http

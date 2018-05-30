@@ -16,15 +16,12 @@ spec:
     spec:
       containers:
       - image: parity/parity:beta
-        args: [-d, /data, --jsonrpc-interface, all, --jsonrpc-cors, '*', --jsonrpc-apis, safe, --no-ancient-blocks, --cache=1024]
+        args: [-d, /data, --jsonrpc-interface, all, --jsonrpc-cors, '*', --jsonrpc-apis, safe, --no-ancient-blocks, --cache=2048]
         name: parity
         resources:
           requests:
             cpu: 1000m
             memory: 750Mi
-          limits:
-            cpu: 2000m
-            memory: 2Gi
         volumeMounts:
         - mountPath: /data
           name: data
