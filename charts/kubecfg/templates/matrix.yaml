@@ -34,6 +34,13 @@ spec:
               name: http
             - containerPort: 8448
               name: https
+          livenessProbe:
+            httpGet:
+              path: /_matrix/client/versions
+              port: 8008
+            initialDelaySeconds: 60
+            periodSeconds: 30
+            timeoutSeconds: 15
           resources:
             requests:
               cpu: 0.5
