@@ -180,8 +180,9 @@
     device = "/swap";
     size = 4096;
   } ];
+  boot.kernel.sysctl."vm.dirty_ratio" = 2;
   services.udev.extraRules = ''
-    ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/scheduler}="kyber"
+    ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/scheduler}="bfq"
   '';
 
   # Reset keyboard on bootup (Pok3r)
