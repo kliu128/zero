@@ -26,7 +26,7 @@
   services.xserver.windowManager.i3 = {
     enable = true;
     package = pkgs.i3-gaps;
-    extraPackages = with pkgs; [ blueman compton conky dunst i3lock nitrogen redshift rofi system-config-printer scrot xautolock xcape xorg.xmodmap termite udiskie ];
+    extraPackages = with pkgs; [ blueman compton conky i3lock nitrogen redshift rofi system-config-printer scrot xautolock xcape xorg.xmodmap termite udiskie ];
   };
   services.xserver.desktopManager.plasma5.enable = true;
 
