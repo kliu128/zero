@@ -19,3 +19,5 @@ tcp:
   631: default/cups:631
   8448: default/matrix:8448
   8545: default/parity:8545
+  9001: default/tor:9001
+  9030: default/tor:9030

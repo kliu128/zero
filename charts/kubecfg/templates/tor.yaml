@@ -1,0 +1,82 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: tor
+  name: tor
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: tor
+    spec:
+      containers:
+      - image: jess/tor-relay
+        args: [-f, /etc/tor/torrc]
+        name: tor
+        resources: {}
+        volumeMounts:
+        - mountPath: /etc/tor/torrc
+          name: config
+          subPath: torrc
+          readOnly: true
+        - mountPath: /var/lib/tor/.tor
+          name: data
+      restartPolicy: Always
+      volumes:
+      - name: config
+        configMap:
+          name: tor-config
+      - name: data
+        persistentVolumeClaim:
+          claimName: tor-data
+status: {}
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: tor-config
+  labels:
+    app: tor
+data:
+  torrc: |
+    ORPort 9001
+    DirPort 9030
+    ## A handle for your relay, so people don't have to refer to it by key.
+    Nickname potatorelay
+    ContactInfo 8792E2260F507DA00F0DB58E2160C3EB40A944EC Kevin Liu kevin@potatofrom.space
+    ExitPolicy reject *:*
+    ExitPolicy reject6 *:*
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tor
+spec:
+  selector:
+    app: tor
+  ports:
+  - name: or
+    targetPort: 9001
+    port: 9001
+  - name: dir
+    targetPort: 9030
+    port: 9030
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    app: tor
+  name: tor-data
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+status: {}
