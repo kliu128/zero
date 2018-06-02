@@ -46,6 +46,7 @@
 
       imports = [
         ./modules/docker.nix
+        ./modules/kdeconnect.nix
         ./modules/kubernetes-common.nix
         ./modules/kubernetes-master.nix
         ./rem/backups.nix
