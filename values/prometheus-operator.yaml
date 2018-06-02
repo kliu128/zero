@@ -1,4 +1,11 @@
 prometheus:
+  volumeClaimTemplate:
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 50Gi
+    selector: {}
   serviceMonitors:
     - name: matrix
       labels:
