@@ -30,6 +30,7 @@ releases:
     chart: coreos/kube-prometheus
     values:
       - ./values/kube-prometheus.yaml
+      - ./values/kube-prometheus.secret.yaml
   - name: gitlab
     namespace: default
     chart: ./charts/gitlab

@@ -16,15 +16,18 @@ alertmanager:
         hosts:
           - alertmanager.potatofrom.space
 grafana:
+  auth:
+    anonymous:
+      enabled: false
+  storageSpec:
+    class: ""
+    accessMode: ReadWriteOnce
+    resources:
+      requests:
+        storage: 1Gi
   ingress:
     enabled: true
     annotations:
-      # type of authentication
-      nginx.ingress.kubernetes.io/auth-type: basic
-      # name of the secret that contains the user/password definitions
-      nginx.ingress.kubernetes.io/auth-secret: grafana-auth
-      # message to display with an appropriate context why the authentication is required
-      nginx.ingress.kubernetes.io/auth-realm: "Authentication Required - Grafana"
       kubernetes.io/tls-acme: 'true'
     hosts:
       - stats.potatofrom.space
