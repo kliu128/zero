@@ -1,12 +1,13 @@
-kind: Deployment
-apiVersion: extensions/v1beta1
+kind: StatefulSet
+apiVersion: apps/v1
 metadata:
   name: mailserver
   labels:
     app: mailserver
 spec:
-  strategy:
-    type: Recreate
+  selector:
+    matchLabels:
+      app: mailserver
   template:
     metadata:
       labels:

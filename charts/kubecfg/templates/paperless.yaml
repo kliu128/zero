@@ -10,11 +10,14 @@ spec:
     targetPort: 8000
     port: 8000
 ---
-apiVersion: apps/v1beta1
-kind: Deployment
+apiVersion: apps/v1
+kind: StatefulSet
 metadata:
   name: paperless
 spec:
+  selector:
+    matchLabels:
+      app: paperless
   template:
     metadata:
       labels:

@@ -1,13 +1,13 @@
-apiVersion: extensions/v1beta1
-kind: Deployment
+apiVersion: apps/v1
+kind: StatefulSet
 metadata:
   labels:
     app: cups
   name: cups
 spec:
-  replicas: 1
-  strategy:
-    type: Recreate
+  selector:
+    matchLabels:
+      app: cups
   template:
     metadata:
       labels:
