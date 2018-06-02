@@ -15,11 +15,14 @@ spec:
   - name: turn
     port: 3478
 ---
-apiVersion: apps/v1beta1
-kind: Deployment
+apiVersion: apps/v1
+kind: StatefulSet
 metadata:
   name: matrix
 spec:
+  selector:
+    matchLabels:
+      app: matrix
   template:
     metadata:
       labels:
@@ -50,6 +53,9 @@ spec:
               subPath: homeserver.yaml
               mountPath: /data/homeserver.yaml
             - name: config
+              subPath: skype-registration.yaml
+              mountPath: /data/skype-registration.yaml
+            - name: config
               subPath: potatofrom.space.log.config
               mountPath: /data/potatofrom.space.log.config
             - name: data
@@ -62,6 +68,18 @@ spec:
           volumeMounts:
             - name: db
               mountPath: /var/lib/postgresql/data
+        - name: skype
+          image: registry.potatofrom.space/kevin/r/matrix-puppet-skype:latest
+          ports:
+            - containerPort: 8090
+              name: skype
+          volumeMounts:
+            - name: config
+              subPath: skype-config.json
+              mountPath: /app/config.json
+            - name: config
+              subPath: skype-registration.yaml
+              mountPath: /app/skype-registration.yaml
       volumes:
         # Stores SSL keys, media_store
         - name: data
