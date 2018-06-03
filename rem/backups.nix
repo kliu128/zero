@@ -200,6 +200,24 @@
     };
     startAt = "daily";
   };
+  systemd.services.scintillating-mirror = {
+    description = "Google Drive Gas Leak Data Mirroring";
+    path = [ pkgs.rclone ];
+    script = ''
+      rclone --config /etc/rclone.conf sync --verbose --drive-formats ods,odt,odp,svg "gdrive-batchfiles:Scintillating" "/mnt/storage/Kevin/Backups/Scintillating Drive"
+      chown -R kevin:users "/mnt/storage/Kevin/Backups/Scintillating Drive"
+    '';
+    after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
+    serviceConfig = {
+      CPUSchedulingPolicy = "idle";
+      IOSchedulingClass = "idle";
+    };
+    unitConfig = {
+      RequiresMountsFor = [ "/mnt/storage" ];
+    };
+    startAt = "daily";
+  };
 
   # Can't just include it into nix config because rclone modifies it
   # periodically
