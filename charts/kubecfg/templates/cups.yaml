@@ -14,7 +14,7 @@ spec:
         app: cups
     spec:
       containers:
-      - image: pneumaticat/cups
+      - image: registry.potatofrom.space/kevin/r/cups:latest
         name: cups
         env:
           - name: CUPSADMIN
