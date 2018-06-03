@@ -21,10 +21,6 @@ certmanager:
 certmanager-issuer:
   email: kevin@potatofrom.space
 gitlab:
-  gitlab-runner:
-    runners:
-      privileged: true
-
   # Use Community Edition
   migrations:
     image:
@@ -37,8 +33,13 @@ gitlab:
       kubernetes.io/hostname: rem
     image:
       repository: registry.gitlab.com/gitlab-org/build/cng/gitlab-unicorn-ce
-nginx:
-  enabled: false
+gitlab-runner:
+  rbac:
+    create: true
+  runners:
+    privileged: true
+nginx-ingress:
+  install: false
 postgresql:
   existingSecret: gitlab-postgresql-password
 prometheus:
