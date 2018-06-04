@@ -35,3 +35,14 @@ grafana:
       - secretName: grafana-tls
         hosts:
           - stats.potatofrom.space
+prometheus:
+  nodeSelector:
+    kubernetes.io/hostname: rem
+  storageSpec:
+    volumeClaimTemplate:
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 50Gi
+      selector: {}
