@@ -16,15 +16,6 @@
   boot.kernelParams = [ "scsi_mod.use_blk_mq=Y" ];
   boot.earlyVconsoleSetup = true;
 
-  services.earlyoom = {
-    enable = true;
-    freeMemThreshold = 3; # ~500M / 20G
-  };
-  # Occasionally crashes with the message:
-  # > Could not convert number: Numerical result out of range
-  # So just have it restart afterward.
-  systemd.services.earlyoom.serviceConfig.Restart = "always";
-
   # Freeness (that is, not.)
   hardware.enableRedistributableFirmware = true; # for amdgpu
   nixpkgs.config.allowUnfree = true;
