@@ -39,7 +39,7 @@ gitlab-runner:
   runners:
     privileged: true
 nginx-ingress:
-  install: false
+  enabled: false
 postgresql:
   existingSecret: gitlab-postgresql-password
 prometheus:
