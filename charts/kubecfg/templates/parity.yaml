@@ -14,29 +14,20 @@ spec:
       labels:
         app: parity
     spec:
-      nodeSelector:
-        kubernetes.io/hostname: rem
       containers:
       - image: parity/parity:nightly
         imagePullPolicy: Always
         args: [-d, /data, --jsonrpc-interface=all, --jsonrpc-cors=*,
               --jsonrpc-apis=safe, --no-ancient-blocks]
         name: parity
-        livenessProbe:
-          httpGet:
-            path: /api/health
-            port: 8545
-          initialDelaySeconds: 30
-          periodSeconds: 10
-          timeoutSeconds: 8
         volumeMounts:
         - mountPath: /data
           name: data
       restartPolicy: Always
       volumes:
       - name: data
-        hostPath:
-          path: /srv/nfs/pvcs/default-parity-data-pvc-aa61e42a-62bb-11e8-93f6-12895a9cb3cf
+        persistentVolumeClaim:
+          claimName: parity-data
 status: {}
 ---
 apiVersion: v1
