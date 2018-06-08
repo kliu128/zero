@@ -155,6 +155,9 @@
     serviceConfig = {
       Type = "forking";
       PrivateNetwork = true;
+
+      # mergerfs usually sets itself to -10 nice, but this causes lag so stop
+      CapabilityBoundingSet = "~CAP_SYS_NICE";
     };
     unitConfig = {
       # Implicitly adds dependency on basic.target otherwise, which creates
