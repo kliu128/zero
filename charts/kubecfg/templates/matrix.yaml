@@ -31,7 +31,7 @@ spec:
       containers:
         # Main matrix server
         - name: synapse
-          image: avhost/docker-matrix:v0.30.0
+          image: avhost/docker-matrix:v0.31.1
           ports:
             - containerPort: 8008
               name: http
