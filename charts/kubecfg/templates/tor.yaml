@@ -15,6 +15,7 @@ spec:
     spec:
       containers:
       - image: jess/tor-relay
+        command: [tor]
         args: [-f, /etc/tor/torrc]
         name: tor
         resources: {}
@@ -45,11 +46,13 @@ data:
   torrc: |
     ORPort 9001
     DirPort 9030
+    Address potatofrom.space
     ## A handle for your relay, so people don't have to refer to it by key.
     Nickname potatorelay
     ContactInfo 8792E2260F507DA00F0DB58E2160C3EB40A944EC Kevin Liu kevin@potatofrom.space
     ExitPolicy reject *:*
-    ExitPolicy reject6 *:*
+    RelayBandwidthRate 10 MBytes
+    RelayBandwidthBurst 20 MBytes
 ---
 apiVersion: v1
 kind: Service
