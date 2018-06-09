@@ -28,6 +28,8 @@ spec:
       labels:
         app: matrix
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: rem
       containers:
         # Main matrix server
         - name: synapse
