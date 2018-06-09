@@ -28,8 +28,6 @@ spec:
       labels:
         app: matrix
     spec:
-      nodeSelector:
-        kubernetes.io/hostname: rem
       containers:
         # Main matrix server
         - name: synapse
@@ -73,18 +71,6 @@ spec:
           volumeMounts:
             - name: db
               mountPath: /var/lib/postgresql/data
-        - name: skype
-          image: registry.potatofrom.space/kevin/r/matrix-puppet-skype:latest
-          ports:
-            - containerPort: 8090
-              name: skype
-          volumeMounts:
-            - name: config
-              subPath: skype-config.json
-              mountPath: /app/config.json
-            - name: config
-              subPath: skype-registration.yaml
-              mountPath: /app/skype-registration.yaml
       volumes:
         # Stores SSL keys, media_store
         - name: data
