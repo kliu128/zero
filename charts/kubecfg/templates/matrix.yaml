@@ -31,7 +31,10 @@ spec:
       containers:
         # Main matrix server
         - name: synapse
-          image: avhost/docker-matrix:v0.31.1
+          image: matrixdotorg/synapse:v0.31.1
+          env:
+            - name: SYNAPSE_CONFIG_PATH
+              value: /config/homeserver.yaml
           ports:
             - containerPort: 8008
               name: http
@@ -46,20 +49,20 @@ spec:
             timeoutSeconds: 15
           resources:
             requests:
-              cpu: 0.5
+              cpu: 1
               memory: 1Gi
           volumeMounts:
             - name: config
               subPath: homeserver.yaml
-              mountPath: /data/homeserver.yaml
+              mountPath: /config/homeserver.yaml
             - name: config
               subPath: skype-registration.yaml
-              mountPath: /data/skype-registration.yaml
+              mountPath: /config/skype-registration.yaml
             - name: config
               subPath: potatofrom.space.log.config
-              mountPath: /data/potatofrom.space.log.config
+              mountPath: /config/potatofrom.space.log.config
             - name: data
-              mountPath: /data2
+              mountPath: /data
         - name: db
           image: postgres
           ports:
