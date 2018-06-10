@@ -1,3 +1,4 @@
+image: registry.potatofrom.space/kevin/r/glitch-soc:latest
 persistence:
   size: 25Gi
 ingress:
@@ -16,6 +17,7 @@ config:
   # Note: Changing LOCAL_DOMAIN at a later time will cause unwanted side effects, including breaking all existing federation.
   # LOCAL_DOMAIN should *NOT* contain the protocol part of the domain e.g https://example.com.
   LOCAL_DOMAIN: potatofrom.space
+  MAX_TOOT_CHARS: '2147483647'
   # Changing LOCAL_HTTPS in production is no longer supported. (Mastodon will always serve https:// links)
   # Use this only if you need to run mastodon on a different domain than the one used for federation.
   # You can read more about this option on https://github.com/tootsuite/documentation/blob/master/Running-Mastodon/Serving_a_different_domain.md

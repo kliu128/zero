@@ -1,4 +1,5 @@
 image: "gargron/mastodon:v2.4.0"
+imagePullPolicy: Always
 
 ## Persistence for assets and system
 persistence:
