@@ -51,6 +51,7 @@ spec:
 {{ toYaml .Values.resources | indent 10 }}
         volumeMounts:
         - name: web-system
+          readOnly: true
           mountPath: /mastodon/public/system
       volumes:
       - name: web-system
