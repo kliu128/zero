@@ -8,6 +8,10 @@ metadata:
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
 spec:
+  strategy:
+    type: RollingUpdate
+    maxSurge: 1
+    maxUnavailable: 0
   template:
     metadata:
       labels:
@@ -18,7 +22,6 @@ spec:
         image: {{ .Values.image | quote }}
         imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
         args: ["bundle", "exec", "rails", "s", "-p", "3000", "-b", "0.0.0.0"]
-        
         envFrom:
           - secretRef:
               name: {{ template "fullname" . }}-secrets
