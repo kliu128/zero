@@ -13,6 +13,9 @@ spec:
       labels:
         app: tor
     spec:
+      hostNetwork: true
+      nodeSelector:
+        kubernetes.io/hostname: rem
       containers:
       - image: jess/tor-relay
         command: [tor]
@@ -53,21 +56,6 @@ data:
     ExitPolicy reject *:*
     RelayBandwidthRate 10 MBytes
     RelayBandwidthBurst 20 MBytes
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: tor
-spec:
-  selector:
-    app: tor
-  ports:
-  - name: or
-    targetPort: 9001
-    port: 9001
-  - name: dir
-    targetPort: 9030
-    port: 9030
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
