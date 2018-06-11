@@ -14,6 +14,7 @@
       ./common/firewall.nix
       ./common/kernel.nix
       ./common/ssh.nix
+      ./common/time.nix
       ./common/users.nix
     ];
 
