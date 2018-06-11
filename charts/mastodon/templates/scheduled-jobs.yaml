@@ -30,19 +30,9 @@ spec:
             resources:
 {{ toYaml .Values.resources | indent 14 }}
             volumeMounts:
-            - name: web-assets
-              mountPath: /mastodon/public/assets
-            - name: web-packs
-              mountPath: /mastodon/public/packs
             - name: web-system
               mountPath: /mastodon/public/system
           volumes:
-          - name: web-assets
-            persistentVolumeClaim:
-              claimName: {{ .Values.persistence.existingAssetsClaim | default (include "fullname" .) }}-web-assets
-          - name: web-packs
-            persistentVolumeClaim:
-              claimName: {{ .Values.persistence.existingPacksClaim | default (include "fullname" .) }}-web-packs
           - name: web-system
             persistentVolumeClaim:
               claimName: {{ .Values.persistence.existingSystemClaim | default (include "fullname" .) }}-web-system
