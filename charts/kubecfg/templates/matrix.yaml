@@ -45,8 +45,8 @@ spec:
               path: /_matrix/client/versions
               port: 8008
             initialDelaySeconds: 60
-            periodSeconds: 30
-            timeoutSeconds: 15
+            periodSeconds: 60
+            timeoutSeconds: 45
           resources:
             requests:
               cpu: 1
