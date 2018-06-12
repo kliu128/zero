@@ -18,6 +18,9 @@ spec:
       labels:
         app: collabora-code
     spec:
+      nodeSelector:
+        # semi-hack: lock to rem because for some reason it has ridiculous disk IO
+        kubernetes.io/hostname: rem
       containers:
       - image: collabora/code
         env:
