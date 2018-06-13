@@ -179,6 +179,10 @@
     ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="deadline"
   '';
 
+  # Sets all screens to 1024x768 for some reason (Linux 4.17.0)
+  # Avoid for now.
+  boot.kernelParams = [ "amdgpu.dc=0" ];
+
   # Reset keyboard on bootup (Pok3r)
   # Otherwise keys get dropped, for some reason
   systemd.services.keyboard-reset = {
