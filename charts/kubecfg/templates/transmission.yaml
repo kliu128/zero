@@ -24,10 +24,12 @@ spec:
             value: '100'
           - name: TRANSMISSION_RATIO_LIMIT_ENABLED
             value: 'true'
+          - name: LOCAL_NETWORK
+            value: 10.0.0.0/24
         envFrom:
           - secretRef:
               name: transmission-pia-auth
-        image: haugene/transmission-openvpn
+        image: haugene/transmission-openvpn:latest
         name: transmission
         securityContext:
           privileged: true
