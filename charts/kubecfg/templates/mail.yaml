@@ -53,13 +53,6 @@ spec:
           envFrom:
             - secretRef:
                 name: mailserver.mailgun-relayhost
-          resources:
-            requests:
-              memory: 500Mi
-              cpu: 500m
-            limits:
-              memory: 500Mi
-              cpu: 500m
           securityContext:
             capabilities:
               add:
