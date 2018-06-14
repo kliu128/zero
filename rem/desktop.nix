@@ -66,7 +66,7 @@
     # System tools
     i7z atop bcachefs-tools beets borgbackup cointop cowsay ctop dnsutils file fortune docker_compose  gnupg hdparm htop iftop iotop python python3 libva-full lm_sensors lolcat looking-glass-client lzip mpw nheko oh-my-zsh openjdk python36Packages.tvnamer rclone restic rustup screen smartmontools snapraid spectre-meltdown-checker stress-ng telnet tmux tree uptimed vim vnstat wget unar
     # Desktop applications
-    android-studio arduino atom calibre cantata chromium clementine codeblocks discord electron-cash emacs filezilla firefox gpodder hexchat jetbrains.idea-community jetbrains.pycharm-community liferea mate.atril mkvtoolnix mpv multimc pavucontrol skypeforlinux simple-scan slack thunderbird tor-browser-bundle transmission_gtk transmission_remote_gtk vlc vscode wine winetricks youtube-dl
+    android-studio arduino atom calibre cantata chromium clementine codeblocks discord electron-cash emacs filezilla firefox gpodder hexchat jetbrains.idea-community jetbrains.pycharm-community liferea mate.atril mkvtoolnix mpv multimc pavucontrol skypeforlinux simple-scan slack thunderbird tor-browser-bundle transmission_gtk transmission_remote_gtk vlc vscode wine winetricks youtube-dl zoom-us
     # KDE applications
     ark kate partition-manager spectacle
     # Development
