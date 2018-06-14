@@ -151,10 +151,6 @@
     serviceConfig = {
       Type = "forking";
       PrivateNetwork = true;
-
-      # mergerfs usually sets itself to -10 nice, but this causes lag so stop
-      CapabilityBoundingSet = "~CAP_SYS_NICE";
-      Nice = 19;
     };
     unitConfig.RequiresMountsFor = [ "/mnt/data0" "/mnt/data1" "/mnt/data2" "/mnt/data3" "/mnt/data4" ];
   };
