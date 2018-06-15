@@ -31,7 +31,7 @@ spec:
       containers:
         # Main matrix server
         - name: synapse
-          image: matrixdotorg/synapse:v0.31.1
+          image: matrixdotorg/synapse:v0.31.2
           env:
             - name: SYNAPSE_CONFIG_PATH
               value: /config/homeserver.yaml
