@@ -49,6 +49,7 @@ data:
   torrc: |
     ORPort 9001
     DirPort 9030
+    BridgeRelay 1
     Address potatofrom.space
     ## A handle for your relay, so people don't have to refer to it by key.
     Nickname potatorelay
