@@ -34,7 +34,7 @@ spec:
               containerPort: 993
           env:
             - name: ENABLE_CLAMAV
-              value: '1'
+              value: '0'
             - name: ENABLE_SPAMASSASSIN
               value: '1'
             - name: OVERRIDE_HOSTNAME

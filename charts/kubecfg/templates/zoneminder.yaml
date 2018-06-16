@@ -13,10 +13,6 @@ spec:
       labels:
         app: zoneminder
     spec:
-      nodeSelector:
-        # Requires rem for higher performance
-        # and proximity to data storage
-        kubernetes.io/hostname: rem
       containers:
         - image: quantumobject/docker-zoneminder:latest
           imagePullPolicy: IfNotPresent
