@@ -68,7 +68,7 @@
     # Desktop applications
     android-studio arduino atom calibre cantata chromium clementine codeblocks discord electron-cash emacs filezilla firefox gpodder hexchat jetbrains.idea-community jetbrains.pycharm-community liferea mate.atril mkvtoolnix mpv multimc pavucontrol skypeforlinux simple-scan slack thunderbird tor-browser-bundle transmission_gtk transmission_remote_gtk vlc vscode wine winetricks youtube-dl zoom-us
     # KDE applications
-    ark kate partition-manager spectacle
+    ark kate okular partition-manager spectacle
     # Development
     bfg-repo-cleaner gcc gdb git-crypt gitAndTools.gitFull gnumake
     # Games

@@ -173,13 +173,12 @@
   # Reduce from default 60 to improve interactivity
   boot.kernel.sysctl."vm.swappiness" = 10;
   services.udev.extraRules = ''
-    # set deadline scheduler for non-rotating disks
-    ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="deadline"
+    ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/scheduler}="kyber"
   '';
 
   # Sets all screens to 1024x768 for some reason (Linux 4.17.0)
   # Avoid for now.
-  boot.kernelParams = [ "amdgpu.dc=0" ];
+  boot.kernelParams = [ "amdgpu.dc=0" "scsi_mod.use_blk_mq=Y" ];
 
   # Reset keyboard on bootup (Pok3r)
   # Otherwise keys get dropped, for some reason
