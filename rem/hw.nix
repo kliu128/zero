@@ -175,6 +175,7 @@
   services.udev.extraRules = ''
     ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/scheduler}="kyber"
   '';
+  systemd.additionalUpstreamSystemUnits = [ "debug-shell.service" ];
 
   # Sets all screens to 1024x768 for some reason (Linux 4.17.0)
   # Avoid for now.
