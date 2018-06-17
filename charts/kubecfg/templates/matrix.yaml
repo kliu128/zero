@@ -64,7 +64,7 @@ spec:
             - name: data
               mountPath: /data
         - name: db
-          image: postgres:10
+          image: postgres:10-alpine
           ports:
             - containerPort: 5342
               name: postgres
