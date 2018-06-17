@@ -11,7 +11,7 @@
     restartIfChanged = false;
     serviceConfig.Type = "oneshot";
     serviceConfig.RemainAfterExit = true;
-    after = [ "docker.service" "docker.socket" "storage.service" "remote-fs.target" ];
+    after = [ "docker.service" "docker.socket" "local-fs.target" "nfs-server.service" "remote-fs.target" ];
     before = [ "kubelet.service" ];
     preStop = ''
       ${pkgs.docker}/bin/docker stop $(${pkgs.docker}/bin/docker ps -q)
