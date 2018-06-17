@@ -3,15 +3,20 @@
 {
   virtualisation.docker.enable = true;
   virtualisation.docker.autoPrune.enable = true;
-  # Incompatible with Docker swarm, and causes a bunch of errors on computer
-  # shutdown when enabled.
-  virtualisation.docker.liveRestore = false;
-  systemd.services.docker.restartIfChanged = false;
   systemd.services.docker.after = [ "remote-fs.target" ];
   systemd.services.docker.wants = [ "remote-fs.target" ];
-  systemd.services.docker.preStop = ''
-    ${pkgs.docker}/bin/docker stop $(${pkgs.docker}/bin/docker ps -q)
-  '';
+  systemd.services.docker.serviceConfig.CPUSchedulingPolicy = "idle";
+  systemd.services.docker-shutdown = {
+    wantedBy = [ "multi-user.target" ];
+    restartIfChanged = false;
+    serviceConfig.Type = "oneshot";
+    serviceConfig.RemainAfterExit = true;
+    after = [ "docker.service" "docker.socket" "storage.service" "remote-fs.target" ];
+    before = [ "kubelet.service" ];
+    preStop = ''
+      ${pkgs.docker}/bin/docker stop $(${pkgs.docker}/bin/docker ps -q)
+    '';
+  };
   users.extraUsers.kevin.extraGroups = [ "docker" ];
   networking.firewall.allowedTCPPorts = [ 2376 2377 7946 ];
   networking.firewall.allowedUDPPorts = [ 4789 7946 ];
