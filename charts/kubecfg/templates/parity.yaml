@@ -20,6 +20,9 @@ spec:
         args: [-d, /data, --jsonrpc-interface=all, --jsonrpc-cors=*,
               --jsonrpc-apis=safe, --no-ancient-blocks]
         name: parity
+        resources:
+          limits:
+            cpu: 500m
         volumeMounts:
         - mountPath: /data
           name: data
