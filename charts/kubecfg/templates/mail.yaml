@@ -33,6 +33,9 @@ spec:
               containerPort: 587
             - name: imap-secure
               containerPort: 993
+          resources:
+            limits:
+              cpu: 100m
           env:
             - name: ENABLE_CLAMAV
               value: '1'
