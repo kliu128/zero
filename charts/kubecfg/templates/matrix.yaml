@@ -35,6 +35,8 @@ spec:
           env:
             - name: SYNAPSE_CONFIG_PATH
               value: /config/homeserver.yaml
+            - name: SYNAPSE_CACHE_FACTOR
+              value: "0.01"
           ports:
             - containerPort: 8008
               name: http
@@ -48,9 +50,12 @@ spec:
             periodSeconds: 60
             timeoutSeconds: 45
           resources:
-            requests:
-              cpu: 1
-              memory: 1Gi
+            request:
+              memory: 750Mi
+              cpu: 500m
+            limits:
+              memory: 2Gi
+              cpu: 1000m
           volumeMounts:
             - name: config
               subPath: homeserver.yaml
