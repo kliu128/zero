@@ -55,7 +55,7 @@ spec:
               cpu: 500m
             limits:
               memory: 2Gi
-              cpu: 1000m
+              cpu: 4000m
           volumeMounts:
             - name: config
               subPath: homeserver.yaml
