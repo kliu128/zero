@@ -22,7 +22,6 @@ spec:
         name: parity
         resources:
           limits:
-            cpu: 500m
             memory: 500Mi
           resources:
             cpu: 500m
