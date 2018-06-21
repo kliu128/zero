@@ -73,6 +73,7 @@
     bfg-repo-cleaner gcc gdb git-crypt gitAndTools.gitFull gnumake
     # Games
     dolphinEmuMaster steam steam-run-native
+    dunst
     # Desktop theme
     arc-theme papirus-icon-theme libsForQt5.qtstyleplugins
     # VM and DevOps
