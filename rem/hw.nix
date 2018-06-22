@@ -151,6 +151,12 @@
     serviceConfig = {
       Type = "forking";
       PrivateNetwork = true;
+      # Implicitly adds dependency on basic.target otherwise, which creates
+      # an ordering cycle on boot
+      DefaltDependencies = false;
+      # Normally would be added by DefaultDependencies=
+      Conflicts = [ "shutdown.target" ];
+      Before = [ "shutdown.target" ];
     };
     unitConfig.RequiresMountsFor = [ "/mnt/data0" "/mnt/data1" "/mnt/data2" "/mnt/data3" "/mnt/data4" ];
   };
