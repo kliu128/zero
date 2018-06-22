@@ -29,12 +29,6 @@
     extraPackages = with pkgs; [ blueman compton conky i3lock nitrogen redshift rofi system-config-printer scrot xautolock xcape xorg.xmodmap termite udiskie ];
   };
   services.xserver.desktopManager.plasma5.enable = true;
-  # Add activation script to rebuild KDE desktop start menu
-  # see https://github.com/NixOS/nixpkgs/issues/40915
-  system.activationScripts.kbuildsycoca5 = {
-    text = "${pkgs.su}/bin/su kevin -c kbuildsycoca5";
-    deps = [];
-  };
 
   programs.gnupg.agent.enable = true;
   security.pam.services.login.enableKwallet = true;
