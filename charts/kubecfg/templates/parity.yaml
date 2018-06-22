@@ -15,14 +15,12 @@ spec:
         app: parity
     spec:
       containers:
-      - image: parity/parity:nightly
+      - image: parity/parity:beta
         imagePullPolicy: Always
         args: [-d, /data, --jsonrpc-interface=all, --jsonrpc-cors=*,
-              --jsonrpc-apis=safe, --no-ancient-blocks]
+              --jsonrpc-apis=safe]
         name: parity
         resources:
-          limits:
-            memory: 500Mi
           resources:
             cpu: 500m
             memory: 500Mi
