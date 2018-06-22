@@ -66,16 +66,15 @@
     # System tools
     i7z atop bcachefs-tools beets borgbackup cointop cowsay ctop dnsutils file fortune python36Packages.glances gnupg hdparm htop iftop iotop python python3 libva-full lm_sensors lolcat looking-glass-client lzip mpw nheko oh-my-zsh openjdk python36Packages.tvnamer rclone restic rustup screen smartmontools snapraid spectre-meltdown-checker stress-ng telnet tmux tree uptimed vim vnstat wget unar
     # Desktop applications
-    android-studio arduino atom calibre cantata chromium clementine codeblocks discord electron-cash emacs filezilla firefox gpodder hexchat jetbrains.idea-community jetbrains.pycharm-community liferea mate.atril mkvtoolnix mpv multimc pavucontrol skypeforlinux simple-scan slack thunderbird tor-browser-bundle transmission_gtk transmission_remote_gtk vlc vscode wine winetricks youtube-dl zoom-us
+    android-studio arduino atom autokey calibre cantata chromium clementine codeblocks discord electron-cash emacs filezilla firefox gpodder hexchat jetbrains.idea-community jetbrains.pycharm-community liferea mate.atril mkvtoolnix mpv pavucontrol skypeforlinux simple-scan slack thunderbird tor-browser-bundle transmission_gtk transmission_remote_gtk vlc vscode wine winetricks youtube-dl zoom-us
     # KDE applications
     ark kate okular partition-manager spectacle
     # Development
     bfg-repo-cleaner gcc gdb git-crypt gitAndTools.gitFull gnumake
     # Games
-    dolphinEmuMaster steam steam-run-native
-    dunst
+    dolphinEmuMaster multimc steam steam-run-native
     # Desktop theme
-    arc-theme papirus-icon-theme libsForQt5.qtstyleplugins
+    arc-theme dunst papirus-icon-theme libsForQt5.qtstyleplugins
     # VM and DevOps
     helmfile kubernetes-helm nixops virtmanager
   ];

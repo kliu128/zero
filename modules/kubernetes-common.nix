@@ -10,7 +10,7 @@
     verbose = true;
 
     apiserver = {
-      address = "0.0.0.0";
+      bindAddress = "0.0.0.0";
       securePort = 6443; # Conflicts with hosting on 443
       tlsCertFile = "/var/lib/kubernetes/certs/kube-apiserver.pem";
       tlsKeyFile = "/var/lib/kubernetes/certs/kube-apiserver-key.pem";
