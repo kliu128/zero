@@ -178,14 +178,13 @@
   } ];
   # Reduce from default 60 to improve interactivity
   boot.kernel.sysctl."vm.swappiness" = 10;
+  boot.kernel.sysctl."vm.dirty_ratio" = 10;
+  boot.kernel.sysctl."vm.dirty_background_ratio" = 5;
   services.udev.extraRules = ''
-    ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/scheduler}="kyber"
+    ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="deadline"
   '';
   systemd.additionalUpstreamSystemUnits = [ "debug-shell.service" ];
-
-  # Sets all screens to 1024x768 for some reason (Linux 4.17.0)
-  # Avoid for now.
-  boot.kernelParams = [ "amdgpu.dc=0" "scsi_mod.use_blk_mq=Y" ];
+  systemd.services.debug-shell.enable = true;
 
   # Reset keyboard on bootup (Pok3r)
   # Otherwise keys get dropped, for some reason
