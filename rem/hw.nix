@@ -180,11 +180,10 @@
   boot.kernel.sysctl."vm.swappiness" = 10;
   boot.kernel.sysctl."vm.dirty_ratio" = 10;
   boot.kernel.sysctl."vm.dirty_background_ratio" = 5;
+  boot.kernelParams = [ "scsi_mod.use_blk_mq=1" ];
   services.udev.extraRules = ''
-    ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="deadline"
+    ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/scheduler}="kyber"
   '';
-  systemd.additionalUpstreamSystemUnits = [ "debug-shell.service" ];
-  systemd.services.debug-shell.enable = true;
 
   # Reset keyboard on bootup (Pok3r)
   # Otherwise keys get dropped, for some reason
