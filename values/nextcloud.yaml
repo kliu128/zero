@@ -18,13 +18,13 @@ lamp:
       - custom_apps
       - config
       - data
-collabora:
+onlyoffice:
   ingress:
     enabled: true
     hosts: 
       - office.potatofrom.space
     tls:
-      - secretName: collabora-code-tls
+      - secretName: onlyoffice-tls
         hosts:
           - office.potatofrom.space
     annotations:

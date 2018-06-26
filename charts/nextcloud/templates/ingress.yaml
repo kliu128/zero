@@ -1,25 +1,23 @@
-{{- if .Values.collabora.ingress.enabled -}}
+{{- if .Values.onlyoffice.ingress.enabled -}}
 {{- $fullName := include "nextcloud.fullname" . -}}
-{{- $ingressPath := .Values.collabora.ingress.path -}}
+{{- $ingressPath := .Values.onlyoffice.ingress.path -}}
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: {{ $fullName }}-collabora-code
+  name: {{ $fullName }}-onlyoffice
   labels:
     app: {{ template "nextcloud.name" . }}
     chart: {{ template "nextcloud.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
-{{- with .Values.collabora.ingress.annotations }}
+{{- with .Values.onlyoffice.ingress.annotations }}
   annotations:
-    nginx.ingress.kubernetes.io/secure-backends: "true"
-    nginx.ingress.kubernetes.io/server-snippet: "proxy_ssl_verify off;"
 {{ toYaml . | indent 4 }}
 {{- end }}
 spec:
-{{- if .Values.collabora.ingress.tls }}
+{{- if .Values.onlyoffice.ingress.tls }}
   tls:
-  {{- range .Values.collabora.ingress.tls }}
+  {{- range .Values.onlyoffice.ingress.tls }}
     - hosts:
       {{- range .hosts }}
         - {{ . }}
@@ -28,13 +26,13 @@ spec:
   {{- end }}
 {{- end }}
   rules:
-  {{- range .Values.collabora.ingress.hosts }}
+  {{- range .Values.onlyoffice.ingress.hosts }}
     - host: {{ . }}
       http:
         paths:
           - path: {{ $ingressPath }}
             backend:
-              serviceName: {{ $fullName }}-collabora-code
+              serviceName: {{ $fullName }}-onlyoffice
               servicePort: http
   {{- end }}
 {{- end }}

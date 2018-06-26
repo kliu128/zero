@@ -2,7 +2,7 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: {{ $fullName }}-collabora-code
+  name: {{ $fullName }}-onlyoffice
   labels:
     app: {{ template "nextcloud.name" . }}
     chart: {{ template "nextcloud.chart" . }}
@@ -14,31 +14,29 @@ spec:
     type: Recreate
   template:
     metadata:
-      creationTimestamp: null
       labels:
-        app: collabora-code
+        app: {{ template "nextcloud.name" . }}-onlyoffice
     spec:
-      nodeSelector:
-        # semi-hack: lock to rem because for some reason it has ridiculous disk IO
-        kubernetes.io/hostname: rem
       containers:
-      - image: collabora/code
-        env:
-          - name: domain
-            value: {{ .Values.lamp.ingress.domain | replace "." "\\." | quote }}
-        name: code
-        securityContext:
-          capabilities:
-            add:
-              - MKNOD
-        resources: {}
+      - image: onlyoffice/documentserver:latest
+        name: onlyoffice
+        # OnlyOffice requires STDIN and TTY attached—see
+        # https://github.com/ONLYOFFICE/Docker-DocumentServer/issues/63
+        stdin: true
+        tty: true
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 60
+          periodSeconds: 3
       restartPolicy: Always
 status: {}
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ $fullName }}-collabora-code
+  name: {{ $fullName }}-onlyoffice
   labels:
     app: {{ template "nextcloud.name" . }}
     chart: {{ template "nextcloud.chart" . }}
@@ -47,7 +45,7 @@ metadata:
 spec:
   ports:
   - name: http
-    port: 9980
-    targetPort: 9980
+    port: 80
+    targetPort: 80
   selector:
-    app: collabora-code
+    app: {{ template "nextcloud.name" . }}-onlyoffice
