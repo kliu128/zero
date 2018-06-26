@@ -33,8 +33,6 @@ gitlab:
       repository: registry.gitlab.com/gitlab-org/build/cng/gitlab-unicorn-ce
     minReplicas: 1
 gitlab-runner:
-  rbac:
-    create: true
   runners:
     privileged: true
 nginx-ingress:
