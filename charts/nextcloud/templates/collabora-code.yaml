@@ -4,7 +4,7 @@ kind: Deployment
 metadata:
   name: {{ $fullName }}-collabora-code
   labels:
-    app: {{ template "nextcloud.name" . }}
+    app: {{ template "nextcloud.name" . }}-collabora-code
     chart: {{ template "nextcloud.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
@@ -16,11 +16,8 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        app: collabora-code
+        app: {{ template "nextcloud.name" . }}-collabora-code
     spec:
-      nodeSelector:
-        # semi-hack: lock to rem because for some reason it has ridiculous disk IO
-        kubernetes.io/hostname: rem
       containers:
       - image: collabora/code
         env:
@@ -31,7 +28,13 @@ spec:
           capabilities:
             add:
               - MKNOD
-        resources: {}
+        resources:
+          requests:
+            cpu: 200m
+            memory: 500Mi
+          limits:
+            cpu: 2000m
+            memory: 2Gi
       restartPolicy: Always
 status: {}
 ---
@@ -50,4 +53,4 @@ spec:
     port: 9980
     targetPort: 9980
   selector:
-    app: collabora-code
+    app: {{ template "nextcloud.name" . }}-collabora-code
