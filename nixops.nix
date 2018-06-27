@@ -54,6 +54,7 @@
         ./rem/backups.nix
         ./rem/desktop.nix
         ./rem/hw.nix
+        ./rem/ipv6-tunnel.nix
         ./rem/kindle.nix
         ./rem/nfs.nix
         ./rem/nix.nix
