@@ -18,7 +18,7 @@ spec:
       - image: parity/parity:beta
         imagePullPolicy: Always
         args: [-d, /data, --jsonrpc-interface=all, --jsonrpc-cors=*,
-              --jsonrpc-apis=safe]
+              --jsonrpc-apis=safe, --no-ancient-blocks]
         name: parity
         resources:
           resources:
