@@ -6,7 +6,7 @@
   programs.zsh.enable = true;
   programs.zsh.ohMyZsh = {
     enable = true;
-    theme = "blinks";
+    theme = "agnoster";
     plugins = [ "tmux" "git" ];
   };
   programs.zsh.interactiveShellInit = ''
