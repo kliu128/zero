@@ -5,7 +5,6 @@
   virtualisation.docker.autoPrune.enable = true;
   systemd.services.docker.after = [ "remote-fs.target" ];
   systemd.services.docker.wants = [ "remote-fs.target" ];
-  systemd.services.docker.serviceConfig.CPUSchedulingPolicy = "idle";
   systemd.services.docker-shutdown = {
     wantedBy = [ "multi-user.target" ];
     restartIfChanged = false;
