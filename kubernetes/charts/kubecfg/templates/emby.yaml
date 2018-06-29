@@ -1,0 +1,106 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: emby
+  name: emby
+spec:
+  selector:
+    matchLabels:
+      app: emby
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: emby
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: rem
+      containers:
+        - image: nvllsvm/emby-unlocked:latest
+          env:
+            - name: PGID
+              value: "100"
+            - name: PUID
+              value: "1000"
+          name: emby
+          ports:
+            - containerPort: 8096
+              name: http
+          resources: {}
+          livenessProbe:
+            httpGet:
+              path: /web/index.html
+              port: 8096
+            initialDelaySeconds: 60
+            periodSeconds: 3
+          volumeMounts:
+          - mountPath: /data/tv-shows
+            name: tv
+            readOnly: true
+          - mountPath: /data/movies
+            name: movies
+            readOnly: true
+          - mountPath: /config
+            name: config
+      restartPolicy: Always
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: emby-config
+        - name: tv
+          hostPath:
+            path: /mnt/storage/Kevin/Videos/TV Shows
+            type: Directory
+        - name: movies
+          hostPath:
+            path: /mnt/storage/Kevin/Videos/Movies
+            type: Directory
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: emby
+  name: emby
+spec:
+  ports:
+  - name: http
+    port: 8096
+    targetPort: http
+  selector:
+    app: emby
+---
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    app: emby
+  name: emby-config
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+status: {}
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/tls-acme: 'true'
+  name: emby
+spec:
+  tls:
+    - secretName: emby-tls
+      hosts:
+        - media.potatofrom.space
+  rules:
+  - host: media.potatofrom.space
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: emby
+          servicePort: 8096

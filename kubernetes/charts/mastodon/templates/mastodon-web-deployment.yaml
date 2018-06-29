@@ -1,0 +1,62 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "fullname" . }}-web
+  labels:
+    app: {{ template "fullname" . }}-web
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  strategy:
+    type: RollingUpdate
+    maxSurge: 1
+    maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: {{ template "fullname" . }}-web
+    spec:
+      containers:
+      - name: {{ template "fullname" . }}-web
+        image: {{ .Values.image | quote }}
+        imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
+        args: ["bundle", "exec", "rails", "s", "-p", "3000", "-b", "0.0.0.0"]
+        envFrom:
+          - secretRef:
+              name: {{ template "fullname" . }}-secrets
+          - configMapRef:
+              name: {{ template "fullname" . }}-config
+        ports:
+        - name: web
+          containerPort: 3000
+        livenessProbe:
+          httpGet:
+            path: /about
+            port: web
+            httpHeaders:
+            - name: X-Forwarded-Proto
+              value: "https"
+          initialDelaySeconds: 60
+          periodSeconds: 10
+          timeoutSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /about
+            port: web
+            httpHeaders:
+            - name: X-Forwarded-Proto
+              value: "https"
+          initialDelaySeconds: 3
+          periodSeconds: 10
+          timeoutSeconds: 5
+        resources:
+{{ toYaml .Values.resources | indent 10 }}
+        volumeMounts:
+        - name: web-system
+          mountPath: /mastodon/public/system
+      volumes:
+      - name: web-system
+        persistentVolumeClaim:
+          claimName: {{ .Values.persistence.existingSystemClaim | default (include "fullname" .) }}-web-system
+

@@ -1,0 +1,13 @@
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-prod
+  namespace: kube-system
+spec:
+  acme:
+    server: https://acme-v02.api.letsencrypt.org/directory
+    email: kevin@potatofrom.space
+    privateKeySecretRef:
+      name: letsencrypt-prod
+    # Enable the HTTP-01 challenge provider
+    http01: {}

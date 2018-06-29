@@ -1,0 +1,23 @@
+controller:
+  nodeSelector:
+    kubernetes.io/hostname: rem
+  hostNetwork: true
+  config:
+    # HACK: GitLab registry push fails over HTTP/2. Can't disable it for only
+    # one ingress, so we have to disable it globally.
+    # See https://gitlab.com/charts/gitlab/merge_requests/150
+    use-http2: "false"
+    server-tokens: "false"
+    hsts: "true"
+    hsts-include-subdomains: "true"
+    hsts-max-age: "31557600"
+    hsts-preload: "true"
+rbac:
+  create: true
+tcp:
+  22: default/gitlab-gitlab-shell:22
+  631: default/cups:631
+  8448: default/matrix:8448
+  8545: default/parity:8545
+  9001: default/tor:9001
+  9030: default/tor:9030

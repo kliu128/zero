@@ -1,0 +1,36 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "fullname" . }}-sidekiq
+  labels:
+    app: {{ template "fullname" . }}-sidekiq
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: {{ template "fullname" . }}-sidekiq
+    spec:
+      containers:
+      - name: {{ template "fullname" . }}-sidekiq
+        image: {{ .Values.image | quote }}
+        imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
+        args: ["bundle", "exec", "sidekiq", "-q", "default", "-q", "mailers", "-q", "pull", "-q", "push"]
+        envFrom:
+          - secretRef:
+              name: {{ template "fullname" . }}-secrets
+          - configMapRef:
+              name: {{ template "fullname" . }}-config
+        resources:
+{{ toYaml .Values.resources | indent 10 }}
+        volumeMounts:
+        - name: web-system
+          mountPath: /mastodon/public/system
+      volumes:
+      - name: web-system
+        persistentVolumeClaim:
+          claimName: {{ .Values.persistence.existingSystemClaim | default (include "fullname" .) }}-web-system

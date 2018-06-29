@@ -1,0 +1,64 @@
+repositories:
+  - name: stable
+    url: https://kubernetes-charts.storage.googleapis.com
+  - name: coreos
+    url: https://s3-eu-west-1.amazonaws.com/coreos-charts/stable/
+
+releases:
+  - name: nginx-ingress
+    namespace: kube-system
+    chart: stable/nginx-ingress
+    version: ^0.19.2
+    values:
+      - ./values/nginx-ingress.yaml
+  - name: nfs-client-provisioner
+    namespace: kube-system
+    chart: ./charts/nfs-client-provisioner
+  - name: cert-manager
+    namespace: kube-system
+    chart: stable/cert-manager
+    version: ^0.2.10
+    values:
+      - ./values/cert-manager.yaml
+  - name: prometheus-operator
+    namespace: monitoring
+    chart: coreos/prometheus-operator
+    values:
+      - ./values/prometheus-operator.yaml
+  - name: kube-prometheus
+    namespace: monitoring
+    chart: coreos/kube-prometheus
+    values:
+      - ./values/kube-prometheus.yaml
+      - ./values/kube-prometheus.secret.yaml
+  - name: gitlab
+    namespace: default
+    chart: ./charts/gitlab
+    values:
+      - ./values/gitlab.yaml
+      - ./values/gitlab.secret.yaml
+  - name: mastodon
+    namespace: default
+    chart: ./charts/mastodon
+    values:
+      - ./values/mastodon.yaml
+      - ./values/mastodon.secret.yaml
+  - name: nextcloud
+    namespace: default
+    chart: ./charts/nextcloud
+    values:
+      - ./values/nextcloud.yaml
+      - ./values/nextcloud.secret.yaml
+  - name: wordpress
+    namespace: default
+    chart: stable/wordpress
+    version: ^1.0.7
+    values:
+      - ./values/wordpress.yaml
+      - ./values/wordpress.secret.yaml
+  - name: kubecfg
+    namespace: default
+    chart: ./charts/kubecfg
+    values:
+      - ./values/kubecfg.yaml
+      - ./values/kubecfg.secret.yaml

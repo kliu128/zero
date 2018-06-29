@@ -1,0 +1,78 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: cups
+  name: cups
+spec:
+  selector:
+    matchLabels:
+      app: cups
+  template:
+    metadata:
+      labels:
+        app: cups
+    spec:
+      containers:
+      - image: registry.potatofrom.space/kevin/r/cups:latest
+        name: cups
+        env:
+          - name: CUPSADMIN
+            value: kevin
+        envFrom:
+          - secretRef:
+              name: cups-password
+        resources:
+          limits:
+            memory: 100Mi
+            cpu: 1000m
+          requests:
+            memory: 10Mi
+            cpu: 50m
+        volumeMounts:
+        - mountPath: /config
+          name: config
+      restartPolicy: Always
+      volumes:
+      - name: config
+        persistentVolumeClaim:
+          claimName: cups-config
+status: {}
+---
+kind: Secret
+apiVersion: v1
+metadata:
+  name: cups-password
+  labels:
+    app: cups
+type: Opaque
+stringData:
+  CUPSPASSWORD: {{ .Values.cups.password }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: cups
+  name: cups
+spec:
+  ports:
+  - name: http
+    port: 631
+    targetPort: 631
+  selector:
+    app: cups
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    app: cups
+  name: cups-config
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+status: {}

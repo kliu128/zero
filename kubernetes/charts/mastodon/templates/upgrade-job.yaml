@@ -1,0 +1,26 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  # Unique key of the Job instance
+  name: {{ template "jobname" . }}
+  labels:
+    app: {{ template "fullname" . }}
+    heritage: {{.Release.Service | quote }}
+    release: {{.Release.Name | quote }}
+    chart: "{{.Chart.Name}}-{{.Chart.Version}}"
+spec:
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+      - name: {{ template "fullname" . }}-upgrade
+        image: {{ .Values.image | quote }}
+        imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
+        command: [bundle, exec, rails, 'db:migrate']
+        envFrom:
+          - secretRef:
+              name: {{ template "fullname" . }}-secrets
+          - configMapRef:
+              name: {{ template "fullname" . }}-config
+        resources:
+{{ toYaml .Values.resources | indent 10 }}

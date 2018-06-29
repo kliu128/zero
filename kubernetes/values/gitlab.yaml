@@ -1,0 +1,43 @@
+global:
+  hosts:
+    domain: potatofrom.space
+  ingress:
+    class: ''
+  smtp:
+    enabled: true
+    address: potatofrom.space
+    port: 587
+    user_name: gitlab@potatofrom.space
+    password:
+      secret: gitlab-smtp
+      key: password
+    starttls_auto: true
+    openssl_verify_mode: none
+  email:
+    from: gitlab@potatofrom.space
+  time_zone: America/New_York
+certmanager:
+  install: false
+certmanager-issuer:
+  email: kevin@potatofrom.space
+gitlab:
+  # Use Community Edition
+  migrations:
+    image:
+      repository: registry.gitlab.com/gitlab-org/build/cng/gitlab-rails-ce
+  sidekiq:
+    image:
+      repository: registry.gitlab.com/gitlab-org/build/cng/gitlab-sidekiq-ce
+  unicorn:
+    image:
+      repository: registry.gitlab.com/gitlab-org/build/cng/gitlab-unicorn-ce
+    minReplicas: 1
+gitlab-runner:
+  runners:
+    privileged: true
+nginx-ingress:
+  enabled: false
+postgresql:
+  existingSecret: gitlab-postgresql-password
+prometheus:
+  install: false

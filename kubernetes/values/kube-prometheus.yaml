@@ -1,0 +1,48 @@
+alertmanager:
+  ingress:
+    enabled: true
+    annotations:
+      # type of authentication
+      nginx.ingress.kubernetes.io/auth-type: basic
+      # name of the secret that contains the user/password definitions
+      nginx.ingress.kubernetes.io/auth-secret: alertmanager-auth
+      # message to display with an appropriate context why the authentication is required
+      nginx.ingress.kubernetes.io/auth-realm: "Authentication Required - AlertManager"
+      kubernetes.io/tls-acme: 'true'
+    hosts:
+      - alertmanager.potatofrom.space
+    tls:
+      - secretName: alertmanager-tls
+        hosts:
+          - alertmanager.potatofrom.space
+grafana:
+  auth:
+    anonymous:
+      enabled: false
+  storageSpec:
+    class: ""
+    accessMode: ReadWriteOnce
+    resources:
+      requests:
+        storage: 1Gi
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/tls-acme: 'true'
+    hosts:
+      - stats.potatofrom.space
+    tls:
+      - secretName: grafana-tls
+        hosts:
+          - stats.potatofrom.space
+prometheus:
+  nodeSelector:
+    kubernetes.io/hostname: rem
+  storageSpec:
+    volumeClaimTemplate:
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 50Gi
+      selector: {}

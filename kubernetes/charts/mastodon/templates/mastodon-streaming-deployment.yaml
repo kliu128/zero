@@ -1,0 +1,35 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "fullname" . }}-streaming
+  labels:
+    app: {{ template "fullname" . }}-streaming
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  strategy:
+    type: RollingUpdate
+    maxSurge: 1
+    maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: {{ template "fullname" . }}-streaming
+    spec:
+      containers:
+      - name: {{ template "fullname" . }}-streaming
+        image: {{ .Values.image | quote }}
+        imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
+        args: ["npm", "run", "start"]
+        
+        envFrom:
+          - secretRef:
+              name: {{ template "fullname" . }}-secrets
+          - configMapRef:
+              name: {{ template "fullname" . }}-config
+        ports:
+        - name: streaming
+          containerPort: 4000
+        resources:
+{{ toYaml .Values.resources | indent 10 }}

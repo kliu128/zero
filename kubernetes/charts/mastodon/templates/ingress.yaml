@@ -1,0 +1,37 @@
+{{- if .Values.ingress.enabled }}
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ template "fullname" . }}-ingress
+  annotations:
+    kubernetes.io/tls-acme: "true"
+spec:
+  {{- if .Values.ingress.tls }}
+  tls:
+  - hosts:
+    {{- if .Values.config.WEB_DOMAIN }}
+    - {{ .Values.config.WEB_DOMAIN | quote }}
+    {{- end }}
+    - {{ .Values.config.LOCAL_DOMAIN | quote }}
+    secretName: {{ template "fullname" . }}-web
+  {{- end }}
+  rules:
+  - host: {{ .Values.config.WEB_DOMAIN | default .Values.config.LOCAL_DOMAIN | quote }}
+    http:
+      paths:
+      - path: /api/v1/streaming
+        backend:
+          serviceName: {{ template "fullname" . }}-streaming
+          servicePort: streaming
+      - path: /
+        backend:
+          serviceName: {{ template "fullname" . }}-web
+          servicePort: web
+  - host: {{ required "config.LOCAL_DOMAIN must be set for ingress" .Values.config.LOCAL_DOMAIN | quote }}
+    http:
+      paths:
+      - path: /.well-known/host-meta
+        backend:
+          serviceName: {{ template "fullname" . }}-web
+          servicePort: web
+{{- end }}

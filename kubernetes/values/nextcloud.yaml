@@ -1,0 +1,31 @@
+lamp:
+  ingress:
+    enabled: true
+    domain: cloud.potatofrom.space
+    ssl: true
+    annotations:
+      kubernetes.io/tls-acme: 'true'
+  mysql:
+    repository: mariadb
+    tag: 10.3
+    sockets: false
+    user: nextcloud
+    database: nextcloud
+  php:
+    repository: nextcloud
+    tag: 13.0.2-fpm
+    persistentSubpaths:
+      - custom_apps
+      - config
+      - data
+collabora:
+  ingress:
+    enabled: true
+    hosts: 
+      - office.potatofrom.space
+    tls:
+      - secretName: collabora-code-tls
+        hosts:
+          - office.potatofrom.space
+    annotations:
+      kubernetes.io/tls-acme: 'true'

@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: red-discord-bot
+  name: red-discord-bot
+spec:
+  selector:
+    matchLabels:
+      app: red-discord-bot
+  template:
+    metadata:
+      labels:
+        app: red-discord-bot
+    spec:
+      containers:
+        - image: pejter/red-discordbot:latest
+          name: red-discord-bot
+          resources: {}
+          volumeMounts:
+            - mountPath: /app/data
+              name: data
+              subPath: data
+            - mountPath: /app/cogs
+              name: data
+              subPath: cogs
+      restartPolicy: Always
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: red-discord-bot-data
+status: {}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    app: red-discord-bot
+  name: red-discord-bot-data
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+status: {}

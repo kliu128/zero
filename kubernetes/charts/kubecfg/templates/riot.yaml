@@ -1,0 +1,96 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: riot
+spec:
+  selector:
+    app: riot
+  ports:
+  - name: http
+    targetPort: 80
+    port: 80
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: riot
+spec:
+  template:
+    metadata:
+      labels:
+        app: riot
+    spec:
+      containers:
+        - image: avhost/docker-matrix-riot
+          name: riot-web
+          resources: {}
+          volumeMounts:
+          - mountPath: /data
+            name: config
+      restartPolicy: Always
+      volumes:
+        - name: config
+          configMap:
+            name: riot-config
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: riot-config
+  labels:
+    app: riot
+data:
+  riot.im.conf: |
+    -p 80
+    -A 0.0.0.0
+  config.json: |
+    {
+        "default_hs_url": "https://potatofrom.space",
+        "default_is_url": "https://vector.im",
+        "disable_custom_urls": false,
+        "disable_guests": false,
+        "disable_login_language_selector": false,
+        "disable_3pid_login": false,
+        "brand": "Potatoriot",
+        "integrations_ui_url": "https://dimension.potatofrom.space/riot",
+        "integrations_rest_url": "https://dimension.potatofrom.space/api/v1/scalar",
+        "integrations_widgets_urls": ["https://dimension.potatofrom.space/widgets"],
+        "bug_report_endpoint_url": "https://riot.im/bugreports/submit",
+        "features": {
+            "feature_groups": "labs",
+            "feature_pinning": "labs"
+        },
+        "default_federate": true,
+        "welcomePageUrl": "home.html",
+        "default_theme": "status",
+        "roomDirectory": {
+            "servers": [
+                "potatofrom.space",
+                "matrix.org"
+            ]
+        },
+        "welcomeUserId": "@riot-bot:matrix.org",
+        "enable_presence_by_hs_url": {
+            "https://matrix.org": false
+        }
+    }
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/tls-acme: 'true'
+  name: riot
+spec:
+  tls:
+    - secretName: riot-tls
+      hosts:
+        - riot.potatofrom.space
+  rules:
+  - host: riot.potatofrom.space
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: riot
+          servicePort: 80

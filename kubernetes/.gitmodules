@@ -1,0 +1,4 @@
+[submodule "charts/gitlab"]
+	path = charts/gitlab
+	url = https://gitlab.com/charts/gitlab.git
+	ignore = dirty

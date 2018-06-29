@@ -1,0 +1,86 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: transmission
+  name: transmission
+spec:
+  selector:
+    matchLabels:
+      app: transmission
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: transmission
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: rem
+      containers:
+      - env:
+          - name: PUID
+            value: '1000'
+          - name: PGID
+            value: '100'
+          - name: TRANSMISSION_RATIO_LIMIT_ENABLED
+            value: 'true'
+          - name: LOCAL_NETWORK
+            value: 10.0.0.0/24
+        envFrom:
+          - secretRef:
+              name: transmission-pia-auth
+        image: haugene/transmission-openvpn:latest
+        name: transmission
+        securityContext:
+          privileged: true
+        resources: {}
+        volumeMounts:
+        - mountPath: /data
+          name: files
+      restartPolicy: Always
+      volumes:
+      - name: files
+        hostPath:
+          path: /mnt/storage/Kevin/Incoming
+          type: Directory
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: transmission
+  name: transmission
+spec:
+  ports:
+  - name: http
+    port: 9091
+    targetPort: 9091
+  selector:
+    app: transmission
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    # type of authentication
+    nginx.ingress.kubernetes.io/auth-type: basic
+    # name of the secret that contains the user/password definitions
+    nginx.ingress.kubernetes.io/auth-secret: transmission-auth
+    # message to display with an appropriate context why the authentication is required
+    nginx.ingress.kubernetes.io/auth-realm: "Authentication Required - transmission"
+    kubernetes.io/tls-acme: 'true'
+  name: transmission
+spec:
+  tls:
+    - secretName: transmission-tls
+      hosts:
+        - transmission.potatofrom.space
+  rules:
+  - host: transmission.potatofrom.space
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: transmission
+          servicePort: 9091
