@@ -31,4 +31,13 @@
   '';
   # Allow kevin to manage libvirt
   users.extraUsers.kevin.extraGroups = [ "libvirtd" ];
+
+  programs.zsh.interactiveShellInit = ''
+    vm-start() {
+      touch /dev/shm/looking-glass || true
+      chown kevin:libvirtd /dev/shm/looking-glass
+      chmod 660 /dev/shm/looking-glass
+      sudo virsh start Windows
+    }
+  '';
 }
