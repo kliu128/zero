@@ -64,7 +64,7 @@
     # KDE applications
     ark kate okular partition-manager spectacle
     # Development
-    bfg-repo-cleaner gcc gdb git-crypt gitAndTools.gitFull gnumake
+    bfg-repo-cleaner gcc gdb git-crypt gitAndTools.gitFull gnumake google-cloud-sdk
     # Games
     dolphinEmuMaster multimc steam steam-run-native
     # Desktop theme
