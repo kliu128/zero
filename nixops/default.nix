@@ -94,9 +94,11 @@ let credentials = {
       # Reduced set of imports
       imports = [
         ./common/earlyoom.nix
+        ./common/firewall.nix
         ./common/kernel.nix
         ./common/time.nix
       ];
+      networking.firewall.allowedTCPPorts = [ 22 ];
       
       deployment.targetEnv = "gce";
       deployment.gce = credentials // {
@@ -105,7 +107,6 @@ let credentials = {
         region = "us-east1-b";
         ipAddress = resources.gceStaticIPs.puck-ip;
       };
-
 
       # This value determines the NixOS release with which your system is to be
       # compatible, in order to avoid breaking some software such as database
