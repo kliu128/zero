@@ -1,0 +1,4 @@
+[submodule "kubernetes/charts/gitlab"]
+	path = kubernetes/charts/gitlab
+	url = https://gitlab.com/charts/gitlab.git
+	ignore = dirty
