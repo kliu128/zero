@@ -3,7 +3,6 @@
 {
   # Configure NixOS/nix
   nix.autoOptimiseStore = true;
-  nix.useSandbox = true;
   nix.nixPath = [ "nixpkgs=/etc/nixos/nixpkgs" "nixos-config=/etc/nixos/configuration.nix" ];
   nix.buildCores = 0; # use all available CPU cores
   nix.maxJobs = lib.mkDefault 8;

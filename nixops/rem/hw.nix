@@ -178,8 +178,8 @@
   } ];
   # Reduce from default 60 to improve interactivity
   boot.kernel.sysctl."vm.swappiness" = 10;
-  boot.kernel.sysctl."vm.dirty_ratio" = 10;
-  boot.kernel.sysctl."vm.dirty_background_ratio" = 5;
+  boot.kernel.sysctl."vm.dirty_ratio" = 2;
+  boot.kernel.sysctl."vm.dirty_background_ratio" = 1;
   boot.kernelParams = [ "scsi_mod.use_blk_mq=1" ];
   services.udev.extraRules = ''
     ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/scheduler}="kyber"
