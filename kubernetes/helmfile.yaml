@@ -49,13 +49,6 @@ releases:
     values:
       - ./values/nextcloud.yaml
       - ./values/nextcloud.secret.yaml
-  - name: wordpress
-    namespace: default
-    chart: stable/wordpress
-    version: ^1.0.7
-    values:
-      - ./values/wordpress.yaml
-      - ./values/wordpress.secret.yaml
   - name: kubecfg
     namespace: default
     chart: ./charts/kubecfg
