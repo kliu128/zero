@@ -19,7 +19,8 @@ spec:
         app: {{ template "nextcloud.name" . }}-collabora-code
     spec:
       containers:
-      - image: collabora/code
+      - image: libreoffice/online:master
+        imagePullPolicy: Always
         env:
           - name: domain
             value: {{ .Values.lamp.ingress.domain | replace "." "\\." | quote }}
