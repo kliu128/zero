@@ -61,6 +61,7 @@
     };
     flannel.enable = true;
     addons.dashboard.enable = true;
+    addons.dashboard.rbac.enable = true;
     addons.dns.enable = true;
   };
   networking.firewall.allowedTCPPorts = [
