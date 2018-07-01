@@ -171,7 +171,6 @@
   boot.initrd.luks.devices."root".allowDiscards = true;
   services.fstrim.enable = true;
   boot.cleanTmpDir = true;
-  boot.tmpOnTmpfs = true;
   swapDevices = [ {
     device = "/swap";
     size = 4096;
