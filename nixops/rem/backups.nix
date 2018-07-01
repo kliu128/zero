@@ -156,7 +156,7 @@
   environment.etc."snapraid.conf" = {
     text = ''
       block_size 256
-      autosave 5
+      autosave 1000
       content /mnt/data0/snapraid.content
       content /mnt/data1/snapraid.content
       content /mnt/data2/snapraid.content
