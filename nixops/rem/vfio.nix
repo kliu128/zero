@@ -21,7 +21,7 @@
     namespaces = []
     user = "kevin"
     cgroup_device_acl = [
-      "/dev/input/by-id/usb-Logitech_USB_Receiver-event-mouse",
+      "/dev/input/by-id/usb-Logitech_USB_Receiver-if02-event-mouse",
       "/dev/input/by-id/usb-04d9_USB_Keyboard-event-kbd",
       "/dev/null", "/dev/full", "/dev/zero",
       "/dev/random", "/dev/urandom",
