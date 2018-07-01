@@ -3,8 +3,16 @@
 {
   virtualisation.docker.enable = true;
   virtualisation.docker.autoPrune.enable = true;
-  systemd.services.docker.after = [ "remote-fs.target" ];
-  systemd.services.docker.wants = [ "remote-fs.target" ];
+  systemd.services.docker = {
+    after = [ "remote-fs.target" ];
+    wants = [ "remote-fs.target" ];
+    serviceConfig = {
+      # First send SIGTERM to Docker, then SIGKILL to anything remaining
+      KillMode = "mixed";
+    };
+    # Do not restart - restarting kills cgroup
+    restartIfChanged = false;
+  };
   systemd.services.docker-shutdown = {
     wantedBy = [ "multi-user.target" ];
     restartIfChanged = false;
