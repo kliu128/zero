@@ -21,6 +21,9 @@ certmanager:
 certmanager-issuer:
   email: kevin@potatofrom.space
 gitlab:
+  gitlab-shell:
+    minReplicas: 1
+    maxUnavailable: 0
   # Use Community Edition
   migrations:
     image:
@@ -32,6 +35,7 @@ gitlab:
     image:
       repository: registry.gitlab.com/gitlab-org/build/cng/gitlab-unicorn-ce
     minReplicas: 1
+    maxUnavailable: 0
 gitlab-runner:
   runners:
     privileged: true
