@@ -60,20 +60,6 @@ spec:
           type: Directory
 status: {}
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    app: dl
-  name: dl
-spec:
-  ports:
-  - name: http
-    port: 80
-    targetPort: 80
-  selector:
-    app: dl
----
 kind: ConfigMap
 apiVersion: v1
 metadata:
@@ -81,10 +67,16 @@ metadata:
   labels:
     app: dl
 data:
-  # Enable autoindex
-  custom.conf:
+  custom.conf: |
+    # Allow for file indexing
     autoindex on;
+    # Anonymity - disable nginx version
     server_tokens off;
+    # Allow on localhost only
+    # which is where tor connects from
+    allow 127.0.0.1;
+    deny all;
+    
 ---
 kind: ConfigMap
 apiVersion: v1
