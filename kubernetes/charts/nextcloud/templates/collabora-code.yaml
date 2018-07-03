@@ -18,6 +18,8 @@ spec:
       labels:
         app: {{ template "nextcloud.name" . }}-collabora-code
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: rem
       containers:
       - image: collabora/code
         env:
@@ -28,14 +30,6 @@ spec:
           capabilities:
             add:
               - MKNOD
-        resources:
-          requests:
-            cpu: 200m
-            memory: 500Mi
-          limits:
-            cpu: 2000m
-            memory: 2Gi
-      restartPolicy: Always
 status: {}
 ---
 apiVersion: v1
