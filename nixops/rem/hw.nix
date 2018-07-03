@@ -12,7 +12,8 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.initrd.availableKernelModules = [ "ehci_pci" "ahci" "xhci_pci" "usb_storage" "usbhid" "sd_mod" "sr_mod" ];
   boot.kernelModules = [ "kvm-intel" ];
-  boot.supportedFilesystems = [ "btrfs" "ext4" ];
+  # exfat support for Nintendo Switch / other SD cards
+  boot.supportedFilesystems = [ "btrfs" "ext4" "exfat" ];
   boot.earlyVconsoleSetup = true;
 
   # Freeness (that is, not.)
