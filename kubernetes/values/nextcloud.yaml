@@ -13,7 +13,7 @@ lamp:
     database: nextcloud
   php:
     repository: nextcloud
-    tag: 13.0.2-fpm
+    tag: fpm
     persistentSubpaths:
       - custom_apps
       - config
