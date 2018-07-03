@@ -88,12 +88,6 @@
   '';
 
   nixpkgs.config.packageOverrides = pkgs: rec {
-    dolphinEmuMaster = pkgs.dolphinEmuMaster.override {
-      # Use Cool and New Qt GUI instead of WX
-      # https://dolphin-emu.org/blog/2018/05/02/legend-dolphin-lens-between-worlds/
-      dolphin-wxgui = false;
-      dolphin-qtgui = true;
-    };
     factorio = pkgs.factorio.override {
       username = "Pneumaticat";
       password = builtins.readFile ./secrets/factorio-password.txt;
