@@ -62,7 +62,7 @@
     # Desktop applications
     android-studio arduino atom calibre cantata chromium clementine codeblocks discord electron-cash emacs filezilla firebird-emu firefox gpodder hexchat jetbrains.idea-community jetbrains.pycharm-community liferea mate.atril mkvtoolnix mpv pavucontrol skypeforlinux simple-scan slack thunderbird tor-browser-bundle transmission_gtk transmission_remote_gtk vlc vscode wine winetricks youtube-dl zoom-us
     # Desktop tools
-    autokey barrier
+    appimage-run autokey barrier
     # KDE applications
     ark kate okular partition-manager spectacle
     # Development
