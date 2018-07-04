@@ -15,5 +15,6 @@
       done
     '';
     serviceConfig.CPUQuota = "5%";
+    serviceConfig.CPUSchedulingPolicy = "idle";
   };
 }
