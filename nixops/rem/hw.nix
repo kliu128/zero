@@ -146,7 +146,7 @@
     path = [ pkgs.mergerfs ];
     restartIfChanged = false; # don't want the filesystem falling out from under processes
     script = ''
-      mergerfs -o defaults,allow_other,use_ino,moveonenospc=true,fsname=storage,minfreespace=50G /mnt/data\* /mnt/storage
+      mergerfs -o defaults,allow_other,use_ino,moveonenospc=true,fsname=storage,minfreespace=50G,nonempty /mnt/data\* /mnt/storage
     '';
     wantedBy = [ "local-fs.target" ];
     serviceConfig = {
