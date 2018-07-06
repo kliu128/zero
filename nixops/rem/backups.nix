@@ -126,7 +126,8 @@
 
   # Backup hosting for Scintillating
   services.borgbackup.repos.scintillating = {
-    authorizedKeys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBQDtQx7AWGKLgSK2TE1nIus65ZD+jQl6TVGHQaOfFn/ kevin@rem"];
+    # Placeholder
+    authorizedKeys = [ (import ../ssh-keys.nix).kevin-rem ];
     path = "/mnt/storage/Kevin/Backups/Systems/scintillating-borg";
     quota = "150G";
   };
