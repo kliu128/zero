@@ -76,70 +76,55 @@
     after = [ "storage.service" "docker.service" "network-online.target" ];
     startAt = "daily";
   };
-  systemd.services.emergency-backup = {
-    description = "Borg Backup to Emergency Backup USB";
-    restartIfChanged = false;
-    path = [ pkgs.borgbackup ];
-    script = ''
-      set -xeuo pipefail
-      repo="/mnt/emergency-backup/emergency-borg"
-      export BORG_PASSPHRASE='${builtins.readFile ../secrets/emergency-borg-password.txt}'
-      borg create "$repo::{hostname}-documents-{utcnow}" /mnt/storage/Kevin/Personal/Documents \
-          --verbose --progress --stats \
-          --compression lzma
-      borg create "$repo::{hostname}-programming-{utcnow}" /mnt/storage/Kevin/Personal/Code \
-          --verbose --progress --stats \
-          --compression lzma
-      borg create "$repo::{hostname}-keys-{utcnow}" /etc/keys \
-          --verbose --progress --stats \
-          --compression lzma
-      backups=("{hostname}-documents" "{hostname}-programming" "{hostname}-keys")
-      for backup in "''${backups[@]}"; do
-          borg prune -v --list --prefix "$backup" \
-              --keep-daily=7 --keep-weekly=4 --keep-monthly=-1 \
-              "$repo"
-      done
-    '';
-    unitConfig = {
-      RequiresMountsFor = [ "/mnt/emergency-backup" ];
+
+  # BorgBackup jobs
+  services.borgbackup.jobs.emergency-backup = {
+    repo = "/mnt/emergency-backup/emergency-borg";
+    doInit = false;
+    compression = "lzma";
+    encryption = {
+      mode = "repokey";
+      passphrase = builtins.readFile ../secrets/emergency-borg-password.txt;
     };
-    serviceConfig = {
-      CPUSchedulingPolicy = "idle";
-      IOSchedulingClass = "idle";
+    paths = [
+      "/mnt/storage/Kevin/Personal/Documents"
+      "/mnt/storage/Kevin/Personal/Code"
+      "/etc/keys"
+    ];
+    extraCreateArgs = "--stats --progress -v";
+    prune.keep = {
+      daily = 7;
+      weekly = 4;
+      monthly = 6;
     };
-    wants = [ "storage.service" ];
-    after = [ "storage.service" ];
-    startAt = "daily";
   };
-  systemd.services.root-backup = {
-    description = "Borg Backup of / to /mnt/storage";
-    restartIfChanged = false;
-    path = [ pkgs.borgbackup ];
-    script = ''
-      set -xeuo pipefail
-      export BORG_PASSPHRASE='${builtins.readFile ../secrets/storage-borg-password.txt}'
-      borg create -v --progress --stats \
-          --one-file-system \
-          --exclude 'sh:/home/*/.cache/*' \
-          --exclude 'sh:/var/lib/docker/*' \
-          --exclude 'sh:/var/log/*' \
-          --compression auto,lzma \
-          /mnt/storage/Kevin/Backups/System\ Images/storage-borg::{hostname}-root-{now} / || true
-      borg prune -v --list --keep-daily=7 --keep-weekly=4 --keep-monthly=-1 /mnt/storage/Kevin/Backups/System\ Images/storage-borg
-    '';
-    wants = [ "storage.service" ];
-    after = [ "storage.service" ];
-    serviceConfig = {
-      CPUSchedulingPolicy = "idle";
-      IOSchedulingClass = "idle";
+  services.borgbackup.jobs.root-backup = {
+    doInit = false; # Already exists
+    compression = "auto,lzma";
+    encryption = {
+      mode = "repokey";
+      passphrase = builtins.readFile ../secrets/storage-borg-password.txt;
     };
-    unitConfig.RequiresMountsFor = [ "/" ];
-    startAt = "daily";
+    exclude = [
+      "sh:/home/*/.cache/*"
+      "sh:/var/lib/docker/*"
+      "sh:/var/log/*"
+    ];
+    extraCreateArgs = "--one-file-system --stats --progress -v";
+    paths = "/";
+    repo = "/mnt/storage/Kevin/Backups/Systems/storage-borg";
+    prune.keep = {
+      daily = 7;
+      weekly = 4;
+      monthly = 6;
+    };
   };
   environment.etc."keys/backups.borg-key" = {
     mode = "400";
     text = builtins.readFile ../secrets/keys/backups.borg-key;
   };
+
+  # SnapRAID
   systemd.services.snapraid = {
     description = "SnapRAID Synchronization and Maintenance";
     path = [ pkgs.snapraid ];
@@ -182,6 +167,7 @@
     '';
   };
   
+  # Mirror services
   systemd.services.gas-leak-mirror = {
     description = "Google Drive Gas Leak Data Mirroring";
     path = [ pkgs.rclone ];
