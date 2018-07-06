@@ -172,18 +172,6 @@
   boot.initrd.luks.devices."root".allowDiscards = true;
   services.fstrim.enable = true;
   boot.cleanTmpDir = true;
-  swapDevices = [ {
-    device = "/swap";
-    size = 4096;
-  } ];
-  # Reduce from default 60 to improve interactivity
-  boot.kernel.sysctl."vm.swappiness" = 10;
-  boot.kernel.sysctl."vm.dirty_ratio" = 2;
-  boot.kernel.sysctl."vm.dirty_background_ratio" = 1;
-  boot.kernelParams = [ "scsi_mod.use_blk_mq=1" ];
-  services.udev.extraRules = ''
-    ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/scheduler}="kyber"
-  '';
 
   # Reset keyboard on bootup (Pok3r)
   # Otherwise keys get dropped, for some reason
