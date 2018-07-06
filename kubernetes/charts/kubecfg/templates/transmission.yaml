@@ -26,6 +26,8 @@ spec:
             value: 'true'
           - name: LOCAL_NETWORK
             value: 10.0.0.0/24
+          - name: TRANSMISSION_WEB_UI
+            value: transmission-web-control
         envFrom:
           - secretRef:
               name: transmission-pia-auth
