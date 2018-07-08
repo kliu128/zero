@@ -9,6 +9,15 @@
   };
   
   defaults = {
+    imports = [
+      ./common/earlyoom.nix
+      ./common/firewall.nix
+      ./common/kernel.nix
+      ./common/ssh.nix
+      ./common/time.nix
+      ./common/users.nix
+    ];
+
     networking.domain = "potatofrom.space";
     time.timeZone = "America/New_York";
   };
@@ -20,12 +29,6 @@
       deployment.hasFastConnection = true;
 
       imports = [
-        ./common/earlyoom.nix
-        ./common/firewall.nix
-        ./common/kernel.nix
-        ./common/ssh.nix
-        ./common/time.nix
-        ./common/users.nix
         ./modules/docker.nix
         ./modules/kubernetes-common.nix
         ./modules/kubernetes-node.nix
@@ -44,12 +47,6 @@
       deployment.hasFastConnection = true;
 
       imports = [
-        ./common/earlyoom.nix
-        ./common/firewall.nix
-        ./common/kernel.nix
-        ./common/ssh.nix
-        ./common/time.nix
-        ./common/users.nix
         ./modules/docker.nix
         ./modules/kdeconnect.nix
         ./modules/kubernetes-common.nix
