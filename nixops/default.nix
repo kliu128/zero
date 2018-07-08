@@ -51,6 +51,7 @@
         ./modules/kdeconnect.nix
         ./modules/kubernetes-common.nix
         ./modules/kubernetes-master.nix
+        ./modules/redshift.nix
         ./rem/backups.nix
         ./rem/desktop.nix
         ./rem/fusee-launcher.nix
