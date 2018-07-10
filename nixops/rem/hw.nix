@@ -153,9 +153,11 @@
     serviceConfig = {
       Type = "forking";
       PrivateNetwork = true;
+    };
+    unitConfig = {
       # Implicitly adds dependency on basic.target otherwise, which creates
       # an ordering cycle on boot
-      DefaltDependencies = false;
+      DefaultDependencies = false;
       # Normally would be added by DefaultDependencies=
       Conflicts = [ "shutdown.target" ];
       Before = [ "shutdown.target" ];
