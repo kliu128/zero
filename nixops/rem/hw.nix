@@ -38,7 +38,7 @@
     fsType = "ext4";
   };
 
-  fileSystems."/var/lib/libvirt/images" = {
+  fileSystems."/var/lib/libvirt/images/hdd" = {
     device = "/dev/mapper/vms";
     encrypted = {
       enable = true;
@@ -47,6 +47,7 @@
       label = "vms";
     };
   };
+
   environment.etc."keys/keyfile-vms.bin" = {
     mode = "400";
     source = ../secrets/keys/keyfile-vms.bin;
