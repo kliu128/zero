@@ -16,6 +16,8 @@ spec:
       containers:
         - image: quantumobject/docker-zoneminder:latest
           imagePullPolicy: IfNotPresent
+          command: [/bin/sh]
+          args: [-c, "rm -rf /dev/shm/*; /sbin/my_init"]
           env:
             - name: ZM_DB_HOST
               value: 127.0.0.1
