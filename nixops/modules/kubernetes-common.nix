@@ -64,11 +64,18 @@
     addons.dashboard.rbac.enable = true;
     addons.dns.enable = true;
   };
-  networking.firewall.allowedTCPPorts = [
-    # Kubernetes - kubelet, etcd, apiserver
-    10250 2379 2380 6443
-    # Node Exporter
-    9100 ];
+  networking.firewall = {
+    allowedTCPPorts = [
+      # Kubernetes - kubelet, etcd, apiserver
+      10250 2379 2380 6443
+      # Node Exporter
+      9100 ];
+    trustedInterfaces = ["docker0"];
+    # allow any traffic from all of the nodes in the cluster
+    extraCommands = lib.concatMapStrings  (node: ''
+      iptables -A INPUT -s ${node} -j ACCEPT
+    '') (["192.168.1.5" "192.168.1.11"]);
+  };
   services.nfs.server.enable = true;
 
   # Make kube-scheduler restart on failure (for some reason it crashes)
