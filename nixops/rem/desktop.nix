@@ -27,6 +27,10 @@
     enable = true;
     package = pkgs.i3-gaps;
     extraPackages = with pkgs; [ blueman conky i3lock nitrogen pcmanfm redshift rofi system-config-printer scrot xautolock xcape xorg.xmodmap termite udiskie ];
+    extraSessionCommands = ''
+      # Start polkit agent to allow for superuser operations
+      ${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1 &
+    '';
   };
   services.xserver.desktopManager.plasma5.enable = true;
 
