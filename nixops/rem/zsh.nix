@@ -22,7 +22,7 @@
     }
 
     export PATH=$HOME/.cargo/bin:$PATH:$HOME/bin:$HOME/Android/Sdk/ndk-bundle:$HOME/Android/Sdk/platform-tools:$HOME/.npm-global/bin:$HOME/.local/bin:$HOME/.local/var/npm/bin
-    export EDITOR="emacsclient "
+    export EDITOR="emacsclient --socket-name=/tmp/emacs1000/server "
     alias emacs="$EDITOR "
     
     alias k=kubectl
