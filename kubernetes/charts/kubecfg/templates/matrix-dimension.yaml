@@ -24,7 +24,7 @@ spec:
         app: matrix-dimension
     spec:
       containers:
-        - image: registry.potatofrom.space/kevin/r/matrix-dimension:latest
+        - image: registry.potatofrom.space/kevin/matrix-dimension:latest
           name: matrix-dimension-web
           resources: {}
           volumeMounts:

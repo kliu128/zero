@@ -1,4 +1,4 @@
-image: registry.potatofrom.space/kevin/r/glitch-soc:latest
+image: registry.potatofrom.space/kevin/glitch-soc:latest
 persistence:
   size: 25Gi
 ingress:
