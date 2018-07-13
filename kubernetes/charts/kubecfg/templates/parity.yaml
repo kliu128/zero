@@ -14,6 +14,8 @@ spec:
       labels:
         app: parity
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: otto
       containers:
       - image: parity/parity:nightly
         imagePullPolicy: Always
