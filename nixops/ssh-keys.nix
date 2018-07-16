@@ -3,4 +3,5 @@
   kevin-rem-vm-ilo2-sandbox = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGB8DdZut/WsKtOEwyeheRNM5WJUSahKucm6IkrmbUSW kevin@rem-vm-ilo2-sandbox";
   kevin-emilia = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINvRm/l9jaQ3fN5ZQvmZCfhKGHgtizonT9BRSKFbbgro kevin@emilia";
   kevin-xt1575 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGBlgyWrDlIJ5RWigaWGOmjVWBpPqqJ/cL58yJblfm33 kevin@xt1575";
+  root-karmaxer = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJHiTREGQKMXJud+n5LiDchuuOnktird70h0FDgWBPTJ root@karmaxer";
 }
