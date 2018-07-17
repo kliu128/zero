@@ -119,4 +119,13 @@
     '';
   };
   hardware.pulseaudio.tcp.enable = true;
+
+  programs.ssh.extraConfig = ''
+    Host karmaxer
+         HostName server.scintillate.me
+         User kevin
+         Port 843
+    Host subaru
+         HostName server.scintillate.me
+  '';
 }
