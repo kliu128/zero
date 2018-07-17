@@ -65,6 +65,9 @@ spec:
               subPath: postfix-virtual.cf
               mountPath: /tmp/docker-mailserver/postfix-virtual.cf
             - name: config
+              subPath: spamassassin-rules.cf
+              mountPath: /tmp/docker-mailserver/spamassassin-rules.cf
+            - name: config
               subPath: SigningTable
               mountPath: /tmp/docker-mailserver/opendkim/SigningTable
             - name: config
