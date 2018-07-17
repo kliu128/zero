@@ -3,7 +3,7 @@
 {
   # Fonts
   fonts.fontconfig.allowBitmaps = false;
-  fonts.fonts = with pkgs; [ inconsolata liberation_ttf ];
+  fonts.fonts = with pkgs; [ powerline-fonts inconsolata liberation_ttf ];
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
