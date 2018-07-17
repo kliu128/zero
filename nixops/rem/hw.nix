@@ -15,6 +15,8 @@
   # exfat support for Nintendo Switch / other SD cards
   boot.supportedFilesystems = [ "btrfs" "ext4" "exfat" ];
   boot.earlyVconsoleSetup = true;
+  # Video.
+  services.xserver.videoDrivers = [ "amdgpu" ];
 
   # Freeness (that is, not.)
   hardware.enableRedistributableFirmware = true; # for amdgpu

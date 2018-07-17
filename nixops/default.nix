@@ -47,13 +47,13 @@
       deployment.hasFastConnection = true;
 
       imports = [
+        ./modules/desktop.nix
         ./modules/docker.nix
         ./modules/kdeconnect.nix
         ./modules/kubernetes-common.nix
         ./modules/kubernetes-master.nix
         ./modules/redshift.nix
         ./rem/backups.nix
-        ./rem/desktop.nix
         ./rem/fusee-launcher.nix
         ./rem/hw.nix
         ./rem/ipv6-tunnel.nix
