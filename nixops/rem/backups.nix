@@ -54,6 +54,23 @@
     '';
     startAt = "*-*-* 03:00:00";
   };
+  systemd.services.gsuite-mount = {
+    enable = true;
+    description = "G-Suite Mount";
+    after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
+    wantedBy = [ "multi-user.target" ];
+    path = [ pkgs.rclone pkgs.fuse ];
+    serviceConfig.Type = "notify";
+    serviceConfig.ExecStart = ''${pkgs.rclone}/bin/rclone --config /etc/rclone.conf mount \
+        --allow-other --allow-non-empty \
+        gsuite-mysmccd-crypt: /mnt/gsuite'';
+    serviceConfig.PostStop = "${pkgs.coreutils}/bin/umount /mnt/gsuite";
+    restartIfChanged = false;
+  };
+  systemd.tmpfiles.rules = [
+    "d /mnt/gsuite 0755 root root -"
+  ];
   systemd.services.matrix-recorder = {
     description = "Matrix Recorder";
     path = [ pkgs.nodejs pkgs.curl ];
