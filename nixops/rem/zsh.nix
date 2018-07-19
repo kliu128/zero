@@ -22,13 +22,19 @@
     }
 
     export PATH=$HOME/.cargo/bin:$PATH:$HOME/bin:$HOME/Android/Sdk/ndk-bundle:$HOME/Android/Sdk/platform-tools:$HOME/.npm-global/bin:$HOME/.local/bin:$HOME/.local/var/npm/bin
-    export EDITOR="emacsclient --socket-name=/tmp/emacs1000/server "
-    alias emacs="$EDITOR "
+    if [[ "$DISPLAY" ]]; then
+      # Use graphical emacs
+      export EDITOR="emacsclient --socket-name=/tmp/emacs1000/server "
+      alias emacs="$EDITOR "
+    else
+      # Just use vim:tm: without graphical environment
+      export EDITOR="vim "
+    fi
     
     alias k=kubectl
 
     # MOTD
-    print -P "Welcome to \e[1m\e[36mRem%F{reset_color}\e[0m\!"
+    print -P "Welcome to \e[1m\e[36m$(cat /etc/hostname)%F{reset_color}\e[0m\!"
     print -P "   Kernel: $(uname -r) ($(uname -v))%F{reset_color}"
     # show system status
     systemctl status | head -n 5 | tail -n 4
