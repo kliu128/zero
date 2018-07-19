@@ -180,10 +180,6 @@
   boot.initrd.luks.devices."root".allowDiscards = true;
   services.fstrim.enable = true;
   boot.cleanTmpDir = true;
-  swapDevices = [ {
-    device = "/swap";
-    size = 4096;
-  } ];
   services.udev.extraRules = ''
     ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="deadline"
   '';
