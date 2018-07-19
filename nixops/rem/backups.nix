@@ -64,8 +64,10 @@
     serviceConfig.Type = "notify";
     serviceConfig.ExecStart = ''${pkgs.rclone}/bin/rclone --config /etc/rclone.conf mount \
         --allow-other --allow-non-empty \
+        -vv --drive-use-trash=false \
+        --vfs-cache-mode writes --low-level-retries 100 \
         gsuite-mysmccd-crypt: /mnt/gsuite'';
-    serviceConfig.PostStop = "${pkgs.coreutils}/bin/umount /mnt/gsuite";
+    serviceConfig.ExecStopPost = "${pkgs.utillinux}/bin/umount -l /mnt/gsuite";
     restartIfChanged = false;
   };
   systemd.tmpfiles.rules = [
