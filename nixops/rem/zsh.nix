@@ -33,6 +33,12 @@
     
     alias k=kubectl
 
+    # Set GPG TTY (for SSH sessions, etc.)
+    export GPG_TTY=$(tty)
+
+    # Refresh gpg-agent tty in case user switches into an X session
+    gpg-connect-agent updatestartuptty /bye >/dev/null
+
     # MOTD
     print -P "Welcome to \e[1m\e[36m$(cat /etc/hostname)%F{reset_color}\e[0m\!"
     print -P "   Kernel: $(uname -r) ($(uname -v))%F{reset_color}"
