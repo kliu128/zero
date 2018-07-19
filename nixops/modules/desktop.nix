@@ -99,15 +99,6 @@
   };
   hardware.pulseaudio.tcp.enable = true;
 
-  programs.ssh.extraConfig = ''
-    Host karmaxer
-         HostName server.scintillate.me
-         User kevin
-         Port 843
-    Host subaru
-         HostName server.scintillate.me
-  '';
-
   # Home manager
   imports = [
     "${builtins.fetchTarball https://github.com/rycee/home-manager/archive/master.tar.gz}/nixos"
@@ -137,8 +128,23 @@
     };
     programs.ssh = {
       enable = true;
+      matchBlocks = {
+        karmaxer = {
+          hostname = "server.scintillate.me";
+          user = "kevin";
+          port = 843;
+        };
+        subaru = {
+          hostname = "server.scintillate.me";
+          user = "kevin";
+          port = 844;
+        };
+      };
     };
-    services.gpg-agent.enable = true;
+
+    services.gpg-agent = {
+      enable = true;
+    };
 
     # i3
     xsession.enable = true;
