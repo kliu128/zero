@@ -186,6 +186,8 @@
   services.udev.extraRules = ''
     ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="deadline"
   '';
+  boot.kernel.sysctl."vm.dirty_ratio" = 2;
+  boot.kernel.sysctl."vm.dirty_background_ratio" = 1;
 
   # Reset keyboard on bootup (Pok3r)
   # Otherwise keys get dropped, for some reason
