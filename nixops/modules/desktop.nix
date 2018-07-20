@@ -53,7 +53,7 @@
     # Games
     dolphinEmuMaster multimc steam steam-run-native
     # Desktop theme
-    arc-theme dunst papirus-icon-theme libsForQt5.qtstyleplugins
+    arc-theme papirus-icon-theme libsForQt5.qtstyleplugins
     # VM and DevOps
     helmfile kubernetes-helm nixops virtmanager
   ];
@@ -142,9 +142,9 @@
       };
     };
 
-    services.gpg-agent = {
-      enable = true;
-    };
+    # Desktop services
+    services.dunst.enable = true;
+    services.gpg-agent.enable = true;
     services.redshift = {
       enable = true;
       provider = "manual"; # Provide own longitude + latitude
@@ -152,10 +152,14 @@
       longitude = "-71";
       tray = true;
     };
+    services.udiskie = {
+      enable = true;
+      tray = "always";
+    };
 
     # i3
     xsession.enable = true;
-    home.packages = with pkgs; [ blueman conky i3lock nitrogen pcmanfm redshift rofi system-config-printer scrot xautolock xcape xorg.xmodmap termite udiskie ];
+    home.packages = with pkgs; [ blueman conky i3lock nitrogen pcmanfm redshift rofi system-config-printer scrot xautolock xcape xorg.xmodmap termite ];
     xsession.windowManager.i3 = {
       enable = true;
       package = pkgs.i3-gaps;
@@ -413,8 +417,6 @@
         exec xmodmap ~/.xmodmap.conf
         exec xcape
         exec /home/kevin/.screenlayout/layout.sh
-        exec --no-startup-id dunst
-        exec --no-startup-id udiskie
         exec --no-startup-id xautolock -time 5 -locker "i3lock" -corners ----
         exec --no-startup-id xset s 290
         bindsym Pause exec xautolock -locknow && sleep 5 && xset dpms force off
