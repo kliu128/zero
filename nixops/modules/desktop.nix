@@ -129,10 +129,25 @@
     programs.ssh = {
       enable = true;
       matchBlocks = {
+        emilia = {
+          hostname = "emilia.lan";
+          user = "kevin";
+          port = 22;
+        };
+        demonbeast = {
+          hostname = "demonbeast.lan";
+          user = "pi";
+          port = 22;
+        };
         karmaxer = {
           hostname = "server.scintillate.me";
           user = "kevin";
           port = 843;
+        };
+        otto = {
+          hostname = "otto.lan";
+          user = "kevin";
+          port = 22;
         };
         subaru = {
           hostname = "server.scintillate.me";
