@@ -157,6 +157,29 @@
       tray = "always";
     };
 
+    # Visual Studio Code config
+    home.file.".config/Code/User/settings.json" = {
+      text = ''
+        {
+          "team.showWelcomeMessage": false,
+          "git.enableSmartCommit": true,
+          "workbench.colorTheme": "Kimbie Dark",
+          // Suppress the warning that the .NET CLI is not on the path.
+          "csharp.suppressDotnetInstallWarning": true,
+          "files.autoSave": "onFocusChange",
+          // Set the default
+          "editor.formatOnSave": true,
+          "[json]": {
+            "editor.formatOnSave": false
+          },
+          "telemetry.enableTelemetry": false,
+          "workbench.iconTheme": "vs-nomo-dark",
+          "editor.wordWrap": "on",
+          "editor.tabSize": 2
+        }
+      '';
+    };
+
     # i3
     xsession.enable = true;
     home.packages = with pkgs; [ blueman conky i3lock nitrogen pcmanfm redshift rofi system-config-printer scrot xautolock xcape xorg.xmodmap termite ];
