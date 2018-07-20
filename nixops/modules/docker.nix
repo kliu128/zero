@@ -14,7 +14,6 @@
     after = [ "remote-fs.target" ];
     wants = [ "remote-fs.target" ];
     restartIfChanged = false;
-    serviceConfig.CPUSchedulingPolicy = "idle";
   };
   systemd.services.docker-shutdown = {
     wantedBy = [ "multi-user.target" ];

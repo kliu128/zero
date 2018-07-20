@@ -6,7 +6,7 @@
     source = ../hekate_ctcaer_3.0.bin;
   };
   systemd.services.fusee-launcher = {
-    enable = true;
+    enable = false;
     path = [ pkgs.fusee-launcher ];
     wantedBy = [ "multi-user.target" ];
     script = ''
