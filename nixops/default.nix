@@ -53,6 +53,7 @@
         ./modules/kubernetes-common.nix
         ./modules/kubernetes-master.nix
         ./modules/redshift.nix
+        ./modules/toxvpn.nix
         ./rem/backups.nix
         ./rem/fusee-launcher.nix
         ./rem/hw.nix
@@ -72,6 +73,9 @@
       # Options as Kubernetes entry node
       networking.firewall.allowedTCPPorts = [
         22 25 80 143 443 587 993 8448 9001 9030 25565 ];
+      
+      # ToxVPN ip
+      services.toxvpn.localip = "10.123.123.1";
 
       # This value determines the NixOS release with which your system is to be
       # compatible, in order to avoid breaking some software such as database
