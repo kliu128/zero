@@ -145,6 +145,13 @@
     services.gpg-agent = {
       enable = true;
     };
+    services.redshift = {
+      enable = true;
+      provider = "manual"; # Provide own longitude + latitude
+      latitude = "42";
+      longitude = "-71";
+      tray = true;
+    };
 
     # i3
     xsession.enable = true;

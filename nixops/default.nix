@@ -52,7 +52,6 @@
         ./modules/kdeconnect.nix
         ./modules/kubernetes-common.nix
         ./modules/kubernetes-master.nix
-        ./modules/redshift.nix
         ./modules/toxvpn.nix
         ./rem/backups.nix
         ./rem/fusee-launcher.nix
