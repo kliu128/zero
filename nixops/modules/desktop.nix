@@ -43,7 +43,7 @@
     # System tools
     i7z atop bcachefs-tools beets borgbackup cointop cowsay ctop dnsutils file fortune python36Packages.glances gnupg hdparm htop iftop iotop python python3 libva-full lm_sensors lolcat looking-glass-client lzip mpw nheko oh-my-zsh openjdk python36Packages.tvnamer rclone restic rustup screen smartmontools snapraid spectre-meltdown-checker stress-ng telnet tmux tree vim wget unar
     # Desktop applications
-    android-studio arduino atom calibre cantata chromium clementine codeblocks discord electron-cash emacs filezilla firebird-emu firefox gnome3.gnome-disk-utility gpodder hexchat jetbrains.idea-community jetbrains.pycharm-community keepassxc liferea mate.atril mkvtoolnix mpv pavucontrol skypeforlinux simple-scan slack thunderbird tor-browser-bundle transmission_gtk transmission_remote_gtk vlc vscode wine winetricks youtube-dl zoom-us
+    android-studio arduino atom calibre cantata chromium clementine codeblocks discord electron-cash emacs filezilla firebird-emu gnome3.gnome-disk-utility gpodder hexchat jetbrains.idea-community jetbrains.pycharm-community keepassxc liferea mate.atril mkvtoolnix mpv pavucontrol skypeforlinux simple-scan slack thunderbird tor-browser-bundle transmission_gtk transmission_remote_gtk vlc vscode wine winetricks youtube-dl zoom-us
     # Desktop tools
     appimage-run autokey barrier
     # KDE applications
@@ -103,6 +103,10 @@
   imports = [
     "${builtins.fetchTarball https://github.com/rycee/home-manager/archive/master.tar.gz}/nixos"
   ];
+  nixpkgs.overlays = [
+    (import (builtins.fetchTarball https://github.com/mozilla/nixpkgs-mozilla/archive/master.tar.gz))
+  ];
+
   home-manager.users.kevin = {
     programs.home-manager.enable = true;
     programs.git = {
@@ -197,7 +201,7 @@
 
     # i3
     xsession.enable = true;
-    home.packages = with pkgs; [ blueman conky i3lock nitrogen pcmanfm redshift rofi system-config-printer scrot xautolock xcape xorg.xmodmap termite ];
+    home.packages = with pkgs; [ blueman conky i3lock nitrogen pcmanfm redshift rofi system-config-printer scrot xautolock xcape xorg.xmodmap termite latest.firefox-nightly-bin ];
     xsession.windowManager.i3 = {
       enable = true;
       package = pkgs.i3-gaps;
