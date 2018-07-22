@@ -27,18 +27,19 @@ gitlab:
   # Use Community Edition
   # Lock versions because otherwise we might restart with a newer version
   # without having run migrations
+  # Update from: https://gitlab.com/gitlab-org/build/CNG/container_registry
   migrations:
     image:
       repository: registry.gitlab.com/gitlab-org/build/cng/gitlab-rails-ce
-      tag: v11.0.3
+      tag: v11.1.0
   sidekiq:
     image:
       repository: registry.gitlab.com/gitlab-org/build/cng/gitlab-sidekiq-ce
-      tag: v11.0.3
+      tag: v11.1.0
   unicorn:
     image:
       repository: registry.gitlab.com/gitlab-org/build/cng/gitlab-unicorn-ce
-      tag: v11.0.3
+      tag: v11.1.0
     minReplicas: 1
     maxUnavailable: 0
 gitlab-runner:
