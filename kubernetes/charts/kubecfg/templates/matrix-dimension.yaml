@@ -10,7 +10,7 @@ spec:
     targetPort: 8184
     port: 8184
 ---
-apiVersion: apps/v1beta1
+apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: matrix-dimension
@@ -24,14 +24,15 @@ spec:
         app: matrix-dimension
     spec:
       containers:
-        - image: registry.potatofrom.space/kevin/matrix-dimension:latest
-          name: matrix-dimension-web
+        - image: turt2live/matrix-dimension
+          name: matrix-dimension
           resources: {}
           volumeMounts:
-          - mountPath: /app/config
-            name: config
-          - mountPath: /app/data
+          - mountPath: /data
             name: db
+          - mountPath: /data/config.yaml
+            subPath: default.yaml
+            name: config
       restartPolicy: Always
       volumes:
         - name: config
@@ -90,10 +91,6 @@ data:
       - 172.16.0.0/12
       - 192.168.0.0/16
       - 127.0.0.0/8
-
-    # Where the database for Dimension is
-    database:
-      file: "data/dimension.db"
 
     # Display settings that apply to self-hosted go-neb instances
     goneb:
