@@ -18,7 +18,7 @@
 
   # Video.
   boot.earlyVconsoleSetup = true;
-  services.xserver.videoDrivers = [ "amdgpu" ];
+  services.xserver.videoDrivers = [ "modesetting" "amdgpu" ];
   boot.kernelParams = [ "amdgpu.dc=0" ];
 
   # Freeness (that is, not.)
@@ -183,7 +183,17 @@
   boot.initrd.luks.devices."root".allowDiscards = true;
   services.fstrim.enable = true;
   boot.cleanTmpDir = true;
-  boot.kernel.sysctl."vm.vfs_cache_pressure" = 100000;
+
+  # perf output:
+  # 11.37%  [kernel]                                          [k] list_lru_count_one
+  systemd.services.drop-caches = {
+    enable = false;
+    description = "Periodically Drop Caches";
+    script = ''
+      while true; do echo 3 > /proc/sys/vm/drop_caches; sleep 60; done
+    '';
+    wantedBy = [ "multi-user.target" ];
+  };
 
   # Reset keyboard on bootup (Pok3r)
   # Otherwise keys get dropped, for some reason

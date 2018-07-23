@@ -234,9 +234,9 @@
         #
         # Default wallpaper (more resolutions are available in /usr/share/sway/)
 
-        workspace 1 output HDMI-A-0
-        workspace 2 output DisplayPort-0
-        workspace 3 output DVI-D-0
+        workspace 1 output HDMI-1
+        workspace 2 output DP-1
+        workspace 3 output DVI-D-1
 
         font pango:Source Code Pro 10
 
