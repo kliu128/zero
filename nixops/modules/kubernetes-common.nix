@@ -78,6 +78,7 @@
   };
   services.nfs.server.enable = true;
 
-  # Make kube-scheduler restart on failure (for some reason it crashes)
+  # Make critical services restart on failure
   systemd.services.kube-scheduler.serviceConfig.Restart = "always";
+  systemd.services.flannel.serviceConfig.Restart = "always";
 }
