@@ -44,7 +44,7 @@
   puck =
     { config, pkgs, lib, ... }:
     {
-      deployment.targetHost = "puck.lan";
+      deployment.targetHost = (import ./wireguard.nix).ips.puck;
 
       imports = [
         ./modules/desktop.nix
