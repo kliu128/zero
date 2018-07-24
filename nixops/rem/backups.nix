@@ -21,7 +21,7 @@
     startAt = "daily";
   };
   systemd.services.gsuite-backup = {
-    enable = true;
+    enable = false;
     description = "Gsuite backup";
     path = [ pkgs.rclone ];
     serviceConfig = {
