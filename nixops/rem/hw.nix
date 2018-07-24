@@ -182,11 +182,16 @@
   boot.initrd.luks.devices."root".allowDiscards = true;
   services.fstrim.enable = true;
   boot.cleanTmpDir = true;
+  swapDevices = [ {
+    device = "/swap";
+    size = 4096;
+  } ];
 
   # perf output:
   # 11.37%  [kernel]                                          [k] list_lru_count_one
+  boot.kernel.sysctl."vm.vfs_cache_pressure" = 10000;
   systemd.services.drop-caches = {
-    enable = false;
+    enable = true;
     description = "Periodically Drop Caches";
     path = with pkgs; [ procps gawk ];
     script = ''
