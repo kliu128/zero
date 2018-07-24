@@ -71,6 +71,7 @@
         ./modules/kubernetes-master.nix
         ./modules/toxvpn.nix
         ./rem/backups.nix
+        ./rem/desktop.nix
         ./rem/fusee-launcher.nix
         ./rem/hw.nix
         ./rem/ipv6-tunnel.nix

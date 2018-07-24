@@ -34,4 +34,9 @@
       ];
     };
   };
+
+  # Make more reliable with wifi
+  systemd.services.wireguard-wg0.serviceConfig.Type = lib.mkForce "simple";
+  systemd.services.wireguard-wg0.serviceConfig.Restart = "on-failure";
+  systemd.services.wireguard-wg0.preStart = "ip link del wg0 || true";
 }

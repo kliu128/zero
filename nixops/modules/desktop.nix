@@ -1,5 +1,8 @@
 { config, lib, pkgs, ... }:
 
+with import <nixpkgs> {};
+with lib;
+
 {
   # Fonts
   fonts.fontconfig.allowBitmaps = false;
@@ -228,6 +231,35 @@
       '';
     };
 
+    home.file.".tmux.conf".text = ''
+      # Fix ESC key delay
+      set -s escape-time 0
+
+      # if run as "tmux attach", create a session if one does not already exist
+      new-session -n $HOST
+
+      # Enable 256-color mode
+      set -g default-terminal "screen-256color"
+
+      # enable mouse
+      set -g mouse on
+    '';
+
+    home.file.".conkyrc".text = builtins.readFile ./.conkyrc;
+
+    # Emacs
+    home.file.".spacemacs".text = builtins.readFile ./.spacemacs;
+
+    home.file.".emacs.d" = {
+      source = fetchFromGitHub {
+        owner = "syl20bnr";
+        repo = "spacemacs";
+        rev = "45ee95c289adaba6f7eff0c2564756ea41d9fb15";
+        sha256 = "16yn14cxvdj8salaf3x3mabbbs5kr94v6d9sd5paxd51c69mnx1x";
+      };
+      recursive = true;
+    };
+
     # i3
     xsession.enable = true;
     xsession.initExtra = ''
@@ -235,21 +267,12 @@
       ${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1 &
     '';
    
-    home.packages = with pkgs; [ blueman conky i3lock nitrogen pcmanfm redshift rofi system-config-printer scrot xautolock xcape xorg.xmodmap termite latest.firefox-nightly-bin wireguard wireguard-tools ];
+    home.packages = with pkgs; [ blueman conky i3lock nitrogen pcmanfm redshift rofi system-config-printer scrot xautolock xcape termite latest.firefox-nightly-bin wireguard wireguard-tools ];
     xsession.windowManager.i3 = {
       enable = true;
       package = pkgs.i3-gaps;
-      #extraSessionCommands = ''
-      #  # Start polkit agent to allow for superuser operations
-      #  ${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1 &
-      #'';
+      config.bars = [ ];
       extraConfig = ''
-        # Default config for sway
-        #
-        # Copy this to ~/.config/sway/config and edit it to your liking.
-        #
-        # Read `man 5 sway` for a complete reference.
-
         ### Variables
         #
         # Logo key. Use Mod1 for Alt.
@@ -263,14 +286,6 @@
         set $term termite --exec "tmux attach"
         # Your preferred application launcher
         set $menu exec i3-dmenu-desktop --dmenu='rofi -show run -font "Source Code Pro 11"'
-
-        ### Output configuration
-        #
-        # Default wallpaper (more resolutions are available in /usr/share/sway/)
-
-        workspace 1 output HDMI-1
-        workspace 2 output DP-1
-        workspace 3 output DVI-D-1
 
         font pango:Source Code Pro 10
 
@@ -461,7 +476,7 @@
         client.urgent $base02 $base08 $base07 $base08
 
         bar {
-            status_command /home/kevin/.local/bin/conky-bar.sh
+            status_command bash ${./conky-bar.sh}
             i3bar_command i3bar -t
             font pango:Source Code Pro
             position top
@@ -483,20 +498,14 @@
         gaps inner 4
         gaps outer 6
 
-        # STARTUP APPLICATIONS
-        # ====================
-        exec --no-startup-id i3-msg 'workspace 1; exec firefox; workspace 3; layout tabbed; exec $term; exec emacsclient -c; workspace 2; layout tabbed; exec thunderbird; exec Discord'
-
         # BOILERPLATE DESKTOP STARTUP
         # ===========================
         exec nitrogen --restore
-        exec xmodmap ~/.xmodmap.conf
         exec xcape
-        exec /home/kevin/.screenlayout/layout.sh
         exec --no-startup-id xautolock -time 5 -locker "i3lock" -corners ----
         exec --no-startup-id xset s 290
         bindsym Pause exec xautolock -locknow && sleep 5 && xset dpms force off
-        '';
+      '';
     };
 
     # ZSH
