@@ -163,6 +163,35 @@
 
     # Desktop services
     services.dunst.enable = true;
+    services.dunst.settings = {
+      global = {
+        follow = "mouse";
+        geometry = "300x5-30+20";
+        indicate_hidden = true;
+        shrink = false;
+        transparency = 0;
+        notification_height = 0;
+        separator_height = 2;
+        padding = 8;
+        horizontal_padding = 8;
+        frame_width = 3;
+        frame_color = "#AAAAAA";
+        separator_color = "auto";
+        sort = true;
+        font = "Monospace 10";
+        line_height = 0;
+        markup = "full";
+        format = "<b>%s</b>\\n%b";
+        alignment = "left";
+        show_age_threshold = 60;
+        word_wrap = true;
+        ellipsize = "middle";
+        ignore_newline = false;
+        stack_duplicates = true;
+        hide_duplicate_count = false;
+        show_indicators = true;
+      };
+    };
     services.gpg-agent.enable = true;
     services.redshift = {
       enable = true;
