@@ -189,8 +189,15 @@
   systemd.services.drop-caches = {
     enable = true;
     description = "Periodically Drop Caches";
+    path = with pkgs; [ procps gawk ];
     script = ''
-      while true; do echo 3 > /proc/sys/vm/drop_caches; sleep 60; done
+      set -x
+      while true; do
+        echo 3 > /proc/sys/vm/drop_caches
+        while [ $(free -m | awk '/Mem:/ {print $4}') -gt 1000 ]; do
+          sleep 1
+        done
+      done
     '';
     wantedBy = [ "multi-user.target" ];
   };
