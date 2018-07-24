@@ -230,6 +230,11 @@
 
     # i3
     xsession.enable = true;
+    xsession.initExtra = ''
+      # Start polkit agent to allow for superuser operations
+      ${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1 &
+    '';
+   
     home.packages = with pkgs; [ blueman conky i3lock nitrogen pcmanfm redshift rofi system-config-printer scrot xautolock xcape xorg.xmodmap termite latest.firefox-nightly-bin ];
     xsession.windowManager.i3 = {
       enable = true;
