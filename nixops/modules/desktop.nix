@@ -235,7 +235,7 @@
       ${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1 &
     '';
    
-    home.packages = with pkgs; [ blueman conky i3lock nitrogen pcmanfm redshift rofi system-config-printer scrot xautolock xcape xorg.xmodmap termite latest.firefox-nightly-bin ];
+    home.packages = with pkgs; [ blueman conky i3lock nitrogen pcmanfm redshift rofi system-config-printer scrot xautolock xcape xorg.xmodmap termite latest.firefox-nightly-bin wireguard wireguard-tools ];
     xsession.windowManager.i3 = {
       enable = true;
       package = pkgs.i3-gaps;

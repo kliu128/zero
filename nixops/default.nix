@@ -13,6 +13,7 @@
       ./common/earlyoom.nix
       ./common/firewall.nix
       ./common/kernel.nix
+      ./common/nix.nix
       ./common/ssh.nix
       ./common/time.nix
       ./common/users.nix
@@ -37,6 +38,22 @@
 
       networking.hostName = "otto";
 
+      system.nixos.stateVersion = "unstable";
+    };
+  
+  puck =
+    { config, pkgs, lib, ... }:
+    {
+      deployment.targetHost = "puck.lan";
+
+      imports = [
+        ./modules/desktop.nix
+        ./puck/hw.nix
+        ./puck/wireguard.nix
+        ./puck/wireless.nix
+      ];
+
+      networking.hostName = "puck";
       system.nixos.stateVersion = "unstable";
     };
 
@@ -64,6 +81,7 @@
         ./rem/nix.nix
         ./rem/samba.nix
         ./rem/vfio.nix
+        ./rem/wireguard.nix
         ./rem/zsh.nix
       ];
 

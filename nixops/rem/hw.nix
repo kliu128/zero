@@ -19,11 +19,10 @@
   # Video.
   boot.earlyVconsoleSetup = true;
   services.xserver.videoDrivers = [ "modesetting" "amdgpu" ];
-  boot.kernelParams = [ "amdgpu.dc=0" ];
+  boot.kernelParams = [ "amdgpu.dc=0" "scsi_mod.use_blk_mq=1" ];
 
   # Freeness (that is, not.)
   hardware.enableRedistributableFirmware = true; # for amdgpu
-  nixpkgs.config.allowUnfree = true;
   hardware.cpu.intel.updateMicrocode = true;
 
   fileSystems."/" =
@@ -187,7 +186,7 @@
   # perf output:
   # 11.37%  [kernel]                                          [k] list_lru_count_one
   systemd.services.drop-caches = {
-    enable = true;
+    enable = false;
     description = "Periodically Drop Caches";
     path = with pkgs; [ procps gawk ];
     script = ''
