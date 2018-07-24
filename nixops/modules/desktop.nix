@@ -156,6 +156,11 @@ with lib;
           user = "kevin";
           port = 22;
         };
+        puck = {
+          hostname = (import ../wireguard.nix).ips.puck;
+          user = "kevin";
+          port = 843;
+        };
         subaru = {
           hostname = "server.scintillate.me";
           user = "kevin";
