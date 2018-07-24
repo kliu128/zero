@@ -11,8 +11,8 @@
   # don't do that.
   virtualisation.docker.liveRestore = false;
   systemd.services.docker = {
-    after = [ "remote-fs.target" ];
-    wants = [ "remote-fs.target" ];
+    after = [ "nfs-server.service" ];
+    wants = [ "nfs-server.service" ];
     restartIfChanged = false;
   };
   users.extraUsers.kevin.extraGroups = [ "docker" ];
