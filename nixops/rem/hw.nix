@@ -187,7 +187,7 @@
   # perf output:
   # 11.37%  [kernel]                                          [k] list_lru_count_one
   systemd.services.drop-caches = {
-    enable = false;
+    enable = true;
     description = "Periodically Drop Caches";
     script = ''
       while true; do echo 3 > /proc/sys/vm/drop_caches; sleep 60; done
