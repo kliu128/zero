@@ -26,6 +26,14 @@
     device = "/mnt/data3/Kevin/Computing/Data/ZoneMinder";
     options = [ "bind" ];
   };
+  fileSystems."/srv/nfs/home" = {
+    device = "/home/kevin";
+    options = [ "bind" ];
+  };
+  fileSystems."/srv/nfs/storage" = {
+    device = "/mnt/storage/Kevin";
+    options = [ "bind" "x-systemd.after=storage.service" ];
+  };
   services.nfs.server = {
     enable = true;
     statdPort = 4000;
@@ -33,12 +41,16 @@
     mountdPort = 4002;
     exports = ''
       /srv/nfs *.lan(rw,fsid=0,async,no_root_squash,crossmnt)
+
       /srv/nfs/books *.lan(rw,fsid=100,async,insecure,nohide,no_root_squash)
       /srv/nfs/incoming *.lan(rw,fsid=102,async,nohide,insecure,no_root_squash)
       /srv/nfs/movies *.lan(rw,fsid=103,async,nohide,insecure,no_root_squash)
       /srv/nfs/mineos-backups *.lan(rw,fsid=104,async,nohide,insecure,no_root_squash)
       /srv/nfs/tv-shows *.lan(rw,fsid=105,async,nohide,insecure,no_root_squash)
       /srv/nfs/zoneminder *.lan(rw,fsid=106,async,nohide,insecure,no_root_squash)
+
+      /srv/nfs/home ${(import ../wireguard.nix).subnet}(rw,async,nohide,insecure,no_root_squash)
+      /srv/nfs/storage ${(import ../wireguard.nix).subnet}(rw,async,fsid=107,nohide,insecure,no_root_squash)
     '';
   };
 }
