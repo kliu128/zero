@@ -5,8 +5,10 @@
 { config, pkgs, ... }:
 
 {
-  networking.wireless.enable = true;
-  networking.wireless.networks."9WJP3-5GHz" = {
-    psk = "***REMOVED***";
-  };
+  #networking.wireless.enable = true;
+  networking.networkmanager.enable = true;
+  users.extraUsers.kevin.extraGroups = [ "networkmanager" ];
+  #networking.wireless.networks."9WJP3-5GHz" = {
+  #  psk = "***REMOVED***";
+  #};
 }
