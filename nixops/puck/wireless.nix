@@ -5,10 +5,10 @@
 { config, pkgs, ... }:
 
 {
-  #networking.wireless.enable = true;
   networking.networkmanager.enable = true;
   users.extraUsers.kevin.extraGroups = [ "networkmanager" ];
-  #networking.wireless.networks."9WJP3-5GHz" = {
-  #  psk = "***REMOVED***";
-  #};
+  home-manager.users.kevin.home.packages = [ pkgs.networkmanagerapplet ];
+  home-manager.users.kevin.xsession.windowManager.i3.extraConfig = ''
+    exec nm-applet
+  '';
 }
