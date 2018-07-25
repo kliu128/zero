@@ -6,7 +6,7 @@ with lib;
 {
   # Fonts
   fonts.fontconfig.allowBitmaps = false;
-  fonts.fonts = with pkgs; [ powerline-fonts inconsolata liberation_ttf ];
+  fonts.fonts = with pkgs; [ emojione powerline-fonts inconsolata liberation_ttf ];
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
@@ -289,7 +289,8 @@ with lib;
       ${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1 &
     '';
    
-    home.packages = with pkgs; [ blueman conky i3lock nitrogen pcmanfm redshift rofi system-config-printer scrot xautolock xcape termite latest.firefox-nightly-bin wireguard wireguard-tools ];
+    home.packages = with pkgs; [ blueman conky i3lock nitrogen pcmanfm redshift rofi system-config-printer scrot xautolock xcape termite latest.firefox-nightly-bin wireguard wireguard-tools yarn ];
+
     xsession.windowManager.i3 = {
       enable = true;
       package = pkgs.i3-gaps;
@@ -560,6 +561,8 @@ with lib;
       fi
       
       alias k=kubectl
+      # Enable yarn with emoji
+      alias yarn="yarn --emoji"
 
       # Set GPG TTY (for SSH sessions, etc.)
       export GPG_TTY=$(tty)
