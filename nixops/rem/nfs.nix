@@ -31,7 +31,7 @@
     options = [ "bind" ];
   };
   fileSystems."/srv/nfs/storage" = {
-    device = "/mnt/storage/Kevin";
+    device = "/mnt/storage";
     options = [ "bind" "x-systemd.after=storage.service" ];
   };
   services.nfs.server = {
