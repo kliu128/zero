@@ -40,4 +40,5 @@ conky.text = [[
   { "full_text": "RAM: ${mem} used, ${memeasyfree} free", "color":
     ${if_match ${memperc}<90}"\#00ff00"${else}"\#ff0000"${endif} },
   { "full_text": "Load: ${loadavg}", "color": "\#ff9900" },
+  { "full_text": "Battery: ${battery_percent BAT0}%", "color": "\#ffffff" },
   { "full_text": "${time %Y-%m-%d %H:%M}", "color": "\#ffffff" }],]];
