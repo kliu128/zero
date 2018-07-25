@@ -56,7 +56,7 @@ with lib;
     # Games
     dolphinEmuMaster multimc steam steam-run-native
     # Desktop theme
-    arc-theme papirus-icon-theme libsForQt5.qtstyleplugins
+    libsForQt5.qtstyleplugins
     # VM and DevOps
     helmfile kubernetes-helm nixops virtmanager
   ];
@@ -263,6 +263,23 @@ with lib;
         sha256 = "16yn14cxvdj8salaf3x3mabbbs5kr94v6d9sd5paxd51c69mnx1x";
       };
       recursive = true;
+    };
+
+    # GTK & Qt
+    gtk = {
+      enable = true;
+      iconTheme = {
+        name = "Papirus-Dark";
+        package = pkgs.papirus-icon-theme;
+      };
+      theme = {
+        name = "Arc-Dark";
+        package = pkgs.arc-theme;
+      };
+    };
+    qt = {
+      enable = true;
+      useGtkTheme = true;
     };
 
     # i3
