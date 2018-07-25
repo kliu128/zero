@@ -562,7 +562,7 @@ with lib;
       
       alias k=kubectl
       # Enable yarn with emoji
-      alias yarn="yarn --emoji"
+      alias yarn="yarn --emoji true"
 
       # Set GPG TTY (for SSH sessions, etc.)
       export GPG_TTY=$(tty)
