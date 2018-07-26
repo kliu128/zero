@@ -14,7 +14,7 @@ spec:
         app: red-discord-bot
     spec:
       containers:
-        - image: pejter/red-discordbot:latest
+        - image: pejter/red-discordbot:slim
           name: red-discord-bot
           resources: {}
           volumeMounts:
