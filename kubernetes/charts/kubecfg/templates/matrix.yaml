@@ -60,8 +60,8 @@ spec:
               subPath: homeserver.yaml
               mountPath: /config/homeserver.yaml
             - name: config
-              subPath: skype-registration.yaml
-              mountPath: /config/skype-registration.yaml
+              subPath: discord-registration.yaml
+              mountPath: /config/discord-registration.yaml
             - name: config
               subPath: potatofrom.space.log.config
               mountPath: /config/potatofrom.space.log.config
@@ -75,11 +75,28 @@ spec:
           volumeMounts:
             - name: db
               mountPath: /var/lib/postgresql/data
+        - name: discord
+          image: halfshot/matrix-appservice-discord:develop
+          ports:
+            - containerPort: 9005
+              name: discord
+          volumeMounts:
+            - name: config
+              subPath: discord-registration.yaml
+              mountPath: /data/discord-registration.yaml
+            - name: config
+              subPath: discord-config.yaml
+              mountPath: /data/config.yaml
+            - name: discord-data
+              mountPath: /data
       volumes:
         # Stores SSL keys, media_store
         - name: data
           persistentVolumeClaim:
             claimName: matrix-data
+        - name: discord-data
+          persistentVolumeClaim:
+            claimName: matrix-discord-data
         - name: db
           persistentVolumeClaim:
             claimName: matrix-db
@@ -100,6 +117,21 @@ spec:
   resources:
     requests:
       storage: 20Gi
+status: {}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    app: matrix
+  name: matrix-discord-data
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
 status: {}
 ---
 apiVersion: v1
