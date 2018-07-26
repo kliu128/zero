@@ -186,25 +186,7 @@
     device = "/swap";
     size = 4096;
   } ];
-
-  # perf output:
-  # 11.37%  [kernel]                                          [k] list_lru_count_one
-  boot.kernel.sysctl."vm.vfs_cache_pressure" = 10000;
-  systemd.services.drop-caches = {
-    enable = true;
-    description = "Periodically Drop Caches";
-    path = with pkgs; [ procps gawk ];
-    script = ''
-      set -x
-      while true; do
-        echo 3 > /proc/sys/vm/drop_caches
-        while [ $(free -m | awk '/Mem:/ {print $4}') -gt 1000 ]; do
-          sleep 1
-        done
-      done
-    '';
-    wantedBy = [ "multi-user.target" ];
-  };
+  boot.kernel.sysctl."vm.min_free_kbytes" = 1000000;
 
   # Reset keyboard on bootup (Pok3r)
   # Otherwise keys get dropped, for some reason
