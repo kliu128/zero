@@ -276,7 +276,7 @@ with lib;
       # Games
       dolphinEmuMaster multimc steam steam-run-native
       # VM and DevOps
-      helmfile kubernetes-helm nixops virtmanager
+      helmfile kubectl kubernetes-helm nixops virtmanager
       # Desktop environment
       blueman conky i3lock nitrogen pcmanfm system-config-printer scrot xautolock xcape termite
     ];
