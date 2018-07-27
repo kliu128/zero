@@ -224,11 +224,10 @@ with lib;
       set -g mouse on
     '';
 
-    home.file.".conkyrc".text = builtins.readFile ./.conkyrc;
+    home.file.".conkyrc".text = builtins.readFile ./desktop/.conkyrc;
 
     # Emacs
-    home.file.".spacemacs".text = builtins.readFile ./.spacemacs;
-
+    home.file.".spacemacs".text = builtins.readFile ./desktop/.spacemacs;
     home.file.".emacs.d" = {
       source = fetchFromGitHub {
         owner = "syl20bnr";
@@ -238,6 +237,7 @@ with lib;
       };
       recursive = true;
     };
+    home.file.".spacemacs.d/next-spec-day.el".text = builtins.readFile ./desktop/next-spec-day.el;
 
     # GTK & Qt
     gtk = {
@@ -495,7 +495,7 @@ with lib;
         client.urgent $base02 $base08 $base07 $base08
 
         bar {
-            status_command bash ${./conky-bar.sh}
+            status_command bash ${./desktop/conky-bar.sh}
             i3bar_command i3bar -t
             font pango:Source Code Pro
             position top
