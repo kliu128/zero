@@ -85,7 +85,6 @@
         ./rem/samba.nix
         ./rem/vfio.nix
         ./rem/wireguard.nix
-        ./rem/zsh.nix
       ];
 
       networking.hostName = "rem";
