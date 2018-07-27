@@ -560,6 +560,7 @@ with lib;
         export EDITOR="vim "
       fi
       
+      # Convenient aliases
       alias k=kubectl
       # Enable yarn with emoji
       alias yarn="yarn --emoji true"
