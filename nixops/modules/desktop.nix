@@ -24,6 +24,10 @@ with lib;
   services.avahi.publish.userServices = true;
   services.avahi.nssmdns = true; # allow .local resolving
 
+  # Printing configuration
+  services.printing.enable = true;
+  services.printing.clientConf = "ServerName ${(import ../wireguard.nix).ips.rem}";
+
   services.syncthing = {
     enable = true;
     user = "kevin";
