@@ -15,12 +15,12 @@ spec:
         app: parity
     spec:
       nodeSelector:
-        kubernetes.io/hostname: otto
+        kubernetes.io/hostname: rem
       containers:
       - image: parity/parity:nightly
         imagePullPolicy: Always
         args: [-d, /data, --jsonrpc-interface=all, --jsonrpc-cors=*,
-              --jsonrpc-apis=safe, --no-ancient-blocks, --max-peers=200, --min-peers=100, --snapshot-peers=100]
+              --jsonrpc-apis=safe, --no-ancient-blocks, --no-warp]
         name: parity
         resources:
           resources:
@@ -32,8 +32,8 @@ spec:
       restartPolicy: Always
       volumes:
       - name: data
-        persistentVolumeClaim:
-          claimName: parity-data
+        hostPath:
+          path: /srv/nfs/pvcs/default-parity-data-pvc-fbaa03aa-6b52-11e8-9446-74d435e2529b
 status: {}
 ---
 apiVersion: v1
