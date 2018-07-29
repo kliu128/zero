@@ -33,4 +33,5 @@
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 
   services.tlp.enable = true; # For laptop
+  powerManagement.powertop.enable = true;
 }
