@@ -26,7 +26,7 @@
   otto =
     { config, pkgs, lib, ... }:
     {
-      deployment.targetHost = "otto.lan";
+      deployment.targetHost = "192.168.1.11";
       deployment.hasFastConnection = true;
 
       imports = [
@@ -62,7 +62,7 @@
   rem =
     { config, pkgs, lib, ... }:
     {
-      deployment.targetHost = "rem.lan";
+      deployment.targetHost = "192.168.1.5";
       deployment.hasFastConnection = true;
 
       imports = [

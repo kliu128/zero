@@ -40,14 +40,14 @@
     lockdPort = 4001;
     mountdPort = 4002;
     exports = ''
-      /srv/nfs *.lan(rw,fsid=0,async,no_root_squash,crossmnt)
+      /srv/nfs 192.168.1.0/24(rw,fsid=0,async,no_root_squash,crossmnt)
 
-      /srv/nfs/books *.lan(rw,fsid=100,async,insecure,nohide,no_root_squash)
-      /srv/nfs/incoming *.lan(rw,fsid=102,async,nohide,insecure,no_root_squash)
-      /srv/nfs/movies *.lan(rw,fsid=103,async,nohide,insecure,no_root_squash)
-      /srv/nfs/mineos-backups *.lan(rw,fsid=104,async,nohide,insecure,no_root_squash)
-      /srv/nfs/tv-shows *.lan(rw,fsid=105,async,nohide,insecure,no_root_squash)
-      /srv/nfs/zoneminder *.lan(rw,fsid=106,async,nohide,insecure,no_root_squash)
+      /srv/nfs/books 192.168.1.0/24(rw,fsid=100,async,insecure,nohide,no_root_squash)
+      /srv/nfs/incoming 192.168.1.0/24(rw,fsid=102,async,nohide,insecure,no_root_squash)
+      /srv/nfs/movies 192.168.1.0/24(rw,fsid=103,async,nohide,insecure,no_root_squash)
+      /srv/nfs/mineos-backups 192.168.1.0/24(rw,fsid=104,async,nohide,insecure,no_root_squash)
+      /srv/nfs/tv-shows 192.168.1.0/24(rw,fsid=105,async,nohide,insecure,no_root_squash)
+      /srv/nfs/zoneminder 192.168.1.0/24(rw,fsid=106,async,nohide,insecure,no_root_squash)
 
       /srv/nfs/home ${(import ../wireguard.nix).subnet}(rw,async,nohide,insecure,no_root_squash)
       /srv/nfs/storage ${(import ../wireguard.nix).subnet}(rw,async,fsid=107,nohide,insecure,no_root_squash)

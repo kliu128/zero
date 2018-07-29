@@ -19,7 +19,7 @@
   # Video.
   boot.earlyVconsoleSetup = true;
   services.xserver.videoDrivers = [ "modesetting" "amdgpu" ];
-  boot.kernelParams = [ "amdgpu.dc=0" "scsi_mod.use_blk_mq=1" ];
+  boot.kernelParams = [ "amdgpu.dc=0" "scsi_mod.use_blk_mq=1" "amdgpu.vm_fragment_size=9" ];
 
   # Freeness (that is, not.)
   hardware.enableRedistributableFirmware = true; # for amdgpu
@@ -187,6 +187,7 @@
     size = 4096;
   } ];
   boot.kernel.sysctl."vm.min_free_kbytes" = 1000000;
+  boot.kernel.sysctl."kernel.rr_interval" = 3;
 
   # Reset keyboard on bootup (Pok3r)
   # Otherwise keys get dropped, for some reason

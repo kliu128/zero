@@ -270,7 +270,7 @@ with lib;
       # System tools
       i7z atop bcachefs-tools beets borgbackup cointop cowsay ctop dnsutils file fortune python36Packages.glances gnupg hdparm htop iftop iotop python python3 libva-full lm_sensors lolcat looking-glass-client lzip mpw nheko oh-my-zsh openjdk python36Packages.tvnamer rclone restic rustup screen smartmontools snapraid spectre-meltdown-checker stress-ng telnet tmux tree vim wget wireguard unar
       # Desktop applications
-      android-studio arduino atom calibre cantata chromium clementine codeblocks discord electron-cash emacs filezilla firebird-emu gnome3.gnome-disk-utility gpodder hexchat jetbrains.idea-community jetbrains.pycharm-community keepassxc latest.firefox-nightly-bin liferea mate.atril mkvtoolnix mpv pavucontrol skypeforlinux simple-scan slack thunderbird tor-browser-bundle transmission_gtk transmission_remote_gtk vlc vscode wine winetricks youtube-dl zoom-us
+      android-studio arduino atom calibre cantata chromium clementine codeblocks discord electron-cash emacs filezilla firebird-emu gnome3.gnome-disk-utility google-chrome gpodder hexchat jetbrains.idea-community jetbrains.pycharm-community keepassxc latest.firefox-nightly-bin liferea mate.atril mkvtoolnix mpv pavucontrol skypeforlinux simple-scan slack thunderbird tor-browser-bundle transmission_gtk transmission_remote_gtk vlc vscode wine winetricks youtube-dl zoom-us
       # Desktop tools
       appimage-run autokey barrier
       # KDE applications
@@ -282,7 +282,7 @@ with lib;
       # VM and DevOps
       helmfile kubectl kubernetes-helm nixops virtmanager
       # Desktop environment
-      blueman conky i3lock nitrogen pcmanfm system-config-printer scrot xautolock xcape termite
+      blueman conky i3lock nitrogen pcmanfm system-config-printer scrot xautolock xcape xcompmgr termite
     ];
     pam.sessionVariables = {
       GPODDER_HOME = "/home/kevin/.config/gPodder";
@@ -528,6 +528,7 @@ with lib;
         exec --no-startup-id xautolock -time 5 -locker "i3lock" -corners ----
         exec --no-startup-id xset s 290
         bindsym Pause exec xautolock -locknow && sleep 5 && xset dpms force off
+        exec xcompmgr
       '';
     };
 
