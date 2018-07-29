@@ -31,4 +31,6 @@
 
   nix.maxJobs = lib.mkDefault 4;
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
+
+  services.tlp.enable = true; # For laptop
 }
