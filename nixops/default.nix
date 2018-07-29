@@ -30,6 +30,7 @@
       deployment.hasFastConnection = true;
 
       imports = [
+        ./modules/boinc.nix
         ./modules/docker.nix
         ./modules/kubernetes-common.nix
         ./modules/kubernetes-node.nix
