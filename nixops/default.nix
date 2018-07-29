@@ -93,6 +93,8 @@
       # Options as Kubernetes entry node
       networking.firewall.allowedTCPPorts = [
         22 25 80 143 443 587 631 993 8448 9001 9030 25565 ];
+
+      systemd.services.cups.enable = false; # don't conflict with docker cups
       
       # ToxVPN ip
       services.toxvpn.localip = "10.123.123.1";
