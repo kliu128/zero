@@ -81,4 +81,9 @@
   # Make critical services restart on failure
   systemd.services.kube-scheduler.serviceConfig.Restart = "always";
   systemd.services.flannel.serviceConfig.Restart = "always";
+
+  networking.hosts = {
+    "192.168.1.5" = [ "rem" ];
+    "192.168.1.11" = [ "otto" ];
+  };
 }
