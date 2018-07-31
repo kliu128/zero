@@ -175,6 +175,8 @@
   systemd.tmpfiles.rules = [
     # Auto-make mount folders for filesystems that NixOS doesn't handle directly
     "d /mnt/storage 0755 root root -"
+    # Ethminer
+    "w /sys/class/drm/card0/device/hwmon/hwmon1/pwm1 - - - - 200"
   ];
 
   # Disk and swap
@@ -182,12 +184,11 @@
   boot.initrd.luks.devices."root".allowDiscards = true;
   services.fstrim.enable = true;
   boot.cleanTmpDir = true;
-  swapDevices = [ {
-    device = "/swap";
-    size = 4096;
-  } ];
   boot.kernel.sysctl."vm.min_free_kbytes" = 1000000;
   boot.kernel.sysctl."kernel.rr_interval" = 3;
+  services.udev.extraRules = ''
+    ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/scheduler}="kyber"
+  '';
 
   # Reset keyboard on bootup (Pok3r)
   # Otherwise keys get dropped, for some reason
@@ -212,4 +213,5 @@
     };
     wantedBy = [ "multi-user.target" ];
   };
+  zramSwap.enable = true;
 }
