@@ -1,0 +1,19 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: ethminer
+spec:
+  template:
+    metadata:
+      labels:
+        app: ethminer
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: rem
+      containers:
+        - image: calvintam236/ethminer:amdgpu
+          args: [-G, -S, "http://eth-us-east1.nanopool.org:9999", -O, 0xc3ad46dbffefa7ddba2e4774650eb55cfab5056f.rem/kevin@potatofrom.space]
+          name: ethminer
+          securityContext:
+            privileged: true
+      restartPolicy: Always
