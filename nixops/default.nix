@@ -10,7 +10,6 @@
   
   defaults = {
     imports = [
-      ./common/earlyoom.nix
       ./common/firewall.nix
       ./common/kernel.nix
       ./common/nix.nix
