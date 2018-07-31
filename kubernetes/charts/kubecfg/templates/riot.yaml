@@ -55,6 +55,7 @@ data:
         "integrations_ui_url": "https://dimension.potatofrom.space/riot",
         "integrations_rest_url": "https://dimension.potatofrom.space/api/v1/scalar",
         "integrations_widgets_urls": ["https://dimension.potatofrom.space/widgets"],
+        "integrations_jitsi_widget_url": "https://dimension.potatofrom.space/widgets/jitsi",
         "bug_report_endpoint_url": "https://riot.im/bugreports/submit",
         "features": {
             "feature_groups": "labs",
