@@ -1,5 +1,5 @@
 { config, lib, pkgs, ... }:
 
 {
-  boot.kernelPackages = pkgs.linuxPackages_4_16;
+  boot.kernelPackages = pkgs.linuxPackages_4_14;
 }
