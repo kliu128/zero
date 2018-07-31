@@ -82,6 +82,7 @@
         ./rem/nfs.nix
         ./rem/nix.nix
         ./rem/samba.nix
+        ./rem/unbound.nix
         ./rem/vfio.nix
         ./rem/wireguard.nix
       ];
