@@ -12,6 +12,7 @@ controller:
     hsts-include-subdomains: "true"
     hsts-max-age: "31557600"
     hsts-preload: "true"
+    add-headers: "default/headers" # use configmap in default ns
 rbac:
   create: true
 tcp:
