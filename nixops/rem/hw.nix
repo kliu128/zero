@@ -213,5 +213,4 @@
     };
     wantedBy = [ "multi-user.target" ];
   };
-  zramSwap.enable = true;
 }
