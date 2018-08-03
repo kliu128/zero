@@ -47,6 +47,7 @@
 
       imports = [
         ./modules/desktop.nix
+        ./puck/desktop.nix
         ./puck/hw.nix
         ./puck/nfs-filesystems.nix
         ./puck/wireguard.nix
