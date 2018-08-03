@@ -17,7 +17,7 @@ spec:
       nodeSelector:
         kubernetes.io/hostname: rem
       containers:
-        - image: nvllsvm/emby-unlocked:latest
+        - image: nvllsvm/emby-unlocked:3.5.0.0
           env:
             - name: PGID
               value: "100"
