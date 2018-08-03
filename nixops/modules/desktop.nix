@@ -105,6 +105,7 @@ with lib;
       accountGuestInCpuMeter = true;
       detailedCpuTime = true;
       hideKernelThreads = false;
+      hideUserlandThreads = true;
       hideThreads = true;
     };
     programs.rofi = {
