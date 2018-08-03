@@ -18,7 +18,7 @@
 
   # Video.
   boot.earlyVconsoleSetup = true;
-  services.xserver.videoDrivers = [ "modesetting" "amdgpu" ];
+  services.xserver.videoDrivers = [ "amdgpu" ];
   boot.kernelParams = [ "amdgpu.dc=0" "scsi_mod.use_blk_mq=1" "amdgpu.vm_fragment_size=9" ];
 
   # Freeness (that is, not.)
@@ -185,7 +185,10 @@
   services.fstrim.enable = true;
   boot.cleanTmpDir = true;
   boot.kernel.sysctl."vm.min_free_kbytes" = 1000000;
-  boot.kernel.sysctl."kernel.rr_interval" = 3;
+  swapDevices = [ {
+    device = "/swap";
+    size = 4096;
+  } ];
   services.udev.extraRules = ''
     ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/scheduler}="kyber"
   '';
