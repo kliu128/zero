@@ -31,12 +31,10 @@ spec:
       containers:
         # Main matrix server
         - name: synapse
-          image: matrixdotorg/synapse:v0.33.0
+          image: matrixdotorg/synapse:v0.33.1
           env:
             - name: SYNAPSE_CONFIG_PATH
               value: /config/homeserver.yaml
-            - name: SYNAPSE_CACHE_FACTOR
-              value: "0.01"
           ports:
             - containerPort: 8008
               name: http
@@ -76,7 +74,7 @@ spec:
             - name: db
               mountPath: /var/lib/postgresql/data
         - name: discord
-          image: halfshot/matrix-appservice-discord:develop
+          image: pneumaticat/matrix-appservice-discord:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 9005
