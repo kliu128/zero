@@ -216,10 +216,17 @@
     startAt = "daily";
   };
   systemd.services.scintillating-mirror = {
-    description = "Google Drive Gas Leak Data Mirroring";
+    description = "Scintillating Drive Mirroring";
     path = [ pkgs.rclone ];
     script = ''
-      rclone --config /etc/rclone.conf sync --verbose --drive-formats ods,odt,odp,svg "gdrive-batchfiles:Scintillating" "/mnt/storage/Kevin/Backups/Scintillating Drive"
+      # Drive alternate export: otherwise it fails to download files >~5 MB
+      # see https://github.com/ncw/rclone/issues/2243
+      rclone \
+        --config /etc/rclone.conf \
+        sync \
+        --verbose --drive-formats ods,odt,odp,svg \
+        --drive-alternate-export \
+        "gdrive-batchfiles:Scintillating" "/mnt/storage/Kevin/Backups/Scintillating Drive"
       chown -R kevin:users "/mnt/storage/Kevin/Backups/Scintillating Drive"
     '';
     after = [ "network-online.target" ];
