@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: minecraft
+spec:
+  selector:
+    matchLabels:
+      app: minecraft
+  template:
+    metadata:
+      labels:
+        app: minecraft
+    spec:
+      containers:
+        - name: minecraft
+          image: itzg/minecraft-server:latest
+          env:
+            # Accept Mojang EULA (required)
+            - name: EULA
+              value: "TRUE"
+            # Set Minecraft version and opts
+            - name: VERSION
+              value: "1.13"
+            # Minecraft config
+            - name: DIFFICULTY
+              value: hard
+            - name: OPS
+              value: nitroignika,WildTaegr
+            - name: WHITELIST
+              value: nitroignika,WildTaegr
+            - name: ENABLE_QUERY
+              value: "TRUE"
+            - name: ANNOUNCE_PLAYER_ACHIEVEMENTS
+              value: "TRUE"
+            - name: MOTD
+              value: "Kevloo Hosting"
+          ports:
+            - containerPort: 25565
+              name: minecraft
+          volumeMounts:
+            - name: data
+              mountPath: /data
+            - name: backups
+              mountPath: /backups
+          # Allow for attaching
+          tty: true
+          stdin: true
+      nodeSelector:
+        kubernetes.io/hostname: rem
+      hostNetwork: true
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: minecraft-data
+        - name: backups
+          hostPath:
+            path: /mnt/storage/Kevin/Backups/Minecraft/Current
+            type: Directory
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    app: minecraft
+  name: minecraft-data
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+status: {}
