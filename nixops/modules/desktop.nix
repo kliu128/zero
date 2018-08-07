@@ -283,7 +283,7 @@ with lib;
       # VM and DevOps
       helmfile kubectl kubernetes-helm nixops virtmanager
       # Desktop environment
-      arandr blueman conky i3lock nitrogen pcmanfm system-config-printer scrot xautolock xcape xcompmgr termite
+      arandr blueman conky dolphin i3lock nitrogen system-config-printer scrot xautolock xcape xcompmgr termite
     ];
     pam.sessionVariables = {
       GPODDER_HOME = "/home/kevin/.config/gPodder";
