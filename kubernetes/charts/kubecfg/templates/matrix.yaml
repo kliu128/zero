@@ -61,6 +61,9 @@ spec:
               subPath: discord-registration.yaml
               mountPath: /config/discord-registration.yaml
             - name: config
+              subPath: telegram-registration.yaml
+              mountPath: /config/telegram-registration.yaml
+            - name: config
               subPath: potatofrom.space.log.config
               mountPath: /config/potatofrom.space.log.config
             - name: data
@@ -88,6 +91,19 @@ spec:
               mountPath: /data/config.yaml
             - name: discord-data
               mountPath: /data
+        - name: telegram
+          image: tulir/mautrix-telegram
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+              name: telegram
+          volumeMounts:
+            - name: config
+              subPath: telegram-registration.yaml
+              mountPath: /data/registration.yaml
+              # Telegram config is in PVC
+            - name: telegram-data
+              mountPath: /data
       volumes:
         # Stores SSL keys, media_store
         - name: data
@@ -96,6 +112,9 @@ spec:
         - name: discord-data
           persistentVolumeClaim:
             claimName: matrix-discord-data
+        - name: telegram-data
+          persistentVolumeClaim:
+            claimName: matrix-telegram-data
         - name: db
           persistentVolumeClaim:
             claimName: matrix-db
@@ -125,6 +144,21 @@ metadata:
   labels:
     app: matrix
   name: matrix-discord-data
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+status: {}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    app: matrix
+  name: matrix-telegram-data
 spec:
   accessModes:
   - ReadWriteOnce
