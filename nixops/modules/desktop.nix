@@ -13,6 +13,9 @@ with lib;
   # Keyboard layout
   services.xserver.libinput.enable = true;
 
+  # Fwupd
+  services.fwupd.enable = true;
+
   hardware.opengl.driSupport32Bit = true; # for steam and wine
 
   # Scanner
