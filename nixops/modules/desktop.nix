@@ -222,9 +222,6 @@ with lib;
       # if run as "tmux attach", create a session if one does not already exist
       new-session -n $HOST
 
-      # Enable 256-color mode
-      set -g default-terminal "screen-256color"
-
       # enable mouse
       set -g mouse on
     '';
