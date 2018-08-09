@@ -16,10 +16,12 @@
     serviceConfig.DynamicUser = true;
   };
   users.users.kindle = {
+    home = "/home/kindle";
     shell = pkgs.bash;
     description = "Kindle Status User";
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICuhNYOw//qjZTsQT99TavXaLAJLHmaDXV4YZowNWSMS root@kindle"
     ];
   };
+  home-manager.users.kindle.home.packages = [ pkgs.htop ];
 }
