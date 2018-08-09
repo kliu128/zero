@@ -19,7 +19,7 @@
   # Video.
   boot.earlyVconsoleSetup = true;
   services.xserver.videoDrivers = [ "amdgpu" ];
-  boot.kernelParams = [ "amdgpu.dc=0" "scsi_mod.use_blk_mq=N" "amdgpu.vm_fragment_size=9" ];
+  boot.kernelParams = [ "amdgpu.dc=0" "amdgpu.vm_fragment_size=9" ];
 
   # Freeness (that is, not.)
   hardware.enableRedistributableFirmware = true; # for amdgpu
@@ -184,7 +184,6 @@
   boot.initrd.luks.devices."root".allowDiscards = true;
   services.fstrim.enable = true;
   boot.cleanTmpDir = true;
-  boot.kernel.sysctl."vm.min_free_kbytes" = 1000000;
   swapDevices = [ {
     device = "/swap";
     size = 4096;
