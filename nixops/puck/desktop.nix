@@ -12,4 +12,6 @@
       bindsym XF86MonBrightnessDown exec xbacklight -dec 10
     '';
   };
+  virtualisation.libvirtd.enable = true;
+  users.extraUsers.kevin.extraGroups = [ "libvirtd" ];
 }
