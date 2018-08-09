@@ -40,7 +40,7 @@
     lockdPort = 4001;
     mountdPort = 4002;
     exports = ''
-      /srv/nfs 192.168.1.0/24(rw,fsid=0,async,no_root_squash,crossmnt)
+      /srv/nfs 192.168.1.0/24(rw,fsid=0,async,no_root_squash,crossmnt) ${(import ../wireguard.nix).subnet}(rw,fsid=0,async,no_root_squash,crossmnt)
 
       /srv/nfs/books 192.168.1.0/24(rw,fsid=100,async,insecure,nohide,no_root_squash)
       /srv/nfs/incoming 192.168.1.0/24(rw,fsid=102,async,nohide,insecure,no_root_squash)
