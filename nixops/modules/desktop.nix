@@ -91,6 +91,25 @@ with lib;
     (import (builtins.fetchTarball https://github.com/mozilla/nixpkgs-mozilla/archive/master.tar.gz))
   ];
 
+  environment.systemPackages = with pkgs; [
+    # System tools
+    i7z atop bcachefs-tools beets borgbackup cointop cowsay ctop dnsutils file fortune python36Packages.glances gnupg hdparm htop iftop iotop python python3 libva-full lm_sensors lolcat looking-glass-client lzip mpw nheko oh-my-zsh openjdk python36Packages.tvnamer rclone restic rustup screen smartmontools snapraid spectre-meltdown-checker stress-ng telnet thefuck tmux tree vim wget wireguard unar
+    # Desktop applications
+    android-studio arduino atom calibre cantata chromium clementine codeblocks discord emacs filezilla firebird-emu firefox gnome3.gnome-disk-utility google-chrome gpodder hexchat jetbrains.idea-community jetbrains.pycharm-community keepassxc libreoffice-fresh liferea mate.atril mkvtoolnix mpv pavucontrol skypeforlinux simple-scan slack thunderbird tor-browser-bundle transmission_gtk transmission_remote_gtk vlc vscode wine winetricks youtube-dl zoom-us
+    # Desktop tools
+    appimage-run autokey barrier
+    # KDE applications
+    ark kate okular partition-manager spectacle
+    # Development
+    bfg-repo-cleaner docker docker_compose docker-machine gcc gdb git-crypt gitAndTools.gitFull gnumake google-cloud-sdk
+    # Games
+    dolphinEmuMaster multimc steam steam-run-native
+    # VM and DevOps
+    helmfile kubectl kubernetes-helm nixops virtmanager
+    # Desktop environment
+    arandr blueman conky gnome3.nautilus i3lock system-config-printer scrot xautolock xcape xcompmgr termite
+  ];
+
   home-manager.users.kevin = {
     programs.home-manager.enable = true;
     programs.git = {
@@ -267,24 +286,6 @@ with lib;
       # Start polkit agent to allow for superuser operations
       ${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1 &
     '';
-    home.packages = with pkgs; [
-      # System tools
-      i7z atop bcachefs-tools beets borgbackup cointop cowsay ctop dnsutils file fortune python36Packages.glances gnupg hdparm htop iftop iotop python python3 libva-full lm_sensors lolcat looking-glass-client lzip mpw nheko oh-my-zsh openjdk python36Packages.tvnamer rclone restic rustup screen smartmontools snapraid spectre-meltdown-checker stress-ng telnet thefuck tmux tree vim wget wireguard unar
-      # Desktop applications
-      android-studio arduino atom calibre cantata chromium clementine codeblocks discord emacs filezilla firebird-emu firefox gnome3.gnome-disk-utility google-chrome gpodder hexchat jetbrains.idea-community jetbrains.pycharm-community keepassxc libreoffice-fresh liferea mate.atril mkvtoolnix mpv pavucontrol skypeforlinux simple-scan slack thunderbird tor-browser-bundle transmission_gtk transmission_remote_gtk vlc vscode wine winetricks youtube-dl zoom-us
-      # Desktop tools
-      appimage-run autokey barrier
-      # KDE applications
-      ark kate okular partition-manager spectacle
-      # Development
-      bfg-repo-cleaner docker docker_compose docker-machine gcc gdb git-crypt gitAndTools.gitFull gnumake google-cloud-sdk
-      # Games
-      dolphinEmuMaster multimc steam steam-run-native
-      # VM and DevOps
-      helmfile kubectl kubernetes-helm nixops virtmanager
-      # Desktop environment
-      arandr blueman conky i3lock nitrogen system-config-printer scrot xautolock xcape xcompmgr termite xfce.thunar
-    ];
     pam.sessionVariables = {
       GPODDER_HOME = "/home/kevin/.config/gPodder";
       GPODDER_DOWNLOAD_DIR = "/mnt/storage/Kevin/Audio/Podcasts";
