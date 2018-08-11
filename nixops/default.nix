@@ -68,6 +68,7 @@
       imports = [
         ./modules/desktop.nix
         ./modules/docker.nix
+        ./modules/ipfs.nix
         ./modules/kdeconnect.nix
         ./modules/kubernetes-common.nix
         ./modules/kubernetes-master.nix
