@@ -17,25 +17,25 @@ spec:
       nodeSelector:
         kubernetes.io/hostname: rem
       containers:
-      - image: nginx
-        name: nginx
-        resources: {}
-        volumeMounts:
-        - mountPath: /usr/share/nginx/html
-          name: files
-        - mountPath: /etc/nginx/conf.d/custom.conf
-          name: config
-          subPath: custom.conf
-          readOnly: true
+        - image: nginx
+          name: nginx
+          resources: {}
+          volumeMounts:
+            - mountPath: /usr/share/nginx/html
+              name: files
+            - mountPath: /etc/nginx/conf.d/custom.conf
+              name: config
+              subPath: custom.conf
+              readOnly: true
       restartPolicy: Always
       volumes:
-      - name: config
-        configMap:
-          name: dl-config
-      - name: files
-        hostPath:
-          path: /mnt/storage/Kevin/Incoming
-          type: Directory
+        - name: config
+          configMap:
+            name: dl-config
+        - name: files
+          hostPath:
+            path: /mnt/storage/Kevin/Share
+            type: Directory
 status: {}
 ---
 apiVersion: v1
@@ -46,9 +46,9 @@ metadata:
   name: dl
 spec:
   ports:
-  - name: http
-    port: 80
-    targetPort: 80
+    - name: http
+      port: 80
+      targetPort: 80
   selector:
     app: dl
 ---
@@ -60,8 +60,7 @@ metadata:
     app: dl
 data:
   # Enable autoindex
-  custom.conf:
-    autoindex on;
+  custom.conf: autoindex on;
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -73,7 +72,7 @@ metadata:
     nginx.ingress.kubernetes.io/auth-secret: dl-auth
     # message to display with an appropriate context why the authentication is required
     nginx.ingress.kubernetes.io/auth-realm: "Authentication Required - dl"
-    kubernetes.io/tls-acme: 'true'
+    kubernetes.io/tls-acme: "true"
   name: dl
 spec:
   tls:
@@ -81,10 +80,10 @@ spec:
       hosts:
         - dl.potatofrom.space
   rules:
-  - host: dl.potatofrom.space
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: dl
-          servicePort: 80
+    - host: dl.potatofrom.space
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: dl
+              servicePort: 80
