@@ -14,31 +14,31 @@ spec:
         app: tor
     spec:
       containers:
-      - image: registry.potatofrom.space/kevin/pia-tor:latest
-        name: tor
-        securityContext:
-          capabilities:
-            add:
-              - NET_ADMIN
-              - MKNOD
-        volumeMounts:
-        - mountPath: /etc/tor/torrc
-          name: config
-          subPath: torrc
-        - mountPath: /auth.conf
-          name: config
-          subPath: auth.conf
-          readOnly: true
-        - mountPath: /var/lib/tor/
-          name: data
+        - image: registry.potatofrom.space/kevin/pia-tor:latest
+          name: tor
+          securityContext:
+            capabilities:
+              add:
+                - NET_ADMIN
+                - MKNOD
+          volumeMounts:
+            - mountPath: /etc/tor/torrc
+              name: config
+              subPath: torrc
+            - mountPath: /auth.conf
+              name: config
+              subPath: auth.conf
+              readOnly: true
+            - mountPath: /var/lib/tor/
+              name: data
       restartPolicy: Always
       volumes:
-      - name: config
-        secret:
-          secretName: tor-config
-      - name: data
-        persistentVolumeClaim:
-          claimName: tor-data
+        - name: config
+          secret:
+            secretName: tor-config
+        - name: data
+          persistentVolumeClaim:
+            claimName: tor-data
 status: {}
 ---
 apiVersion: v1
@@ -50,7 +50,7 @@ metadata:
   name: tor-data
 spec:
   accessModes:
-  - ReadWriteOnce
+    - ReadWriteOnce
   resources:
     requests:
       storage: 1Gi

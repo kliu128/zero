@@ -17,22 +17,6 @@ spec:
       nodeSelector:
         kubernetes.io/hostname: rem
       containers:
-      - image: jess/tor-relay
-        command: [tor]
-        args: [-f, /etc/tor/torrc]
-        name: tor
-        resources: {}
-        volumeMounts:
-        - mountPath: /etc/tor/torrc
-          name: tor-config
-          subPath: torrc
-          readOnly: true
-        - mountPath: /var/lib/tor/.tor
-          subPath: tor
-          name: data
-        - mountPath: /var/lib/tor/dl
-          subPath: dl
-          name: data
       - image: nginx
         name: nginx
         resources: {}
@@ -40,23 +24,17 @@ spec:
         - mountPath: /usr/share/nginx/html
           name: files
         - mountPath: /etc/nginx/conf.d/custom.conf
-          name: nginx-config
+          name: config
           subPath: custom.conf
           readOnly: true
       restartPolicy: Always
       volumes:
-      - name: nginx-config
+      - name: config
         configMap:
-          name: dl-nginx-config
-      - name: tor-config
-        configMap:
-          name: dl-tor-config
-      - name: data
-        persistentVolumeClaim:
-          claimName: dl-tor-data
+          name: dl-config
       - name: files
         hostPath:
-          path: /mnt/storage/Kevin/Share
+          path: /mnt/storage/Kevin/Incoming
           type: Directory
 status: {}
 ---
@@ -77,37 +55,36 @@ spec:
 kind: ConfigMap
 apiVersion: v1
 metadata:
-  name: dl-nginx-config
+  name: dl-config
   labels:
     app: dl
 data:
   # Enable autoindex
   custom.conf:
     autoindex on;
-    server_tokens off;
 ---
-kind: ConfigMap
-apiVersion: v1
+apiVersion: extensions/v1beta1
+kind: Ingress
 metadata:
-  name: dl-tor-config
-  labels:
-    app: dl
-data:
-  torrc: |
-    HiddenServiceDir /var/lib/tor/dl
-    HiddenServicePort 80 127.0.0.1:80
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  creationTimestamp: null
-  labels:
-    app: dl
-  name: dl-tor-data
+  annotations:
+    # type of authentication
+    nginx.ingress.kubernetes.io/auth-type: basic
+    # name of the secret that contains the user/password definitions
+    nginx.ingress.kubernetes.io/auth-secret: dl-auth
+    # message to display with an appropriate context why the authentication is required
+    nginx.ingress.kubernetes.io/auth-realm: "Authentication Required - dl"
+    kubernetes.io/tls-acme: 'true'
+  name: dl
 spec:
-  accessModes:
-  - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Gi
-status: {}
+  tls:
+    - secretName: dl-tls
+      hosts:
+        - dl.potatofrom.space
+  rules:
+  - host: dl.potatofrom.space
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: dl
+          servicePort: 80
