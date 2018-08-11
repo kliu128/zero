@@ -188,6 +188,7 @@
     device = "/swap";
     size = 4096;
   } ];
+  boot.kernel.sysctl."vm.min_free_kbytes" = 1000000;
 
   # Reset keyboard on bootup (Pok3r)
   # Otherwise keys get dropped, for some reason
