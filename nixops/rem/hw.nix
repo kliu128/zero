@@ -19,7 +19,7 @@
   # Video.
   boot.earlyVconsoleSetup = true;
   services.xserver.videoDrivers = [ "amdgpu" ];
-  boot.kernelParams = [ "amdgpu.dc=0" "amdgpu.vm_fragment_size=9" ];
+  boot.kernelParams = [ "amdgpu.dc=0" "scsi_mod.use_blk_mq=Y" "amdgpu.vm_fragment_size=9" ];
 
   # Freeness (that is, not.)
   hardware.enableRedistributableFirmware = true; # for amdgpu
