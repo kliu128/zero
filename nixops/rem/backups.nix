@@ -127,9 +127,8 @@
     exclude = [
       "sh:/home/*/.cache/*"
       "sh:/var/lib/docker/*"
+      "sh:/var/lib/kubernetes/*"
       "sh:/var/log/*"
-      # Many files deleted and created continuously; breaks borg
-      "sh:/srv/nfs/pvcs/default-parity-data-pvc-fbaa03aa-6b52-11e8-9446-74d435e2529b/*"
     ];
     extraCreateArgs = "--one-file-system --stats --progress -v";
     paths = "/";
