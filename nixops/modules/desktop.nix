@@ -153,12 +153,17 @@ with lib;
           port = 843;
         };
         otto = {
-          hostname = "otto.lan";
+          hostname = "192.168.1.11";
           user = "kevin";
           port = 22;
         };
         puck = {
           hostname = (import ../wireguard.nix).ips.puck;
+          user = "kevin";
+          port = 843;
+        };
+        rem = {
+          hostname = (import ../wireguard.nix).ips.rem;
           user = "kevin";
           port = 843;
         };
