@@ -27,6 +27,7 @@ let credentials = {
       deployment.hasFastConnection = true;
 
       imports = [
+        ./common/dns.nix
         ./common/earlyoom.nix
         ./common/firewall.nix
         ./common/kernel.nix
@@ -51,6 +52,7 @@ let credentials = {
       deployment.targetHost = (import ./wireguard.nix).ips.puck;
 
       imports = [
+        ./common/dns.nix
         ./common/earlyoom.nix
         ./common/firewall.nix
         ./common/kernel.nix
@@ -77,6 +79,7 @@ let credentials = {
       deployment.hasFastConnection = true;
 
       imports = [
+        ./common/dns.nix
         ./common/earlyoom.nix
         ./common/firewall.nix
         ./common/kernel.nix
@@ -135,6 +138,7 @@ let credentials = {
     {
       # Reduced set of imports
       imports = [
+        ./common/dns.nix
         ./common/earlyoom.nix
         ./common/firewall.nix
         ./common/kernel.nix
