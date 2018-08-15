@@ -186,7 +186,7 @@
     size = 4096;
   } ];
   services.udev.extraRules = ''
-    ACTION=="add|change", SUBSYSTEM=="block", KERNEL=="sd?", ATTR{queue/scheduler}="bfq"
+    ACTION=="add|change", SUBSYSTEM=="block", KERNEL=="sd?", ATTR{queue/scheduler}="kyber"
   '';
   boot.kernel.sysctl."vm.min_free_kbytes" = 1000000;
   boot.kernel.sysctl."vm.dirty_ratio" = 2;
