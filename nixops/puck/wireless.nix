@@ -1,8 +1,4 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   networking.networkmanager.enable = true;
@@ -11,4 +7,5 @@
   home-manager.users.kevin.xsession.windowManager.i3.extraConfig = ''
     exec nm-applet
   '';
+  services.fail2ban.enable = lib.mkForce false;
 }
