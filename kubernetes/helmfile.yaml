@@ -20,17 +20,6 @@ releases:
     version: ^0.2.10
     values:
       - ./values/cert-manager.yaml
-  - name: prometheus-operator
-    namespace: monitoring
-    chart: coreos/prometheus-operator
-    values:
-      - ./values/prometheus-operator.yaml
-  - name: kube-prometheus
-    namespace: monitoring
-    chart: coreos/kube-prometheus
-    values:
-      - ./values/kube-prometheus.yaml
-      - ./values/kube-prometheus.secret.yaml
   - name: gitlab
     namespace: default
     chart: ./charts/gitlab
