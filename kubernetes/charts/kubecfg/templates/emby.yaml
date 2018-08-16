@@ -14,8 +14,6 @@ spec:
       labels:
         app: emby
     spec:
-      nodeSelector:
-        kubernetes.io/hostname: rem
       containers:
         - image: nvllsvm/emby-unlocked:3.5.0.0
           env:
@@ -35,27 +33,27 @@ spec:
             initialDelaySeconds: 60
             periodSeconds: 3
           volumeMounts:
-          - mountPath: /data/tv-shows
-            name: tv
-            readOnly: true
-          - mountPath: /data/movies
-            name: movies
-            readOnly: true
-          - mountPath: /config
-            name: config
+            - mountPath: /data/tv-shows
+              name: tv
+              readOnly: true
+            - mountPath: /data/movies
+              name: movies
+              readOnly: true
+            - mountPath: /config
+              name: config
       restartPolicy: Always
       volumes:
         - name: config
           persistentVolumeClaim:
             claimName: emby-config
         - name: tv
-          hostPath:
-            path: /mnt/storage/Kevin/Videos/TV Shows
-            type: Directory
+          nfs:
+            path: /storage/Kevin/Videos/TV Shows
+            server: 192.168.1.5
         - name: movies
-          hostPath:
-            path: /mnt/storage/Kevin/Videos/Movies
-            type: Directory
+          nfs:
+            path: /storage/Kevin/Videos/Movies
+            type: 192.168.1.5
 status: {}
 ---
 apiVersion: v1
@@ -66,9 +64,9 @@ metadata:
   name: emby
 spec:
   ports:
-  - name: http
-    port: 8096
-    targetPort: http
+    - name: http
+      port: 8096
+      targetPort: http
   selector:
     app: emby
 ---
@@ -79,7 +77,7 @@ metadata:
   name: emby-config
 spec:
   accessModes:
-  - ReadWriteOnce
+    - ReadWriteOnce
   resources:
     requests:
       storage: 20Gi
@@ -89,7 +87,7 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   annotations:
-    kubernetes.io/tls-acme: 'true'
+    kubernetes.io/tls-acme: "true"
   name: emby
 spec:
   tls:
@@ -97,10 +95,10 @@ spec:
       hosts:
         - media.potatofrom.space
   rules:
-  - host: media.potatofrom.space
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: emby
-          servicePort: 8096
+    - host: media.potatofrom.space
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: emby
+              servicePort: 8096

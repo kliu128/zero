@@ -13,16 +13,14 @@ spec:
       labels:
         app: sonarr
     spec:
-      nodeSelector:
-        kubernetes.io/hostname: rem
       containers:
         - env:
-          - name: PGID
-            value: "100"
-          - name: PUID
-            value: "1000"
-          - name: TZ
-            value: America/New_York
+            - name: PGID
+              value: "100"
+            - name: PUID
+              value: "1000"
+            - name: TZ
+              value: America/New_York
           image: linuxserver/sonarr
           name: sonarr
           livenessProbe:
@@ -70,16 +68,16 @@ spec:
           persistentVolumeClaim:
             claimName: sonarr-config
         - name: sonarr-data
-          hostPath:
-            path: /mnt/storage/Kevin/Incoming
-            type: Directory
+          nfs:
+            path: /storage/Kevin/Incoming
+            server: 192.168.1.5
         - name: jackett-config
           persistentVolumeClaim:
             claimName: jackett-config
         - name: tv
-          hostPath:
-            path: /mnt/storage/Kevin/Videos/TV Shows
-            type: Directory
+          nfs:
+            path: /storage/Kevin/Videos/TV Shows
+            server: 192.168.1.5
 status: {}
 ---
 apiVersion: v1
@@ -90,9 +88,9 @@ metadata:
   name: sonarr
 spec:
   ports:
-  - name: http
-    port: 8989
-    targetPort: 8989
+    - name: http
+      port: 8989
+      targetPort: 8989
   selector:
     app: sonarr
 ---
@@ -106,7 +104,7 @@ metadata:
     nginx.ingress.kubernetes.io/auth-secret: sonarr-auth
     # message to display with an appropriate context why the authentication is required
     nginx.ingress.kubernetes.io/auth-realm: "Authentication Required - sonarr"
-    kubernetes.io/tls-acme: 'true'
+    kubernetes.io/tls-acme: "true"
   name: sonarr
 spec:
   tls:
@@ -114,13 +112,13 @@ spec:
       hosts:
         - sonarr.potatofrom.space
   rules:
-  - host: sonarr.potatofrom.space
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: sonarr
-          servicePort: 8989
+    - host: sonarr.potatofrom.space
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: sonarr
+              servicePort: 8989
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -131,7 +129,7 @@ metadata:
   name: sonarr-config
 spec:
   accessModes:
-  - ReadWriteOnce
+    - ReadWriteOnce
   resources:
     requests:
       storage: 20Gi
@@ -146,7 +144,7 @@ metadata:
   name: jackett-config
 spec:
   accessModes:
-  - ReadWriteOnce
+    - ReadWriteOnce
   resources:
     requests:
       storage: 20Gi

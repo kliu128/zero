@@ -14,8 +14,6 @@ spec:
       labels:
         app: dl
     spec:
-      nodeSelector:
-        kubernetes.io/hostname: rem
       containers:
         - image: nginx
           name: nginx
@@ -33,9 +31,9 @@ spec:
           configMap:
             name: dl-config
         - name: files
-          hostPath:
-            path: /mnt/storage/Kevin/Share
-            type: Directory
+          nfs:
+            path: /storage/Kevin/Share
+            server: 192.168.1.5
 status: {}
 ---
 apiVersion: v1

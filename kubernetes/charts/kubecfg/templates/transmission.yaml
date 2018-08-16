@@ -14,37 +14,35 @@ spec:
       labels:
         app: transmission
     spec:
-      nodeSelector:
-        kubernetes.io/hostname: rem
       containers:
-      - env:
-          - name: PUID
-            value: '1000'
-          - name: PGID
-            value: '100'
-          - name: TRANSMISSION_RATIO_LIMIT_ENABLED
-            value: 'true'
-          - name: LOCAL_NETWORK
-            value: 10.0.0.0/24
-          - name: TRANSMISSION_WEB_UI
-            value: transmission-web-control
-        envFrom:
-          - secretRef:
-              name: transmission-pia-auth
-        image: haugene/transmission-openvpn:latest
-        name: transmission
-        securityContext:
-          privileged: true
-        resources: {}
-        volumeMounts:
-        - mountPath: /data
-          name: files
+        - env:
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "100"
+            - name: TRANSMISSION_RATIO_LIMIT_ENABLED
+              value: "true"
+            - name: LOCAL_NETWORK
+              value: 10.0.0.0/24
+            - name: TRANSMISSION_WEB_UI
+              value: transmission-web-control
+          envFrom:
+            - secretRef:
+                name: transmission-pia-auth
+          image: haugene/transmission-openvpn:latest
+          name: transmission
+          securityContext:
+            privileged: true
+          resources: {}
+          volumeMounts:
+            - mountPath: /data
+              name: files
       restartPolicy: Always
       volumes:
-      - name: files
-        hostPath:
-          path: /mnt/storage/Kevin/Incoming
-          type: Directory
+        - name: files
+          nfs:
+            path: /storage/Kevin/Incoming
+            host: 192.168.1.5
 status: {}
 ---
 apiVersion: v1
@@ -55,9 +53,9 @@ metadata:
   name: transmission
 spec:
   ports:
-  - name: http
-    port: 9091
-    targetPort: 9091
+    - name: http
+      port: 9091
+      targetPort: 9091
   selector:
     app: transmission
 ---
@@ -71,7 +69,7 @@ metadata:
     nginx.ingress.kubernetes.io/auth-secret: transmission-auth
     # message to display with an appropriate context why the authentication is required
     nginx.ingress.kubernetes.io/auth-realm: "Authentication Required - transmission"
-    kubernetes.io/tls-acme: 'true'
+    kubernetes.io/tls-acme: "true"
   name: transmission
 spec:
   tls:
@@ -79,10 +77,10 @@ spec:
       hosts:
         - transmission.potatofrom.space
   rules:
-  - host: transmission.potatofrom.space
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: transmission
-          servicePort: 9091
+    - host: transmission.potatofrom.space
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: transmission
+              servicePort: 9091
