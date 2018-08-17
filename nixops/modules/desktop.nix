@@ -59,10 +59,6 @@ with lib;
       username = "Pneumaticat";
       password = builtins.readFile ./secrets/factorio-password.txt;
     };
-    wine = pkgs.wine.override {
-      wineRelease = "staging";
-      wineBuild = "wineWow";
-    };
   };
 
   hardware.bluetooth.enable = true;
@@ -232,6 +228,9 @@ with lib;
           // Set the default
           "editor.formatOnSave": true,
           "[json]": {
+            "editor.formatOnSave": false
+          },
+          "[yaml]": {
             "editor.formatOnSave": false
           },
           "telemetry.enableTelemetry": false,

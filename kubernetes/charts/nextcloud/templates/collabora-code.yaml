@@ -18,6 +18,8 @@ spec:
       labels:
         app: {{ template "nextcloud.name" . }}-collabora-code
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: rem
       containers:
       - image: collabora/code
         env:
