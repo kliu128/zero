@@ -151,7 +151,7 @@ with lib;
         otto = {
           hostname = "192.168.1.11";
           user = "kevin";
-          port = 22;
+          port = 843;
         };
         puck = {
           hostname = (import ../wireguard.nix).ips.puck;
