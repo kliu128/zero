@@ -1,0 +1,85 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: netdata
+  name: netdata
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: netdata
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: rem
+      containers:
+        - image: firehol/netdata
+          name: netdata
+          securityContext:
+            cap_add:
+              - SYS_PTRACE
+          volumeMounts:
+            - mountPath: /host/proc
+              name: proc
+              readOnly: true
+            - mountPath: /host/sys
+              name: sys
+              readOnly: true
+            - mountPath: /var/run/docker.sock
+              name: docker
+              readOnly: true
+      restartPolicy: Always
+      volumes:
+        - name: proc
+          hostPath:
+            path: /proc
+        - name: sys
+          hostPath:
+            path: /sys
+        - name: docker
+          hostPath:
+            path: /var/run/docker.sock
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: netdata
+  name: netdata
+spec:
+  ports:
+    - name: http
+      port: 19999
+      targetPort: 19999
+  selector:
+    app: netdata
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    # type of authentication
+    nginx.ingress.kubernetes.io/auth-type: basic
+    # name of the secret that contains the user/password definitions
+    nginx.ingress.kubernetes.io/auth-secret: netdata-auth
+    # message to display with an appropriate context why the authentication is required
+    nginx.ingress.kubernetes.io/auth-realm: "Authentication Required - netdata"
+    kubernetes.io/tls-acme: "true"
+  name: netdata
+spec:
+  tls:
+    - secretName: netdata-tls
+      hosts:
+        - stats.potatofrom.space
+  rules:
+    - host: stats.potatofrom.space
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: netdata
+              servicePort: 19999
