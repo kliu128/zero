@@ -29,6 +29,7 @@
       "/dev/rtc","/dev/hpet", "/dev/vfio/vfio"
     ]
   '';
+  virtualisation.libvirtd.qemuRunAsRoot = true;
   # Allow kevin to manage libvirt
   users.extraUsers.kevin.extraGroups = [ "libvirtd" ];
 
@@ -42,13 +43,13 @@
   '';
 
   # Patch for better PulseAudio (for QEMU 2.12)
-  nixpkgs.config.packageOverrides = pkgs: rec {
-    qemu = pkgs.qemu.overrideAttrs (oldAttrs: rec {
-      patches = (pkgs.fetchpatch {
-        url = "https://github.com/qemu/qemu/compare/master...spheenik:2.12.0-patched.patch";
-        name = "qemu-pa-2.12.patch"; # Required due to https://github.com/NixOS/nixpkgs/issues/44949
-        sha256 = "0wzp0s6na7scf2z19zm0cyk58rdxc39fk3gksj53hi3d03r3vzss";
-      });
-    });
-  };
+  # nixpkgs.config.packageOverrides = pkgs: rec {
+  #   qemu = pkgs.qemu.overrideAttrs (oldAttrs: rec {
+  #     patches = (pkgs.fetchpatch {
+  #       url = "https://github.com/qemu/qemu/compare/master...spheenik:2.12.0-patched.patch";
+  #       name = "qemu-pa-2.12.patch"; # Required due to https://github.com/NixOS/nixpkgs/issues/44949
+  #       sha256 = "0wzp0s6na7scf2z19zm0cyk58rdxc39fk3gksj53hi3d03r3vzss";
+  #     });
+  #   });
+  # };
 }
