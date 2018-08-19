@@ -7,7 +7,6 @@
     roles = [ "node" "master" ];
 
     caFile = "/var/lib/kubernetes/certs/ca.pem";
-    verbose = true;
 
     apiserver = {
       bindAddress = "0.0.0.0";
