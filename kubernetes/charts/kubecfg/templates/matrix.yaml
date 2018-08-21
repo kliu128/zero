@@ -28,6 +28,8 @@ spec:
       labels:
         app: matrix
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: rem
       containers:
         # Main matrix server
         - name: synapse
@@ -60,6 +62,9 @@ spec:
             - name: config
               subPath: discord-registration.yaml
               mountPath: /config/discord-registration.yaml
+            - name: config
+              subPath: skype-registration.yaml
+              mountPath: /config/skype-registration.yaml
             - name: config
               subPath: telegram-registration.yaml
               mountPath: /config/telegram-registration.yaml
@@ -104,6 +109,18 @@ spec:
               # Telegram config is in PVC
             - name: telegram-data
               mountPath: /data
+        - name: skype
+          image: registry.potatofrom.space/kevin/matrix-puppet-skype:latest
+          ports:
+            - containerPort: 8090
+              name: skype
+          volumeMounts:
+            - name: config
+              subPath: skype-config.json
+              mountPath: /app/config.json
+            - name: config
+              subPath: skype-registration.yaml
+              mountPath: /app/skype-registration.yaml
       volumes:
         # Stores SSL keys, media_store
         - name: data
