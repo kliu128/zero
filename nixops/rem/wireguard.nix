@@ -28,11 +28,17 @@
       privateKey = builtins.readFile ../secrets/wireguard/rem-privatekey;
 
       peers = [
-         { # Puck
+        { # Puck
           # Public key of the peer (not a file path).
           publicKey = (import ../wireguard.nix).keys.puck;
           # List of IPs assigned to this peer within the tunnel subnet. Used to configure routing.
           allowedIPs = [ "${(import ../wireguard.nix).ips.puck}/32" ];
+        }
+        { # Phone
+          # Public key of the peer (not a file path).
+          publicKey = (import ../wireguard.nix).keys.phone;
+          # List of IPs assigned to this peer within the tunnel subnet. Used to configure routing.
+          allowedIPs = [ "${(import ../wireguard.nix).ips.phone}/32" ];
         }
       ];
     };

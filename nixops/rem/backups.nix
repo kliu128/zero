@@ -151,49 +151,6 @@
     path = "/mnt/storage/Kevin/Backups/Systems/scintillating-borg";
     quota = "150G";
   };
-
-  # SnapRAID
-  systemd.services.snapraid = {
-    description = "SnapRAID Synchronization and Maintenance";
-    path = [ pkgs.snapraid ];
-    script = ''
-      set -xeuo pipefail
-      snapraid sync && snapraid scrub && snapraid status
-    '';
-    serviceConfig = {
-      CPUSchedulingPolicy = "idle";
-      IOSchedulingClass = "idle";
-    };
-    startAt = "*-*-* 03:00:00";
-  };
-  environment.etc."snapraid.conf" = {
-    text = ''
-      block_size 256
-      autosave 1000
-      content /mnt/data0/snapraid.content
-      content /mnt/data1/snapraid.content
-      content /mnt/data2/snapraid.content
-      content /mnt/data3/snapraid.content
-      content /mnt/data4/snapraid.content
-      disk data0 /mnt/data0
-      disk data1 /mnt/data1
-      disk data2 /mnt/data2
-      disk data3 /mnt/data3
-      disk data4 /mnt/data4
-      parity /mnt/parity0/snapraid.parity
-
-      exclude *.bak
-      exclude *.unrecoverable
-      exclude /tmp/
-      exclude lost+found/
-      exclude .content
-      exclude aquota.group
-      exclude aquota.user
-      exclude snapraid.conf*
-      exclude /Kevin/Computing/Software/Data/
-      exclude /Kevin/Incoming/
-    '';
-  };
   
   # Mirror services
   systemd.services.gas-leak-mirror = {

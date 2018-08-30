@@ -143,37 +143,25 @@
   };
   # Add UAS module to initramfs
   # Required for Seagate Backup Plus hub
-  boot.initrd.kernelModules = [ "uas" ];
+  boot.initrd.kernelModules = [ "uas" "btrfs" ];
 
   systemd.services.storage = {
     enable = true;
     description = "Grand Stores Mount";
-    path = [ pkgs.mergerfs ];
+    path = [ pkgs.lizardfs ];
     restartIfChanged = false; # don't want the filesystem falling out from under processes
     script = ''
-      mergerfs -o defaults,allow_other,use_ino,moveonenospc=true,fsname=storage,minfreespace=50G,nonempty /mnt/data\* /mnt/storage
+      mfsmount -o nodev,noatime,big_writes,allow_other,nonempty,mfsmaster=192.168.1.5 /mnt/storage
     '';
-    wantedBy = [ "local-fs.target" ];
+    wantedBy = [ "remote-fs.target" ];
     serviceConfig = {
       Type = "forking";
-      PrivateNetwork = true;
     };
-    unitConfig = {
-      # Implicitly adds dependency on basic.target otherwise, which creates
-      # an ordering cycle on boot
-      DefaultDependencies = false;
-      # Normally would be added by DefaultDependencies=
-      Conflicts = [ "shutdown.target" ];
-      Before = [ "shutdown.target" ];
-    };
-    unitConfig.RequiresMountsFor = [ "/mnt/data0" "/mnt/data1" "/mnt/data2" "/mnt/data3" "/mnt/data4" ];
   };
 
   systemd.tmpfiles.rules = [
     # Auto-make mount folders for filesystems that NixOS doesn't handle directly
     "d /mnt/storage 0755 root root -"
-    # Ethminer
-    "w /sys/class/drm/card0/device/hwmon/hwmon1/pwm1 - - - - 200"
   ];
 
   # Disk and swap

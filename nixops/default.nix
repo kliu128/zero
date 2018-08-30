@@ -39,6 +39,7 @@ let credentials = {
         ./modules/kubernetes-common.nix
         ./modules/kubernetes-node.nix
         ./otto/hw.nix
+        ./otto/lizardfs.nix
       ];
 
       networking.hostName = "otto";
@@ -99,6 +100,7 @@ let credentials = {
         ./rem/hw.nix
         ./rem/ipv6-tunnel.nix
         ./rem/kindle.nix
+        ./rem/lizardfs.nix
         ./rem/locate.nix
         ./rem/monitoring.nix
         ./rem/nfs.nix

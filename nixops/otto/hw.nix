@@ -20,6 +20,10 @@
     { device = "/dev/disk/by-uuid/093180dc-abbd-46b1-af91-0c6524bbee49";
       fsType = "ext4";
     };
+  fileSystems."/var/lib/lizardfs-data2" =
+    { device = "/dev/disk/by-uuid/614de4ca-d912-4dbd-ae18-c5866a997757";
+      fsType = "ext4";
+    };
 
   swapDevices = [ {
     device = "/swap";
