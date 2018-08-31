@@ -42,21 +42,6 @@
     fsType = "ext4";
   };
 
-  fileSystems."/var/lib/libvirt/images/hdd" = {
-    device = "/dev/mapper/vms";
-    encrypted = {
-      enable = true;
-      blkDev = "/dev/disk/by-uuid/b8ae9582-39c5-48f6-bcba-53fcd6f0c42f";
-      keyFile = "/mnt-root/etc/keys/keyfile-vms.bin";
-      label = "vms";
-    };
-  };
-
-  environment.etc."keys/keyfile-vms.bin" = {
-    mode = "400";
-    source = ../secrets/keys/keyfile-vms.bin;
-  };
-
   fileSystems."/mnt/data0" = {
     device = "/dev/mapper/data0";
     encrypted = {
