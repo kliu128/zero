@@ -43,7 +43,7 @@ spec:
       volumes:
         - name: files
           hostPath:
-            path: /mnt/tmp/Kevin/Incoming
+            path: /mnt/storage/Kevin/Incoming
             
 status: {}
 ---

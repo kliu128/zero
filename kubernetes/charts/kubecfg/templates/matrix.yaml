@@ -28,6 +28,8 @@ spec:
       labels:
         app: matrix
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: otto
       containers:
         # Main matrix server
         - name: synapse
@@ -47,12 +49,6 @@ spec:
             initialDelaySeconds: 60
             periodSeconds: 60
             timeoutSeconds: 45
-          resources:
-            request:
-              memory: 750Mi
-              cpu: 500m
-            limits:
-              cpu: 4000m
           volumeMounts:
             - name: config
               subPath: homeserver.yaml
