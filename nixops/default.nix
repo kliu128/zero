@@ -2,11 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-let credentials = {
-  project = "zero-cluster";
-  serviceAccount = "nixops@zero-cluster.iam.gserviceaccount.com";
-  accessKey = toString ./secrets/gce-access-key.json;
-}; in {
+{
   network = {
     description = "Re:Zero Production™ Cluster";
     enableRollback = true;
@@ -14,6 +10,13 @@ let credentials = {
   
   defaults = {
     imports = [
+      ./common/earlyoom.nix
+      ./common/firewall.nix
+      ./common/kernel.nix
+      ./common/nix.nix
+      ./common/ssh.nix
+      ./common/time.nix
+      ./common/users.nix
     ];
 
     networking.domain = "potatofrom.space";
@@ -27,14 +30,6 @@ let credentials = {
       deployment.hasFastConnection = true;
 
       imports = [
-        ./common/dns.nix
-        ./common/earlyoom.nix
-        ./common/firewall.nix
-        ./common/kernel.nix
-        ./common/nix.nix
-        ./common/ssh.nix
-        ./common/time.nix
-        ./common/users.nix
         ./modules/docker.nix
         ./modules/kubernetes-common.nix
         ./modules/kubernetes-node.nix
@@ -53,14 +48,6 @@ let credentials = {
       deployment.targetHost = (import ./wireguard.nix).ips.puck;
 
       imports = [
-        ./common/dns.nix
-        ./common/earlyoom.nix
-        ./common/firewall.nix
-        ./common/kernel.nix
-        ./common/nix.nix
-        ./common/ssh.nix
-        ./common/time.nix
-        ./common/users.nix
         ./modules/desktop.nix
         ./puck/desktop.nix
         ./puck/hw.nix
@@ -80,14 +67,6 @@ let credentials = {
       deployment.hasFastConnection = true;
 
       imports = [
-        ./common/dns.nix
-        ./common/earlyoom.nix
-        ./common/firewall.nix
-        ./common/kernel.nix
-        ./common/nix.nix
-        ./common/ssh.nix
-        ./common/time.nix
-        ./common/users.nix
         ./modules/desktop.nix
         ./modules/docker.nix
         ./modules/kdeconnect.nix
@@ -122,39 +101,6 @@ let credentials = {
       
       # ToxVPN ip
       services.toxvpn.localip = "10.123.123.1";
-
-      # This value determines the NixOS release with which your system is to be
-      # compatible, in order to avoid breaking some software such as database
-      # servers. You should change this only after NixOS release notes say you
-      # should.
-      system.nixos.stateVersion = "unstable"; # Did you read the comment?
-    };
-
-  resources.gceStaticIPs.beatrice-ip = credentials // {
-    ipAddress = "35.227.53.55";
-    region = "us-east1";
-  };
-  
-  beatrice =
-    { config, pkgs, lib, resources, ... }:
-    {
-      # Reduced set of imports
-      imports = [
-        ./common/dns.nix
-        ./common/earlyoom.nix
-        ./common/firewall.nix
-        ./common/kernel.nix
-        ./common/time.nix
-      ];
-      networking.firewall.allowedTCPPorts = [ 22 ];
-      
-      deployment.targetEnv = "gce";
-      deployment.gce = credentials // {
-        instanceType = "f1-micro";
-        rootDiskSize = 20; # GB
-        region = "us-east1-b";
-        ipAddress = resources.gceStaticIPs.beatrice-ip;
-      };
 
       # This value determines the NixOS release with which your system is to be
       # compatible, in order to avoid breaking some software such as database
