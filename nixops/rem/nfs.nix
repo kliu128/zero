@@ -2,10 +2,6 @@
   networking.firewall.allowedTCPPorts = [ 111 2049 4000 4001 4002 20048 ];
   networking.firewall.allowedUDPPorts = [ 111 2049 4000 4001 4002 20048 ];
   
-  fileSystems."/srv/nfs/zoneminder" = {
-    device = "/mnt/data3/Kevin/Computing/Data/ZoneMinder";
-    options = [ "bind" ];
-  };
   fileSystems."/srv/nfs/home" = {
     device = "/home/kevin";
     options = [ "bind" ];
