@@ -21,7 +21,7 @@ spec:
           - name: {{ template "fullname" . }}-daily
             image: {{ .Values.image | quote }}
             imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
-            args: ["bundle", "exec", "rake", "mastodon:daily"]
+            args: ["bundle", "exec", "rake", "mastodon:media:remove_remote"]
             envFrom:
               - secretRef:
                   name: {{ template "fullname" . }}-secrets

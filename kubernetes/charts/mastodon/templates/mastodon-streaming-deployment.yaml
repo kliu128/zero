@@ -21,7 +21,7 @@ spec:
       - name: {{ template "fullname" . }}-streaming
         image: {{ .Values.image | quote }}
         imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
-        args: ["npm", "run", "start"]
+        args: ["yarn", "start"]
         
         envFrom:
           - secretRef:

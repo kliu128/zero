@@ -5,6 +5,7 @@ metadata:
   name: {{ template "fullname" . }}-ingress
   annotations:
     kubernetes.io/tls-acme: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: 80m
 spec:
   {{- if .Values.ingress.tls }}
   tls:
