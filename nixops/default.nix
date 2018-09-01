@@ -72,7 +72,6 @@
         ./modules/kdeconnect.nix
         ./modules/kubernetes-common.nix
         ./modules/kubernetes-master.nix
-        ./modules/toxvpn.nix
         ./rem/backups.nix
         ./rem/desktop.nix
         ./rem/fusee-launcher.nix
@@ -98,9 +97,6 @@
         22 25 80 143 443 587 631 993 8448 9001 9030 25565 ];
 
       systemd.services.cups.enable = false; # don't conflict with docker cups
-      
-      # ToxVPN ip
-      services.toxvpn.localip = "10.123.123.1";
 
       # This value determines the NixOS release with which your system is to be
       # compatible, in order to avoid breaking some software such as database
