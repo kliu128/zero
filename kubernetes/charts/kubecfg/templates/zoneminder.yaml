@@ -13,6 +13,8 @@ spec:
       labels:
         app: zoneminder
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: rem
       containers:
         - image: quantumobject/docker-zoneminder:latest
           imagePullPolicy: IfNotPresent
@@ -57,9 +59,8 @@ spec:
           persistentVolumeClaim:
             claimName: zoneminder-data
         - name: capture
-          nfs:
-            server: 192.168.1.5
-            path: /storage/Kevin/Computing/Data/ZoneMinder
+          hostPath:
+            path: /mnt/storage/Kevin/Computing/Data/ZoneMinder
         - name: shm
           emptyDir:
             medium: Memory
