@@ -230,14 +230,6 @@ with lib;
           // Suppress the warning that the .NET CLI is not on the path.
           "csharp.suppressDotnetInstallWarning": true,
           "files.autoSave": "onFocusChange",
-          // Set the default
-          "editor.formatOnSave": true,
-          "[json]": {
-            "editor.formatOnSave": false
-          },
-          "[yaml]": {
-            "editor.formatOnSave": false
-          },
           "telemetry.enableTelemetry": false,
           "workbench.iconTheme": "vs-nomo-dark",
           "editor.wordWrap": "on",
