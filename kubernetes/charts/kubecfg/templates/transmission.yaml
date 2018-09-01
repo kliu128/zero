@@ -14,8 +14,6 @@ spec:
       labels:
         app: transmission
     spec:
-      nodeSelector:
-        kubernetes.io/hostname: rem
       containers:
         - env:
             - name: PUID
@@ -42,8 +40,9 @@ spec:
       restartPolicy: Always
       volumes:
         - name: files
-          hostPath:
-            path: /mnt/storage/Kevin/Incoming
+          nfs:
+            server: 192.168.1.5
+            path: /storage/Kevin/Incoming
             
 status: {}
 ---

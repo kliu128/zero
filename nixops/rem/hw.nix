@@ -136,11 +136,19 @@
     path = [ pkgs.lizardfs ];
     restartIfChanged = false; # don't want the filesystem falling out from under processes
     script = ''
-      mfsmount -o nodev,noatime,cacheexpirationtime=0,big_writes,allow_other,nonempty,mfsmaster=192.168.1.5 /mnt/storage
+      mfsmount -o nodev,noatime,cacheexpirationtime=0,mfsdelayedinit,mfsacl,enablefilelocks=1,big_writes,allow_other,nonempty,mfsmaster=192.168.1.5 /mnt/storage
     '';
-    wantedBy = [ "remote-fs.target" ];
+    wantedBy = [ "local-fs.target" ];
     serviceConfig = {
       Type = "forking";
+    };
+    unitConfig = {
+      # Implicitly adds dependency on basic.target otherwise, which creates
+      # an ordering cycle on boot
+      DefaultDependencies = false;
+      # Normally would be added by DefaultDependencies=
+      Conflicts = [ "shutdown.target" ];
+      Before = [ "shutdown.target" ];
     };
   };
 

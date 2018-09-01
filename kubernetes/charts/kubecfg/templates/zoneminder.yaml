@@ -58,11 +58,8 @@ spec:
             claimName: zoneminder-data
         - name: capture
           nfs:
-            # Uses /mnt/data3 instead of /mnt/storage because ZoneMinder
-            # misbehaves when running on top of MergerFS and fails to store
-            # events
             server: 192.168.1.5
-            path: /zoneminder
+            path: /storage/Kevin/Computing/Data/ZoneMinder
         - name: shm
           emptyDir:
             medium: Memory
