@@ -166,7 +166,6 @@
     device = "/swap";
     size = 4096;
   } ];
-  zramSwap.enable = true;
   services.udev.extraRules = ''
     ACTION=="add|change", SUBSYSTEM=="block", KERNEL=="sd?", ATTR{queue/scheduler}="kyber"
   '';
