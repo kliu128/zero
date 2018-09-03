@@ -32,15 +32,15 @@ gitlab:
   migrations:
     image:
       repository: registry.gitlab.com/gitlab-org/build/cng/gitlab-rails-ce
-      tag: v11.1.4
+      tag: v11.2.3
   sidekiq:
     image:
       repository: registry.gitlab.com/gitlab-org/build/cng/gitlab-sidekiq-ce
-      tag: v11.1.4
+      tag: v11.2.3
   unicorn:
     image:
       repository: registry.gitlab.com/gitlab-org/build/cng/gitlab-unicorn-ce
-      tag: v11.1.4
+      tag: v11.2.3
     minReplicas: 1
     maxUnavailable: 0
 gitlab-runner:
