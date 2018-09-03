@@ -13,6 +13,8 @@ spec:
       labels:
         app: sonarr
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: rem
       containers:
         - env:
             - name: PGID
@@ -61,16 +63,14 @@ spec:
           persistentVolumeClaim:
             claimName: sonarr-config
         - name: sonarr-data
-          nfs:
-            path: /storage/Kevin/Incoming
-            server: 192.168.1.5
+          hostPath:
+            path: /mnt/storage/Kevin/Incoming
         - name: jackett-config
           persistentVolumeClaim:
             claimName: jackett-config
         - name: tv
-          nfs:
-            path: /storage/Kevin/Videos/TV Shows
-            server: 192.168.1.5
+          hostPath:
+            path: /mnt/storage/Kevin/Videos/TV Shows
 status: {}
 ---
 apiVersion: v1

@@ -2,68 +2,53 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   labels:
-    app: shinobi
-  name: shinobi
+    app: zoneminder
+  name: zoneminder
 spec:
   replicas: 1
   strategy:
     type: Recreate
   template:
     metadata:
-      creationTimestamp: null
       labels:
-        app: shinobi
+        app: zoneminder
     spec:
       nodeSelector:
         kubernetes.io/hostname: rem
       containers:
-      - args: [node, /opt/shinobi/camera.js]
-        image: registry.gitlab.com/pneumaticat/shinobidocker:latest
-        name: shinobi
-        resources: {}
+      - image: dlandon/zoneminder
+        name: zoneminder
         volumeMounts:
+        - mountPath: /dev/shm
+          name: shm
         - mountPath: /config
           name: config
-        - mountPath: /opt/shinobi/videos
+        - mountPath: /var/cache/zoneminder
+          name: vids
+        - mountPath: /data
           name: data
-        - mountPath: /var/lib/mysql
-          name: database
-        - mountPath: /run
-          name: socket
-      - args: [node, /opt/shinobi/cron.js]
-        image: registry.gitlab.com/pneumaticat/shinobidocker:latest
-        name: cron
-        resources: {}
-        volumeMounts:
-        - mountPath: /config
-          name: config
-        - mountPath: /opt/shinobi/videos
-          name: data
-        - mountPath: /run
-          name: socket
       restartPolicy: Always
       volumes:
+      - name: shm
+        emptyDir: {}
       - name: config
         persistentVolumeClaim:
-          claimName: shinobi-config
-      - name: data
+          claimName: zoneminder-config
+      - name: vids
         hostPath:
-          path: /mnt/storage/Kevin/Computing/Data/Shinobi
+          path: /mnt/storage/Kevin/Computing/Data/Zoneminder
           type: Directory
-      - name: database
+      - name: data
         persistentVolumeClaim:
-          claimName: shinobi-database
-      - name: socket
-        emptyDir: {}
-status: {}
+          claimName: zoneminder-data
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   creationTimestamp: null
   labels:
-    app: shinobi
-  name: shinobi-config
+    app: zoneminder
+  name: zoneminder-config
 spec:
   accessModes:
   - ReadWriteOnce
@@ -77,8 +62,8 @@ kind: PersistentVolumeClaim
 metadata:
   creationTimestamp: null
   labels:
-    app: shinobi
-  name: shinobi-database
+    app: zoneminder
+  name: zoneminder-data
 spec:
   accessModes:
   - ReadWriteOnce
@@ -91,31 +76,31 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: shinobi
-  name: shinobi
+    app: zoneminder
+  name: zoneminder
 spec:
   ports:
   - name: http
-    port: 8080
-    targetPort: 8080
+    port: 80
+    targetPort: 80
   selector:
-    app: shinobi
+    app: zoneminder
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   annotations:
+    kubernetes.io/tls-acme: 'true'
     # type of authentication
     nginx.ingress.kubernetes.io/auth-type: basic
     # name of the secret that contains the user/password definitions
-    nginx.ingress.kubernetes.io/auth-secret: shinobi-auth
+    nginx.ingress.kubernetes.io/auth-secret: zoneminder-auth
     # message to display with an appropriate context why the authentication is required
-    nginx.ingress.kubernetes.io/auth-realm: "Authentication Required - Shinobi"
-    kubernetes.io/tls-acme: 'true'
-  name: shinobi
+    nginx.ingress.kubernetes.io/auth-realm: "Authentication Required - zoneminder"
+  name: zoneminder
 spec:
   tls:
-    - secretName: shinobi-tls
+    - secretName: zoneminder-tls
       hosts:
         - zm.potatofrom.space
   rules:
@@ -124,5 +109,5 @@ spec:
       paths:
       - path: /
         backend:
-          serviceName: shinobi
-          servicePort: 8080
+          serviceName: zoneminder
+          servicePort: 80

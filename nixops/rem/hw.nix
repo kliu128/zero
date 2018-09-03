@@ -136,7 +136,7 @@
     path = [ pkgs.lizardfs ];
     restartIfChanged = false; # don't want the filesystem falling out from under processes
     script = ''
-      mfsmount -o nodev,noatime,cacheexpirationtime=0,mfsdelayedinit,mfsacl,enablefilelocks=1,big_writes,allow_other,nonempty,mfsmaster=192.168.1.5 /mnt/storage
+      mfsmount -o nodev,noatime,mfsdelayedinit,big_writes,allow_other,nonempty,mfsmaster=192.168.1.5,cacheexpirationtime=500,readaheadmaxwindowsize=4096 /mnt/storage
     '';
     wantedBy = [ "local-fs.target" ];
     serviceConfig = {
