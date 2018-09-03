@@ -3,6 +3,8 @@ repositories:
     url: https://kubernetes-charts.storage.googleapis.com
   - name: coreos
     url: https://s3-eu-west-1.amazonaws.com/coreos-charts/stable/
+  - name: gitlab
+    url: https://charts.gitlab.io
 
 releases:
   - name: nginx-ingress
@@ -22,7 +24,8 @@ releases:
       - ./values/cert-manager.yaml
   - name: gitlab
     namespace: default
-    chart: ./charts/gitlab
+    chart: gitlab/gitlab
+    version: 1.0.2
     values:
       - ./values/gitlab.yaml
       - ./values/gitlab.secret.yaml

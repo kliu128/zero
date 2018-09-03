@@ -43,6 +43,12 @@ gitlab:
       tag: v11.2.3
     minReplicas: 1
     maxUnavailable: 0
+    workhorse:
+      image: registry.gitlab.com/gitlab-org/build/cng/gitlab-workhorse-ce
+  task-runner:
+    image:
+      repository: registry.gitlab.com/gitlab-org/build/cng/gitlab-task-runner-ce
+      tag: v11.2.3
 gitlab-runner:
   runners:
     privileged: true
