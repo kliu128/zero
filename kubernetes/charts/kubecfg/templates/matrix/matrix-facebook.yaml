@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: matrix-facebook
+spec:
+  selector:
+    matchLabels:
+      app: matrix-facebook
+  template:
+    metadata:
+      labels:
+        app: matrix-facebook
+    spec:
+      containers:
+        - name: facebook
+          image: registry.potatofrom.space/kevin/matrix-puppet-facebook
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8090
+              name: facebook
+          volumeMounts:
+            - name: config
+              subPath: facebook-registration.yaml
+              mountPath: /usr/src/app/facebook-registration.yaml
+            - name: config
+              subPath: facebook-config.json
+              mountPath: /usr/src/app/config.json
+            - name: facebook-appstate
+              subPath: appstate.json
+              mountPath: /usr/src/app/appstate.json
+      volumes:
+        - name: config
+          secret:
+            secretName: matrix-config
+        - name: facebook-appstate
+          persistentVolumeClaim:
+            claimName: matrix-facebook-appstate
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    app: matrix-facebook
+  name: matrix-facebook-appstate
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: matrix-facebook
+spec:
+  selector:
+    app: matrix-facebook
+  ports:
+  - name: http
+    targetPort: 8090
+    port: 8090

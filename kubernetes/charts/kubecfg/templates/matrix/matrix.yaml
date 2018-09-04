@@ -1,0 +1,109 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: matrix
+spec:
+  selector:
+    app: matrix
+  ports:
+  - name: http
+    targetPort: 8008
+    port: 8008
+  - name: https
+    targetPort: 8448
+    port: 8448
+  - name: turn
+    port: 3478
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: matrix
+spec:
+  selector:
+    matchLabels:
+      app: matrix
+  template:
+    metadata:
+      labels:
+        app: matrix
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: otto
+      containers:
+        # Main matrix server
+        - name: synapse
+          image: matrixdotorg/synapse:v0.33.3
+          env:
+            - name: SYNAPSE_CONFIG_PATH
+              value: /config/homeserver.yaml
+          ports:
+            - containerPort: 8008
+              name: http
+            - containerPort: 8448
+              name: https
+          volumeMounts:
+            - name: config
+              subPath: homeserver.yaml
+              mountPath: /config/homeserver.yaml
+            - name: config
+              subPath: discord-registration.yaml
+              mountPath: /config/discord-registration.yaml
+            - name: config
+              subPath: telegram-registration.yaml
+              mountPath: /config/telegram-registration.yaml
+            - name: config
+              subPath: facebook-registration.yaml
+              mountPath: /config/facebook-registration.yaml
+            - name: config
+              subPath: potatofrom.space.log.config
+              mountPath: /config/potatofrom.space.log.config
+            - name: data
+              mountPath: /data
+      volumes:
+        # Stores SSL keys, media_store
+        - name: data
+          persistentVolumeClaim:
+            claimName: matrix-data
+        - name: config
+          secret:
+            secretName: matrix-config
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    app: matrix
+  name: matrix-data
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+status: {}
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/tls-acme: 'true'
+    nginx.ingress.kubernetes.io/proxy-body-size: 100m
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "14400"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "14400"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "14400"
+  name: matrix
+spec:
+  tls:
+    - secretName: matrix-tls
+      hosts:
+        - potatofrom.space
+  rules:
+  - host: potatofrom.space
+    http:
+      paths:
+      - path: /_matrix
+        backend:
+          serviceName: matrix
+          servicePort: 8008

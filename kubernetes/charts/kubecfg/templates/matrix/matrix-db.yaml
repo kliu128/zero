@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: matrix-db
+spec:
+  selector:
+    matchLabels:
+      app: matrix-db
+  template:
+    metadata:
+      labels:
+        app: matrix-db
+    spec:
+      containers:
+        - name: db
+          image: postgres:10-alpine
+          ports:
+            - containerPort: 5342
+              name: postgres
+          volumeMounts:
+            - name: db
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: db
+          persistentVolumeClaim:
+            claimName: matrix-db
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    app: matrix
+  name: matrix-db
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: matrix-db
+spec:
+  selector:
+    app: matrix-db
+  ports:
+  - name: postgres
+    targetPort: 5432
+    port: 5432

@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: matrix-discord
+spec:
+  selector:
+    matchLabels:
+      app: matrix-discord
+  template:
+    metadata:
+      labels:
+        app: matrix-discord
+    spec:
+      containers:
+        - name: discord
+          image: pneumaticat/matrix-appservice-discord:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 9005
+              name: discord
+          volumeMounts:
+            - name: config
+              subPath: discord-registration.yaml
+              mountPath: /data/discord-registration.yaml
+            - name: config
+              subPath: discord-config.yaml
+              mountPath: /data/config.yaml
+            - name: data
+              mountPath: /data
+      volumes:
+        - name: config
+          secret:
+            secretName: matrix-config
+        - name: data
+          persistentVolumeClaim:
+            claimName: matrix-discord-data
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    app: matrix
+  name: matrix-discord-data
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: matrix-discord
+spec:
+  selector:
+    app: matrix-discord
+  ports:
+  - name: http
+    targetPort: 9005
+    port: 9005
