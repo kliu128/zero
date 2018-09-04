@@ -107,6 +107,8 @@ with lib;
     helmfile kubectl kubernetes-helm nixops virtmanager
     # Desktop environment
     arandr blueman conky gnome3.nautilus i3lock system-config-printer scrot xautolock xcape xcompmgr termite
+    # Image editing
+    gwenview krita
   ];
 
   services.dbus.packages = [ pkgs.gnome3.dconf ];

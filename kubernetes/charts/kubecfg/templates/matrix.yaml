@@ -42,13 +42,6 @@ spec:
               name: http
             - containerPort: 8448
               name: https
-          livenessProbe:
-            httpGet:
-              path: /_matrix/client/versions
-              port: 8008
-            initialDelaySeconds: 60
-            periodSeconds: 60
-            timeoutSeconds: 45
           volumeMounts:
             - name: config
               subPath: homeserver.yaml
@@ -59,6 +52,9 @@ spec:
             - name: config
               subPath: telegram-registration.yaml
               mountPath: /config/telegram-registration.yaml
+            - name: config
+              subPath: facebook-registration.yaml
+              mountPath: /config/facebook-registration.yaml
             - name: config
               subPath: potatofrom.space.log.config
               mountPath: /config/potatofrom.space.log.config
@@ -100,6 +96,22 @@ spec:
               # Telegram config is in PVC
             - name: telegram-data
               mountPath: /data
+        - name: facebook
+          image: registry.potatofrom.space/kevin/matrix-puppet-facebook
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8090
+              name: facebook
+          volumeMounts:
+            - name: config
+              subPath: facebook-registration.yaml
+              mountPath: /usr/src/app/facebook-registration.yaml
+            - name: config
+              subPath: facebook-config.json
+              mountPath: /usr/src/app/config.json
+            - name: facebook-appstate
+              subPath: appstate.json
+              mountPath: /usr/src/app/appstate.json
       volumes:
         # Stores SSL keys, media_store
         - name: data
@@ -111,6 +123,9 @@ spec:
         - name: telegram-data
           persistentVolumeClaim:
             claimName: matrix-telegram-data
+        - name: facebook-appstate
+          persistentVolumeClaim:
+            claimName: matrix-facebook-appstate
         - name: db
           persistentVolumeClaim:
             claimName: matrix-db
@@ -155,6 +170,21 @@ metadata:
   labels:
     app: matrix
   name: matrix-telegram-data
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+status: {}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    app: matrix
+  name: matrix-facebook-appstate
 spec:
   accessModes:
   - ReadWriteOnce
