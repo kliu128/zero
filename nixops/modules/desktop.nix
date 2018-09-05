@@ -333,7 +333,7 @@ with lib;
 
           # Menu and term
           "${modifier}+d" = ''exec i3-dmenu-desktop --dmenu='rofi -show run -font "Source Code Pro 11"' '';
-          "${modifier}+Enter" = "termite --exec 'tmux attach'";
+          "${modifier}+Return" = "exec termite --exec 'tmux attach'";
 
           # Scratchpad
           "${modifier}+Shift+minus" = "move scratchpad";
