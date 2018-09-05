@@ -6,6 +6,7 @@
   services.lizardfs.master.enable = true;
   services.lizardfs.master.exports = ''
     192.168.1.0/24 / rw,maproot=0
+    10.100.0.0/24 / rw,maproot=0
   '';
   services.lizardfs.master.goals = ''
     6 ec_2_1 : $ec(2,1)

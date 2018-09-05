@@ -51,7 +51,7 @@
         ./modules/desktop.nix
         ./puck/desktop.nix
         ./puck/hw.nix
-        ./puck/nfs-filesystems.nix
+        ./puck/remote-fs.nix
         ./puck/wireguard.nix
         ./puck/wireless.nix
       ];
