@@ -28,8 +28,6 @@ spec:
       labels:
         app: matrix
     spec:
-      nodeSelector:
-        kubernetes.io/hostname: otto
       containers:
         # Main matrix server
         - name: synapse
@@ -55,6 +53,9 @@ spec:
             - name: config
               subPath: facebook-registration.yaml
               mountPath: /config/facebook-registration.yaml
+            - name: config
+              subPath: slack-registration.yaml
+              mountPath: /config/slack-registration.yaml
             - name: config
               subPath: potatofrom.space.log.config
               mountPath: /config/potatofrom.space.log.config
