@@ -6,6 +6,10 @@
     device = "/home/kevin";
     options = [ "bind" ];
   };
+  fileSystems."/srv/nfs/storage" = {
+    device = "/mnt/storage";
+    options = [ "bind" ];
+  };
   services.nfs.server = {
     enable = true;
     statdPort = 4000;
