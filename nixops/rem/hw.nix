@@ -152,6 +152,32 @@
       Before = [ "shutdown.target" ];
     };
   };
+  systemd.services.wait-for-storage = {
+    enable = true;
+    description = "Wait for Grand Stores mount to populate";
+    path = [ pkgs.gawk pkgs.lizardfs ];
+    script = ''
+      set -euo pipefail
+      
+      # wait until # of lost chunks in ec_2_1 (goal #5) < 10
+      # a good proxy for determining "did the server completely start up?"
+      while [ "$(lizardfs-admin chunks-health localhost 9421 --availability --porcelain | head -n 6 | tail -n 1 | awk '{print $NF}')" -ge 10 ]
+      do
+        echo "Waiting for mount..."
+        sleep 1
+      done
+    '';
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+    };
+    before = [
+      "nfs-server.service"
+      "transmission.service"
+      "borgbackup-repo-scintillating.service"
+    ];
+    wantedBy = [ "multi-user.target" ];
+  };
 
   systemd.tmpfiles.rules = [
     # Auto-make mount folders for filesystems that NixOS doesn't handle directly
