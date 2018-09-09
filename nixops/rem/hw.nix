@@ -193,10 +193,7 @@
     device = "/swap";
     size = 4096;
   } ];
-  services.udev.extraRules = ''
-    ACTION=="add|change", SUBSYSTEM=="block", KERNEL=="sd?", ATTR{queue/scheduler}="kyber"
-  '';
-  boot.kernel.sysctl."vm.min_free_kbytes" = 1000000;
+  boot.kernel.sysctl."vm.min_free_kbytes" = 262144;
 
   # Reset keyboard on bootup (Pok3r)
   # Otherwise keys get dropped, for some reason

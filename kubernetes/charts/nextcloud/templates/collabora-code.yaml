@@ -21,7 +21,7 @@ spec:
       nodeSelector:
         kubernetes.io/hostname: rem
       containers:
-      - image: libreoffice/online:master
+      - image: collabora/code
         env:
           - name: domain
             value: {{ .Values.lamp.ingress.domain | replace "." "\\." | quote }}
