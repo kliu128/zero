@@ -65,6 +65,7 @@ with lib;
       plugins = [ plugins.color-theme ];
     };
   };
+  nixpkgs.config.chromium.enableAdobeFlash = true;
 
   hardware.bluetooth.enable = true;
 
@@ -178,7 +179,7 @@ with lib;
           user = "kevin";
           port = 843;
         };
-        subaru = {
+        assuna = {
           hostname = "server.scintillate.me";
           user = "kevin";
           port = 844;
@@ -349,6 +350,7 @@ with lib;
           { command = ''xautolock -time 5 -locker "i3lock" -corners ----''; notification = false; }
           { command = "xset s 290"; notification = false; }
           { command = "xcompmgr"; notification = false; }
+          { command = "autokey-gtk"; notification = false; }
         ];
       };
       extraConfig = ''

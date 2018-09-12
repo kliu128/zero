@@ -19,7 +19,6 @@
   # Video.
   boot.earlyVconsoleSetup = true;
   services.xserver.videoDrivers = [ "amdgpu" ];
-  boot.kernelParams = [ "amdgpu.dc=0" "scsi_mod.use_blk_mq=Y" "amdgpu.vm_fragment_size=9" ];
 
   # Freeness (that is, not.)
   hardware.enableRedistributableFirmware = true; # for amdgpu
@@ -32,7 +31,7 @@
   boot.initrd.luks.devices."root".device = "/dev/disk/by-uuid/8a1b105c-5772-477e-8b60-49de6ccf4b86";
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/B0DD-20FA";
+    { device = "/dev/disk/by-uuid/725D-8B6F";
       fsType = "vfat";
     };
   
@@ -126,9 +125,21 @@
     mode = "400";
     source = ../secrets/keys/keyfile-parity0.bin;
   };
-  # Add UAS module to initramfs
-  # Required for Seagate Backup Plus hub
-  boot.initrd.kernelModules = [ "uas" "btrfs" ];
+  boot.initrd.kernelModules = [ "btrfs" ];
+
+  fileSystems."/var/lib/libvirt/images/ssd" = {
+    device = "/dev/mapper/vms";
+    encrypted = {
+      enable = true;
+      blkDev = "/dev/disk/by-uuid/35ee3543-d00d-45f2-89a0-26fd819539eb";
+      keyFile = "/mnt-root/etc/keys/keyfile-vms.bin";
+      label = "vms";
+    };
+  };
+  environment.etc."keys/keyfile-vms.bin" = {
+    mode = "400";
+    source = ../secrets/keys/keyfile-vms.bin;
+  };
 
   systemd.services.storage = {
     enable = true;
@@ -158,7 +169,7 @@
     path = [ pkgs.gawk pkgs.lizardfs ];
     script = ''
       set -euo pipefail
-      
+
       # wait until # of lost chunks in ec_2_1 (goal #5) < 10
       # a good proxy for determining "did the server completely start up?"
       while [ "$(lizardfs-admin chunks-health localhost 9421 --availability --porcelain | head -n 6 | tail -n 1 | awk '{print $NF}')" -ge 10 ]
@@ -166,11 +177,17 @@
         echo "Waiting for mount..."
         sleep 1
       done
+
+      # wait until mount is accessible
+      until ls /mnt/storage; do
+        sleep 1
+      done
     '';
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
     };
+    after = [ "lizardfs-master.service" ];
     before = [
       "nfs-server.service"
       "transmission.service"
@@ -193,7 +210,24 @@
     device = "/swap";
     size = 4096;
   } ];
-  boot.kernel.sysctl."vm.min_free_kbytes" = 262144;
+  boot.kernel.sysctl."vm.min_free_kbytes" = 1000000;
+  boot.kernel.sysctl."vm.vfs_cache_pressure" = 200;
+  systemd.services.drop-caches = {
+    enable = false;
+    description = "Dropping caches";
+    script = ''
+      set -euo pipefail
+
+      while true; do
+        echo 3 > /proc/sys/vm/drop_caches
+      done
+    '';
+    wantedBy = [ "multi-user.target" ];
+  };
+  boot.kernelParams = [ "scsi_mod.use_blk_mq=Y" ];
+  services.udev.extraRules = ''
+    ACTION=="add|change", KERNEL=="sd*[!0-9]|sr*", ATTR{queue/scheduler}="kyber"
+  '';
 
   # Reset keyboard on bootup (Pok3r)
   # Otherwise keys get dropped, for some reason

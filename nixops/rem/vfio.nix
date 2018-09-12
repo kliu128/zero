@@ -8,7 +8,7 @@
     # Disable transparent hugepages; it makes QEMU take much longer to start,
     # as it has to allocate a ton of hugepages at the beginning, which can be
     # slow due to memory fragmentation.
-    "transparent_hugepage=never"
+    #"transparent_hugepage=never"
   ];
   # Use vfio-pci for NVIDIA GTX 770
   boot.extraModprobeConfig = ''

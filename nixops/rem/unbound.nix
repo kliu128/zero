@@ -52,11 +52,11 @@
         local-data: "tp-s.nflximg.net IN AAAA ::2"
       forward-zone:
         name: "."
-        forward-addr: 1.1.1.1@853
-        forward-addr: 1.0.0.1@853
-        forward-addr: 2606:4700:4700::2111@853
-        forward-addr: 2606:4700:4700::2001@853
-        forward-ssl-upstream: yes
+        forward-addr: 1.1.1.1@53
+        forward-addr: 1.0.0.1@53
+        forward-addr: 2606:4700:4700::2111@53
+        forward-addr: 2606:4700:4700::2001@53
+        forward-ssl-upstream: no
     '';
   };
 }
