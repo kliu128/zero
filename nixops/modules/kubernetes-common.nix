@@ -80,6 +80,24 @@
   systemd.services.kube-scheduler.serviceConfig.Restart = "always";
   systemd.services.flannel.serviceConfig.Restart = "always";
 
+  systemd.services.clean-up-flannel-ips = {
+    enable = true;
+    description = "Clean up Flannel IPs";
+    path = [ pkgs.gawk pkgs.docker pkgs.findutils pkgs.gnugrep ];
+    script = ''
+      set -xeuo pipefail
+
+      cd /var/lib/cni/networks/mynet
+
+      for hash in $(tail -n +1 * | grep '^[A-Za-z0-9]*$' | cut -c 1-8); do if [ -z $(docker ps -a | grep $hash | awk '{print $1}') ]; then grep -ilr $hash ./; fi; done | xargs rm
+    '';
+  };
+  systemd.timers.clean-up-flannel-ips = {
+    enable = true;
+    timerConfig.OnUnitActiveSec = 600; # every 5 min
+    wantedBy = [ "timers.target" ];
+  };
+
   networking.hosts = {
     "192.168.1.5" = [ "rem" ];
     "192.168.1.11" = [ "otto" ];

@@ -210,24 +210,35 @@
     device = "/swap";
     size = 4096;
   } ];
+  # IO scheduler
+  boot.kernelParams = [ "scsi_mod.use_blk_mq=Y" ];
+  services.udev.extraRules = ''
+    ACTION=="add|change", KERNEL=="sd*[!0-9]|sr*", ATTR{queue/scheduler}="kyber"
+  '';
+
+  # HACKS
+
+  # Reduce memory lag
+  boot.kernel.sysctl."vm.vfs_cache_pressure" = 2000000;
   boot.kernel.sysctl."vm.min_free_kbytes" = 1000000;
-  boot.kernel.sysctl."vm.vfs_cache_pressure" = 200;
   systemd.services.drop-caches = {
-    enable = false;
-    description = "Dropping caches";
+    enable = true;
+    description = "Auto-dropping caches to reduce memory lag";
+    path = [ pkgs.gawk pkgs.procps ];
     script = ''
       set -euo pipefail
 
       while true; do
+        # Wait until free memory < 2 GB
+        while [ "$(free -m | tail -n 2 | head -n 1 | awk '{print $4}')" -gt 2000 ]; do
+          sleep 0.5
+        done
+
         echo 3 > /proc/sys/vm/drop_caches
       done
     '';
     wantedBy = [ "multi-user.target" ];
   };
-  boot.kernelParams = [ "scsi_mod.use_blk_mq=Y" ];
-  services.udev.extraRules = ''
-    ACTION=="add|change", KERNEL=="sd*[!0-9]|sr*", ATTR{queue/scheduler}="kyber"
-  '';
 
   # Reset keyboard on bootup (Pok3r)
   # Otherwise keys get dropped, for some reason

@@ -6,7 +6,7 @@ with lib;
 {
   # Fonts
   fonts.fontconfig.allowBitmaps = false;
-  fonts.fonts = with pkgs; [ emojione powerline-fonts inconsolata liberation_ttf ];
+  fonts.fonts = with pkgs; [ corefonts emojione powerline-fonts inconsolata liberation_ttf ];
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
@@ -65,7 +65,7 @@ with lib;
       plugins = [ plugins.color-theme ];
     };
   };
-  nixpkgs.config.chromium.enableAdobeFlash = true;
+  nixpkgs.config.firefox.enableAdobeFlash = true;
 
   hardware.bluetooth.enable = true;
 
@@ -111,12 +111,11 @@ with lib;
     # VM and DevOps
     helmfile kubectl kubernetes-helm nixops virtmanager
     # Desktop environment
-    arandr blueman conky gnome3.nautilus i3lock system-config-printer scrot xautolock xcape xcompmgr termite
+    arandr blueman conky pcmanfm gvfs i3lock system-config-printer scrot xautolock xcape xcompmgr termite
     # Image editing
     gwenview krita
   ];
-
-  services.dbus.packages = [ pkgs.gnome3.dconf ];
+  environment.variables.GIO_EXTRA_MODULES = [ "${pkgs.gvfs}/lib/gio/modules" ];
 
   # Must be done on the system level (not the home-manager level) to install
   # zsh completion for packages in environment.systemPackages

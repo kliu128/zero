@@ -21,9 +21,9 @@
     startAt = "daily";
   };
   systemd.services.gsuite-backup = {
-    enable = false;
-    description = "Gsuite backup";
-    path = [ pkgs.rclone ];
+    enable = true;
+    description = "G-Suite Restic Backup";
+    path = [ pkgs.restic pkgs.rclone ];
     serviceConfig = {
       CPUSchedulingPolicy = "idle";
       IOSchedulingClass = "idle";
@@ -31,47 +31,30 @@
     script = ''
       set -xeuo pipefail
 
-      # Backup with monthly backup dirs and revisioned suffixes in each
-
-      dir_format="+%Y-%m"
-      monthly_backup_dir="$(env TZ=Etc/UTC date "$dir_format")"
-      backup_suffix="$(env TZ=Etc/UTC date +"__%Y_%m_%d_%H%M%SZ")"
-      # Prune the backup dir from 6 months ago
-      prune_backup_dir="$(env TZ=Etc/UTC date --date="-6 months" "$dir_format")"
-
-      rclone --config /etc/rclone.conf \
-            sync /mnt/storage/Kevin gsuite-mysmccd-crypt:/Data/current \
-            --backup-dir "gsuite-mysmccd-crypt:/Data/old/$monthly_backup_dir" \
-            --bwlimit 8650k --transfers 32 --checkers 32 \
-            --suffix "$backup_suffix" \
-            --exclude '/Computing/Data/**' \
-            --exclude '/Incoming/**' \
-            --exclude 'node_modules/**' \
-            --exclude '.fuse_hidden*' \
-            --delete-excluded
-      rclone --config /etc/rclone.conf \
-            purge -v "gsuite-mysmccd-crypt:/Data/old/$prune_backup_dir" || true
+      XDG_CACHE_HOME=/var/cache/gsuite-backup RESTIC_PASSWORD_FILE=${../secrets/gsuite-backup-password.txt} RCLONE_CONFIG=/etc/rclone.conf restic -o rclone.connections=16 -o rclone.args='serve restic --stdio -v --drive-use-trash=false' -r rclone:gsuite-mysmccd:gsuite-restic backup  --exclude '/mnt/storage/Kevin/Incoming/**/*' /mnt/storage/Kevin
     '';
     startAt = "*-*-* 03:00:00";
   };
-  systemd.services.gsuite-mount = {
+  systemd.services.gschool-sync = {
     enable = true;
-    description = "G-Suite Mount";
-    after = [ "network-online.target" ];
-    wants = [ "network-online.target" ];
-    wantedBy = [ "multi-user.target" ];
-    path = [ pkgs.rclone pkgs.fuse ];
-    serviceConfig.Type = "notify";
-    serviceConfig.ExecStart = ''${pkgs.rclone}/bin/rclone --config /etc/rclone.conf mount \
-        --allow-other --allow-non-empty \
-        -vv --drive-use-trash=false \
-        --vfs-cache-mode writes --low-level-retries 100 \
-        gsuite-mysmccd-crypt: /mnt/gsuite'';
-    serviceConfig.ExecStopPost = "${pkgs.utillinux}/bin/umount -l /mnt/gsuite";
-    restartIfChanged = false;
+    description = "School Drive Synchronization";
+    path = [ pkgs.rclone ];
+    serviceConfig = {
+      CPUSchedulingPolicy = "idle";
+      IOSchedulingClass = "idle";
+    };
+    script = ''
+      set -xeuo pipefail
+      rclone --config /etc/rclone.conf sync /mnt/storage/Kevin/Personal/Documents/School gsuite-school:Sync/
+    '';
+  };
+  systemd.timers.gschool-sync = {
+    enable = true;
+    timerConfig.OnUnitActiveSec = 3600;
+    wantedBy = [ "timers.target" ];
   };
   systemd.tmpfiles.rules = [
-    "d /mnt/gsuite 0755 root root -"
+    "d /var/cache/gsuite-backup 0400 root root -"
   ];
   systemd.services.matrix-recorder = {
     description = "Matrix Recorder";

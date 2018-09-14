@@ -32,6 +32,16 @@ spec:
         # Main matrix server
         - name: synapse
           image: matrixdotorg/synapse:v0.33.4
+          livenessProbe:
+            httpGet:
+              path: /_matrix/client/versions
+              port: 8008
+            initialDelaySeconds: 60
+            periodSeconds: 30
+            timeoutSeconds: 30
+          resources:
+            limits:
+              memory: 2Gi
           env:
             - name: SYNAPSE_CONFIG_PATH
               value: /config/homeserver.yaml
