@@ -23,7 +23,7 @@
   systemd.services.gsuite-backup = {
     enable = true;
     description = "G-Suite Restic Backup";
-    path = [ pkgs.restic pkgs.rclone ];
+    path = [ pkgs.rclone pkgs.restic ];
     serviceConfig = {
       CPUSchedulingPolicy = "idle";
       IOSchedulingClass = "idle";
@@ -57,6 +57,21 @@
   systemd.tmpfiles.rules = [
     "d /var/cache/gsuite-backup 0400 root root -"
   ];
+  systemd.services.lizardfs-snapshot = {
+    enable = true;
+    description = "LizardFS daily snapshot";
+    path = [ pkgs.lizardfs ];
+    script = ''
+      set -xeuo pipefail
+      lizardfs makesnapshot -l /mnt/storage/Kevin "/mnt/storage/snapshots/$(date "+%Y-%m-%d")"
+      num_snapshots=$(ls /mnt/storage/snapshots | wc -l)
+      if [ "$num_snapshots" -gt 1 ]; then
+        oldest_snapshot=$(ls -t /mnt/storage/snapshots | tail -n 1)
+        lizardfs rremove -l "/mnt/storage/snapshots/$oldest_snapshot"
+      fi
+    '';
+    startAt = "daily";
+  };
   systemd.services.matrix-recorder = {
     description = "Matrix Recorder";
     path = [ pkgs.nodejs pkgs.curl ];

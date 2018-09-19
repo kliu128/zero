@@ -199,6 +199,8 @@
   systemd.tmpfiles.rules = [
     # Auto-make mount folders for filesystems that NixOS doesn't handle directly
     "d /mnt/storage 0755 root root -"
+    "w /sys/kernel/mm/transparent_hugepage/enabled - - - - always"
+    "w /sys/kernel/mm/transparent_hugepage/defrag - - - - defer"
   ];
 
   # Disk and swap
@@ -210,6 +212,7 @@
     device = "/swap";
     size = 4096;
   } ];
+
   # IO scheduler
   boot.kernelParams = [ "scsi_mod.use_blk_mq=Y" ];
   services.udev.extraRules = ''
@@ -217,28 +220,6 @@
   '';
 
   # HACKS
-
-  # Reduce memory lag
-  boot.kernel.sysctl."vm.vfs_cache_pressure" = 2000000;
-  boot.kernel.sysctl."vm.min_free_kbytes" = 1000000;
-  systemd.services.drop-caches = {
-    enable = true;
-    description = "Auto-dropping caches to reduce memory lag";
-    path = [ pkgs.gawk pkgs.procps ];
-    script = ''
-      set -euo pipefail
-
-      while true; do
-        # Wait until free memory < 2 GB
-        while [ "$(free -m | tail -n 2 | head -n 1 | awk '{print $4}')" -gt 2000 ]; do
-          sleep 0.5
-        done
-
-        echo 3 > /proc/sys/vm/drop_caches
-      done
-    '';
-    wantedBy = [ "multi-user.target" ];
-  };
 
   # Reset keyboard on bootup (Pok3r)
   # Otherwise keys get dropped, for some reason
