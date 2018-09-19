@@ -116,6 +116,8 @@
       monthly = 6;
     };
   };
+
+  # Root filesystem backup
   services.borgbackup.jobs.root-backup = {
     doInit = false; # Already exists
     compression = "auto,lzma";
@@ -150,6 +152,20 @@
     authorizedKeys = [ (import ../ssh-keys.nix).root-karmaxer ];
     path = "/mnt/storage/Kevin/Backups/Systems/scintillating-borg";
     quota = "150G";
+  };
+
+  # /boot backup
+  systemd.services.boot-backup = {
+    enable = true;
+    description = "/boot Backup";
+    path = [ pkgs.rsync ];
+    script = ''
+      rsync -avP /boot /mnt/storage/Kevin/Backups/Systems/boot
+    '';
+    unitConfig = {
+      RequiresMountsFor = [ "/mnt/storage" ];
+    };
+    startAt = "daily";
   };
   
   # Mirror services
