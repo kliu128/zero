@@ -110,7 +110,7 @@ with lib;
     # Desktop tools
     appimage-run autokey barrier
     # KDE applications
-    ark kate okular partition-manager spectacle
+    kate okular partition-manager spectacle
     # Development
     bfg-repo-cleaner docker docker_compose docker-machine gcc gdb git-crypt gitAndTools.gitFull gnumake google-cloud-sdk
     # Games
@@ -118,7 +118,7 @@ with lib;
     # VM and DevOps
     helmfile kubectl kubernetes-helm nixops virtmanager
     # Desktop environment
-    arandr blueman conky pcmanfm gvfs i3lock system-config-printer scrot xautolock xcape xcompmgr termite
+    arandr blueman conky pcmanfm gnome3.file-roller gvfs i3lock system-config-printer scrot xautolock xcape xcompmgr termite
     # Image editing
     gwenview krita
   ];
