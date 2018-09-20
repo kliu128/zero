@@ -12,6 +12,13 @@ with lib;
   services.xserver.enable = true;
   # Keyboard layout
   services.xserver.libinput.enable = true;
+  # iBus
+  i18n.inputMethod = {
+    enabled = "ibus";
+    ibus = {
+      engines = [ pkgs.ibus-engines.uniemoji ];
+    };
+  };
 
   # Fwupd
   services.fwupd.enable = true;
@@ -97,7 +104,7 @@ with lib;
     # System tools
     i7z atop bcachefs-tools beets borgbackup cointop cowsay ctop dnsutils file fortune python36Packages.glances gnupg hdparm htop iftop iotop python python3 libva-full lm_sensors lolcat looking-glass-client lzip mpw nheko oh-my-zsh openjdk python36Packages.tvnamer rclone restic rustup screen smartmontools snapraid spectre-meltdown-checker stress-ng telnet thefuck tmux tree vim wget wireguard unar
     # Desktop applications
-    android-studio anki arduino atom calibre cantata chromium clementine codeblocks discord emacs filezilla firebird-emu latest.firefox-nightly-bin gnome3.gnome-disk-utility google-chrome gpodder hexchat jetbrains.idea-community jetbrains.pycharm-community keepassxc libreoffice-fresh liferea mate.atril mkvtoolnix mpv myEclipse pavucontrol skypeforlinux simple-scan slack thunderbird tor-browser-bundle transmission_gtk transmission_remote_gtk vlc vscode wineWowPackages.staging winetricks youtube-dl zoom-us
+    android-studio arduino atom calibre cantata chromium clementine codeblocks discord emacs filezilla firebird-emu latest.firefox-nightly-bin gnome3.gnome-disk-utility google-chrome gpodder hexchat jetbrains.idea-community jetbrains.pycharm-community keepassxc libreoffice-fresh liferea mate.atril mkvtoolnix mpv myEclipse pavucontrol skypeforlinux simple-scan slack thunderbird tor-browser-bundle transmission_gtk transmission_remote_gtk vlc vscode wineWowPackages.staging winetricks youtube-dl zoom-us
     # Anki and related packages (for LaTeX support)
     anki texlive.combined.scheme-basic tetex
     # Desktop tools
@@ -350,6 +357,7 @@ with lib;
           { command = "xset s 290"; notification = false; }
           { command = "xcompmgr"; notification = false; }
           { command = "autokey-gtk"; notification = false; }
+          { command = "ibus-daemon"; notification = false; }
         ];
       };
       extraConfig = ''
