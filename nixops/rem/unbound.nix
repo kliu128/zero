@@ -6,6 +6,7 @@
     enable = true;
     interfaces = [ "127.0.0.1" "::1" ];
     extraConfig = ''
+        module-config: "iterator"
         local-zone: "netflix.com" typetransparent
         local-data: "netflix.com IN AAAA ::2"
 
