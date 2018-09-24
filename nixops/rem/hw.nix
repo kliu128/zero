@@ -147,8 +147,7 @@
     path = [ pkgs.lizardfs ];
     restartIfChanged = false; # don't want the filesystem falling out from under processes
     script = ''
-      sleep 30
-      mfsmount -o nodev,noatime,mfsdelayedinit,big_writes,allow_other,nonempty,mfsmaster=192.168.1.5,cacheexpirationtime=0,readaheadmaxwindowsize=4096 /mnt/storage
+      mfsmount -o nodev,noatime,mfsdelayedinit,big_writes,allow_other,nonempty,mfsmaster=192.168.1.5,cacheexpirationtime=0 /mnt/storage
     '';
     wantedBy = [ "local-fs.target" ];
     serviceConfig = {
@@ -212,12 +211,10 @@
     device = "/swap";
     size = 4096;
   } ];
+  zramSwap.enable = true;
 
   # IO scheduler
   boot.kernelParams = [ "scsi_mod.use_blk_mq=Y" ];
-  services.udev.extraRules = ''
-    ACTION=="add|change", KERNEL=="sd*[!0-9]|sr*", ATTR{queue/scheduler}="kyber"
-  '';
 
   # HACKS
 

@@ -10,30 +10,26 @@ spec:
       app: parity
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app: parity
     spec:
       nodeSelector:
         kubernetes.io/hostname: rem
+      hostNetwork: true
       containers:
-      - image: parity/parity:nightly
+      - image: parity/parity:v2.0.6
         imagePullPolicy: Always
         args: [-d, /data, --jsonrpc-interface=all, --jsonrpc-cors=*,
-              --jsonrpc-apis=safe, --no-ancient-blocks, --no-warp]
+              --jsonrpc-apis=safe, --no-ancient-blocks,--chain=kovan]
         name: parity
-        resources:
-          resources:
-            cpu: 500m
-            memory: 500Mi
         volumeMounts:
         - mountPath: /data
           name: data
       restartPolicy: Always
       volumes:
       - name: data
-        hostPath:
-          path: /srv/nfs/pvcs/default-parity-data-pvc-fbaa03aa-6b52-11e8-9446-74d435e2529b
+        persistentVolumeClaim:
+          claimName: parity-data
 status: {}
 ---
 apiVersion: v1
@@ -50,18 +46,3 @@ spec:
     requests:
       storage: 50Gi
 status: {}
----
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    app: parity
-  name: parity
-spec:
-  ports:
-  - name: jsonrpc
-    port: 8545
-    targetPort: 8545
-  selector:
-    app: parity
----
