@@ -173,7 +173,7 @@
     description = "Google Drive Gas Leak Data Mirroring";
     path = [ pkgs.rclone ];
     script = ''
-      rclone --config /etc/rclone.conf sync --verbose --drive-formats ods,odt,odp,svg "gsuite-school:10th Grade/Acton Gas Leak Area Data" "/mnt/storage/Kevin/Backups/Acton Gas Leak Data Mirror"
+      rclone --config /etc/rclone.conf sync --verbose --drive-formats ods,odt,odp,svg "gsuite-school:Acton Gas Leak Area Data" "/mnt/storage/Kevin/Backups/Acton Gas Leak Data Mirror"
       chown -R kevin:users "/mnt/storage/Kevin/Backups/Acton Gas Leak Data Mirror"
     '';
     after = [ "network-online.target" ];
