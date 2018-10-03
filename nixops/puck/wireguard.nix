@@ -26,7 +26,7 @@
           allowedIPs = [ (import ../wireguard.nix).subnet ];
 
           # Set this to the server IP and port.
-          endpoint = "potatofrom.space:51820";
+          endpoint = "potatofrom.space:53";
 
           # Send keepalives every 25 seconds. Important to keep NAT tables alive.
           persistentKeepalive = 25;

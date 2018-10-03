@@ -211,10 +211,12 @@
     device = "/swap";
     size = 4096;
   } ];
-  zramSwap.enable = true;
 
   # IO scheduler
   boot.kernelParams = [ "scsi_mod.use_blk_mq=Y" ];
+  services.udev.extraRules = ''
+    ACTION=="add|change", KERNEL=="sd*[!0-9]|sr*", ATTR{queue/scheduler}="kyber"
+  '';
 
   # HACKS
 
