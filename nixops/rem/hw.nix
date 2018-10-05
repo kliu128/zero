@@ -126,6 +126,10 @@
     source = ../secrets/keys/keyfile-parity0.bin;
   };
   boot.initrd.kernelModules = [ "btrfs" ];
+  services.btrfs.autoScrub = {
+    enable = true;
+    fileSystems = [ "/mnt/parity0" ];
+  };
 
   fileSystems."/var/lib/libvirt/images/ssd" = {
     device = "/dev/mapper/vms";
@@ -213,10 +217,7 @@
   } ];
 
   # IO scheduler
-  boot.kernelParams = [ "scsi_mod.use_blk_mq=Y" ];
-  services.udev.extraRules = ''
-    ACTION=="add|change", KERNEL=="sd*[!0-9]|sr*", ATTR{queue/scheduler}="kyber"
-  '';
+  boot.kernelParams = [ "scsi_mod.use_blk_mq=N" ];
 
   # HACKS
 

@@ -51,7 +51,7 @@
   };
   systemd.timers.gschool-sync = {
     enable = true;
-    timerConfig.OnUnitActiveSec = 3600;
+    timerConfig.OnActiveSec = 3600;
     wantedBy = [ "timers.target" ];
   };
   systemd.tmpfiles.rules = [
