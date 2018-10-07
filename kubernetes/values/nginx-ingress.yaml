@@ -1,7 +1,9 @@
 controller:
+  hostNetwork: true
   nodeSelector:
     kubernetes.io/hostname: rem
-  hostNetwork: true
+  image:
+    tag: 0.14.0
   config:
     # HACK: GitLab registry push fails over HTTP/2. Can't disable it for only
     # one ingress, so we have to disable it globally.

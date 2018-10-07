@@ -6,7 +6,9 @@ with lib;
 {
   # Fonts
   fonts.fontconfig.allowBitmaps = false;
-  fonts.fonts = with pkgs; [ corefonts emojione powerline-fonts inconsolata liberation_ttf ];
+  fonts.fonts = with pkgs; [
+    corefonts emojione powerline-fonts inconsolata liberation_ttf source-han-serif-simplified-chinese source-han-serif-japanese source-han-serif-korean source-han-serif-traditional-chinese
+  ];
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
@@ -16,7 +18,7 @@ with lib;
   i18n.inputMethod = {
     enabled = "ibus";
     ibus = {
-      engines = [ pkgs.ibus-engines.uniemoji ];
+      engines = [ pkgs.ibus-engines.uniemoji pkgs.ibus-engines.libpinyin pkgs.ibus-engines.table-chinese pkgs.ibus-engines.table ];
     };
   };
 
