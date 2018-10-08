@@ -217,7 +217,7 @@
   } ];
 
   # IO scheduler
-  boot.kernelParams = [ "scsi_mod.use_blk_mq=N" "amdgpu.dc=0" "iommu=pt" ];
+  boot.kernelParams = [ "scsi_mod.use_blk_mq=N" "iommu=pt" ];
 
   # HACKS
 
