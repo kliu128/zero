@@ -74,8 +74,7 @@ with lib;
       plugins = [ plugins.color-theme ];
     };
   };
-  nixpkgs.config.firefox.enableAdobeFlash = true;
-
+  
   hardware.bluetooth.enable = true;
 
   # MPD configuration
@@ -276,8 +275,8 @@ with lib;
       source = fetchFromGitHub {
         owner = "syl20bnr";
         repo = "spacemacs";
-        rev = "45ee95c289adaba6f7eff0c2564756ea41d9fb15";
-        sha256 = "16yn14cxvdj8salaf3x3mabbbs5kr94v6d9sd5paxd51c69mnx1x";
+        rev = "06927bc8f075768b253d4e8ce3ac9f07c2aaddf9";
+        sha256 = "06m63q1k02m18ih94qsc4bavc58pi2hschkp3db6dh28cysqva2g";
       };
       recursive = true;
     };
