@@ -19,6 +19,7 @@ rbac:
   create: true
 tcp:
   22: default/gitlab-gitlab-shell:22
+  113: default/matrix-irc-hashbang:113
   631: default/cups:631
   8448: default/matrix:8448
   8545: default/parity:8545

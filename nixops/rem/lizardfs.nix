@@ -4,6 +4,9 @@
   services.lizardfs.enable = true;
   services.lizardfs.cgiserv.enable = true;
   services.lizardfs.master.enable = true;
+  services.lizardfs.master.config = ''
+    USE_BDB_FOR_NAME_STORAGE = 1
+  '';
   services.lizardfs.master.exports = ''
     192.168.1.0/24 / rw,maproot=0
     10.100.0.0/24 / rw,maproot=0

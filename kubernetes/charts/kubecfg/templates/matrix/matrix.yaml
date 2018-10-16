@@ -67,6 +67,9 @@ spec:
               subPath: slack-registration.yaml
               mountPath: /config/slack-registration.yaml
             - name: config
+              subPath: irc-hashbang-registration.yaml
+              mountPath: /config/irc-hashbang-registration.yaml
+            - name: config
               subPath: potatofrom.space.log.config
               mountPath: /config/potatofrom.space.log.config
             - name: data

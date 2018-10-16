@@ -14,8 +14,6 @@ spec:
       labels:
         app: dl
     spec:
-      nodeSelector:
-        kubernetes.io/hostname: rem
       containers:
         - image: nginx
           name: nginx

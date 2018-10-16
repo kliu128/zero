@@ -76,6 +76,7 @@ with lib;
   };
   
   hardware.bluetooth.enable = true;
+  hardware.pulseaudio.package = pkgs.pulseaudioFull;
 
   # MPD configuration
   services.mpd = {
@@ -119,7 +120,7 @@ with lib;
     # VM and DevOps
     helmfile kubectl kubernetes-helm nixops virtmanager
     # Desktop environment
-    arandr blueman conky pcmanfm gnome3.file-roller gvfs i3lock system-config-printer scrot xautolock xcape termite
+    arandr blueman conky pcmanfm gnome3.file-roller gvfs i3lock p7zip system-config-printer scrot xautolock xcape termite
     # Image editing
     gwenview krita
   ];
@@ -342,7 +343,7 @@ with lib;
 
           # Menu and term
           "${modifier}+d" = ''exec i3-dmenu-desktop --dmenu='rofi -show run -font "Source Code Pro 11"' '';
-          "${modifier}+Return" = "exec termite --exec 'tmux attach'";
+          "${modifier}+Return" = "exec termite";
 
           # Scratchpad
           "${modifier}+Shift+minus" = "move scratchpad";
@@ -359,6 +360,8 @@ with lib;
           { command = "xset s 290"; notification = false; }
           { command = "autokey-gtk"; notification = false; }
           { command = "ibus-daemon"; notification = false; }
+          { command = "kdeconnect-indicator"; notification = false; }
+          { command = "${pkgs.feh}/bin/feh --bg-fill ${./desktop/bg.jpg}"; notification = false; }
         ];
       };
       extraConfig = ''
@@ -406,6 +409,15 @@ with lib;
             }
         }
       '';
+    };
+
+    # Compositor
+    services.compton = {
+      enable = true;
+      vSync = "drm";
+      fade = true;
+      fadeDelta = 5;
+      backend = "xrender";
     };
 
     # Keyboard

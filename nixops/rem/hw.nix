@@ -145,28 +145,6 @@
     source = ../secrets/keys/keyfile-vms.bin;
   };
 
-  systemd.services.storage = {
-    enable = true;
-    description = "Grand Stores Mount";
-    path = [ pkgs.lizardfs pkgs.kmod ];
-    restartIfChanged = false; # don't want the filesystem falling out from under processes
-    script = ''
-      modprobe fuse
-      mfsmount -o nodev,noatime,mfsdelayedinit,big_writes,allow_other,nonempty,mfsmaster=192.168.1.5,cacheexpirationtime=0 /mnt/storage
-    '';
-    wantedBy = [ "local-fs.target" ];
-    serviceConfig = {
-      Type = "forking";
-    };
-    unitConfig = {
-      # Implicitly adds dependency on basic.target otherwise, which creates
-      # an ordering cycle on boot
-      DefaultDependencies = false;
-      # Normally would be added by DefaultDependencies=
-      Conflicts = [ "shutdown.target" ];
-      Before = [ "shutdown.target" ];
-    };
-  };
   systemd.services.wait-for-storage = {
     enable = true;
     description = "Wait for Grand Stores mount to populate";
@@ -201,8 +179,6 @@
   };
 
   systemd.tmpfiles.rules = [
-    # Auto-make mount folders for filesystems that NixOS doesn't handle directly
-    "d /mnt/storage 0755 root root -"
     "w /sys/kernel/mm/transparent_hugepage/enabled - - - - always"
     "w /sys/kernel/mm/transparent_hugepage/defrag - - - - defer"
   ];
@@ -216,9 +192,13 @@
     device = "/swap";
     size = 4096;
   } ];
+  zramSwap.enable = true;
 
   # IO scheduler
-  boot.kernelParams = [ "scsi_mod.use_blk_mq=N" "iommu=pt" ];
+  boot.kernelParams = [ "iommu=pt" ];
+  services.udev.extraRules = ''
+    ACTION=="add|change", KERNEL=="sd*[!0-9]|sr*", ATTR{queue/scheduler}="kyber"
+  '';
 
   # HACKS
 

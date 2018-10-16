@@ -71,3 +71,18 @@ spec:
     requests:
       storage: 20Gi
 status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: minecraft
+  name: minecraft
+spec:
+  ports:
+  - name: mc
+    port: 25565
+    targetPort: 25565
+  selector:
+    app: minecraft
+---

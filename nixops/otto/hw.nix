@@ -29,6 +29,6 @@
     device = "/swap";
     size = 4096;
   } ];
-
+  
   nix.maxJobs = lib.mkDefault 4;
 }

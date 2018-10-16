@@ -13,8 +13,6 @@ spec:
       labels:
         app: zoneminder
     spec:
-      nodeSelector:
-        kubernetes.io/hostname: rem
       containers:
       - image: dlandon/zoneminder
         name: zoneminder

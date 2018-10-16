@@ -30,9 +30,11 @@
       deployment.hasFastConnection = true;
 
       imports = [
+        ./modules/boinc.nix
         ./modules/docker.nix
         ./modules/kubernetes-common.nix
         ./modules/kubernetes-node.nix
+        ./modules/lizardfs-mnt.nix
         ./otto/hw.nix
         ./otto/lizardfs.nix
       ];
@@ -49,6 +51,7 @@
 
       imports = [
         ./modules/desktop.nix
+        ./modules/docker.nix
         ./puck/desktop.nix
         ./puck/hw.nix
         ./puck/remote-fs.nix
@@ -67,11 +70,13 @@
       deployment.hasFastConnection = true;
 
       imports = [
+        ./modules/boinc.nix
         ./modules/desktop.nix
         ./modules/docker.nix
         ./modules/kdeconnect.nix
         ./modules/kubernetes-common.nix
         ./modules/kubernetes-master.nix
+        ./modules/lizardfs-mnt.nix
         ./rem/backups.nix
         ./rem/desktop.nix
         ./rem/fusee-launcher.nix
@@ -94,7 +99,7 @@
 
       # Options as Kubernetes entry node
       networking.firewall.allowedTCPPorts = [
-        22 25 80 143 443 587 631 993 8448 9001 9030 25565 ];
+        22 25 80 113 143 443 587 631 993 8448 9001 9030 25565 ];
 
       systemd.services.cups.enable = false; # don't conflict with docker cups
 
