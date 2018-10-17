@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: boinc-amd
+  labels:
+    app: boinc-amd
+spec:
+  selector:
+    matchLabels:
+      name: boinc-amd
+  template:
+    metadata:
+      labels:
+        name: boinc-amd
+    spec:
+      containers:
+      - name: boinc-amd
+        hostNetwork: true
+        image: boinc/client:amd
+        resources:
+          limits:
+            amd.com/gpu: 1
+        volumeMounts:
+        - mountPath: /var/lib/boinc-client
+          name: data
+        restartPolicy: Always
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: boinc-amd-data
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    app: boinc-amd
+  name: boinc-amd-data
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+status: {}

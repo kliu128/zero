@@ -17,7 +17,7 @@ spec:
         kubernetes.io/hostname: rem
       hostNetwork: true
       containers:
-      - image: parity/parity:v2.0.6
+      - image: parity/parity:beta
         imagePullPolicy: Always
         args: [-d, /data, --jsonrpc-interface=all, --jsonrpc-cors=*,
               --jsonrpc-apis=safe, --no-ancient-blocks,--chain=kovan]
