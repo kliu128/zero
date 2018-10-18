@@ -19,8 +19,7 @@ spec:
       containers:
       - image: parity/parity:beta
         imagePullPolicy: Always
-        args: [-d, /data, --jsonrpc-interface=all, --jsonrpc-cors=*,
-              --jsonrpc-apis=safe, --no-ancient-blocks,--chain=kovan]
+        args: [-d, /data, --no-ancient-blocks,--chain=kovan, --geth]
         name: parity
         volumeMounts:
         - mountPath: /data

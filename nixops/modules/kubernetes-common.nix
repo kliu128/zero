@@ -76,6 +76,8 @@
   };
   services.nfs.server.enable = true;
 
+  systemd.services.kubelet.restartIfChanged = false;
+
   # Make critical services restart on failure
   systemd.services.kube-scheduler.serviceConfig.Restart = "always";
   systemd.services.flannel.serviceConfig.Restart = "always";
