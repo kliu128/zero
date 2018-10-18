@@ -31,7 +31,7 @@ spec:
       containers:
         # Main matrix server
         - name: synapse
-          image: matrixdotorg/synapse:v0.33.6-py3
+          image: matrixdotorg/synapse:v0.33.7-py3
           livenessProbe:
             httpGet:
               path: /_matrix/client/versions
