@@ -5,7 +5,7 @@ ingress:
   enabled: true
   tls: true
 postgresql:
-  imageTag: latest
+  imageTag: "10"
   postgresUser: mastodon
   postgresDatabase: mastodon
 config:
