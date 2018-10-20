@@ -1,4 +1,4 @@
-image: registry.potatofrom.space/kevin/glitch-soc:latest
+image: gargron/mastodon:v2.5.2
 persistence:
   size: 25Gi
 ingress:
