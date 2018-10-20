@@ -130,6 +130,7 @@ with lib;
     # U2F
     yubikey-personalization-gui yubikey-manager
   ];
+  services.udev.packages = [ pkgs.yubikey-personalization-gui ];
   environment.variables.GIO_EXTRA_MODULES = [ "${pkgs.gvfs}/lib/gio/modules" ];
 
   # Must be done on the system level (not the home-manager level) to install
@@ -463,6 +464,8 @@ with lib;
       alias k=kubectl
       # Enable yarn with emoji
       alias yarn="yarn --emoji true"
+      # Fix "Unknown terminal type xterm-termite"
+      alias ssh="TERM=xterm ssh"
 
       eval $(thefuck --alias)
 
