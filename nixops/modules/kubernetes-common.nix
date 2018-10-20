@@ -62,6 +62,7 @@
     addons.dashboard.rbac.enable = true;
     addons.dns.enable = true;
   };
+  services.etcd.peerClientCertAuth = true;
   networking.firewall = {
     allowedTCPPorts = [
       # Kubernetes - kubelet, etcd, apiserver
