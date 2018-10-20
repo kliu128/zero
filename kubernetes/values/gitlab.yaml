@@ -1,4 +1,5 @@
 global:
+  edition: ce
   hosts:
     domain: potatofrom.space
   ingress:
@@ -20,35 +21,6 @@ certmanager:
   install: false
 certmanager-issuer:
   email: kevin@potatofrom.space
-  # https://gitlab.com/charts/gitlab/issues/613
-gitlab:
-  gitlab-shell:
-    minReplicas: 1
-    maxUnavailable: 0
-  # Use Community Edition
-  # Lock versions because otherwise we might restart with a newer version
-  # without having run migrations
-  # Update from: https://gitlab.com/gitlab-org/build/CNG/container_registry
-  migrations:
-    image:
-      repository: registry.gitlab.com/gitlab-org/build/cng/gitlab-rails-ce
-      tag: v11.3.5
-  sidekiq:
-    image:
-      repository: registry.gitlab.com/gitlab-org/build/cng/gitlab-sidekiq-ce
-      tag: v11.3.5
-  unicorn:
-    image:
-      repository: registry.gitlab.com/gitlab-org/build/cng/gitlab-unicorn-ce
-      tag: v11.3.5
-    minReplicas: 1
-    maxUnavailable: 0
-    workhorse:
-      image: registry.gitlab.com/gitlab-org/build/cng/gitlab-workhorse-ce
-  task-runner:
-    image:
-      repository: registry.gitlab.com/gitlab-org/build/cng/gitlab-task-runner-ce
-      tag: v11.3.5
 gitlab-runner:
   runners:
     privileged: true
