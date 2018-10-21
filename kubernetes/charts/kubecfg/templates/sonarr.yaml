@@ -13,8 +13,6 @@ spec:
       labels:
         app: sonarr
     spec:
-      nodeSelector:
-        kubernetes.io/hostname: rem
       containers:
         - env:
             - name: PGID

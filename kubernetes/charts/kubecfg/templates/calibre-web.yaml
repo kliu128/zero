@@ -13,8 +13,6 @@ spec:
       labels:
         app: calibre-web
     spec:
-      nodeSelector:
-        kubernetes.io/hostname: rem
       containers:
       - image: linuxserver/calibre-web
         name: calibre-web
