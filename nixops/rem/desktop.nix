@@ -6,6 +6,10 @@
     home.file.".config/sway/config".text = builtins.readFile ./sway;
   };
 
+  services.synergy.server.enable = true;
+  services.synergy.server.configFile = ./synergyServer.conf;
+  networking.firewall.allowedTCPPorts = [ 24800 ]; # synergy port
+
   home-manager.users.kevin.xsession.windowManager.i3.extraConfig = ''
     workspace 1 output HDMI-A-1
     workspace 2 output DisplayPort-0

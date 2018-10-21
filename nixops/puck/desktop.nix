@@ -19,4 +19,9 @@
   };
   virtualisation.libvirtd.enable = true;
   users.extraUsers.kevin.extraGroups = [ "libvirtd" ];
+
+  services.synergy.client = {
+    enable = true;
+    serverAddress = "192.168.1.5";
+  };
 }
