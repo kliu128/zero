@@ -128,7 +128,6 @@ set $base0F #d41acd
 bar {
     #status_command bash /nix/store/vqwwanjgxz2i4w2wgc07y5z7i6swgnpd-conky-bar.sh
     #i3bar_command i3bar -t
-    font pango:Source Code Pro
     position top
     
     colors {

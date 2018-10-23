@@ -12,7 +12,6 @@
     imports = [
       ./common/earlyoom.nix
       ./common/firewall.nix
-      ./common/kernel.nix
       ./common/nix.nix
       ./common/ssh.nix
       ./common/time.nix
