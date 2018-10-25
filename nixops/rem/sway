@@ -126,7 +126,7 @@ set $base0F #d41acd
 #client.urgent $base02 $base08 $base07 $base08
 
 bar {
-    #status_command bash /nix/store/vqwwanjgxz2i4w2wgc07y5z7i6swgnpd-conky-bar.sh
+    status_command while date +'%Y-%m-%d %l:%M:%S %p'; do sleep 1; done
     #i3bar_command i3bar -t
     position top
     
