@@ -148,7 +148,22 @@ with lib;
         key = "8792E2260F507DA00F0DB58E2160C3EB40A944EC";
         signByDefault = true;
       };
+      extraConfig = ''
+        [init]
+        templatedir = /home/kevin/.git-templates
+      '';
     };
+    # Git template file to sync before committing
+    # Fixes bug where LizardFS doesn't fully write commit message file before
+    # commit actually occurs
+    home.file.".git-templates/hooks/pre-commit" = {
+      executable = true;
+      text = ''
+        #!/bin/sh
+        sync
+      '';
+    };
+
     programs.htop = {
       enable = true;
       accountGuestInCpuMeter = true;
