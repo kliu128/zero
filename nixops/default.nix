@@ -69,7 +69,6 @@
       deployment.hasFastConnection = true;
 
       imports = [
-        ./modules/boinc.nix
         ./modules/desktop.nix
         ./modules/docker.nix
         ./modules/kdeconnect.nix

@@ -32,6 +32,7 @@
     size = 8096; # size of system memory (for resuming)
   } ];
   boot.kernelParams = [ "scsi_mod.use_blk_mq=Y" "resume_offset=34816" ]; # https://wiki.archlinux.org/index.php/Dm-crypt/Swap_encryption
+  zramSwap.enable = true;
 
   nix.maxJobs = lib.mkDefault 4;
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";

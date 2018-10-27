@@ -15,7 +15,7 @@
   boot.kernelModules = [ "kvm-intel" ];
   # exfat support for Nintendo Switch / other SD cards
   boot.supportedFilesystems = [ "btrfs" "ext4" "exfat" ];
-  boot.kernelPackages = pkgs.linuxPackages_4_19;
+  boot.kernelPackages = pkgs.linuxPackages_4_18;
 
   # Video.
   boot.earlyVconsoleSetup = true;
@@ -180,8 +180,6 @@
   };
 
   systemd.tmpfiles.rules = [
-    "w /sys/kernel/mm/transparent_hugepage/enabled - - - - always"
-    "w /sys/kernel/mm/transparent_hugepage/defrag - - - - defer"
   ];
 
   # Disk and swap
@@ -196,7 +194,7 @@
   zramSwap.enable = true;
 
   # IO scheduler
-  boot.kernelParams = [ "iommu=pt" ];
+  boot.kernelParams = [ "iommu=pt" "amdgpu.dc=0" ];
   services.udev.extraRules = ''
     ACTION=="add|change", KERNEL=="sd*[!0-9]|sr*", ATTR{queue/scheduler}="kyber"
   '';
