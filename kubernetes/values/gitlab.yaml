@@ -30,3 +30,8 @@ postgresql:
   existingSecret: gitlab-postgresql-password
 prometheus:
   install: false
+gitlab:
+  unicorn:
+    maxUnavailable: 0
+    maxReplicas: 1
+    minReplicas: 1
