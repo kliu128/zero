@@ -1,0 +1,47 @@
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: nvidia-gpu-device-plugin
+  namespace: kube-system
+  labels:
+    k8s-app: nvidia-gpu-device-plugin
+spec:
+  template:
+    metadata:
+      labels:
+        k8s-app: nvidia-gpu-device-plugin
+      annotations:
+        scheduler.alpha.kubernetes.io/critical-pod: ''
+    spec:
+      priorityClassName: system-node-critical
+      tolerations:
+      - key: "nvidia.com/gpu"
+        effect: "NoSchedule"
+        operator: "Exists"
+      hostNetwork: true
+      hostPID: true
+      volumes:
+      - name: device-plugin
+        hostPath:
+          path: /var/lib/kubelet/device-plugins
+      - name: dev
+        hostPath:
+          path: /dev
+      containers:
+      - image: "gcr.io/google-containers/nvidia-gpu-device-plugin@sha256:827620149d3a196bf0e6825ff8185e7abae98d71637f3aba387b00fcd7f7759f"
+        command: ["/usr/bin/nvidia-gpu-device-plugin", "-logtostderr", "-host-path=/run/k8s-nvidia-driver/lib"]
+        name: nvidia-gpu-device-plugin
+        resources:
+          requests:
+            cpu: 50m
+            memory: 10Mi
+          limits:
+            cpu: 50m
+            memory: 10Mi
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - name: device-plugin
+          mountPath: /device-plugin
+        - name: dev
+          mountPath: /dev

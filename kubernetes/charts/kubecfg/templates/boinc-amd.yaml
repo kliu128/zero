@@ -13,9 +13,14 @@ spec:
       labels:
         name: boinc-amd
     spec:
+      hostNetwork: true
       containers:
       - name: boinc-amd
-        hostNetwork: true
+        env:
+          - name: BOINC_CMD_LINE_OPTIONS
+            value: "--allow_remote_gui_rpc"
+          - name: BOINC_GUI_RPC_PASSWORD
+            value: {{ .Values.boinc_amd.password | quote }}
         image: boinc/client:amd
         resources:
           limits:

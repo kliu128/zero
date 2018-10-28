@@ -19,7 +19,13 @@
 
   # Video.
   boot.earlyVconsoleSetup = true;
-  services.xserver.videoDrivers = [ "amdgpu" ];
+  services.xserver.videoDrivers = [ "amdgpu" "nvidia" ];
+  system.activationScripts.k8s-nvidia = {
+    text = ''
+      ln -s ${pkgs.linuxPackages_4_18.nvidia_x11} /run/k8s-nvidia-driver
+    '';
+    deps = [];
+  };
 
   # Freeness (that is, not.)
   hardware.enableRedistributableFirmware = true; # for amdgpu
@@ -194,7 +200,7 @@
   zramSwap.enable = true;
 
   # IO scheduler
-  boot.kernelParams = [ "iommu=pt" "amdgpu.dc=0" ];
+  boot.kernelParams = [ "iommu=pt" "amdgpu.gpu_recovery=1" ];
   services.udev.extraRules = ''
     ACTION=="add|change", KERNEL=="sd*[!0-9]|sr*", ATTR{queue/scheduler}="kyber"
   '';
