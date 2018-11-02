@@ -7,8 +7,11 @@ with lib;
   # Home manager
   imports = [
     "${builtins.fetchTarball https://github.com/rycee/home-manager/archive/master.tar.gz}/nixos"
+
     ./games.nix
+    ./u2f.nix
   ];
+  
   nixpkgs.overlays = [
     (import (builtins.fetchTarball https://github.com/mozilla/nixpkgs-mozilla/archive/master.tar.gz))
   ];
@@ -36,10 +39,6 @@ with lib;
 
   # Scanner
   hardware.sane.enable = true;
-
-  # U2F
-  hardware.u2f.enable = true;
-  services.pcscd.enable = true;
 
   # Enable automatic discovery of the printer (from other linux systems with avahi running)
   services.avahi.enable = true;
@@ -111,10 +110,7 @@ with lib;
     arandr blueman conky pcmanfm gnome3.file-roller gvfs i3lock p7zip system-config-printer scrot xautolock xcape termite
     # Image editing
     gwenview krita
-    # U2F
-    yubikey-personalization-gui yubikey-manager
   ];
-  services.udev.packages = [ pkgs.yubikey-personalization-gui ];
   environment.variables.GIO_EXTRA_MODULES = [ "${pkgs.gvfs}/lib/gio/modules" ];
 
   # Must be done on the system level (not the home-manager level) to install
