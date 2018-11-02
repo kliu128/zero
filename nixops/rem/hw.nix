@@ -20,9 +20,12 @@
   # Video.
   boot.earlyVconsoleSetup = true;
   services.xserver.videoDrivers = [ "amdgpu" "nvidia" ];
+  boot.blacklistedKernelModules = [ "nvidia-drm" "nvidia_modeset" ];
   system.activationScripts.k8s-nvidia = {
     text = ''
-      ln -s ${pkgs.linuxPackages_4_18.nvidia_x11} /run/k8s-nvidia-driver
+      if [ ! -e /run/k8s-nvidia-driver ]; then
+        ln -s ${pkgs.linuxPackages_4_18.nvidia_x11} /run/k8s-nvidia-driver
+      fi
     '';
     deps = [];
   };
@@ -186,6 +189,8 @@
   };
 
   systemd.tmpfiles.rules = [
+    "w /sys/kernel/mm/transparent_hugepage/enabled - - - - always"
+    "w /sys/kernel/mm/transparent_hugepage/defrag - - - - defer"
   ];
 
   # Disk and swap
@@ -200,9 +205,11 @@
   zramSwap.enable = true;
 
   # IO scheduler
-  boot.kernelParams = [ "iommu=pt" "amdgpu.gpu_recovery=1" ];
+  boot.kernelParams = [ "iommu=pt" "amdgpu.dc=0" "amdgpu.gpu_recovery=1" ];
   services.udev.extraRules = ''
     ACTION=="add|change", KERNEL=="sd*[!0-9]|sr*", ATTR{queue/scheduler}="kyber"
+
+    ACTION=="add", KERNEL=="card0", SUBSYSTEM=="drm", RUN+="${pkgs.kmod}/bin/modprobe nvidia-drm"
   '';
 
   # HACKS

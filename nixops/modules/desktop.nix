@@ -214,6 +214,11 @@ with lib;
           user = "kevin";
           port = 844;
         };
+        subaru = {
+          hostname = "35.211.16.173";
+          port = 22;
+          user = "kevin";
+        };
       };
     };
 
@@ -379,7 +384,7 @@ with lib;
           { command = "xcape"; notification = false; }
           { command = ''xautolock -time 5 -locker "i3lock" -corners ----''; notification = false; }
           { command = "xset s 290"; notification = false; }
-          { command = "autokey-gtk"; notification = false; }
+          #{ command = "autokey-gtk"; notification = false; }
           { command = "ibus-daemon"; notification = false; }
           { command = "kdeconnect-indicator"; notification = false; }
           { command = "${pkgs.feh}/bin/feh --bg-fill ${./desktop/bg.jpg}"; notification = false; }
