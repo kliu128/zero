@@ -49,7 +49,7 @@
       deployment.targetHost = (import ./wireguard.nix).ips.puck;
 
       imports = [
-        ./modules/desktop.nix
+        ./modules/desktop
         ./modules/docker.nix
         ./puck/desktop.nix
         ./puck/hw.nix
@@ -69,7 +69,7 @@
       deployment.hasFastConnection = true;
 
       imports = [
-        ./modules/desktop.nix
+        ./modules/desktop
         ./modules/docker.nix
         ./modules/kdeconnect.nix
         ./modules/kubernetes-common.nix

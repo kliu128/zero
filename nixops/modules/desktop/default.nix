@@ -4,6 +4,15 @@ with import <nixpkgs> {};
 with lib;
 
 {
+  # Home manager
+  imports = [
+    "${builtins.fetchTarball https://github.com/rycee/home-manager/archive/master.tar.gz}/nixos"
+    ./games.nix
+  ];
+  nixpkgs.overlays = [
+    (import (builtins.fetchTarball https://github.com/mozilla/nixpkgs-mozilla/archive/master.tar.gz))
+  ];
+
   # Fonts
   fonts.fontconfig.allowBitmaps = false;
   fonts.fonts = with pkgs; [
@@ -25,8 +34,6 @@ with lib;
   # Fwupd
   services.fwupd.enable = true;
 
-  hardware.opengl.driSupport32Bit = true; # for steam and wine
-
   # Scanner
   hardware.sane.enable = true;
 
@@ -42,7 +49,7 @@ with lib;
 
   # Printing configuration
   services.printing.enable = true;
-  services.printing.clientConf = "ServerName ${(import ../wireguard.nix).ips.rem}";
+  services.printing.clientConf = "ServerName ${(import ../../wireguard.nix).ips.rem}";
 
   services.syncthing = {
     enable = true;
@@ -65,19 +72,6 @@ with lib;
   hardware.pulseaudio.extraConfig = ''
     load-module module-switch-on-connect
   '';
-
-  # Custom package overrides
-  nixpkgs.config.packageOverrides = pkgs: rec {
-    winetricks = pkgs.winetricks.override { wine = pkgs.wineWowPackages.staging; };
-    factorio = pkgs.factorio.override {
-      username = "Pneumaticat";
-      password = builtins.readFile ./secrets/factorio-password.txt;
-    };
-    myEclipse = with pkgs.eclipses; eclipseWithPlugins {
-      eclipse = eclipse-sdk;
-      plugins = [ plugins.color-theme ];
-    };
-  };
   
   hardware.bluetooth.enable = true;
   hardware.pulseaudio.package = pkgs.pulseaudioFull;
@@ -98,19 +92,11 @@ with lib;
   };
   hardware.pulseaudio.tcp.enable = true;
 
-  # Home manager
-  imports = [
-    "${builtins.fetchTarball https://github.com/rycee/home-manager/archive/master.tar.gz}/nixos"
-  ];
-  nixpkgs.overlays = [
-    (import (builtins.fetchTarball https://github.com/mozilla/nixpkgs-mozilla/archive/master.tar.gz))
-  ];
-
   environment.systemPackages = with pkgs; [
     # System tools
     i7z atop bcachefs-tools beets borgbackup cointop cowsay ctop dnsutils file fortune python36Packages.glances gnupg hdparm htop iftop iotop python python3 libva-full lm_sensors lolcat looking-glass-client lzip mpw oh-my-zsh openjdk python36Packages.tvnamer rclone restic rustup screen smartmontools snapraid spectre-meltdown-checker stress-ng telnet thefuck tmux trash-cli tree vim wget wireguard unar
     # Desktop applications
-    android-studio arduino atom calibre cantata chromium clementine codeblocks discord emacs filezilla firebird-emu latest.firefox-nightly-bin gnome3.gnome-disk-utility google-chrome gpodder hexchat jetbrains.idea-community jetbrains.pycharm-community keepassxc libreoffice-fresh liferea mate.atril mkvtoolnix mpv myEclipse pavucontrol skypeforlinux simple-scan slack thunderbird tor-browser-bundle transmission_gtk transmission_remote_gtk vlc vscode wineWowPackages.staging winetricks youtube-dl zoom-us
+    android-studio arduino atom calibre cantata chromium clementine codeblocks discord emacs filezilla firebird-emu latest.firefox-nightly-bin gnome3.gnome-disk-utility google-chrome gpodder hexchat jetbrains.idea-community jetbrains.pycharm-community keepassxc libreoffice-fresh liferea mate.atril mkvtoolnix mpv pavucontrol skypeforlinux simple-scan slack thunderbird tor-browser-bundle transmission_gtk transmission_remote_gtk vlc vscode youtube-dl zoom-us
     # Anki and related packages (for LaTeX support)
     anki texlive.combined.scheme-basic tetex
     # Desktop tools
@@ -119,8 +105,6 @@ with lib;
     kate okular partition-manager spectacle
     # Development
     bfg-repo-cleaner docker docker_compose docker-machine gcc gdb git-crypt gitAndTools.gitFull gnumake google-cloud-sdk
-    # Games
-    dolphinEmuMaster multimc steam steam-run-native
     # VM and DevOps
     helmfile kubectl kubernetes-helm nixops virtmanager
     # Desktop environment
@@ -200,12 +184,12 @@ with lib;
           port = 843;
         };
         puck = {
-          hostname = (import ../wireguard.nix).ips.puck;
+          hostname = (import ../../wireguard.nix).ips.puck;
           user = "kevin";
           port = 843;
         };
         rem = {
-          hostname = (import ../wireguard.nix).ips.rem;
+          hostname = (import ../../wireguard.nix).ips.rem;
           user = "kevin";
           port = 843;
         };
@@ -295,10 +279,10 @@ with lib;
       set -g mouse on
     '';
 
-    home.file.".conkyrc".text = builtins.readFile ./desktop/.conkyrc;
+    home.file.".conkyrc".text = builtins.readFile ./.conkyrc;
 
     # Emacs
-    home.file.".spacemacs".text = builtins.readFile ./desktop/.spacemacs;
+    home.file.".spacemacs".text = builtins.readFile ./.spacemacs;
     home.file.".emacs.d" = {
       source = fetchFromGitHub {
         owner = "syl20bnr";
@@ -308,7 +292,7 @@ with lib;
       };
       recursive = true;
     };
-    home.file.".spacemacs.d/next-spec-day.el".text = builtins.readFile ./desktop/next-spec-day.el;
+    home.file.".spacemacs.d/next-spec-day.el".text = builtins.readFile ./next-spec-day.el;
 
     # GTK & Qt
     gtk = {
@@ -387,7 +371,7 @@ with lib;
           #{ command = "autokey-gtk"; notification = false; }
           { command = "ibus-daemon"; notification = false; }
           { command = "kdeconnect-indicator"; notification = false; }
-          { command = "${pkgs.feh}/bin/feh --bg-fill ${./desktop/bg.jpg}"; notification = false; }
+          { command = "${pkgs.feh}/bin/feh --bg-fill ${./bg.jpg}"; notification = false; }
         ];
       };
       extraConfig = ''
@@ -419,7 +403,7 @@ with lib;
         client.urgent $base02 $base08 $base07 $base08
 
         bar {
-            status_command bash ${./desktop/conky-bar.sh}
+            status_command bash ${./conky-bar.sh}
             i3bar_command i3bar -t
             font pango:Source Code Pro
             position top
