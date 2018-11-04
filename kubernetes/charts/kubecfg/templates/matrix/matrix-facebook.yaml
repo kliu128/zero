@@ -15,6 +15,17 @@ spec:
         - name: facebook
           image: registry.potatofrom.space/kevin/matrix-puppet-facebook
           imagePullPolicy: Always
+          readinessProbe:
+            tcpSocket:
+              port: 8090
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: 8090
+            # Very long initial delay because initial /sync takes #forever
+            initialDelaySeconds: 240
+            periodSeconds: 20
           ports:
             - containerPort: 8090
               name: facebook
