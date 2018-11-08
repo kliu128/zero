@@ -21,7 +21,6 @@
   services.lizardfs.chunkservers.servers = [
     {
       name = "parity0";
-      config = "PERFORM_FSYNC = 0";
       storageDirectories = [ "/mnt/parity0/mfs" ];
       port = 9422;
     }
@@ -47,7 +46,6 @@
     }
     {
       name = "seagate8tb";
-      config = "PERFORM_FSYNC = 0";
       storageDirectories = [ "/mnt/data4/mfs" ];
       port = 9429;
     }

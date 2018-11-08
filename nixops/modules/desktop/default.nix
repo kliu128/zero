@@ -108,7 +108,7 @@ with lib;
     # VM and DevOps
     helmfile kubectl kubernetes-helm nixops virtmanager
     # Desktop environment
-    arandr blueman conky pcmanfm gnome3.file-roller gvfs i3lock p7zip system-config-printer scrot xautolock xcape termite
+    arandr blueman conky pcmanfm gnome3.file-roller gvfs i3lock p7zip system-config-printer scrot xautolock xcape
     # Image editing
     gwenview krita
   ];
@@ -278,6 +278,8 @@ with lib;
 
     home.file.".conkyrc".text = builtins.readFile ./.conkyrc;
 
+    home.file.".config/alacritty/alacritty.yml".text = builtins.readFile ./alacritty.yml;
+
     # Emacs
     home.file.".spacemacs".text = builtins.readFile ./.spacemacs;
     home.file.".emacs.d" = {
@@ -350,7 +352,7 @@ with lib;
 
           # Menu and term
           "${modifier}+d" = ''exec i3-dmenu-desktop --dmenu='rofi -show run -font "Source Code Pro 11"' '';
-          "${modifier}+Return" = "exec termite";
+          "${modifier}+Return" = "exec ${pkgs.alacritty}/bin/alacritty";
 
           # Scratchpad
           "${modifier}+Shift+minus" = "move scratchpad";
@@ -465,8 +467,6 @@ with lib;
       alias k=kubectl
       # Enable yarn with emoji
       alias yarn="yarn --emoji true"
-      # Fix "Unknown terminal type xterm-termite"
-      alias ssh="TERM=xterm ssh"
 
       eval $(thefuck --alias)
 

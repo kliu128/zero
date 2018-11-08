@@ -15,16 +15,17 @@
   boot.kernelModules = [ "kvm-intel" ];
   # exfat support for Nintendo Switch / other SD cards
   boot.supportedFilesystems = [ "btrfs" "ext4" "exfat" ];
-  boot.kernelPackages = pkgs.linuxPackages_4_18;
 
   # Video.
   boot.earlyVconsoleSetup = true;
+  boot.kernelPackages = pkgs.linuxPackages_4_14;
+  boot.kernel.sysctl."vm.min_free_kbytes" = 1000000;
   services.xserver.videoDrivers = [ "amdgpu" "nvidia" ];
   boot.blacklistedKernelModules = [ "nvidia-drm" "nvidia_modeset" ];
   system.activationScripts.k8s-nvidia = {
     text = ''
       if [ ! -e /run/k8s-nvidia-driver ]; then
-        ln -s ${pkgs.linuxPackages_4_18.nvidia_x11} /run/k8s-nvidia-driver
+        ln -s ${pkgs.linuxPackages_4_14.nvidia_x11} /run/k8s-nvidia-driver
       fi
     '';
     deps = [];
@@ -141,15 +142,15 @@
     fileSystems = [ "/mnt/parity0" ];
   };
 
-  fileSystems."/var/lib/libvirt/images/ssd" = {
-    device = "/dev/mapper/vms";
-    encrypted = {
-      enable = true;
-      blkDev = "/dev/disk/by-uuid/35ee3543-d00d-45f2-89a0-26fd819539eb";
-      keyFile = "/mnt-root/etc/keys/keyfile-vms.bin";
-      label = "vms";
-    };
-  };
+  # fileSystems."/var/lib/libvirt/images/ssd" = {
+  #   device = "/dev/mapper/vms";
+  #   encrypted = {
+  #     enable = true;
+  #     blkDev = "/dev/disk/by-uuid/35ee3543-d00d-45f2-89a0-26fd819539eb";
+  #     keyFile = "/mnt-root/etc/keys/keyfile-vms.bin";
+  #     label = "vms";
+  #   };
+  # };
   environment.etc."keys/keyfile-vms.bin" = {
     mode = "400";
     source = ../secrets/keys/keyfile-vms.bin;
@@ -187,12 +188,7 @@
     ];
     wantedBy = [ "multi-user.target" ];
   };
-
-  systemd.tmpfiles.rules = [
-    "w /sys/kernel/mm/transparent_hugepage/enabled - - - - always"
-    "w /sys/kernel/mm/transparent_hugepage/defrag - - - - defer"
-  ];
-
+  
   # Disk and swap
   # Allow discards on the root partition
   boot.initrd.luks.devices."root".allowDiscards = true;
@@ -205,7 +201,7 @@
   zramSwap.enable = true;
 
   # IO scheduler
-  boot.kernelParams = [ "iommu=pt" "amdgpu.dc=0" "amdgpu.gpu_recovery=1" ];
+  boot.kernelParams = [ "iommu=pt" "amdgpu.gpu_recovery=1" "rqshare=none" ];
   services.udev.extraRules = ''
     ACTION=="add|change", KERNEL=="sd*[!0-9]|sr*", ATTR{queue/scheduler}="kyber"
 
