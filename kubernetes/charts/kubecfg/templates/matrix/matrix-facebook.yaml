@@ -23,9 +23,8 @@ spec:
           livenessProbe:
             tcpSocket:
               port: 8090
-            # Very long initial delay because initial /sync takes #forever
-            initialDelaySeconds: 240
-            periodSeconds: 20
+            initialDelaySeconds: 1200 # 20 min
+            periodSeconds: 10
           ports:
             - containerPort: 8090
               name: facebook
