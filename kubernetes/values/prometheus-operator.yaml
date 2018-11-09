@@ -1,0 +1,21 @@
+prometheus:
+  volumeClaimTemplate:
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 50Gi
+    selector: {}
+  serviceMonitors:
+    - name: matrix
+      labels:
+        prometheus: kube-prometheus
+      selector:
+        matchLabels:
+          app: matrix
+      endpoints:
+        - port: 9092
+          interval: 30s
+          path: /_synapse/metrics
+      namespaceSelector:
+        any: true
