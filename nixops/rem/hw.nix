@@ -142,15 +142,15 @@
     fileSystems = [ "/mnt/parity0" ];
   };
 
-  # fileSystems."/var/lib/libvirt/images/ssd" = {
-  #   device = "/dev/mapper/vms";
-  #   encrypted = {
-  #     enable = true;
-  #     blkDev = "/dev/disk/by-uuid/35ee3543-d00d-45f2-89a0-26fd819539eb";
-  #     keyFile = "/mnt-root/etc/keys/keyfile-vms.bin";
-  #     label = "vms";
-  #   };
-  # };
+  fileSystems."/mnt/ssd" = {
+    device = "/dev/mapper/vms";
+    encrypted = {
+      enable = true;
+      blkDev = "/dev/disk/by-uuid/4b7a4578-fde4-4802-a93b-3351ec538bfc";
+      keyFile = "/mnt-root/etc/keys/keyfile-vms.bin";
+      label = "vms";
+    };
+  };
   environment.etc."keys/keyfile-vms.bin" = {
     mode = "400";
     source = ../secrets/keys/keyfile-vms.bin;
