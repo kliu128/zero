@@ -27,8 +27,9 @@ spec:
       restartPolicy: Always
       volumes:
       - name: data
-        persistentVolumeClaim:
-          claimName: parity-data
+        hostPath:
+          type: Directory
+          path: /mnt/ssd/parity
 status: {}
 ---
 apiVersion: v1
