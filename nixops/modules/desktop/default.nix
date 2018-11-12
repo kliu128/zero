@@ -10,6 +10,7 @@ with lib;
 
     ./games.nix
     ./kubernetes.nix
+    ./nintendo-switch.nix
     ./npm.nix
     ./trash.nix
     ./u2f.nix
@@ -335,7 +336,7 @@ with lib;
           "${modifier}+Shift+l" = "move right";
 
           # Menu and term
-          "${modifier}+d" = ''exec i3-dmenu-desktop --dmenu='rofi -show run -font "Source Code Pro 11"' '';
+          "${modifier}+d" = ''exec PATH=$PATH:$HOME/.local/bin rofi -show run -font "Fira Code 11"'';
           "${modifier}+Return" = "exec ${pkgs.alacritty}/bin/alacritty";
 
           # Scratchpad
