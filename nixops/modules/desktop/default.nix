@@ -9,19 +9,16 @@ with lib;
     "${builtins.fetchTarball https://github.com/rycee/home-manager/archive/master.tar.gz}/nixos"
 
     ./games.nix
+    ./kubernetes.nix
     ./npm.nix
     ./trash.nix
     ./u2f.nix
   ];
   
-  nixpkgs.overlays = [
-    (import (builtins.fetchTarball https://github.com/mozilla/nixpkgs-mozilla/archive/master.tar.gz))
-  ];
-
   # Fonts
   fonts.fontconfig.allowBitmaps = false;
   fonts.fonts = with pkgs; [
-    corefonts emojione powerline-fonts inconsolata liberation_ttf source-han-serif-simplified-chinese source-han-serif-japanese source-han-serif-korean source-han-serif-traditional-chinese
+    corefonts emojione powerline-fonts fira-code liberation_ttf source-han-serif-simplified-chinese source-han-serif-japanese source-han-serif-korean source-han-serif-traditional-chinese
   ];
 
   # Enable the X11 windowing system.
@@ -81,7 +78,7 @@ with lib;
     # System tools
     i7z atop bcachefs-tools beets borgbackup cointop cowsay ctop dnsutils file fortune python36Packages.glances gnupg hdparm htop iftop iotop python python3 libva-full lm_sensors lolcat looking-glass-client lzip mpw oh-my-zsh openjdk python36Packages.tvnamer rclone restic rustup screen smartmontools snapraid spectre-meltdown-checker stress-ng telnet thefuck tmux tree vim wget wireguard unar
     # Desktop applications
-    android-studio arduino atom calibre chromium clementine codeblocks discord emacs filezilla firebird-emu latest.firefox-nightly-bin gnome3.gnome-disk-utility google-chrome gpodder hexchat jetbrains.idea-community jetbrains.pycharm-community keepassxc libreoffice-fresh liferea mate.atril mkvtoolnix mpv pavucontrol skypeforlinux simple-scan slack thunderbird tor-browser-bundle transmission_gtk transmission_remote_gtk vlc vscode youtube-dl zoom-us
+    android-studio arduino atom calibre chromium clementine codeblocks discord emacs filezilla firebird-emu firefox gnome3.gnome-disk-utility google-chrome gpodder hexchat jetbrains.idea-community jetbrains.pycharm-community keepassxc libreoffice-fresh liferea mate.atril mkvtoolnix mpv pavucontrol skypeforlinux simple-scan slack thunderbird tor-browser-bundle transmission_gtk transmission_remote_gtk vlc vscode youtube-dl zoom-us
     # Anki and related packages (for LaTeX support)
     anki texlive.combined.scheme-basic tetex
     # Desktop tools
@@ -91,7 +88,7 @@ with lib;
     # Development
     bfg-repo-cleaner docker docker_compose docker-machine gcc gdb git-crypt gitAndTools.gitFull gnumake google-cloud-sdk
     # VM and DevOps
-    helmfile kubectl kubernetes-helm nixops virtmanager
+    nixops virtmanager
     # Desktop environment
     arandr blueman conky pcmanfm gnome3.file-roller gvfs i3lock p7zip system-config-printer scrot xautolock xcape
     # Image editing
@@ -244,6 +241,8 @@ with lib;
           "files.autoSave": "onFocusChange",
           "telemetry.enableTelemetry": false,
           "workbench.iconTheme": "vs-nomo-dark",
+          "editor.fontFamily": "Fira Code",
+          "editor.fontLigatures": true,
           "editor.wordWrap": "on",
           "editor.tabSize": 2
         }

@@ -18,14 +18,13 @@
 
   # Video.
   boot.earlyVconsoleSetup = true;
-  boot.kernelPackages = pkgs.linuxPackages_4_14;
-  boot.kernel.sysctl."vm.min_free_kbytes" = 1000000;
-  services.xserver.videoDrivers = [ "amdgpu" "nvidia" ];
-  boot.blacklistedKernelModules = [ "nvidia-drm" "nvidia_modeset" ];
+  boot.kernelPackages = pkgs.linuxPackages_4_19;
+  services.xserver.videoDrivers = [ "amdgpu" ];
+  # boot.blacklistedKernelModules = [ "nvidia-drm" "nvidia_modeset" ];
   system.activationScripts.k8s-nvidia = {
     text = ''
       if [ ! -e /run/k8s-nvidia-driver ]; then
-        ln -s ${pkgs.linuxPackages_4_14.nvidia_x11} /run/k8s-nvidia-driver
+        ln -s ${pkgs.linuxPackages_4_19.nvidia_x11} /run/k8s-nvidia-driver
       fi
     '';
     deps = [];

@@ -86,19 +86,19 @@ tabspaces: 8
 font:
   # Normal (roman) font face
   normal:
-    family: monospace
+    family: Fira Code
     # The `style` can be specified to pick a specific face.
     #style: Regular
 
   # Bold font face
   bold:
-    family: monospace
+    family: Fira Code
     # The `style` can be specified to pick a specific face.
     #style: Bold
 
   # Italic font face
   italic:
-    family: monospace
+    family: Fira Code
     # The `style` can be specified to pick a specific face.
     #style: Italic
 
@@ -122,7 +122,9 @@ font:
   # screens and make reading text a little easier.
   # On X11 it is possible to change the DPI for each instance of alacritty by using
   # `WINIT_HIDPI_FACTOR=1.0 alacritty` to scale the font.
-  scale_with_dpi: true
+
+  # Doesn't work on puck, for some reason. So disable it.
+  scale_with_dpi: false
 
 # Display the time it takes to redraw each frame.
 render_timer: false
