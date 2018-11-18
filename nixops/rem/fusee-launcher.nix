@@ -1,20 +1,15 @@
 { config, lib, pkgs, ... }:
 
 {
-  environment.etc."fusee-payload.bin" = {
-    mode = "444";
-    source = ../hekate_ctcaer_3.0.bin;
-  };
   systemd.services.fusee-launcher = {
-    enable = false;
+    enable = true;
     path = [ pkgs.fusee-launcher ];
     wantedBy = [ "multi-user.target" ];
     script = ''
       while true; do
-        fusee-launcher -w /etc/fusee-payload.bin || true
+        fusee-launcher -w ${../hekate_ctcaer_4.2.bin} || true
       done
     '';
-    serviceConfig.CPUQuota = "5%";
-    serviceConfig.CPUSchedulingPolicy = "idle";
+    serviceConfig.Nice = 19;
   };
 }
