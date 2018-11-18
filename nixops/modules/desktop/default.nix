@@ -95,6 +95,7 @@ with lib;
     # Image editing
     gwenview krita
   ];
+
   environment.variables.GIO_EXTRA_MODULES = [ "${pkgs.gvfs}/lib/gio/modules" ];
 
   # Must be done on the system level (not the home-manager level) to install
@@ -117,16 +118,8 @@ with lib;
         templatedir = /home/kevin/.git-templates
       '';
     };
-    # Git template file to sync before committing
-    # Fixes bug where LizardFS doesn't fully write commit message file before
-    # commit actually occurs
-    home.file.".git-templates/hooks/pre-commit" = {
-      executable = true;
-      text = ''
-        #!/bin/sh
-        sync
-      '';
-    };
+
+    home.file.".local/share/thunderbird-signature.png".source = ./signature.html;
 
     programs.htop = {
       enable = true;
