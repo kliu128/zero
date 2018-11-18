@@ -204,8 +204,6 @@
   # IO scheduler
   boot.kernelParams = [ "iommu=pt" "amdgpu.gpu_recovery=1" ];
   services.udev.extraRules = ''
-    ACTION=="add|change", KERNEL=="sd*[!0-9]|sr*", ATTR{queue/scheduler}="kyber"
-
     ACTION=="add", KERNEL=="card0", SUBSYSTEM=="drm", RUN+="${pkgs.kmod}/bin/modprobe nvidia-drm"
   '';
 
