@@ -24,7 +24,7 @@ spec:
             - containerPort: 80
               name: http
           volumeMounts:
-            - mountPath: /data
+            - mountPath: /var/www/monica/storage
               name: data
         - name: db
           env:

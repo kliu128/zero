@@ -25,7 +25,6 @@ spec:
         resources:
           limits:
             amd.com/gpu: 1
-            nvidia.com/gpu: 1
         volumeMounts:
         - mountPath: /var/lib/boinc-client
           name: data
