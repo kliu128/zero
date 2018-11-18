@@ -1,6 +1,10 @@
 { config, lib, pkgs, ... }:
 
-{
+let 
+  wave-1 = "*-*-* 02:30:00";
+  wave-2 = "*-*-* 03:00:00";
+  wave-3 = "*-*-* 04:00:00";
+in {
   systemd.services.crypto-wallet-backup = {
     enable = true;
     description = "Cryptowallet Backup";
@@ -18,7 +22,7 @@
       CPUSchedulingPolicy = "idle";
       IOSchedulingClass = "idle";
     };
-    startAt = "daily";
+    startAt = wave-1;
   };
   systemd.services.gsuite-backup = {
     enable = true;
@@ -33,7 +37,7 @@
 
       XDG_CACHE_HOME=/var/cache/gsuite-backup RESTIC_PASSWORD_FILE=${../secrets/gsuite-backup-password.txt} RCLONE_CONFIG=/etc/rclone.conf restic -o rclone.connections=16 -o rclone.args='serve restic --stdio -v --drive-use-trash=false' -r rclone:gsuite-mysmccd:gsuite-restic backup  --exclude '/mnt/storage/Kevin/Incoming/**/*' /mnt/storage/Kevin
     '';
-    startAt = "*-*-* 03:00:00";
+    startAt = wave-3;
   };
   systemd.services.gschool-sync = {
     enable = true;
@@ -70,7 +74,7 @@
         lizardfs rremove -l "/mnt/storage/snapshots/$oldest_snapshot"
       fi
     '';
-    startAt = "daily";
+    startAt = wave-1;
   };
   systemd.services.matrix-recorder = {
     description = "Matrix Recorder";
@@ -92,7 +96,7 @@
     };
     wants = [ "storage.service" "docker.service" "network-online.target" ];
     after = [ "storage.service" "docker.service" "network-online.target" ];
-    startAt = "daily";
+    startAt = wave-2;
   };
 
   # BorgBackup jobs
@@ -115,6 +119,7 @@
       weekly = 4;
       monthly = 6;
     };
+    startAt = wave-2;
   };
 
   # Root filesystem backup
@@ -139,6 +144,7 @@
       weekly = 4;
       monthly = 6;
     };
+    startAt = wave-2;
   };
   environment.etc."keys/backups.borg-key" = {
     mode = "400";
@@ -165,7 +171,7 @@
     unitConfig = {
       RequiresMountsFor = [ "/mnt/storage" ];
     };
-    startAt = "daily";
+    startAt = wave-2;
   };
   
   # Mirror services
@@ -185,7 +191,7 @@
     unitConfig = {
       RequiresMountsFor = [ "/mnt/storage" ];
     };
-    startAt = "daily";
+    startAt = wave-2;
   };
   systemd.services.scintillating-mirror = {
     description = "Scintillating Drive Mirroring";
@@ -210,7 +216,7 @@
     unitConfig = {
       RequiresMountsFor = [ "/mnt/storage" ];
     };
-    startAt = "daily";
+    startAt = wave-2;
   };
 
   # Can't just include it into nix config because rclone modifies it
