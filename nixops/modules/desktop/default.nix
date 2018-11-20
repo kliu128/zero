@@ -92,7 +92,7 @@ with lib;
     # VM and DevOps
     nixops virtmanager
     # Desktop environment
-    arandr blueman conky pcmanfm gnome3.file-roller gvfs i3lock p7zip system-config-printer scrot xautolock xcape
+    arandr blueman gnome3.cheese conky pcmanfm gnome3.file-roller gvfs i3lock p7zip system-config-printer scrot xautolock xcape
     # Image editing
     gwenview krita
   ];
