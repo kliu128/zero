@@ -313,6 +313,7 @@ with lib;
         gaps = {
           inner = 4;
           outer = 6;
+          smartGaps = true;
         };
         keybindings = mkOptionDefault {
           # Extend default i3 binds
@@ -330,7 +331,7 @@ with lib;
           "${modifier}+Shift+l" = "move right";
 
           # Menu and term
-          "${modifier}+d" = ''exec PATH=$PATH:$HOME/.local/bin rofi -show run -font "Fira Code 11"'';
+          "${modifier}+d" = ''exec "PATH=$PATH:$HOME/.local/bin rofi -combi-modi drun,run,window -show combi -modi combi -font 'Fira Code 11'"'';
           "${modifier}+Return" = "exec ${pkgs.alacritty}/bin/alacritty";
 
           # Scratchpad
