@@ -54,7 +54,6 @@
         ./modules/docker.nix
         ./puck/desktop.nix
         ./puck/hw.nix
-        ./puck/remote-fs.nix
         ./puck/wireguard.nix
         ./puck/wireless.nix
       ];
