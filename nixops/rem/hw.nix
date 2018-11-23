@@ -207,14 +207,26 @@ in {
 
   # Reset keyboard on bootup (Pok3r)
   # Otherwise keys get dropped, for some reason
-  systemd.services.keyboard-reset = {
-    description = "Keyboard Reset";
+  # Same with webcam - mic breaks
+  systemd.services.keyboard-webcam-reset = {
+    description = "Keyboard & Webcam Pro 9000 Reset";
     script = ''
       set -x
       for X in /sys/bus/usb/devices/*
       do
           if [ -e "$X/idVendor" ] && [ -e "$X/idProduct" ] \
           && [ 04d9 = $(cat "$X/idVendor") ] && [ 0141 = $(cat "$X/idProduct") ]
+          then
+              echo 0 >"$X/authorized"
+              sleep 1
+              echo 1 >"$X/authorized"
+          fi
+      done
+
+      for X in /sys/bus/usb/devices/*
+      do
+          if [ -e "$X/idVendor" ] && [ -e "$X/idProduct" ] \
+          && [ 046d = $(cat "$X/idVendor") ] && [ 0809 = $(cat "$X/idProduct") ]
           then
               echo 0 >"$X/authorized"
               sleep 1
