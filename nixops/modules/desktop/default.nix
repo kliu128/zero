@@ -15,6 +15,7 @@ with lib;
     ./npm.nix
     ./trash.nix
     ./u2f.nix
+    ./wincompat.nix
   ];
   
   # Fonts

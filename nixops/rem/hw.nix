@@ -3,7 +3,9 @@
 # to /etc/nixos/configuration.nix instead.
 { config, lib, pkgs, ... }:
 
-{
+let
+  kernel = pkgs.linuxPackages_4_19;
+in {
   imports =
     [ <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
     ];
@@ -18,18 +20,9 @@
 
   # Video.
   boot.earlyVconsoleSetup = true;
-  boot.kernelPackages = pkgs.linuxPackages_4_19;
+  boot.kernelPackages = kernel;
   boot.kernel.sysctl."vm.min_free_kbytes" = 500000;
   services.xserver.videoDrivers = [ "amdgpu" ];
-  # boot.blacklistedKernelModules = [ "nvidia-drm" "nvidia_modeset" ];
-  system.activationScripts.k8s-nvidia = {
-    text = ''
-      if [ ! -e /run/k8s-nvidia-driver ]; then
-        true # ln -s {pkgs.linuxPackages_4_19.nvidia_x11} /run/k8s-nvidia-driver
-      fi
-    '';
-    deps = [];
-  };
 
   # Freeness (that is, not.)
   hardware.enableRedistributableFirmware = true; # for amdgpu
