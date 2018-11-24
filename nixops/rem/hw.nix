@@ -191,12 +191,7 @@ in {
     device = "/swap";
     size = 4096;
   } ];
-  zramSwap = {
-    enable = true;
-    memoryPercent = 100;
-    compressionAlgorithm = "zstd";
-  };
-
+  
   # IO scheduler
   boot.kernelParams = [ "iommu=pt" "amdgpu.gpu_recovery=1" ];
   services.udev.extraRules = ''
