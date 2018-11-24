@@ -23,7 +23,13 @@ spec:
             - name: PGID
               value: "100"
             - name: TRANSMISSION_RATIO_LIMIT_ENABLED
-              value: "true"
+              value: "false"
+            - name: TRANSMISSION_LPD_ENABLED
+              value: "false"
+            - name: TRANSMISSION_DHT_ENABLED
+              value: "false"
+            - name: TRANSMISSION_PEX_ENABLED
+              value: "false"
             - name: LOCAL_NETWORK
               value: 10.0.0.0/24
             - name: TRANSMISSION_WEB_UI
