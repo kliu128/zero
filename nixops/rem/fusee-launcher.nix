@@ -11,5 +11,6 @@
       done
     '';
     serviceConfig.Nice = 19;
+    serviceConfig.CPUQuota = "2%";
   };
 }
