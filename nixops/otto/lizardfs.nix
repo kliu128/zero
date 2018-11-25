@@ -14,6 +14,7 @@
       storageDirectories = ["/var/lib/lizardfs-data"
       "/var/lib/lizardfs-data2/mfs"];
       config = ''
+        PERFORM_FSYNC = 0
         HDD_LEAVE_SPACE_DEFAULT = 50GiB
       '';
     }

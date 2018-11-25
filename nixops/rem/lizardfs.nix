@@ -18,31 +18,37 @@
   services.lizardfs.chunkservers.servers = [
     {
       name = "parity0";
+      config = "PERFORM_FSYNC = 0";
       storageDirectories = [ "/mnt/parity0/mfs" ];
       port = 9422;
     }
     {
       name = "wdblack1tb";
+      config = "PERFORM_FSYNC = 0";
       storageDirectories = [ "/mnt/data1/mfs" ];
       port = 9423;
     }
     {
       name = "wdgreen15tb";
+      config = "PERFORM_FSYNC = 0";
       storageDirectories = [ "/mnt/data0/mfs" ];
       port = 9426;
     }
     {
       name = "wdblue4tb";
+      config = "PERFORM_FSYNC = 0";
       storageDirectories = [ "/mnt/data2/mfs" ];
       port = 9427;
     }
     {
       name = "toshiba4tb";
+      config = "PERFORM_FSYNC = 0";
       storageDirectories = [ "/mnt/data3/mfs" ];
       port = 9428;
     }
     {
       name = "seagate8tb";
+      config = "PERFORM_FSYNC = 0";
       storageDirectories = [ "/mnt/data4/mfs" ];
       port = 9429;
     }
