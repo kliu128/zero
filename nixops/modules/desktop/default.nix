@@ -240,7 +240,8 @@ with lib;
           "editor.fontFamily": "Fira Code",
           "editor.fontLigatures": true,
           "editor.wordWrap": "on",
-          "editor.tabSize": 2
+          "editor.tabSize": 2,
+          "window.titleBarStyle": "custom"
         }
       '';
     };
