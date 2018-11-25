@@ -16,6 +16,11 @@ spec:
       containers:
       - image: dlandon/zoneminder
         name: zoneminder
+        livenessProbe:
+          httpGet:
+            path: /zm/index.php
+            port: 80
+          initialDelaySeconds: 180 # this thing installs packages on launch
         volumeMounts:
         - mountPath: /dev/shm
           name: shm
