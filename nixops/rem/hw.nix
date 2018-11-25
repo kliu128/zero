@@ -190,7 +190,15 @@ in {
   swapDevices = [ {
     device = "/swap";
     size = 4096;
+  } {
+    device = "/swap2";
+    size = 4096;
   } ];
+  systemd.tmpfiles.rules = [
+    "w /sys/module/zswap/parameters/enabled - - - - 1"
+    "w /sys/module/zswap/parameters/compressor - - - - zstd"
+    "w /sys/module/zswap/parameters/zpool - - - - z3fold"
+  ];
   
   # IO scheduler
   boot.kernelParams = [ "iommu=pt" "amdgpu.gpu_recovery=1" ];
