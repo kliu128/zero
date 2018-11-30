@@ -16,10 +16,14 @@
     7 ec_3_1 : $ec(3,1)
     8 ec_4_2 : $ec(4,2)
   '';
-  systemd.services.lizardfs-master.serviceConfig = {
-    OOMScoreAdjust = -1000;
-    MemoryMax = "512M";
-    MemorySwapMax = "infinity";
+  systemd.services.lizardfs-master = {
+    after = [ "swap.target" ];
+    wants = [ "swap.target" ];
+    serviceConfig = {
+      OOMScoreAdjust = -1000;
+      MemoryMax = "512M";
+      MemorySwapMax = "infinity";
+    };
   };
   services.lizardfs.chunkservers.masterHost = "192.168.1.5";
   services.lizardfs.chunkservers.servers = [

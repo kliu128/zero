@@ -3,9 +3,7 @@
 # to /etc/nixos/configuration.nix instead.
 { config, lib, pkgs, ... }:
 
-let
-  kernel = pkgs.linuxPackages_4_19;
-in {
+{
   imports =
     [ <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
     ];
@@ -16,11 +14,10 @@ in {
   boot.initrd.availableKernelModules = [ "ehci_pci" "ahci" "xhci_pci" "usb_storage" "usbhid" "sd_mod" "sr_mod" ];
   boot.kernelModules = [ "kvm-intel" ];
   # exfat support for Nintendo Switch / other SD cards
-  boot.supportedFilesystems = [ "btrfs" "ext4" "exfat" ];
+  boot.supportedFilesystems = [ "btrfs" "bcachefs" "ext4" "exfat" ];
 
   # Video.
   boot.earlyVconsoleSetup = true;
-  boot.kernelPackages = kernel;
   boot.kernel.sysctl."vm.min_free_kbytes" = 500000;
   services.xserver.videoDrivers = [ "amdgpu" ];
 
@@ -191,19 +188,11 @@ in {
   boot.cleanTmpDir = true;
   swapDevices = [ {
     device = "/swap";
-    size = 4096;
-  } {
-    device = "/swap2";
-    size = 4096;
+    size = 20480;
   } ];
-  systemd.tmpfiles.rules = [
-    "w /sys/module/zswap/parameters/enabled - - - - 1"
-    "w /sys/module/zswap/parameters/compressor - - - - zstd"
-    "w /sys/module/zswap/parameters/zpool - - - - z3fold"
-  ];
   
   # IO scheduler
-  boot.kernelParams = [ "scsi_mod.use_blk_mq=N" "iommu=pt" "amdgpu.gpu_recovery=1" ];
+  boot.kernelParams = [ "iommu=pt" "amdgpu.gpu_recovery=1" ];
   services.udev.extraRules = ''
     ACTION=="add", KERNEL=="card0", SUBSYSTEM=="drm", RUN+="${pkgs.kmod}/bin/modprobe nvidia-drm"
   '';

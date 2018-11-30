@@ -26,6 +26,4 @@
   };
   
   services.logind.extraConfig = "HandlePowerKey=ignore";
-
-  services.emacs.enable = lib.mkForce false; # seems to break shutdown
 }

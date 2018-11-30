@@ -1,13 +1,11 @@
 { config, lib, pkgs, ... }:
 
-with import <nixpkgs> {};
-with lib;
-
 {
   # Home manager
   imports = [
     "${builtins.fetchTarball https://github.com/rycee/home-manager/archive/master.tar.gz}/nixos"
 
+    ./emacs
     ./firefox.nix
     ./games.nix
     ./kubernetes.nix
@@ -62,7 +60,6 @@ with lib;
   services.flatpak.enable = true;
   programs.adb.enable = true;
   programs.chromium.enable = true;
-  services.emacs.enable = true;
   programs.sway.enable = true;
   programs.wireshark.enable = true;
   programs.wireshark.package = pkgs.wireshark-gtk;
@@ -261,19 +258,6 @@ with lib;
 
     home.file.".config/alacritty/alacritty.yml".text = builtins.readFile ./alacritty.yml;
 
-    # Emacs
-    home.file.".spacemacs".text = builtins.readFile ./.spacemacs;
-    home.file.".emacs.d" = {
-      source = fetchFromGitHub {
-        owner = "syl20bnr";
-        repo = "spacemacs";
-        rev = "06927bc8f075768b253d4e8ce3ac9f07c2aaddf9";
-        sha256 = "06m63q1k02m18ih94qsc4bavc58pi2hschkp3db6dh28cysqva2g";
-      };
-      recursive = true;
-    };
-    home.file.".spacemacs.d/next-spec-day.el".text = builtins.readFile ./next-spec-day.el;
-
     # GTK & Qt
     gtk = {
       enable = true;
@@ -317,7 +301,7 @@ with lib;
           outer = 6;
           smartGaps = true;
         };
-        keybindings = mkOptionDefault {
+        keybindings = lib.mkOptionDefault {
           # Extend default i3 binds
 
           # Vim movement
