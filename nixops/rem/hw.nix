@@ -61,6 +61,7 @@ in {
 
   fileSystems."/mnt/data1" = {
     device = "/dev/mapper/data1";
+    options = [ "compress=zstd" ];
     encrypted = {
       enable = true;
       blkDev = "/dev/disk/by-uuid/dff62bd6-6e2f-4e77-b1b0-226a13aa0581";
@@ -118,6 +119,7 @@ in {
   # Seagate Backup Plus Hub
   fileSystems."/mnt/parity0" = {
     device = "/dev/mapper/parity0";
+    options = [ "compress=zstd" ];
     encrypted = {
       enable = true;
       blkDev = "/dev/disk/by-uuid/b9eb89d2-c5f8-4eb1-b1c0-601af8b8877c";
@@ -201,7 +203,7 @@ in {
   ];
   
   # IO scheduler
-  boot.kernelParams = [ "iommu=pt" "amdgpu.gpu_recovery=1" ];
+  boot.kernelParams = [ "scsi_mod.use_blk_mq=N" "iommu=pt" "amdgpu.gpu_recovery=1" ];
   services.udev.extraRules = ''
     ACTION=="add", KERNEL=="card0", SUBSYSTEM=="drm", RUN+="${pkgs.kmod}/bin/modprobe nvidia-drm"
   '';

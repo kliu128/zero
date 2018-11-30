@@ -21,4 +21,8 @@
       input(type="imudp" port="514" ruleset="remote")
     '';
   };
+
+  services.smartd = {
+    enable = true;
+  };
 }

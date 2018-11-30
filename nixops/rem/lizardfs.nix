@@ -4,6 +4,9 @@
   services.lizardfs.enable = true;
   services.lizardfs.cgiserv.enable = true;
   services.lizardfs.master.enable = true;
+  services.lizardfs.master.config = ''
+    AUTO_RECOVERY = 1
+  '';
   services.lizardfs.master.exports = ''
     192.168.1.0/24 / rw,maproot=0
     10.100.0.0/24 / rw,maproot=0
@@ -13,7 +16,11 @@
     7 ec_3_1 : $ec(3,1)
     8 ec_4_2 : $ec(4,2)
   '';
-  systemd.services.lizardfs-master.serviceConfig.OOMScoreAdjust = -1000;
+  systemd.services.lizardfs-master.serviceConfig = {
+    OOMScoreAdjust = -1000;
+    MemoryMax = "512M";
+    MemorySwapMax = "infinity";
+  };
   services.lizardfs.chunkservers.masterHost = "192.168.1.5";
   services.lizardfs.chunkservers.servers = [
     {

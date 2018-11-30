@@ -38,9 +38,23 @@
       touch /dev/shm/looking-glass || true
       chown kevin:libvirtd /dev/shm/looking-glass
       chmod 660 /dev/shm/looking-glass
+      sudo /etc/libvirt/hooks/qemu Windows prepare begin -
       sudo virsh start Windows
     }
+
+    vm-stop() {
+      sudo virsh shutdown Windows
+      echo "Press [Enter] key when shutdown..."
+      read -n 1
+      sudo /etc/libvirt/hooks/qemu Windows release end -
+    }
   '';
+
+  environment.systemPackages = [ pkgs.cpuset ];
+  environment.etc."libvirt/hooks/qemu" = {
+    source = ./vfio.sh;
+    mode = "777";
+  };
 
   # Patch for better PulseAudio (for QEMU 2.12)
   # nixpkgs.config.packageOverrides = pkgs: rec {

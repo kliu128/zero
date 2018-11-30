@@ -37,7 +37,7 @@ spec:
           envFrom:
             - secretRef:
                 name: transmission-pia-auth
-          image: haugene/transmission-openvpn:latest
+          image: haugene/transmission-openvpn:latest-alpine
           name: transmission
           securityContext:
             privileged: true

@@ -5,7 +5,7 @@
     # Games
     dolphinEmuMaster multimc steam steam-run-native
     # Wine
-    wineWowPackages.staging winetricks 
+    wineWowPackages.unstable winetricks 
   ];
 
   hardware.opengl.driSupport32Bit = true; # for steam and wine
@@ -23,7 +23,7 @@
 
   # Custom package overrides
   nixpkgs.config.packageOverrides = pkgs: rec {
-    winetricks = pkgs.winetricks.override { wine = pkgs.wineWowPackages.staging; };
+    winetricks = pkgs.winetricks.override { wine = pkgs.wineWowPackages.unstable; };
     factorio = pkgs.factorio.override {
       username = "Pneumaticat";
       password = builtins.readFile ../secrets/factorio-password.txt;

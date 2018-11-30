@@ -24,6 +24,8 @@
     enable = true;
     serverAddress = "192.168.1.5";
   };
+  
+  services.logind.extraConfig = "HandlePowerKey=ignore";
 
   services.emacs.enable = lib.mkForce false; # seems to break shutdown
 }
