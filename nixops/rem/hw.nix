@@ -14,9 +14,10 @@
   boot.initrd.availableKernelModules = [ "ehci_pci" "ahci" "xhci_pci" "usb_storage" "usbhid" "sd_mod" "sr_mod" ];
   boot.kernelModules = [ "kvm-intel" ];
   # exfat support for Nintendo Switch / other SD cards
-  boot.supportedFilesystems = [ "btrfs" "bcachefs" "ext4" "exfat" ];
+  boot.supportedFilesystems = [ "btrfs" "ext4" "exfat" ];
 
   # Video.
+  boot.kernelPackages = pkgs.linuxPackages_4_18;
   boot.earlyVconsoleSetup = true;
   boot.kernel.sysctl."vm.min_free_kbytes" = 500000;
   services.xserver.videoDrivers = [ "amdgpu" ];
