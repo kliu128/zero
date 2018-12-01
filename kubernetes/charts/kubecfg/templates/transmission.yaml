@@ -27,7 +27,7 @@ spec:
             - name: TRANSMISSION_LPD_ENABLED
               value: "false"
             - name: TRANSMISSION_DHT_ENABLED
-              value: "false"
+              value: "true"
             - name: TRANSMISSION_PEX_ENABLED
               value: "false"
             - name: LOCAL_NETWORK
@@ -37,7 +37,7 @@ spec:
           envFrom:
             - secretRef:
                 name: transmission-pia-auth
-          image: haugene/transmission-openvpn:latest-alpine
+          image: haugene/transmission-openvpn:latest
           name: transmission
           securityContext:
             privileged: true
