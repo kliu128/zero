@@ -1,4 +1,4 @@
-image: gargron/mastodon:v2.5.2
+image: tootsuite/mastodon:v2.6.4
 persistence:
   size: 25Gi
 ingress:
