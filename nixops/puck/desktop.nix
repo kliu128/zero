@@ -17,6 +17,7 @@
       MOZ_USE_XINPUT2 = "1";
     };
   };
+
   virtualisation.libvirtd.enable = true;
   users.extraUsers.kevin.extraGroups = [ "libvirtd" ];
 
@@ -25,5 +26,9 @@
     serverAddress = "192.168.1.5";
   };
   
+  # Ignore power key (thank you kunal)
   services.logind.extraConfig = "HandlePowerKey=ignore";
+
+  # Alacritty DPI detection broken
+  environment.variables.WINIT_HIDPI_FACTOR = "1";
 }
