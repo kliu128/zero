@@ -217,10 +217,6 @@
       longitude = "-71";
       tray = true;
     };
-    services.udiskie = {
-      enable = true;
-      tray = "always";
-    };
 
     # Visual Studio Code config
     home.file.".config/Code/User/settings.json" = {
