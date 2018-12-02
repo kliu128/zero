@@ -13,6 +13,7 @@
       ./common/earlyoom.nix
       ./common/firewall.nix
       ./common/io-scheduler.nix
+      ./common/kernel.nix
       ./common/nix.nix
       ./common/ssh.nix
       ./common/time.nix

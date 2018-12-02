@@ -17,7 +17,6 @@
   boot.supportedFilesystems = [ "btrfs" "ext4" "exfat" ];
 
   # Video.
-  boot.kernelPackages = pkgs.linuxPackages_4_18;
   boot.earlyVconsoleSetup = true;
   boot.kernel.sysctl."vm.min_free_kbytes" = 500000;
   services.xserver.videoDrivers = [ "amdgpu" ];
