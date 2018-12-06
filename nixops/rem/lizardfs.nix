@@ -15,51 +15,51 @@
     6 ec_2_1 : $ec(2,1)
     7 ec_3_1 : $ec(3,1)
     8 ec_4_2 : $ec(4,2)
+    9 highio_ec_2_1 : $ec(2,1) { highio highio highio }
   '';
   systemd.services.lizardfs-master = {
-    after = [ "swap.target" ];
-    wants = [ "swap.target" ];
     serviceConfig = {
       OOMScoreAdjust = -1000;
-      MemoryMax = "512M";
-      MemorySwapMax = "infinity";
     };
   };
   services.lizardfs.chunkservers.masterHost = "192.168.1.5";
   services.lizardfs.chunkservers.servers = [
     {
       name = "parity0";
-      config = "PERFORM_FSYNC = 0";
       storageDirectories = [ "/mnt/parity0/mfs" ];
       port = 9422;
     }
     {
       name = "wdblack1tb";
-      config = "PERFORM_FSYNC = 0";
+      config = ''
+        LABEL = highio
+      '';
       storageDirectories = [ "/mnt/data1/mfs" ];
       port = 9423;
     }
     {
       name = "wdgreen15tb";
-      config = "PERFORM_FSYNC = 0";
       storageDirectories = [ "/mnt/data0/mfs" ];
       port = 9426;
     }
     {
       name = "wdblue4tb";
-      config = "PERFORM_FSYNC = 0";
+      config = ''
+        LABEL = highio
+      '';
       storageDirectories = [ "/mnt/data2/mfs" ];
       port = 9427;
     }
     {
       name = "toshiba4tb";
-      config = "PERFORM_FSYNC = 0";
+      config = ''
+        LABEL = highio
+      '';
       storageDirectories = [ "/mnt/data3/mfs" ];
       port = 9428;
     }
     {
       name = "seagate8tb";
-      config = "PERFORM_FSYNC = 0";
       storageDirectories = [ "/mnt/data4/mfs" ];
       port = 9429;
     }

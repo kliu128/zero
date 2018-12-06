@@ -297,7 +297,7 @@
           outer = 6;
           smartGaps = true;
         };
-        keybindings = lib.mkOptionDefault {
+        keybindings = {
           # Extend default i3 binds
 
           # Vim movement
@@ -379,6 +379,103 @@
                 urgent_workspace $base08 $base08 $base07
             }
         }
+
+        # split in vertical orientation
+        bindsym Mod4+v split v
+
+        # enter fullscreen mode for the focused container
+        bindsym Mod4+f fullscreen toggle
+
+        # change container layout (stacked, tabbed, toggle split)
+        bindsym Mod4+s layout stacking
+        bindsym Mod4+w layout tabbed
+        bindsym Mod4+e layout toggle split
+
+        # toggle tiling / floating
+        bindsym Mod4+Shift+space floating toggle
+
+        # change focus between tiling / floating windows
+        bindsym Mod4+space focus mode_toggle
+
+        # focus the parent container
+        bindsym Mod4+a focus parent
+
+        # focus the child container
+        #bindsym Mod4+d focus child
+
+        # Define names for default workspaces for which we configure key bindings later on.
+        # We use variables to avoid repeating the names in multiple places.
+        set $ws1 "1"
+        set $ws2 "2"
+        set $ws3 "3"
+        set $ws4 "4"
+        set $ws5 "5"
+        set $ws6 "6"
+        set $ws7 "7"
+        set $ws8 "8"
+        set $ws9 "9"
+        set $ws10 "10"
+
+
+        # switch to workspace
+        bindsym Mod4+1 workspace $ws1
+        bindsym Mod4+2 workspace $ws2
+        bindsym Mod4+3 workspace $ws3
+        bindsym Mod4+4 workspace $ws4
+        bindsym Mod4+5 workspace $ws5
+        bindsym Mod4+6 workspace $ws6
+        bindsym Mod4+7 workspace $ws7
+        bindsym Mod4+8 workspace $ws8
+        bindsym Mod4+9 workspace $ws9
+        bindsym Mod4+0 workspace $ws10
+
+        # move focused container to workspace
+        bindsym Mod4+Shift+1 move container to workspace $ws1
+        bindsym Mod4+Shift+2 move container to workspace $ws2
+        bindsym Mod4+Shift+3 move container to workspace $ws3
+        bindsym Mod4+Shift+4 move container to workspace $ws4
+        bindsym Mod4+Shift+5 move container to workspace $ws5
+        bindsym Mod4+Shift+6 move container to workspace $ws6
+        bindsym Mod4+Shift+7 move container to workspace $ws7
+        bindsym Mod4+Shift+8 move container to workspace $ws8
+        bindsym Mod4+Shift+9 move container to workspace $ws9
+        bindsym Mod4+Shift+0 move container to workspace $ws10
+        # kill focused window
+        bindsym Mod4+Shift+q kill
+
+        # reload the configuration file
+        bindsym Mod4+Shift+c reload
+        # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+        bindsym Mod4+Shift+r restart
+        # exit i3 (logs you out of your X session)
+        bindsym Mod4+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+
+        # resize window (you can also use the mouse for that)
+        mode "resize" {
+                # These bindings trigger as soon as you enter the resize mode
+
+                # Pressing left will shrink the window’s width.
+                # Pressing right will grow the window’s width.
+                # Pressing up will shrink the window’s height.
+                # Pressing down will grow the window’s height.
+                bindsym $left       resize shrink width 10 px or 10 ppt
+                bindsym $down       resize grow height 10 px or 10 ppt
+                bindsym $up         resize shrink height 10 px or 10 ppt
+                bindsym $right      resize grow width 10 px or 10 ppt
+
+                # same bindings, but for the arrow keys
+                bindsym Left        resize shrink width 10 px or 10 ppt
+                bindsym Down        resize grow height 10 px or 10 ppt
+                bindsym Up          resize shrink height 10 px or 10 ppt
+                bindsym Right       resize grow width 10 px or 10 ppt
+
+                # back to normal: Enter or Escape or Mod4+r
+                bindsym Return mode "default"
+                bindsym Escape mode "default"
+                bindsym Mod4+r mode "default"
+        }
+
+        bindsym Mod4+r mode "resize"
       '';
     };
 
