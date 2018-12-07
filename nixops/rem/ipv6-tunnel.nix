@@ -3,7 +3,7 @@
 {
   systemd.services.ipv6-tunnel = {
     description = "Hurricane Electric IPv6 Tunneling";
-    enable = true;
+    enable = false;
     after = [ "network.target" ];
     wantedBy = [ "multi-user.target" ];
     serviceConfig = {

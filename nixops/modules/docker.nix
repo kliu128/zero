@@ -10,7 +10,6 @@
   # liveRestore is enabled, and keeps using the old IP for `docker0`. So, uh,
   # don't do that.
   virtualisation.docker.liveRestore = false;
-  virtualisation.docker.storageDriver = "overlay2";
   systemd.services.docker = {
     after = [ "nfs-server.service" ];
     wants = [ "nfs-server.service" ];

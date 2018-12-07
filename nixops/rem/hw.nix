@@ -16,6 +16,7 @@
   boot.kernelPackages = pkgs.linuxPackages_4_19;
   # exfat support for Nintendo Switch / other SD cards
   boot.supportedFilesystems = [ "btrfs" "ext4" "exfat" ];
+  virtualisation.docker.storageDriver = "btrfs";
 
   # Video.
   boot.earlyVconsoleSetup = true;
@@ -26,10 +27,10 @@
   hardware.enableRedistributableFirmware = true; # for amdgpu
   hardware.cpu.intel.updateMicrocode = true;
 
-  fileSystems."/" =
-    { device = "/dev/disk/by-uuid/324f901f-9370-4495-98a4-0e1e8df836f9";
-      fsType = "ext4";
-    };
+  fileSystems."/" = {
+    device = "/dev/mapper/root"; 
+    options = [ "compress=zstd" ];
+  };
   boot.initrd.luks.devices."root".device = "/dev/disk/by-uuid/8a1b105c-5772-477e-8b60-49de6ccf4b86";
 
   fileSystems."/boot" =
@@ -187,10 +188,10 @@
   boot.initrd.luks.devices."root".allowDiscards = true;
   services.fstrim.enable = true;
   boot.cleanTmpDir = true;
-  swapDevices = [ {
-    device = "/swap";
-    size = 20480;
-  } ];
+  # swapDevices = [ {
+  #   device = "/swap";
+  #   size = 20480;
+  # } ];
   
   # IO scheduler
   boot.kernelParams = [ "iommu=pt" "amdgpu.gpu_recovery=1" ];

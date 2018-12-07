@@ -89,7 +89,6 @@
         ./rem/nix.nix
         ./rem/samba.nix
         ./rem/services.nix
-        ./rem/unbound.nix
         ./rem/vfio.nix
         ./rem/wireguard.nix
       ];
