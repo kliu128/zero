@@ -41,11 +41,13 @@
   # Backup filesystems
   fileSystems."/mnt/emergency-backup" = {
     device = "/dev/disk/by-uuid/df38ed6d-7404-4065-bd2e-aed453f9c34e";
+    options = [ "errors=remount-ro" ];
     fsType = "ext4";
   };
 
   fileSystems."/mnt/data0" = {
     device = "/dev/mapper/data0";
+    options = [ "errors=remount-ro" ];
     encrypted = {
       enable = true;
       blkDev = "/dev/disk/by-uuid/6addfbee-f237-41b3-9a2b-8ced3d57f410";
@@ -75,6 +77,7 @@
 
   fileSystems."/mnt/data2" = {
     device = "/dev/mapper/data2";
+    options = [ "errors=remount-ro" ];
     encrypted = {
       enable = true;
       blkDev = "/dev/disk/by-uuid/57e6c20c-ab5e-42b0-a984-2444a80aa516";
@@ -89,6 +92,7 @@
 
   fileSystems."/mnt/data3" = {
     device = "/dev/mapper/data3";
+    options = [ "errors=remount-ro" ];
     encrypted = {
       enable = true;
       blkDev = "/dev/disk/by-uuid/c4742594-f01c-4eee-927e-1535d9f222fc";
@@ -104,6 +108,7 @@
   # Seagate Expansion external hard drive
   fileSystems."/mnt/data4" = {
     device = "/dev/mapper/data4";
+    options = [ "errors=remount-ro" ];
     encrypted = {
       enable = true;
       blkDev = "/dev/disk/by-uuid/1351af37-7548-4787-a53f-594ad892b7e3";
@@ -138,6 +143,7 @@
 
   fileSystems."/mnt/ssd" = {
     device = "/dev/mapper/vms";
+    options = [ "errors=remount-ro" ];
     encrypted = {
       enable = true;
       blkDev = "/dev/disk/by-uuid/4b7a4578-fde4-4802-a93b-3351ec538bfc";
