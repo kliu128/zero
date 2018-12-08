@@ -20,13 +20,15 @@ spec:
               value: "TRUE"
             # Set Minecraft version and opts
             - name: VERSION
-              value: "1.13"
+              value: "1.12.2"
+            - name: TYPE
+              value: FORGE
+            - name: FORGEVERSION
+              value: 14.23.5.2768
             # Minecraft config
             - name: DIFFICULTY
               value: hard
             - name: OPS
-              value: nitroignika,WildTaegr
-            - name: WHITELIST
               value: nitroignika,WildTaegr
             - name: ENABLE_QUERY
               value: "TRUE"
