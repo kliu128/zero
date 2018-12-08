@@ -10,6 +10,7 @@
     ./games.nix
     ./kubernetes.nix
     ./nintendo-switch.nix
+    ./nixops.nix
     ./npm.nix
     ./trash.nix
     ./u2f.nix
@@ -88,7 +89,7 @@
     # Development
     bfg-repo-cleaner docker docker_compose docker-machine gcc gdb git-crypt gitAndTools.gitFull gnumake google-cloud-sdk
     # VM and DevOps
-    nixops virtmanager
+    virtmanager
     # Desktop environment
     arandr blueman gnome3.cheese conky gnome3.nautilus gnome3.file-roller gvfs i3lock p7zip system-config-printer scrot xautolock xcape
     # Image editing
