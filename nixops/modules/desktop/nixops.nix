@@ -15,7 +15,10 @@ with lib;
         sha256 = "1zd5c7mkx1s0fd0a5q7hsmp7p7a69nknxza0941in1py3lcv5pz9";
       };
 
-      postInstall = "";
+      postInstall = ''
+        mkdir -p $out/share/nix/nixops
+        cp -av "nix/"* $out/share/nix/nixops
+      '';
     });
   };
 
