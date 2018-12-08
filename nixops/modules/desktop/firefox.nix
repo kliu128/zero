@@ -7,5 +7,4 @@ in {
   environment.systemPackages = with pkgs; [
     latest.firefox-nightly-bin
   ];
-  environment.variables.MOZ_WEBRENDER = "1";
 }
