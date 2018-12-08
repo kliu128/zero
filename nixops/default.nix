@@ -79,6 +79,7 @@
         ./rem/desktop.nix
         ./rem/fusee-launcher.nix
         ./rem/hw.nix
+        ./rem/initrd-ssh.nix
         ./rem/ipv6-tunnel.nix
         ./rem/kindle.nix
         ./rem/lizardfs.nix
