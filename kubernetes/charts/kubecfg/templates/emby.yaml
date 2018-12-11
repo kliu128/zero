@@ -10,12 +10,11 @@ spec:
       app: emby
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app: emby
     spec:
       containers:
-        - image: nvllsvm/emby-unlocked:3.5.0.0
+        - image: jellyfin/jellyfin
           env:
             - name: PGID
               value: "100"
@@ -47,13 +46,11 @@ spec:
           persistentVolumeClaim:
             claimName: emby-config
         - name: tv
-          nfs:
-            path: /storage/Kevin/Videos/TV Shows
-            server: 192.168.1.5
+          hostPath:
+            path: /mnt/storage/Kevin/Videos/TV Shows
         - name: movies
-          nfs:
-            path: /storage/Kevin/Videos/Movies
-            type: 192.168.1.5
+          hostPath:
+            path: /mnt/storage/Kevin/Videos/Movies
 status: {}
 ---
 apiVersion: v1
