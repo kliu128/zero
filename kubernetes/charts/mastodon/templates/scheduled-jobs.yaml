@@ -21,7 +21,7 @@ spec:
           - name: {{ template "fullname" . }}-daily
             image: {{ .Values.image | quote }}
             imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
-            args: ["bundle", "exec", "rake", "mastodon:media:remove_remote"]
+            args: ["sh", "-c", "bundle exec rake mastodon:media:clear; bundle exec rake mastodon:push:refresh; bundle exec rake mastodon:push:clear; bundle exec rake mastodon:feeds:clear"]
             envFrom:
               - secretRef:
                   name: {{ template "fullname" . }}-secrets
