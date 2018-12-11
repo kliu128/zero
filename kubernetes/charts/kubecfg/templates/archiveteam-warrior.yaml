@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: archiveteam-warrior
+  name: archiveteam-warrior
+spec:
+  selector:
+    matchLabels:
+      app: archiveteam-warrior
+  template:
+    metadata:
+      labels:
+        app: archiveteam-warrior
+    spec:
+      containers:
+        - image: archiveteam/warrior-dockerfile
+          name: archiveteam-warrior
+          ports:
+            - containerPort: 8001
+              name: http
+          resources: {}
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8001
+            initialDelaySeconds: 30
+          volumeMounts:
+            - mountPath: /home/warrior/projects
+              name: data
+      restartPolicy: Always
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: archiveteam-warrior-data
+status: {}
+---
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    app: archiveteam-warrior
+  name: archiveteam-warrior-data
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+status: {}
