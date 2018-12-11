@@ -10,7 +10,7 @@
       port = 843;
       authorizedKeys = [
         # Laptop is able to ssh in and unlock
-        (import ../ssh-keys.nix).kevin-emilia
+        (import ../ssh-keys.nix).kevin-emilia-rsa
       ];
     };
   };
