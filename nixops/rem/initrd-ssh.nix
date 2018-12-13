@@ -7,7 +7,7 @@
     ssh = {
       enable = true;
       hostRSAKey = ../secrets/rem-dropbear-ssh-key;
-      port = 843;
+      port = 844;
       authorizedKeys = [
         # Laptop is able to ssh in and unlock
         (import ../ssh-keys.nix).kevin-emilia-rsa

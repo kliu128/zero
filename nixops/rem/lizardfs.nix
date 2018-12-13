@@ -27,9 +27,7 @@
     {
       name = "parity0";
       config = ''
-        ENABLE_FSYNC = 0
         HDD_PUNCH_HOLES = 1
-        NR_OF_NETWORK_WORKERS = 4
         ENABLE_LOAD_FACTOR = 1
       '';
       storageDirectories = [ "/mnt/parity0/mfs" ];

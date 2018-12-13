@@ -13,7 +13,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.initrd.availableKernelModules = [ "ehci_pci" "ahci" "xhci_pci" "usb_storage" "usbhid" "sd_mod" "sr_mod" ];
   boot.kernelModules = [ "kvm-intel" ];
-  boot.kernelPackages = pkgs.linuxPackages_testing;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
   # exfat support for Nintendo Switch / other SD cards
   boot.supportedFilesystems = [ "btrfs" "ext4" "exfat" ];
   virtualisation.docker.storageDriver = "btrfs";
@@ -122,7 +122,7 @@
   # Seagate Backup Plus Hub
   fileSystems."/mnt/parity0" = {
     device = "/dev/mapper/parity0";
-    options = [ "compress=zstd" "autodefrag" ];
+    options = [ "errors=remount-ro" ];
     encrypted = {
       enable = true;
       blkDev = "/dev/disk/by-uuid/b9eb89d2-c5f8-4eb1-b1c0-601af8b8877c";

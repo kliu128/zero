@@ -5,6 +5,7 @@
   imports = [
     "${builtins.fetchTarball https://github.com/rycee/home-manager/archive/master.tar.gz}/nixos"
 
+    ./dotnet.nix
     ./emacs
     ./firefox.nix
     ./games.nix
