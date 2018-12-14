@@ -23,4 +23,6 @@
     (import ../ssh-keys.nix).kevin-rem
   ];
   networking.firewall.allowedTCPPorts = [ 843 ];
+
+  environment.systemPackages = [ pkgs.htop ];
 }

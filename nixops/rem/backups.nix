@@ -26,7 +26,7 @@ in {
   };
   systemd.services.gsuite-backup = {
     enable = true;
-    description = "G-Suite Restic Backup";
+    description = "G-Suite Rclone Backup";
     path = [ pkgs.rclone pkgs.restic ];
     serviceConfig = {
       CPUSchedulingPolicy = "idle";
@@ -35,7 +35,26 @@ in {
     script = ''
       set -xeuo pipefail
 
-      XDG_CACHE_HOME=/var/cache/gsuite-backup RESTIC_PASSWORD_FILE=${../secrets/gsuite-backup-password.txt} RCLONE_CONFIG=/etc/rclone.conf restic -o rclone.connections=16 -o rclone.args='serve restic --stdio -v --drive-use-trash=false' -r rclone:gsuite-mysmccd:gsuite-restic backup  --exclude '/mnt/storage/Kevin/Incoming/**/*' /mnt/storage/Kevin
+      # Backup with monthly backup dirs and revisioned suffixes in each
+
+      dir_format="+%Y-%m"
+      monthly_backup_dir="$(env TZ=Etc/UTC date "$dir_format")"
+      backup_suffix="$(env TZ=Etc/UTC date +"__%Y_%m_%d_%H%M%SZ")"
+      # Prune the backup dir from 6 months ago
+      prune_backup_dir="$(env TZ=Etc/UTC date --date="-6 months" "$dir_format")"
+
+      rclone --config /etc/rclone.conf \
+             sync /mnt/storage/Kevin gsuite-mysmccd-crypt:/Data/current \
+             --backup-dir "gsuite-mysmccd-crypt:/Data/old/$monthly_backup_dir" \
+             --bwlimit 8650k --transfers 32 --checkers 32 \
+             --suffix "$backup_suffix" \
+             --exclude '/Computing/Data/**' \
+             --exclude '/Incoming/**' \
+             --exclude 'node_modules/**' \
+             --exclude '.fuse_hidden*' \
+             --delete-excluded -v
+      rclone --config /etc/rclone.conf \
+             purge -v "gsuite-mysmccd-crypt:/Data/old/$prune_backup_dir" || true
     '';
     startAt = wave-3;
   };
