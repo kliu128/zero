@@ -21,7 +21,13 @@
   # Fonts
   fonts.fontconfig.allowBitmaps = false;
   fonts.fonts = with pkgs; [
-    corefonts emojione powerline-fonts fira-code liberation_ttf source-han-serif-simplified-chinese source-han-serif-japanese source-han-serif-korean source-han-serif-traditional-chinese
+    corefonts carlito caladea
+    
+    emojione powerline-fonts
+    
+    fira-code liberation_ttf
+    
+    source-han-serif-simplified-chinese source-han-serif-japanese source-han-serif-korean source-han-serif-traditional-chinese
   ];
 
   # Enable the X11 windowing system.
