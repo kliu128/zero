@@ -4,6 +4,12 @@ let
   wave-1 = "*-*-* 02:30:00";
   wave-2 = "*-*-* 03:00:00";
   wave-3 = "*-*-* 04:00:00";
+  proxyConfig = ''
+    export http_proxy="$(cat /keys/pia-proxy.txt)"
+    export https_proxy=$http_proxy
+    export HTTP_PROXY=$http_proxy
+    export HTTPS_PROXY=$http_proxy
+  '';
 in {
   systemd.services.crypto-wallet-backup = {
     enable = true;
@@ -12,7 +18,7 @@ in {
     script = ''
       dests=("gdrive-batchfiles-crypt:/Cryptocurrency Wallets" "dropbox-crypt:/Cryptocurrency Wallets")
       for dest in "''${dests[@]}"; do
-          rclone --config /etc/rclone.conf \
+          rclone --config /keys/rclone.conf \
                 sync -vv \
                 '/mnt/storage/Kevin/Personal/Documents/Cryptocurrency Wallets' \
                 "$dest"
@@ -31,9 +37,10 @@ in {
     serviceConfig = {
       CPUSchedulingPolicy = "idle";
       IOSchedulingClass = "idle";
+      SyslogIdentifier = "gsuite-backup";
     };
     script = ''
-      set -xeuo pipefail
+      set -euo pipefail
 
       # Backup with monthly backup dirs and revisioned suffixes in each
 
@@ -43,20 +50,42 @@ in {
       # Prune the backup dir from 6 months ago
       prune_backup_dir="$(env TZ=Etc/UTC date --date="-6 months" "$dir_format")"
 
-      rclone --config /etc/rclone.conf \
+      ${proxyConfig}
+
+      rclone --config /keys/rclone.conf \
              sync /mnt/storage/Kevin gsuite-mysmccd-crypt:/Data/current \
              --backup-dir "gsuite-mysmccd-crypt:/Data/old/$monthly_backup_dir" \
-             --bwlimit 8650k --transfers 32 --checkers 32 \
+             --bwlimit 8650k --transfers 8 --checkers 32 \
              --suffix "$backup_suffix" \
              --exclude '/Computing/Data/**' \
              --exclude '/Incoming/**' \
              --exclude 'node_modules/**' \
              --exclude '.fuse_hidden*' \
              --delete-excluded -v
-      rclone --config /etc/rclone.conf \
+      rclone --config /keys/rclone.conf \
              purge -v "gsuite-mysmccd-crypt:/Data/old/$prune_backup_dir" || true
     '';
     startAt = wave-3;
+  };
+  systemd.services.switch-sync = {
+    enable = true;
+    path = [ pkgs.rclone ];
+    serviceConfig = {
+      CPUSchedulingPolicy = "idle";
+      IOSchedulingClass = "idle";
+      SyslogIdentifier = "switch-sync";
+    };
+    script = ''
+      set -euo pipefail
+
+      ${proxyConfig}
+
+      rclone --config /keys/rclone.conf \
+             sync gsuite-mysmccd:switch2 "/mnt/storage/Kevin/Computing/ROMs/Nintendo Switch" \
+             -v --transfers=8
+      chown -R kevin:users "/mnt/storage/Kevin/Computing/ROMs/Nintendo Switch"
+    '';
+    startAt = wave-2;
   };
   systemd.services.gschool-sync = {
     enable = true;
@@ -69,7 +98,7 @@ in {
     script = ''
       set -xeuo pipefail
       # Skip gdocs because often I may convert a document to Google Doc for peer editing
-      rclone --config /etc/rclone.conf sync /mnt/storage/Kevin/Personal/Documents/School gsuite-school:Sync/ --drive-skip-gdocs
+      rclone --config /keys/rclone.conf sync /mnt/storage/Kevin/Personal/Documents/School gsuite-school:Sync/ --drive-skip-gdocs
     '';
   };
   systemd.timers.gschool-sync = {
@@ -130,7 +159,7 @@ in {
     paths = [
       "/mnt/storage/Kevin/Personal/Documents"
       "/mnt/storage/Kevin/Personal/Code"
-      "/etc/keys"
+      "/keys"
     ];
     extraCreateArgs = "--stats --progress -v";
     prune.keep = {
@@ -198,7 +227,7 @@ in {
     description = "Google Drive Gas Leak Data Mirroring";
     path = [ pkgs.rclone ];
     script = ''
-      rclone --config /etc/rclone.conf sync --verbose --drive-formats ods,odt,odp,svg "gsuite-school:Acton Gas Leak Area Data" "/mnt/storage/Kevin/Backups/Acton Gas Leak Data Mirror"
+      rclone --config /keys/rclone.conf sync --verbose --drive-formats ods,odt,odp,svg "gsuite-school:Acton Gas Leak Area Data" "/mnt/storage/Kevin/Backups/Acton Gas Leak Data Mirror"
       chown -R kevin:users "/mnt/storage/Kevin/Backups/Acton Gas Leak Data Mirror"
     '';
     after = [ "network-online.target" ];
@@ -206,6 +235,7 @@ in {
     serviceConfig = {
       CPUSchedulingPolicy = "idle";
       IOSchedulingClass = "idle";
+      SyslogIdentifier = "gas-leak-mirror";
     };
     unitConfig = {
       RequiresMountsFor = [ "/mnt/storage" ];
@@ -219,7 +249,7 @@ in {
       # Drive alternate export: otherwise it fails to download files >~5 MB
       # see https://github.com/ncw/rclone/issues/2243
       rclone \
-        --config /etc/rclone.conf \
+        --config /keys/rclone.conf \
         sync \
         --verbose --drive-formats ods,odt,odp,svg \
         --drive-alternate-export \
@@ -231,6 +261,7 @@ in {
     serviceConfig = {
       CPUSchedulingPolicy = "idle";
       IOSchedulingClass = "idle";
+      SyslogIdentifier = "scintillating-mirror";
     };
     unitConfig = {
       RequiresMountsFor = [ "/mnt/storage" ];
@@ -240,9 +271,15 @@ in {
 
   # Can't just include it into nix config because rclone modifies it
   # periodically
-  # TODO: Stop storing passwords in Nix store!
-  environment.etc."rclone.conf" = {
-    mode = "0666"; # do not symlink, rclone must be able to modify
+  # also that's bad for passwords
+  deployment.keys."rclone.conf" = {
+    permissions = "600"; # rclone must be able to modify
+    destDir = "/keys";
     text = builtins.readFile ../secrets/rclone.conf.initial;
+  };
+  deployment.keys."pia-proxy.txt" = {
+    permissions = "400";
+    destDir = "/keys";
+    text = builtins.readFile ../secrets/pia-proxy.txt;
   };
 }

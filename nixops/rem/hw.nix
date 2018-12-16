@@ -28,7 +28,7 @@
 
   fileSystems."/" = {
     device = "/dev/mapper/root"; 
-    options = [ "compress=zstd" ];
+    options = [ "compress=zstd" "autodefrag" ];
   };
   boot.initrd.luks.devices."root".device = "/dev/disk/by-uuid/8a1b105c-5772-477e-8b60-49de6ccf4b86";
 
@@ -50,13 +50,14 @@
     encrypted = {
       enable = true;
       blkDev = "/dev/disk/by-uuid/6addfbee-f237-41b3-9a2b-8ced3d57f410";
-      keyFile = "/mnt-root/etc/keys/keyfile-data0.bin";
+      keyFile = "/mnt-root/keys/keyfile-data0.bin";
       label = "data0";
     };
   };
-  environment.etc."keys/keyfile-data0.bin" = {
-    mode = "400";
-    source = ../secrets/keys/keyfile-data0.bin;
+  deployment.keys."keyfile-data0.bin" = {
+    permissions = "400";
+    destDir = "/keys";
+    keyFile = ../secrets/keys/keyfile-data0.bin;
   };
 
   fileSystems."/mnt/data1" = {
@@ -65,13 +66,14 @@
     encrypted = {
       enable = true;
       blkDev = "/dev/disk/by-uuid/dff62bd6-6e2f-4e77-b1b0-226a13aa0581";
-      keyFile = "/mnt-root/etc/keys/keyfile-data1.bin";
+      keyFile = "/mnt-root/keys/keyfile-data1.bin";
       label = "data1";
     };
   };
-  environment.etc."keys/keyfile-data1.bin" = {
-    mode = "400";
-    source = ../secrets/keys/keyfile-data1.bin;
+  deployment.keys."keyfile-data1.bin" = {
+    permissions = "400";
+    destDir = "/keys";
+    keyFile = ../secrets/keys/keyfile-data1.bin;
   };
 
   fileSystems."/mnt/data2" = {
@@ -80,13 +82,14 @@
     encrypted = {
       enable = true;
       blkDev = "/dev/disk/by-uuid/57e6c20c-ab5e-42b0-a984-2444a80aa516";
-      keyFile = "/mnt-root/etc/keys/keyfile-data2.bin";
+      keyFile = "/mnt-root/keys/keyfile-data2.bin";
       label = "data2";
     };
   };
-  environment.etc."keys/keyfile-data2.bin" = {
-    mode = "400";
-    source = ../secrets/keys/keyfile-data2.bin;
+  deployment.keys."keyfile-data2.bin" = {
+    permissions = "400";
+    destDir = "/keys";
+    keyFile = ../secrets/keys/keyfile-data2.bin;
   };
 
   fileSystems."/mnt/data3" = {
@@ -95,13 +98,14 @@
     encrypted = {
       enable = true;
       blkDev = "/dev/disk/by-uuid/c4742594-f01c-4eee-927e-1535d9f222fc";
-      keyFile = "/mnt-root/etc/keys/keyfile-data3.bin";
+      keyFile = "/mnt-root/keys/keyfile-data3.bin";
       label = "data3";
     };
   };
-  environment.etc."keys/keyfile-data3.bin" = {
-    mode = "400";
-    source = ../secrets/keys/keyfile-data3.bin;
+  deployment.keys."keyfile-data3.bin" = {
+    permissions = "400";
+    destDir = "/keys";
+    keyFile = ../secrets/keys/keyfile-data3.bin;
   };
 
   # Seagate Expansion external hard drive
@@ -111,13 +115,14 @@
     encrypted = {
       enable = true;
       blkDev = "/dev/disk/by-uuid/1351af37-7548-4787-a53f-594ad892b7e3";
-      keyFile = "/mnt-root/etc/keys/keyfile-data4.bin";
+      keyFile = "/mnt-root/keys/keyfile-data4.bin";
       label = "data4";
     };
   };
-  environment.etc."keys/keyfile-data4.bin" = {
-    mode = "400";
-    source = ../secrets/keys/keyfile-data4.bin;
+  deployment.keys."keyfile-data4.bin" = {
+    permissions = "400";
+    destDir = "/keys";
+    keyFile = ../secrets/keys/keyfile-data4.bin;
   };
   # Seagate Backup Plus Hub
   fileSystems."/mnt/parity0" = {
@@ -126,13 +131,14 @@
     encrypted = {
       enable = true;
       blkDev = "/dev/disk/by-uuid/b9eb89d2-c5f8-4eb1-b1c0-601af8b8877c";
-      keyFile = "/mnt-root/etc/keys/keyfile-parity0.bin";
+      keyFile = "/mnt-root/keys/keyfile-parity0.bin";
       label = "parity0";
     };
   };
-  environment.etc."keys/keyfile-parity0.bin" = {
-    mode = "400";
-    source = ../secrets/keys/keyfile-parity0.bin;
+  deployment.keys."keyfile-parity0.bin" = {
+    permissions = "400";
+    destDir = "/keys";
+    keyFile = ../secrets/keys/keyfile-parity0.bin;
   };
   boot.initrd.kernelModules = [ "btrfs" ];
   services.btrfs.autoScrub = {
@@ -146,13 +152,14 @@
     encrypted = {
       enable = true;
       blkDev = "/dev/disk/by-uuid/4b7a4578-fde4-4802-a93b-3351ec538bfc";
-      keyFile = "/mnt-root/etc/keys/keyfile-vms.bin";
+      keyFile = "/mnt-root/keys/keyfile-vms.bin";
       label = "vms";
     };
   };
-  environment.etc."keys/keyfile-vms.bin" = {
-    mode = "400";
-    source = ../secrets/keys/keyfile-vms.bin;
+  deployment.keys."keyfile-vms.bin" = {
+    permissions = "400";
+    destDir = "/keys";
+    keyFile = ../secrets/keys/keyfile-vms.bin;
   };
 
   systemd.services.wait-for-storage = {
