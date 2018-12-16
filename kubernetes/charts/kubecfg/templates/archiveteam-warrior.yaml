@@ -13,8 +13,6 @@ spec:
       labels:
         app: archiveteam-warrior
     spec:
-      nodeSelector:
-        kubernetes.io/hostname: rem
       containers:
         - image: archiveteam/warrior-dockerfile
           name: archiveteam-warrior
