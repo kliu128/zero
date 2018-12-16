@@ -8,6 +8,7 @@
     ./dotnet.nix
     ./emacs
     ./firefox.nix
+    ./fonts.nix
     ./games.nix
     ./kubernetes.nix
     ./nintendo-switch.nix
@@ -18,18 +19,6 @@
     ./wincompat.nix
   ];
   
-  # Fonts
-  fonts.fontconfig.allowBitmaps = false;
-  fonts.fonts = with pkgs; [
-    corefonts carlito caladea
-    
-    emojione powerline-fonts
-    
-    fira-code liberation_ttf
-    
-    source-han-serif-simplified-chinese source-han-serif-japanese source-han-serif-korean source-han-serif-traditional-chinese
-  ];
-
   # Enable the X11 windowing system.
   services.xserver.enable = true;
   # Keyboard layout
