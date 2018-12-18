@@ -8,7 +8,7 @@
     carlito caladea comic-neue liberation_ttf liberationsansnarrow
     
     # Emoji
-    emojione 
+    twemoji-color-font 
     
     # Terminal fonts
     fira-code powerline-fonts

@@ -200,7 +200,7 @@
   boot.initrd.luks.devices."root".allowDiscards = true;
   services.fstrim.enable = true;
   boot.cleanTmpDir = true;
-  boot.kernel.sysctl."vm.min_free_kbytes" = 256000;
+  boot.kernel.sysctl."vm.swappiness" = 30;
   swapDevices = [ {
     device = "/mnt/ssd/swap";
     size = 10240;

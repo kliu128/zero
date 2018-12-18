@@ -13,9 +13,18 @@ spec:
       labels:
         app: archiveteam-warrior
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: rem
       containers:
         - image: archiveteam/warrior-dockerfile
           name: archiveteam-warrior
+          env:
+            - name: DOWNLOADER
+              value: Pneumaticat
+            - name: SELECTED_PROJECT
+              value: tumblr
+            - name: CONCURRENT_ITEMS
+              value: "20"
           ports:
             - containerPort: 8001
               name: http
@@ -25,25 +34,5 @@ spec:
               path: /
               port: 8001
             initialDelaySeconds: 240
-          volumeMounts:
-            - mountPath: /home/warrior/projects
-              name: data
       restartPolicy: Always
-      volumes:
-        - name: data
-          persistentVolumeClaim:
-            claimName: archiveteam-warrior-data
-status: {}
----
-kind: PersistentVolumeClaim
-metadata:
-  labels:
-    app: archiveteam-warrior
-  name: archiveteam-warrior-data
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Gi
 status: {}
