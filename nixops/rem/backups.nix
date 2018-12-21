@@ -61,7 +61,7 @@ in {
              --exclude '/Incoming/**' \
              --exclude 'node_modules/**' \
              --exclude '.fuse_hidden*' \
-             --delete-excluded -v
+             --delete-excluded -v --modify-window=1s
       rclone --config /keys/rclone.conf \
              purge -v "gsuite-mysmccd-crypt:/Data/old/$prune_backup_dir" || true
     '';
@@ -82,7 +82,7 @@ in {
 
       rclone --config /keys/rclone.conf \
              sync gsuite-mysmccd:switch2 "/mnt/storage/Kevin/Computing/ROMs/Nintendo Switch" \
-             -v --transfers=8
+             -v --transfers=8 --modify-window=1s
       chown -R kevin:users "/mnt/storage/Kevin/Computing/ROMs/Nintendo Switch"
     '';
     startAt = wave-2;

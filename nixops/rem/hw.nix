@@ -200,7 +200,10 @@
   boot.initrd.luks.devices."root".allowDiscards = true;
   services.fstrim.enable = true;
   boot.cleanTmpDir = true;
+  boot.kernel.sysctl."vm.min_free_kbytes" = 256000;
   boot.kernel.sysctl."vm.swappiness" = 30;
+  boot.kernel.sysctl."vm.dirty_ratio" = 2;
+  boot.kernel.sysctl."vm.dirty_background_ratio" = 2;
   swapDevices = [ {
     device = "/mnt/ssd/swap";
     size = 10240;
@@ -242,5 +245,25 @@
       RemainAfterExit = true;
     };
     wantedBy = [ "multi-user.target" ];
+  };
+  systemd.services.kube-container-clearer = {
+    description = "Clear Broken CrashLoopBackOff services";
+    path = with pkgs; [ kubectl gnugrep coreutils ];
+    script = ''
+      set -euo pipefail
+
+      for pod in $(kubectl get pod | grep CrashLoopBackOff | cut -d " " -f1); do
+        if kubectl describe pod "$pod" | grep "OCI runtime create failed" >/dev/null; then
+          echo "Deleting broken pod state $pod"
+          kubectl delete pod "$pod"
+        fi
+      done
+    '';
+    serviceConfig = {
+      Type = "oneshot";
+    };
+    wants = [ "kubernetes.target" ];
+    after = [ "kubernetes.target" ];
+    startAt = "minutely";
   };
 }
