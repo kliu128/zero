@@ -76,6 +76,7 @@
         ./modules/kubernetes-master.nix
         ./modules/lizardfs-mnt.nix
         ./rem/backups.nix
+        ./rem/bluray.nix
         ./rem/desktop.nix
         ./rem/fusee-launcher.nix
         ./rem/hw.nix
