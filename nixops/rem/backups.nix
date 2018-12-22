@@ -11,17 +11,27 @@ let
     export HTTPS_PROXY=$http_proxy
   '';
 in {
-  systemd.services.crypto-wallet-backup = {
+  systemd.services.cloud-emergency-backup = {
     enable = true;
-    description = "Cryptowallet Backup";
+    description = "Cloud Emergency Backup";
     path = [ pkgs.rclone ];
     script = ''
-      dests=("gdrive-batchfiles-crypt:/Cryptocurrency Wallets" "dropbox-crypt:/Cryptocurrency Wallets")
+      set -xeuo pipefail
+      backup_suffix="$(env TZ=Etc/UTC date +"__%Y_%m_%d_%H%M%SZ")"
+      dests=("gdrive-batchfiles-crypt:/Emergency Backup" "dropbox-crypt:/Emergency Backup")
       for dest in "''${dests[@]}"; do
           rclone --config /keys/rclone.conf \
                 sync -vv \
-                '/mnt/storage/Kevin/Personal/Documents/Cryptocurrency Wallets' \
-                "$dest"
+                --backup-dir "$dest (old)" \
+                --suffix "$backup_suffix" \
+                "/mnt/storage/Kevin/Personal/Documents/Passwords" \
+                "$dest/Passwords"
+          rclone --config /keys/rclone.conf \
+                sync -vv \
+                --backup-dir "$dest (old)" \
+                --suffix "$backup_suffix" \
+                "/mnt/storage/Kevin/Personal/Documents/Cryptocurrency Wallets" \
+                "$dest/Cryptocurrency Wallets"
       done
     '';
     serviceConfig = {
