@@ -15,11 +15,7 @@ spec:
     spec:
       containers:
         - image: jellyfin/jellyfin
-          env:
-            - name: PGID
-              value: "100"
-            - name: PUID
-              value: "1000"
+          user: 1000
           name: emby
           ports:
             - containerPort: 8096
