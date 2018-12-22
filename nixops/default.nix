@@ -68,6 +68,7 @@
       deployment.hasFastConnection = true;
 
       imports = [
+        ./modules/cjdns.nix
         ./modules/desktop
         ./modules/docker.nix
         ./modules/kdeconnect.nix
