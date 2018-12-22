@@ -55,7 +55,7 @@ in {
       rclone --config /keys/rclone.conf \
              sync /mnt/storage/Kevin gsuite-mysmccd-crypt:/Data/current \
              --backup-dir "gsuite-mysmccd-crypt:/Data/old/$monthly_backup_dir" \
-             --bwlimit 8650k --transfers 8 --checkers 32 \
+             --bwlimit 8650k --transfers 32 \
              --suffix "$backup_suffix" \
              --exclude '/Computing/Data/**' \
              --exclude '/Incoming/**' \
