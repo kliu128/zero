@@ -24,7 +24,9 @@ spec:
             - name: TYPE
               value: FORGE
             - name: FORGEVERSION
-              value: 14.23.5.2796
+              value: 14.23.5.2768
+            - name: MEMORY
+              value: 4G
             # Minecraft config
             - name: DIFFICULTY
               value: hard
@@ -42,8 +44,6 @@ spec:
           volumeMounts:
             - name: data
               mountPath: /data
-            - name: backups
-              mountPath: /backups
           # Allow for attaching
           tty: true
           stdin: true
@@ -54,10 +54,6 @@ spec:
         - name: data
           persistentVolumeClaim:
             claimName: minecraft-data
-        - name: backups
-          hostPath:
-            path: /mnt/storage/Kevin/Backups/Minecraft/Current
-            type: Directory
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

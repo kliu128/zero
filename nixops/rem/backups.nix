@@ -108,7 +108,7 @@ in {
     script = ''
       set -xeuo pipefail
       # Skip gdocs because often I may convert a document to Google Doc for peer editing
-      rclone --config /keys/rclone.conf sync /mnt/storage/Kevin/Personal/Documents/School gsuite-school:Sync/ --drive-skip-gdocs
+      rclone --config /keys/rclone.conf copy /mnt/storage/Kevin/Personal/Documents/School gsuite-school:Sync/ --drive-skip-gdocs
     '';
   };
   systemd.timers.gschool-sync = {

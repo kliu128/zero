@@ -1,5 +1,7 @@
 { config, lib, pkgs, ... }:
 
 {
-  environment.systemPackages = with pkgs; [ makemkv ];
+  # Blu-ray/disk system tools
+  environment.systemPackages = with pkgs; [ k3b makemkv ];
+  boot.kernelModules = [ "sg" ];
 }

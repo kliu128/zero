@@ -24,6 +24,7 @@
   services.xserver.enable = true;
   # Keyboard layout
   services.xserver.libinput.enable = true;
+  services.gnome3.gvfs.enable = true;
   
   # iBus
   i18n.inputMethod = {

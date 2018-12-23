@@ -36,6 +36,8 @@ spec:
           env:
             - name: ENABLE_CLAMAV
               value: '0'
+            - name: ENABLE_AMAVIS
+              value: '0'
             - name: ENABLE_SPAMASSASSIN
               value: '1'
             - name: OVERRIDE_HOSTNAME

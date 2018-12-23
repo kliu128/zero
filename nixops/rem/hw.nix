@@ -28,7 +28,7 @@
 
   fileSystems."/" = {
     device = "/dev/mapper/root"; 
-    options = [ "compress=zstd" "autodefrag" ];
+    options = [ "compress=zstd" ];
   };
   boot.initrd.luks.devices."root".device = "/dev/disk/by-uuid/8a1b105c-5772-477e-8b60-49de6ccf4b86";
 
@@ -62,7 +62,7 @@
 
   fileSystems."/mnt/data1" = {
     device = "/dev/mapper/data1";
-    options = [ "compress=zstd" "autodefrag" ];
+    options = [ "compress=zstd" ];
     encrypted = {
       enable = true;
       blkDev = "/dev/disk/by-uuid/dff62bd6-6e2f-4e77-b1b0-226a13aa0581";
@@ -201,13 +201,13 @@
   services.fstrim.enable = true;
   boot.cleanTmpDir = true;
   boot.kernel.sysctl."vm.min_free_kbytes" = 256000;
-  boot.kernel.sysctl."vm.swappiness" = 30;
-  boot.kernel.sysctl."vm.dirty_ratio" = 2;
+  boot.kernel.sysctl."vm.dirty_ratio" = 1;
   boot.kernel.sysctl."vm.dirty_background_ratio" = 2;
   swapDevices = [ {
     device = "/mnt/ssd/swap";
     size = 10240;
   } ];
+  zramSwap.enable = true;
 
   # HACKS
 
