@@ -1,8 +1,16 @@
 apiVersion: apps/v1
-kind: StatefulSet
+kind: Deployment
 metadata:
+  labels:
+    app: matrix-facebook
   name: matrix-facebook
 spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
   selector:
     matchLabels:
       app: matrix-facebook
@@ -72,3 +80,61 @@ spec:
   - name: http
     targetPort: 8090
     port: 8090
+
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: matrix-facebook-restart
+rules:
+- apiGroups:
+  - extensions
+  - apps
+  resources:
+  - deployments
+  - replicasets
+  verbs:
+  - 'patch'
+  - 'get'
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: matrix-facebook-restart
+subjects:
+- kind: ServiceAccount
+  name: sa-matrix-facebook-restart
+roleRef:
+  kind: Role
+  name: matrix-facebook-restart
+  apiGroup: ""
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: sa-matrix-facebook-restart
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: matrix-facebook-restart
+spec:
+  schedule: "* */7 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: sa-matrix-facebook-restart
+          containers:
+          - name: kubectl
+            image: lachlanevenson/k8s-kubectl:latest
+            command:
+            - /bin/sh
+            - -c
+            - kubectl patch deployment matrix-facebook -p '{"spec":{"template":{"metadata":{"labels":{"restarted-by":"'${POD_NAME}'"}}}}}'
+            env:
+              - name: POD_NAME
+                valueFrom:
+                  fieldRef:
+                    fieldPath: metadata.name
+          restartPolicy: OnFailure

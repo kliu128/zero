@@ -91,8 +91,8 @@ in {
       ${proxyConfig}
 
       rclone --config /keys/rclone.conf \
-             sync gsuite-mysmccd:switch2 "/mnt/storage/Kevin/Computing/ROMs/Nintendo Switch" \
-             -v --transfers=8 --modify-window=1s
+             sync "gsuite-mysmccd:Cleartext/Nintendo Switch/Community Stash/" "/mnt/storage/Kevin/Computing/ROMs/Nintendo Switch/" \
+             -v --transfers=8 --modify-window=1s --delete-during
       chown -R kevin:users "/mnt/storage/Kevin/Computing/ROMs/Nintendo Switch"
     '';
     startAt = wave-2;

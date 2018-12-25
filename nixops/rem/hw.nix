@@ -200,14 +200,19 @@
   boot.initrd.luks.devices."root".allowDiscards = true;
   services.fstrim.enable = true;
   boot.cleanTmpDir = true;
-  boot.kernel.sysctl."vm.min_free_kbytes" = 256000;
+  boot.kernel.sysctl."vm.min_free_kbytes" = 512000;
   boot.kernel.sysctl."vm.dirty_ratio" = 1;
   boot.kernel.sysctl."vm.dirty_background_ratio" = 2;
   swapDevices = [ {
     device = "/mnt/ssd/swap";
     size = 10240;
   } ];
-  zramSwap.enable = true;
+  boot.kernelParams = [
+    "zswap.enabled=1"
+    "zswap.compressor=zstd"
+    "zswap.max_pool_percent=20"
+    "zswap.zpool=z3fold"
+  ];
 
   # HACKS
 
