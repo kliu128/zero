@@ -71,7 +71,7 @@ in {
              --exclude '/Incoming/**' \
              --exclude 'node_modules/**' \
              --exclude '.fuse_hidden*' \
-             --delete-excluded -v --modify-window=1s
+             --delete-excluded -v --modify-window=1s --delete-during
       rclone --config /keys/rclone.conf \
              purge -v "gsuite-mysmccd-crypt:/Data/old/$prune_backup_dir" || true
     '';

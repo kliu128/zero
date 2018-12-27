@@ -16,14 +16,14 @@ spec:
       containers:
       - image: dlandon/zoneminder
         name: zoneminder
-        livenessProbe:
-          httpGet:
-            path: /zm/index.php
-            port: 443
-          initialDelaySeconds: 240 # this thing installs packages on launch
+        securityContext:
+          privileged: true
+        env:
+          - name: SHMMAX
+            value: "50%"
+          - name: TZ
+            value: America/New_York
         volumeMounts:
-        - mountPath: /dev/shm
-          name: shm
         - mountPath: /config
           name: config
         - mountPath: /var/cache/zoneminder
@@ -32,8 +32,6 @@ spec:
           name: data
       restartPolicy: Always
       volumes:
-      - name: shm
-        emptyDir: {}
       - name: config
         persistentVolumeClaim:
           claimName: zoneminder-config

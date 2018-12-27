@@ -2,7 +2,6 @@
 
 {
   # rem-specific desktop configuration
-  # programs.criu.enable = true;
 
   home-manager.users.kevin = {
     home.file.".config/sway/config".text = builtins.readFile ./sway;
