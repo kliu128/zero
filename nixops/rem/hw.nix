@@ -254,7 +254,7 @@
     wantedBy = [ "multi-user.target" ];
   };
   systemd.services.kube-container-clearer = {
-    description = "Clear Broken CrashLoopBackOff services";
+    description = "Clear Broken Kubernetes Pods";
     path = with pkgs; [ kubectl gnugrep coreutils ];
     script = ''
       set -euo pipefail
@@ -262,8 +262,12 @@
       for pod in $(kubectl get pod | grep CrashLoopBackOff | cut -d " " -f1); do
         if kubectl describe pod "$pod" | grep "OCI runtime create failed" >/dev/null; then
           echo "Deleting broken pod state $pod"
-          kubectl delete pod "$pod"
+          kubectl delete pod --wait=false "$pod"
         fi
+      done
+
+      for pod in $(kubectl get pod | grep ImagePullBackOff | cut -d " " -f1); do
+        kubectl delete pod --wait=false "$pod"
       done
     '';
     serviceConfig = {
