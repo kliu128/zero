@@ -8,6 +8,9 @@
     enable = true;
     listenClientUrls = [ "https://0.0.0.0:2379" ];
     advertiseClientUrls = [ "https://192.168.1.5:2379" ];
+    extraConf = {
+      AUTO_COMPACTION_RETENTION = "1";
+    };
 
     # Serving certificates
     certFile = "/var/lib/kubernetes/certs/etcd.pem";
