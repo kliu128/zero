@@ -290,7 +290,7 @@
       package = pkgs.i3-gaps;
       config = {
         bars = [ ];
-        fonts = [ "pango: Source Code Pro 10" ];
+        fonts = [ "pango: Fira Code 10" ];
         gaps = {
           inner = 4;
           outer = 6;
@@ -365,7 +365,7 @@
         bar {
             status_command bash ${./conky-bar.sh}
             i3bar_command i3bar -t
-            font pango:Source Code Pro
+            font pango:Fira Code
             position top
             
             colors {
