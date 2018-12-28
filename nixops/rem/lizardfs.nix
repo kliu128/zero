@@ -28,8 +28,7 @@
     {
       name = "parity0";
       config = ''
-        HDD_PUNCH_HOLES = 1
-        ENABLE_LOAD_FACTOR = 1
+        PERFORM_FSYNC = 0
       '';
       storageDirectories = [ "/mnt/parity0/mfs" ];
       port = 9422;
@@ -67,6 +66,9 @@
       name = "seagate8tb";
       storageDirectories = [ "/mnt/data4/mfs" ];
       port = 9429;
+      config = ''
+        PERFORM_FSYNC = 0
+      '';
     }
   ];
   networking.firewall.allowedTCPPorts = [ 9421 9422 9423 9426 9427 9428 9429 ];
