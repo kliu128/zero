@@ -481,11 +481,22 @@
     # Compositor
     services.compton = {
       enable = true;
-      vSync = "drm";
+      vSync = "opengl-swc";
       fade = true;
       fadeDelta = 5;
-      backend = "xrender";
+      backend = "glx";
     };
+    # Allow Compton to be used with OpenGL -- see
+    # https://github.com/ValveSoftware/steam-for-linux/issues/5434#issuecomment-379027036
+    home.file.".drirc".text = ''
+      <driconf>
+        <device driver="amdgpu">
+          <application name="compton" executable="compton">
+            <option name="allow_rgb10_configs" value="false" />
+          </application>
+        </device>
+      </driconf>
+    '';
 
     # Keyboard
     home.keyboard.layout = "us";
