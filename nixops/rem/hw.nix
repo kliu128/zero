@@ -206,15 +206,7 @@
   swapDevices = [ {
     device = "/mnt/ssd/swap";
     size = 10240;
-  } {
-    device = "/mnt/ssd/swap2";
-    size = 10240;
   } ];
-  systemd.tmpfiles.rules = [
-    "w /sys/module/zswap/parameters/compressor - - - - zstd"
-    "w /sys/module/zswap/parameters/zpool - - - - z3fold"
-    "w /sys/module/zswap/parameters/enabled - - - - Y"
-  ];
 
   # HACKS
 

@@ -6,6 +6,7 @@
   services.lizardfs.master.enable = true;
   services.lizardfs.master.config = ''
     AUTO_RECOVERY = 1
+    NICE_LEVEL = 5
   '';
   services.lizardfs.master.exports = ''
     192.168.1.0/24 / rw,maproot=0
@@ -29,6 +30,7 @@
       name = "parity0";
       config = ''
         PERFORM_FSYNC = 0
+        NICE_LEVEL = 5
       '';
       storageDirectories = [ "/mnt/parity0/mfs" ];
       port = 9422;
@@ -37,6 +39,7 @@
       name = "wdblack1tb";
       config = ''
         LABEL = highio
+        NICE_LEVEL = 5
       '';
       storageDirectories = [ "/mnt/data1/mfs" ];
       port = 9423;
@@ -45,11 +48,15 @@
       name = "wdgreen15tb";
       storageDirectories = [ "/mnt/data0/mfs" ];
       port = 9426;
+      config = ''
+        NICE_LEVEL = 5
+      '';
     }
     {
       name = "wdblue4tb";
       config = ''
         LABEL = highio
+        NICE_LEVEL = 5
       '';
       storageDirectories = [ "/mnt/data2/mfs" ];
       port = 9427;
@@ -58,6 +65,7 @@
       name = "toshiba4tb";
       config = ''
         LABEL = highio
+        NICE_LEVEL = 5
       '';
       storageDirectories = [ "/mnt/data3/mfs" ];
       port = 9428;
@@ -68,6 +76,7 @@
       port = 9429;
       config = ''
         PERFORM_FSYNC = 0
+        NICE_LEVEL = 5
       '';
     }
   ];
