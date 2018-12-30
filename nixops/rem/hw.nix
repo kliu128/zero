@@ -203,6 +203,7 @@
   boot.tmpOnTmpfs = true;
   services.journald.extraConfig = "Storage=volatile";
   boot.kernel.sysctl."vm.min_free_kbytes" = 512000;
+  boot.kernel.sysctl."vm.swappiness" = 10;
   swapDevices = [ {
     device = "/mnt/ssd/swap";
     size = 10240;
