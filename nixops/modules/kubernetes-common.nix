@@ -3,7 +3,7 @@
 {
   # Kubernetes
   services.kubernetes = {
-    featureGates = ["AllAlpha"];
+    featureGates = [];
     roles = [ "node" "master" ];
 
     caFile = "/var/lib/kubernetes/certs/ca.pem";
