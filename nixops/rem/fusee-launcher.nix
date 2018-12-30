@@ -7,7 +7,7 @@
     wantedBy = [ "multi-user.target" ];
     script = ''
       while true; do
-        fusee-launcher -w ${../hekate_ctcaer_4.2.bin} || true
+        fusee-launcher -w ${../hekate_ctcaer_4.6.bin} || true
       done
     '';
     serviceConfig.Nice = 19;
