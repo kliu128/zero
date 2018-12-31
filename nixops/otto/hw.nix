@@ -18,11 +18,13 @@
   boot.loader.grub.device = "/dev/sda";
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/093180dc-abbd-46b1-af91-0c6524bbee49";
+    { device = "/dev/mapper/root";
       fsType = "ext4";
     };
-  fileSystems."/var/lib/lizardfs-data2" =
-    { device = "/dev/disk/by-uuid/614de4ca-d912-4dbd-ae18-c5866a997757";
+  boot.initrd.luks.devices."root".device = "/dev/disk/by-uuid/5fd8e623-415d-4ea1-8c09-bd8daf9bace9";
+
+  fileSystems."/boot" =
+    { device = "/dev/disk/by-uuid/cc4fe522-d718-45ea-8531-5c96d636812a";
       fsType = "ext4";
     };
 

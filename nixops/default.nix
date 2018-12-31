@@ -35,6 +35,7 @@
         ./modules/kubernetes-node.nix
         ./modules/lizardfs-mnt.nix
         ./otto/hw.nix
+        ./otto/initrd-ssh.nix
         ./otto/lizardfs.nix
       ];
 
@@ -90,6 +91,7 @@
         ./rem/nix.nix
         ./rem/samba.nix
         ./rem/services.nix
+        ./rem/ssh-unlocker.nix
         ./rem/vfio.nix
         ./rem/wireguard.nix
       ];
