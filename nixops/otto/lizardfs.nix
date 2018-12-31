@@ -17,6 +17,11 @@
         HDD_LEAVE_SPACE_DEFAULT = 50GiB
       '';
     }
+    {
+      name = "250gb-netbook-hdd";
+      port = 9423;
+      storageDirectories = ["/mnt/250gb-netbook-hdd/mfs"];
+    }
   ];
-  networking.firewall.allowedTCPPorts = [ 9422 ];
+  networking.firewall.allowedTCPPorts = [ 9422 9423 ];
 }

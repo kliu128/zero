@@ -28,6 +28,22 @@
       fsType = "ext4";
     };
 
+  fileSystems."/mnt/250gb-netbook-hdd" = {
+    device = "/dev/mapper/250gb-netbook-hdd";
+    options = [ "errors=remount-ro" "noatime" "noexec" "nodev" ];
+    encrypted = {
+      enable = true;
+      blkDev = "/dev/disk/by-uuid/58c60ce6-0ced-430f-b354-c2e1c46d6b74";
+      keyFile = "/mnt-root/keys/keyfile-250gb-netbook-hdd.bin";
+      label = "250gb-netbook-hdd";
+    };
+  };
+  deployment.keys."keyfile-250gb-netbook-hdd.bin" = {
+    permissions = "400";
+    destDir = "/keys";
+    keyFile = ../secrets/keys/keyfile-250gb-netbook-hdd.bin;
+  };
+
   swapDevices = [ {
     device = "/swap";
     size = 4096;
