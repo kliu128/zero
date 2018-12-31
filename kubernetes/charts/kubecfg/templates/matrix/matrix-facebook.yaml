@@ -119,7 +119,8 @@ kind: CronJob
 metadata:
   name: matrix-facebook-restart
 spec:
-  schedule: "* */7 * * *"
+  schedule: "0 */6 * * *"
+  concurrencyPolicy: Forbid
   jobTemplate:
     spec:
       template:
