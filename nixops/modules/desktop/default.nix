@@ -165,9 +165,9 @@
           port = 843;
         };
         assuna = {
-          hostname = "server.scintillate.me";
+          hostname = "192.168.1.9";
           user = "kevin";
-          port = 844;
+          port = 22;
         };
         subaru = {
           hostname = "35.211.16.173";
