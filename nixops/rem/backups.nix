@@ -170,6 +170,7 @@ in {
       "/mnt/storage/Kevin/Personal/Documents"
       "/mnt/storage/Kevin/Personal/Code"
       "/keys"
+      "/home/kevin/Projects/zero"
     ];
     extraCreateArgs = "--stats --progress -v";
     prune.keep = {
@@ -224,7 +225,7 @@ in {
     description = "/boot Backup";
     path = [ pkgs.rsync ];
     script = ''
-      rsync -avP /boot /mnt/storage/Kevin/Backups/Systems/boot
+      rsync -avP /boot /mnt/emergency-backup/boot
     '';
     unitConfig = {
       RequiresMountsFor = [ "/mnt/storage" ];
