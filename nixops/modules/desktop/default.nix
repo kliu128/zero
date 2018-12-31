@@ -321,6 +321,7 @@
 
           # Locking
           "Pause" = "exec xautolock -locknow && sleep 5 && xset dpms force off";
+          "Shift+Pause" = "exec xautolock -toggle && ${pkgs.libnotify}/bin/notify-send 'Toggled screen locking.'";
         };
         modifier = modifier;
         startup = [
