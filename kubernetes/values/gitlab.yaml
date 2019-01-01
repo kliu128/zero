@@ -17,6 +17,9 @@ global:
   email:
     from: gitlab@potatofrom.space
   time_zone: America/New_York
+  psql:
+    database: gitlabhq_production
+    username: gitlab
 certmanager:
   install: false
 certmanager-issuer:
@@ -28,6 +31,8 @@ nginx-ingress:
   enabled: false
 postgresql:
   existingSecret: gitlab-postgresql-password
+  postgresUser: gitlab
+  postgresDatabase: gitlabhq_production
 prometheus:
   install: false
 gitlab:
