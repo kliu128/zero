@@ -20,6 +20,22 @@
     9 highio_ec_2_1 : $ec(2,1) { highio highio highio }
   '';
   systemd.services.lizardfs-master = {
+    wants = [
+      "lizardfs-chunkserver-parity0.service"
+      "lizardfs-chunkserver-wdblack1tb.service"
+      "lizardfs-chunkserver-wdgreen15tb.service"
+      "lizardfs-chunkserver-wdblue4tb.service"
+      "lizardfs-chunkserver-toshiba4tb.service"
+      "lizardfs-chunkserver-seagate8tb.service"
+    ];
+    after = [
+      "lizardfs-chunkserver-parity0.service"
+      "lizardfs-chunkserver-wdblack1tb.service"
+      "lizardfs-chunkserver-wdgreen15tb.service"
+      "lizardfs-chunkserver-wdblue4tb.service"
+      "lizardfs-chunkserver-toshiba4tb.service"
+      "lizardfs-chunkserver-seagate8tb.service"
+    ];
     serviceConfig = {
       OOMScoreAdjust = -1000;
     };
