@@ -12,10 +12,12 @@
   networking.firewall.allowedTCPPorts = [ 3389 24800 ]; # synergy port
 
   home-manager.users.kevin.xsession.windowManager.i3.extraConfig = ''
-    workspace 1 output HDMI-A-1
+    workspace 1 output HDMI-A-0
     workspace 2 output DisplayPort-0
     workspace 3 output DVI-D-0
-    exec xrandr --output DVI-D-0 --mode 1280x1024 --pos 3840x56 --rotate normal --output HDMI-A-1 --mode 2560x1080 --pos 0x0 --rotate normal --output DisplayPort-0 --mode 1280x1024 --pos 2560x56 --rotate normal --output HDMI-A-0 --off
+    workspace 4 output HDMI-A-1
+    exec xrandr --output DisplayPort-1 --off --output DisplayPort-0 --primary --mode 1280x1024 --pos 2560x56 --rotate normal --output DVI-D-0 --mode 1280x1024 --pos 3840x56 --rotate normal --output HDMI-A-1 --mode 1920x1080 --pos 5120x0 --rotate normal --output HDMI-A-0 --mode 2560x1080 --pos 0x0 --rotate normal
+
     
     # STARTUP APPLICATIONS
     # ====================

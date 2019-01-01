@@ -208,7 +208,6 @@
     device = "/mnt/ssd/swap";
     size = 10240;
   } ];
-  boot.kernelParams = [ "zswap.enabled=1" ];
 
   # HACKS
 
