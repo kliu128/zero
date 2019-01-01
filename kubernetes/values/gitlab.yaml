@@ -35,3 +35,5 @@ gitlab:
     maxUnavailable: 0
     maxReplicas: 1
     minReplicas: 1
+    nodeSelector:
+      kubernetes.io/hostname: rem
