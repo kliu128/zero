@@ -5,6 +5,6 @@ let
 in {
   nixpkgs.overlays = [ moz ];
   environment.systemPackages = with pkgs; [
-    latest.firefox-nightly-bin
+    firefox
   ];
 }
