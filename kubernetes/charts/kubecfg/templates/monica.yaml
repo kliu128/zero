@@ -64,6 +64,7 @@ spec:
   selector:
     app: monica
 ---
+apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   labels:
@@ -77,6 +78,7 @@ spec:
       storage: 2Gi
 status: {}
 ---
+apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   labels:

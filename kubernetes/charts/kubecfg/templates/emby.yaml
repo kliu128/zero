@@ -63,6 +63,7 @@ spec:
   selector:
     app: emby
 ---
+apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   labels:
