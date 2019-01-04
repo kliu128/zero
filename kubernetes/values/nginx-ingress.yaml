@@ -15,8 +15,6 @@ controller:
     ssl-protocols: "TLSv1.3 TLSv1.2"
   headers:
     X-Clacks-Overhead: GNU Terry Pratchett, GNU Jacob Goyette
-  extraArgs:
-    https-port: "8443"
 rbac:
   create: true
 tcp:

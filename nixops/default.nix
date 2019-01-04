@@ -92,7 +92,6 @@
         ./rem/samba.nix
         ./rem/services.nix
         ./rem/ssh-unlocker.nix
-        ./rem/sslh.nix
         ./rem/unbound.nix
         ./rem/vfio.nix
         ./rem/wireguard.nix
