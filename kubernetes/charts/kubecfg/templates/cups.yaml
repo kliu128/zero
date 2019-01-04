@@ -13,6 +13,9 @@ spec:
       labels:
         app: cups
     spec:
+      hostNetwork: true
+      nodeSelector:
+        kubernetes.io/hostname: rem
       containers:
       - image: registry.potatofrom.space/kevin/cups:latest
         name: cups
