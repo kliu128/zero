@@ -13,6 +13,7 @@ controller:
     hsts-max-age: "31557600"
     hsts-preload: "true"
     ssl-protocols: "TLSv1.3 TLSv1.2"
+    add-headers: default/headers
   headers:
     X-Clacks-Overhead: GNU Terry Pratchett, GNU Jacob Goyette
 rbac:
