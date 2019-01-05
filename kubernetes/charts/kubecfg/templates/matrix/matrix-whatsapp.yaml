@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: matrix-whatsapp
+spec:
+  selector:
+    matchLabels:
+      app: matrix-whatsapp
+  template:
+    metadata:
+      labels:
+        app: matrix-whatsapp
+    spec:
+      containers:
+        - name: whatsapp
+          image: tulir/mautrix-whatsapp
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+              name: whatsapp
+          volumeMounts:
+            - name: config
+              subPath: whatsapp-config.yaml
+              mountPath: /data/config.yaml
+            - name: config
+              subPath: whatsapp-registration.yaml
+              mountPath: /data/registration.yaml
+              # whatsapp config is in PVC
+            - name: data
+              mountPath: /data
+      volumes:
+        - name: config
+          secret:
+            secretName: matrix-config
+        - name: data
+          persistentVolumeClaim:
+            claimName: matrix-whatsapp-data
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    app: matrix-whatsapp
+  name: matrix-whatsapp-data
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: matrix-whatsapp
+spec:
+  selector:
+    app: matrix-whatsapp
+  ports:
+  - name: http
+    targetPort: 8080
+    port: 8080

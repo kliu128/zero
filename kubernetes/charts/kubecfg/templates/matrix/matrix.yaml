@@ -63,6 +63,9 @@ spec:
               subPath: telegram-registration.yaml
               mountPath: /config/telegram-registration.yaml
             - name: config
+              subPath: whatsapp-registration.yaml
+              mountPath: /config/whatsapp-registration.yaml
+            - name: config
               subPath: facebook-registration.yaml
               mountPath: /config/facebook-registration.yaml
             - name: config
