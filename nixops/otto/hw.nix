@@ -44,6 +44,22 @@
     keyFile = ../secrets/keys/keyfile-250gb-netbook-hdd.bin;
   };
 
+  fileSystems."/mnt/150gb-dell-hdd" = {
+    device = "/dev/mapper/150gb-dell-hdd";
+    options = [ "errors=remount-ro" "noatime" "noexec" "nodev" ];
+    encrypted = {
+      enable = true;
+      blkDev = "/dev/disk/by-uuid/4762f1cf-75bf-42b2-b39d-d8288c4509ad";
+      keyFile = "/mnt-root/keys/keyfile-150gb-dell-hdd.bin";
+      label = "150gb-dell-hdd";
+    };
+  };
+  deployment.keys."keyfile-150gb-dell-hdd.bin" = {
+    permissions = "400";
+    destDir = "/keys";
+    keyFile = ../secrets/keys/keyfile-150gb-dell-hdd.bin;
+  };
+
   swapDevices = [ {
     device = "/swap";
     size = 4096;

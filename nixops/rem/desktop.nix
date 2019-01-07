@@ -2,6 +2,11 @@
 
 {
   # rem-specific desktop configuration
+  services.resilio = {
+    enable = true;
+    deviceName = "rem";
+    enableWebUI = true;
+  };
 
   home-manager.users.kevin = {
     home.file.".config/sway/config".text = builtins.readFile ./sway;

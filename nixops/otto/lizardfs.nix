@@ -22,6 +22,11 @@
       port = 9423;
       storageDirectories = ["/mnt/250gb-netbook-hdd/mfs"];
     }
+    {
+      name = "150gb-dell-hdd";
+      port = 9424;
+      storageDirectories = ["/mnt/150gb-dell-hdd/mfs"];
+    }
   ];
-  networking.firewall.allowedTCPPorts = [ 9422 9423 ];
+  networking.firewall.allowedTCPPorts = [ 9422 9423 9424 ];
 }
