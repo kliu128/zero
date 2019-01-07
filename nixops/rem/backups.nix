@@ -35,8 +35,7 @@ in {
       done
     '';
     serviceConfig = {
-      CPUSchedulingPolicy = "idle";
-      IOSchedulingClass = "idle";
+      Nice = 19;
     };
     startAt = wave-1;
   };
@@ -45,8 +44,7 @@ in {
     description = "G-Suite Rclone Backup";
     path = [ pkgs.rclone pkgs.restic ];
     serviceConfig = {
-      CPUSchedulingPolicy = "idle";
-      IOSchedulingClass = "idle";
+      Nice = 19;
       SyslogIdentifier = "gsuite-backup";
     };
     script = ''
@@ -81,8 +79,7 @@ in {
     enable = true;
     path = [ pkgs.rclone ];
     serviceConfig = {
-      CPUSchedulingPolicy = "idle";
-      IOSchedulingClass = "idle";
+      Nice = 19;
       SyslogIdentifier = "switch-sync";
     };
     script = ''
@@ -101,8 +98,7 @@ in {
     enable = true;
     path = [ pkgs.rclone ];
     serviceConfig = {
-      CPUSchedulingPolicy = "idle";
-      IOSchedulingClass = "idle";
+      Nice = 19;
       SyslogIdentifier = "aci-sync";
     };
     script = ''
@@ -122,8 +118,7 @@ in {
     description = "School Drive Synchronization";
     path = [ pkgs.rclone ];
     serviceConfig = {
-      CPUSchedulingPolicy = "idle";
-      IOSchedulingClass = "idle";
+      Nice = 19;
     };
     script = ''
       set -xeuo pipefail
@@ -136,9 +131,9 @@ in {
     timerConfig.OnActiveSec = 3600;
     wantedBy = [ "timers.target" ];
   };
-  systemd.tmpfiles.rules = [
-    "d /var/cache/gsuite-backup 0400 root root -"
-  ];
+
+
+
   systemd.services.lizardfs-snapshot = {
     enable = true;
     description = "LizardFS daily snapshot";
@@ -171,9 +166,26 @@ in {
     '';
     serviceConfig = {
       User = "kevin";
+      Group = "users";
     };
     wants = [ "storage.service" "docker.service" "network-online.target" ];
     after = [ "storage.service" "docker.service" "network-online.target" ];
+    startAt = wave-2;
+  };
+
+  systemd.services.photo-sync = {
+    description = "Sync 7+ Day Old Photos from Phone to PC";
+    path = [ pkgs.rsync ];
+    serviceConfig = {
+      User = "kevin";
+      Group = "users";
+    };
+    script = ''
+      set -euo pipefail
+      cd "/mnt/storage/Kevin/Personal/Media/SYNCED OnePlus 6t Current Photos"
+      find . -type f -mtime +7 -print0 | 
+        rsync -0avP --remove-source-files --files-from=- ./ "../UNSORTED OnePlus 6t Camera Roll"
+    '';
     startAt = wave-2;
   };
 
