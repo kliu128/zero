@@ -144,7 +144,7 @@
   boot.initrd.kernelModules = [ "btrfs" ];
   services.btrfs.autoScrub = {
     enable = true;
-    fileSystems = [ "/mnt/parity0" ];
+    fileSystems = [ "/" ];
   };
 
   fileSystems."/mnt/ssd" = {
