@@ -2,7 +2,7 @@
 
 {
   services.earlyoom.enable = true;
-  services.earlyoom.freeMemThreshold = 4;
+  services.earlyoom.freeMemThreshold = 10;
 
   # Occasionally crashes with the message:
   # > Could not convert number: Numerical result out of range
