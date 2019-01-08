@@ -15,7 +15,7 @@ spec:
         app: monica
     spec:
       containers:
-        - image: pneumaticat/monica
+        - image: monicahq/monicahq
           envFrom:
             - secretRef:
                 name: monica-secret
