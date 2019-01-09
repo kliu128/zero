@@ -6,6 +6,13 @@ lamp:
   ingress:
     annotations:
       nginx.ingress.kubernetes.io/proxy-body-size: 4000m
+      nginx.ingress.kubernetes.io/configuration-snippet: |
+        location = /.well-known/carddav {
+          return 301 $scheme://$host/remote.php/dav;
+        }
+        location = /.well-known/caldav {
+          return 301 $scheme://$host/remote.php/dav;
+        }
 
 collabora:
   ingress:
