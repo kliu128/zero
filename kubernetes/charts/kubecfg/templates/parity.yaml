@@ -2,16 +2,16 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   labels:
-    app: parity
-  name: parity
+    app: parity-kovan
+  name: parity-kovan
 spec:
   selector:
     matchLabels:
-      app: parity
+      app: parity-kovan
   template:
     metadata:
       labels:
-        app: parity
+        app: parity-kovan
     spec:
       nodeSelector:
         kubernetes.io/hostname: rem
@@ -19,7 +19,7 @@ spec:
       containers:
       - image: parity/parity:beta
         imagePullPolicy: Always
-        args: [-d, /data, --no-ancient-blocks,--chain=kovan, --geth]
+        args: [-d, /data, --no-ancient-blocks,--chain=kovan]
         name: parity
         volumeMounts:
         - mountPath: /data
@@ -29,20 +29,4 @@ spec:
       - name: data
         hostPath:
           type: Directory
-          path: /mnt/ssd/parity
-status: {}
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  creationTimestamp: null
-  labels:
-    app: parity
-  name: parity-data
-spec:
-  accessModes:
-  - ReadWriteOnce
-  resources:
-    requests:
-      storage: 50Gi
-status: {}
+          path: /mnt/ssd/parity-kovan
