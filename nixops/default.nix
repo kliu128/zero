@@ -77,7 +77,6 @@
         ./modules/kubernetes-common.nix
         ./modules/kubernetes-master.nix
         ./modules/lizardfs-mnt.nix
-        ./rem/avd.nix
         ./rem/backups.nix
         ./rem/bluray.nix
         ./rem/desktop.nix
