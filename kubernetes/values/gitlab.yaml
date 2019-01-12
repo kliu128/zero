@@ -1,5 +1,6 @@
 global:
   edition: ce
+  gitlabVersion: 11.6.3
   hosts:
     domain: potatofrom.space
   ingress:
@@ -42,3 +43,6 @@ gitlab:
     minReplicas: 1
     nodeSelector:
       kubernetes.io/hostname: rem
+  # gitaly:
+  #   image:
+  #     tag: 0.129.0
