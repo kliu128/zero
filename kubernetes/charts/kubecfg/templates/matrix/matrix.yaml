@@ -65,6 +65,9 @@ spec:
               subPath: whatsapp-registration.yaml
               mountPath: /config/whatsapp-registration.yaml
             - name: config
+              subPath: purple-registration.yaml
+              mountPath: /config/purple-registration.yaml
+            - name: config
               subPath: facebook-registration.yaml
               mountPath: /config/facebook-registration.yaml
             - name: config

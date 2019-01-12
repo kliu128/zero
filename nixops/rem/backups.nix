@@ -4,6 +4,7 @@ let
   wave-1 = "*-*-* 02:30:00";
   wave-2 = "*-*-* 03:00:00";
   wave-3 = "*-*-* 04:00:00";
+
   proxyConfig = ''
     export http_proxy="$(cat /keys/pia-proxy.txt)"
     export https_proxy=$http_proxy
@@ -131,8 +132,6 @@ in {
     timerConfig.OnActiveSec = 3600;
     wantedBy = [ "timers.target" ];
   };
-
-
 
   systemd.services.lizardfs-snapshot = {
     enable = true;
@@ -285,29 +284,25 @@ in {
     };
     startAt = wave-2;
   };
-  systemd.services.scintillating-mirror = {
-    description = "Scintillating Drive Mirroring";
-    path = [ pkgs.rclone ];
-    script = ''
+  services.borgbackup.jobs.scintillating-backup = {
+    paths = [ "/mnt/storage/Kevin/Backups/Scintillating/Mirror" ];
+    encryption.mode = "none";
+    preHook = ''
       # Drive alternate export: otherwise it fails to download files >~5 MB
       # see https://github.com/ncw/rclone/issues/2243
-      rclone \
+      ${pkgs.rclone}/bin/rclone \
         --config /keys/rclone.conf \
         sync \
         --verbose --drive-formats ods,odt,odp,svg \
         --drive-alternate-export \
-        "gdrive-batchfiles:Scintillating" "/mnt/storage/Kevin/Backups/Scintillating Drive"
-      chown -R kevin:users "/mnt/storage/Kevin/Backups/Scintillating Drive"
+        "gdrive-batchfiles:Scintillating" "/mnt/storage/Kevin/Backups/Scintillating/Mirror"
     '';
-    after = [ "network-online.target" ];
-    wants = [ "network-online.target" ];
-    serviceConfig = {
-      CPUSchedulingPolicy = "idle";
-      IOSchedulingClass = "idle";
-      SyslogIdentifier = "scintillating-mirror";
-    };
-    unitConfig = {
-      RequiresMountsFor = [ "/mnt/storage" ];
+    readWritePaths = [ "/mnt/storage/Kevin/Backups/Scintillating/Mirror" "/keys" ];
+    repo = "/mnt/storage/Kevin/Backups/Scintillating/Borg";
+    prune.keep = {
+      daily = 7;
+      weekly = 4;
+      monthly = 6;
     };
     startAt = wave-2;
   };

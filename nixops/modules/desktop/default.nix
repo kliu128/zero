@@ -15,6 +15,7 @@
     ./nintendo-switch.nix
     ./nixops.nix
     ./npm.nix
+    ./pidgin.nix
     ./sway
     ./trash.nix
     ./u2f.nix
