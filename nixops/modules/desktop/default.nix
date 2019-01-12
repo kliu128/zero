@@ -76,7 +76,7 @@
 
   environment.systemPackages = with pkgs; [
     # System tools
-    i7z alacritty atop bcachefs-tools borgbackup cointop cowsay ctop dnsutils file fortune gnupg hdparm htop iftop iotop python python3 libva-full lm_sensors lolcat looking-glass-client lzip mpw oh-my-zsh openjdk rclone restic rustup screen smartmontools snapraid spectre-meltdown-checker stress-ng telnet thefuck tmux tree vim wget wireguard
+    i7z atop bcachefs-tools borgbackup cointop cowsay ctop dnsutils file fortune gnupg hdparm htop iftop iotop kitty python python3 libva-full lm_sensors lolcat looking-glass-client lzip mpw oh-my-zsh openjdk rclone restic rustup screen smartmontools snapraid spectre-meltdown-checker stress-ng telnet thefuck tmux tree vim wget wireguard
     # Desktop applications
     arduino atom calibre chromium clementine codeblocks discord emacs filezilla firebird-emu gnome3.gnome-disk-utility google-chrome gpodder hexchat jetbrains.idea-community jetbrains.pycharm-community keepassxc libreoffice-fresh liferea mate.atril mkvtoolnix mpv pavucontrol skypeforlinux simple-scan slack thunderbird tor-browser-bundle transmission_gtk transmission_remote_gtk vscode youtube-dl zim zoom-us termite
     # Anki and related packages (for LaTeX support)
@@ -252,8 +252,6 @@
 
     home.file.".conkyrc".text = builtins.readFile ./.conkyrc;
 
-    home.file.".config/alacritty/alacritty.yml".text = builtins.readFile ./alacritty.yml;
-
     # Screensaver breaks xautolock
 
     home.file.".config/mpv/mpv.conf".text = ''
@@ -321,7 +319,7 @@
 
           # Menu and term
           "${modifier}+d" = ''exec "PATH=$PATH:$HOME/.local/bin rofi -combi-modi drun,run,window -show combi -modi combi -font 'Fira Code 11'"'';
-          "${modifier}+Return" = "exec ${pkgs.alacritty}/bin/alacritty";
+          "${modifier}+Return" = "exec kitty";
 
           # Scratchpad
           "${modifier}+Shift+minus" = "move scratchpad";
