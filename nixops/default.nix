@@ -54,6 +54,7 @@
         ./modules/docker.nix
         ./puck/desktop.nix
         ./puck/hw.nix
+        ./puck/touchscreen-fix.nix
         ./puck/wireguard.nix
         ./puck/wireless.nix
       ];
