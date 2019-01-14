@@ -22,7 +22,7 @@ spec:
             - name: DOWNLOADER
               value: Pneumaticat
             - name: SELECTED_PROJECT
-              value: tumblr
+              value: flickr
             - name: CONCURRENT_ITEMS
               value: "20"
           ports:
