@@ -192,6 +192,7 @@
       "nfs-server.service"
       "transmission.service"
       "borgbackup-repo-scintillating.service"
+      "syncthing.service"
     ];
     wantedBy = [ "multi-user.target" ];
   };
@@ -202,12 +203,13 @@
   services.fstrim.enable = true;
   boot.cleanTmpDir = true;
   boot.tmpOnTmpfs = true;
-  boot.kernel.sysctl."vm.min_free_kbytes" = 512000;
-  boot.kernel.sysctl."vm.swappiness" = 10;
-  swapDevices = [ {
-    device = "/mnt/ssd/swap";
-    size = 10240;
-  } ];
+  boot.kernel.sysctl."vm.dirty_ratio" = 2;
+  boot.kernel.sysctl."vm.dirty_background_ratio" = 1;
+  # swapDevices = [ {
+  #   device = "/mnt/ssd/swap";
+  #   size = 10240;
+  # } ];
+  zramSwap.enable = true;
 
   # HACKS
 

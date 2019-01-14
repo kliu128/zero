@@ -2,12 +2,7 @@
 
 {
   # rem-specific desktop configuration
-  services.resilio = {
-    enable = true;
-    deviceName = "rem";
-    enableWebUI = true;
-  };
-
+  systemd.services.display-manager.enable = lib.mkForce false;
   home-manager.users.kevin = {
     home.file.".config/sway/config".text = builtins.readFile ./sway;
   };
@@ -28,9 +23,4 @@
     # ====================
     exec --no-startup-id i3-msg 'workspace 1; exec firefox; workspace 3; layout tabbed; exec $term; emacsclient -c; workspace 2; layout tabbed; exec thunderbird; exec Discord'
   '';
-
-  services.xrdp = {
-    enable = true;
-    defaultWindowManager = "/home/kevin/.xsession";
-  };
 }

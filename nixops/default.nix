@@ -10,7 +10,6 @@
   
   defaults = {
     imports = [
-      ./common/earlyoom.nix
       ./common/firewall.nix
       ./common/io-scheduler.nix
       ./common/nix.nix

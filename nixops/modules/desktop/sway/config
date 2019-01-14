@@ -66,6 +66,15 @@ bindsym Mod4+space focus mode_toggle
 bindsym Mod4+v split v
 bindsym Mod4+w layout tabbed
 bindsym Pause exec swaylock -f
+bindsym Shift+Prior exec "notify-send 'Enabled screen lock.' && pkill swayidle; swayidle \
+    timeout 5 'if pgrep swaylock; then touch /tmp/locked_and_off; swaymsg \\"output * dpms off\\"; fi' \
+        resume 'if [ -f /tmp/locked_and_off ]; then swaymsg \\"output * dpms on\\"; rm /tmp/locked_and_off; fi' \
+    timeout 290 'swaymsg \\"output * dpms off\\"' \
+        resume 'swaymsg \\"output * dpms on\\"' \
+    timeout 300 'swaylock' \
+        resume 'swaymsg \\"output * dpms on\\"' \
+    before-sleep 'swaylock'"
+bindsym Shift+Next exec notify-send "Disabled screen lock." && pkill swayidle
 
 mode "resize" {
     bindsym Down resize grow height 10 px or 10 ppt
@@ -131,6 +140,7 @@ exec --no-startup-id swayidle \
     timeout 300 'swaylock' \
         resume 'swaymsg "output * dpms on"' \
     before-sleep 'swaylock'
+exec --no-startup-id dunst
 
 # rem
 input 1241:321:USB_Keyboard {

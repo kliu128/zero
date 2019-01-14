@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: warcprox
+  name: warcprox
+spec:
+  selector:
+    matchLabels:
+      app: warcprox
+  template:
+    metadata:
+      labels:
+        app: warcprox
+    spec:
+      hostNetwork: true
+      nodeSelector:
+        kubernetes.io/hostname: rem
+      containers:
+      - image: pneumaticat/warcprox
+        name: warcprox
+        args: [-j, /db/dedup.db, --stats-db-file, /db/stats.db, -c, /ca/ca.pem, --certs-dir, /ca, -d, /warcs, -z]
+        volumeMounts:
+        - mountPath: /ca
+          name: data
+          subPath: ca
+        - mountPath: /db
+          name: data
+          subPath: db
+        - mountPath: /warcs
+          name: warcs
+      restartPolicy: Always
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: warcprox-data
+      - name: warcs
+        hostPath:
+          path: /mnt/storage/Kevin/Archives/warcproxy
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    app: warcprox
+  name: warcprox-data
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+status: {}

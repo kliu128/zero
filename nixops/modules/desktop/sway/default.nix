@@ -17,4 +17,5 @@
     };
   };
   services.xserver.displayManager.sddm.enable = true;
+  environment.systemPackages = with pkgs; [ dunst libnotify ];
 }
