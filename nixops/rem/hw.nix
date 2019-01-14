@@ -13,7 +13,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.initrd.availableKernelModules = [ "ehci_pci" "ahci" "xhci_pci" "usb_storage" "usbhid" "sd_mod" "sr_mod" ];
   boot.kernelModules = [ "kvm-intel" ];
-  boot.kernelPackages = pkgs.linuxPackages_4_19;
+  boot.kernelPackages = lib.mkForce pkgs.linuxPackages_4_19;
   # exfat support for Nintendo Switch / other SD cards
   boot.supportedFilesystems = [ "btrfs" "ext4" "exfat" ];
   virtualisation.docker.storageDriver = "btrfs";
@@ -209,7 +209,11 @@
   #   device = "/mnt/ssd/swap";
   #   size = 10240;
   # } ];
-  zramSwap.enable = true;
+  zramSwap = {
+    enable = true;
+    memoryPercent = 150;
+    compressionAlgorithm = "zstd";
+  };
 
   # HACKS
 

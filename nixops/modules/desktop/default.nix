@@ -11,6 +11,7 @@
     ./firefox.nix
     ./fonts.nix
     ./games.nix
+    ./java.nix
     ./kubernetes.nix
     ./nintendo-switch.nix
     ./nixops.nix
@@ -76,9 +77,9 @@
 
   environment.systemPackages = with pkgs; [
     # System tools
-    i7z atop borgbackup cointop cowsay ctop dnsutils file fortune gnupg hdparm htop iftop iotop kitty python python3 libva-full lm_sensors lolcat looking-glass-client lzip mpw oh-my-zsh openjdk rclone restic rustup screen smartmontools snapraid spectre-meltdown-checker stress-ng telnet thefuck tmux tree vim wget wireguard
+    i7z atop borgbackup cowsay dnsutils file fortune gnupg hdparm htop iftop iotop kitty python python3 libva-full lm_sensors lolcat mpw oh-my-zsh rustup screen smartmontools snapraid spectre-meltdown-checker stress-ng telnet thefuck tmux tree vim wget wireguard
     # Desktop applications
-    arduino atom calibre chromium clementine codeblocks discord emacs filezilla firebird-emu gnome3.gnome-disk-utility google-chrome gpodder hexchat jetbrains.idea-community jetbrains.pycharm-community keepassxc libreoffice-still liferea mate.atril mkvtoolnix pavucontrol skypeforlinux simple-scan slack thunderbird tor-browser-bundle transmission_gtk transmission_remote_gtk vlc vscode youtube-dl zim zoom-us
+    arduino atom calibre chromium clementine codeblocks discord emacs filezilla firebird-emu gnome3.gnome-disk-utility gpodder jetbrains.pycharm-community keepassxc libreoffice-still liferea mate.atril pavucontrol simple-scan thunderbird tor-browser-bundle transmission_gtk transmission_remote_gtk vlc vscode youtube-dl zim zoom-us
     # Anki and related packages (for LaTeX support)
     anki texlive.combined.scheme-basic tetex
     # Desktop tools
@@ -86,7 +87,7 @@
     # KDE applications
     kate okular partition-manager spectacle
     # Development
-    bfg-repo-cleaner docker docker_compose docker-machine gcc gdb git-crypt gitAndTools.gitFull gnumake google-cloud-sdk
+    bfg-repo-cleaner docker docker_compose docker-machine gcc git-crypt gnumake
     # VM and DevOps
     virtmanager
     # Desktop environment
@@ -103,6 +104,12 @@
 
   home-manager.users.kevin = {
     programs.home-manager.enable = true;
+
+    home.file.".config/kitty/kitty.conf".text = ''
+      font_family Fira Code
+      enable_audio_bell no
+    '';
+
     programs.git = {
       enable = true;
       userName = "Kevin Liu";
@@ -112,10 +119,6 @@
         key = "8792E2260F507DA00F0DB58E2160C3EB40A944EC";
         signByDefault = true;
       };
-      extraConfig = ''
-        [init]
-        templatedir = /home/kevin/.git-templates
-      '';
     };
 
     home.file.".local/share/thunderbird-signature.png".source = ./signature.html;

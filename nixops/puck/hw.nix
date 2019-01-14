@@ -12,7 +12,6 @@
   };
   boot.loader.efi.canTouchEfiVariables = true;
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
-  boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
   hardware.cpu.intel.updateMicrocode = true;
@@ -36,8 +35,7 @@
     size = 8096; # size of system memory (for resuming)
   } ];
   boot.kernelParams = [ "resume_offset=34816" ]; # https://wiki.archlinux.org/index.php/Dm-crypt/Swap_encryption
-  zramSwap.enable = true;
-
+  
   nix.maxJobs = lib.mkDefault 4;
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 

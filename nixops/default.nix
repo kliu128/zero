@@ -12,6 +12,7 @@
     imports = [
       ./common/firewall.nix
       ./common/io-scheduler.nix
+      ./common/kernel.nix
       ./common/nix.nix
       ./common/ssh.nix
       ./common/time.nix
@@ -40,7 +41,7 @@
 
       networking.hostName = "otto";
 
-      system.nixos.stateVersion = "unstable";
+      system.stateVersion = "unstable";
     };
   
   puck =
@@ -59,7 +60,7 @@
       ];
 
       networking.hostName = "puck";
-      system.nixos.stateVersion = "unstable";
+      system.stateVersion = "unstable";
     };
 
   rem =
@@ -85,7 +86,6 @@
         ./rem/ipv6-tunnel.nix
         ./rem/kindle.nix
         ./rem/lizardfs.nix
-        ./rem/locate.nix
         ./rem/monitoring.nix
         ./rem/nfs.nix
         ./rem/nix.nix
@@ -109,6 +109,6 @@
       # compatible, in order to avoid breaking some software such as database
       # servers. You should change this only after NixOS release notes say you
       # should.
-      system.nixos.stateVersion = "unstable"; # Did you read the comment?
+      system.stateVersion = "unstable"; # Did you read the comment?
     };
 }
