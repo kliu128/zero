@@ -212,7 +212,7 @@
   zramSwap = {
     enable = true;
     memoryPercent = 150;
-    compressionAlgorithm = "zstd";
+    compressionAlgorithm = "lz4";
   };
 
   # HACKS
