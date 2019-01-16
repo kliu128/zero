@@ -77,7 +77,7 @@
 
   environment.systemPackages = with pkgs; [
     # System tools
-    i7z atop borgbackup cowsay dnsutils file fortune gnupg hdparm htop iftop iotop kitty python python3 libva-full lm_sensors lolcat mpw oh-my-zsh rustup screen smartmontools snapraid spectre-meltdown-checker stress-ng telnet thefuck tmux tree vim wget wireguard
+    i7z atop borgbackup cowsay dnsutils file fortune gnupg hdparm htop iftop iotop kitty python python3 libva-full lm_sensors lolcat mpw oh-my-zsh rustup screen smartmontools snapraid spectre-meltdown-checker stress-ng telnet thefuck tree vim wget wireguard
     # Desktop applications
     arduino atom calibre chromium clementine codeblocks discord emacs filezilla firebird-emu gnome3.gnome-disk-utility gpodder jetbrains.pycharm-community keepassxc libreoffice-still liferea mate.atril pavucontrol simple-scan thunderbird tor-browser-bundle transmission_gtk transmission_remote_gtk vlc vscode youtube-dl zim zoom-us
     # Anki and related packages (for LaTeX support)
@@ -108,6 +108,43 @@
     home.file.".config/kitty/kitty.conf".text = ''
       font_family Fira Code
       enable_audio_bell no
+
+      # Base16 Unikitty Dark - kitty color config
+      # Josh W Lewis (@joshwlewis)
+      background #2e2a31
+      foreground #bcbabe
+      selection_background #bcbabe
+      selection_foreground #2e2a31
+      url_color #9f9da2
+      cursor #bcbabe
+
+      # normal
+      color0 #2e2a31
+      color1 #d8137f
+      color2 #17ad98
+      color3 #dc8a0e
+      color4 #796af5
+      color5 #bb60ea
+      color6 #149bda
+      color7 #bcbabe
+
+      # bright
+      color8 #838085
+      color9 #d8137f
+      color10 #17ad98
+      color11 #dc8a0e
+      color12 #796af5
+      color13 #bb60ea
+      color14 #149bda
+      color15 #bcbabe
+
+      # extended base16 colors
+      color16 #d65407
+      color17 #c720ca
+      color18 #4a464d
+      color19 #666369
+      color20 #9f9da2
+      color21 #d8d7da
     '';
 
     programs.git = {
@@ -242,16 +279,21 @@
       '';
     };
 
-    home.file.".tmux.conf".text = ''
-      # Fix ESC key delay
-      set -s escape-time 0
+    programs.tmux = {
+      enable = true;
+      extraConfig = ''
+        # Fix ESC key delay
+        set -s escape-time 0
 
-      # if run as "tmux attach", create a session if one does not already exist
-      new-session -n $HOST
+        # if run as "tmux attach", create a session if one does not already exist
+        new-session -n $HOST
 
-      # enable mouse
-      set -g mouse on
-    '';
+        # enable mouse
+        set -g mouse on
+
+        set -g default-terminal "tmux-256color"
+      '';
+    };
 
     home.file.".conkyrc".text = builtins.readFile ./.conkyrc;
 
@@ -315,7 +357,7 @@
 
           # Menu and term
           "${modifier}+d" = ''exec "PATH=$PATH:$HOME/.local/bin rofi -combi-modi drun,run,window -show combi -modi combi -font 'Fira Code 11'"'';
-          "${modifier}+Return" = "exec kitty";
+          "${modifier}+Return" = "exec kitty tmux attach";
 
           # Scratchpad
           "${modifier}+Shift+minus" = "move scratchpad";
@@ -511,7 +553,7 @@
     programs.zsh.oh-my-zsh = {
       enable = true;
       theme = "agnoster";
-      plugins = [ "tmux" "git" ];
+      plugins = [ "git" ];
     };
     programs.zsh.initExtra = ''
       # Colorized man
