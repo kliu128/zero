@@ -10,7 +10,13 @@
   boot.kernelModules = [ "sg" ]; # for MakeMKV
 
   # Enable blu-ray support in vlc/etc.
+  # libbluray does not support any decryption by default in nixpkgs (see 
+  # https://github.com/NixOS/nixpkgs/blob/master/pkgs/development/libraries/libbluray/default.nix)
   nixpkgs.config.packageOverrides = pkgs: rec {
-    libbluray = pkgs.libbluray.override { withAACS = true; };
+    libbluray = pkgs.libbluray.override {
+      withJava = true;
+      withAACS = true;
+      withBDplus = true;
+    };
   };
 }
