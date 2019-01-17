@@ -3,7 +3,7 @@
 # Java runtime and development
 
 let
-  jdk = pkgs.adoptopenjdk-openj9-bin-11;
+  jdk = pkgs.openjdk11;
 in {
   # Use GTK theme, enable antialiasing
   environment.variables._JAVA_OPTIONS = "-Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel -Dawt.useSystemAAFontSettings=on";
