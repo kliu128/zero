@@ -37,6 +37,7 @@
         ./otto/hw.nix
         ./otto/initrd-ssh.nix
         ./otto/lizardfs.nix
+        ./otto/netconsole-receiver.nix
       ];
 
       networking.hostName = "otto";
@@ -87,6 +88,7 @@
         ./rem/kindle.nix
         ./rem/lizardfs.nix
         ./rem/monitoring.nix
+        ./rem/netconsole-client.nix
         ./rem/nfs.nix
         ./rem/nix.nix
         ./rem/samba.nix

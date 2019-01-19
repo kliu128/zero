@@ -109,7 +109,7 @@ in {
 
       rclone --config /keys/rclone.conf \
              sync "gsuite-mysmccd:Cleartext/Nintendo Switch/comm-stash/" "/mnt/storage/Kevin/Computing/ROMs/Nintendo Switch/" \
-             -v --transfers=4 --modify-window=1s --max-delete 0 --delete-after
+             -v --transfers=4 --modify-window=1s
       chown -R kevin:users "/mnt/storage/Kevin/Computing/ROMs/Nintendo Switch"
     '';
     startAt = wave-2;
@@ -128,7 +128,7 @@ in {
 
       rclone --config /keys/rclone.conf \
              sync "gsuite-mysmccd:Cleartext/Air Crash Investigation/" "/mnt/storage/Kevin/Videos/TV Shows/Air Crash Investigation/" \
-             -v --transfers=4 --modify-window=1s --max-delete 0 --delete-after
+             -v --transfers=4 --modify-window=1s
       chown -R kevin:users "/mnt/storage/Kevin/Videos/TV Shows/Air Crash Investigation/"
     '';
     startAt = wave-2;

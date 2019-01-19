@@ -205,17 +205,42 @@
   boot.tmpOnTmpfs = true;
   boot.kernel.sysctl."vm.dirty_ratio" = 2;
   boot.kernel.sysctl."vm.dirty_background_ratio" = 1;
-  # swapDevices = [ {
-  #   device = "/mnt/ssd/swap";
-  #   size = 10240;
-  # } ];
-  zramSwap = {
+  systemd.services.loopback-swap = {
     enable = true;
-    memoryPercent = 150;
-    compressionAlgorithm = "lz4";
+    description = "Configure loopback swap device for /";
+    path = [ pkgs.utillinux ];
+    script = ''
+      swapon $(losetup --find --show /swap)
+    '';
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+    };
+    restartIfChanged = false;
+    wantedBy = [ "multi-user.target" ];
   };
+  systemd.tmpfiles.rules = [
+    "w /sys/module/zswap/parameters/enabled - - - - Y"
+    "w /sys/module/zswap/parameters/compressor - - - - lz4"
+    "w /sys/module/zswap/parameters/zpool - - - - z3fold"
+  ];
 
   # HACKS
+
+  # Set Docker processes to IDLE priority
+  # But exclude rsyslog by running a script to re-set the priority of rsyslog
+  # processes to OTHER. This is (somewhat hilariously) necessary because rsyslog
+  # crashes on SCHED_IDLE (big L)
+  systemd.services.fix-mailserver-logging = {
+    enable = true;
+    path = with pkgs; [ procps utillinux ];
+    script = ''
+      if pgrep supervisord; then
+        chrt --other -p 0 $(pgrep supervisord)
+      fi
+    '';
+    startAt = "minutely";
+  };
 
   # Reset keyboard on bootup (Pok3r)
   # Otherwise keys get dropped, for some reason
