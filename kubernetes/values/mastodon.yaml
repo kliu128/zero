@@ -1,4 +1,4 @@
-image: tootsuite/mastodon:v2.6.5
+image: tootsuite/mastodon:v2.7.0
 persistence:
   size: 25Gi
 ingress:

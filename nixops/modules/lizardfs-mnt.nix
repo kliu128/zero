@@ -8,19 +8,13 @@
     restartIfChanged = false; # don't want the filesystem falling out from under processes
     script = ''
       modprobe fuse
-      mfsmount -o nodev,noatime,mfsdelayedinit,big_writes,allow_other,nonempty,mfsmaster=192.168.1.5 /mnt/storage
+      mfsmount -o nodev,relatime,big_writes,allow_other,nonempty,mfsmaster=192.168.1.5 /mnt/storage
     '';
-    wantedBy = [ "local-fs.target" ];
+    wantedBy = [ "remote-fs.target" ];
+    after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
     serviceConfig = {
       Type = "forking";
-    };
-    unitConfig = {
-      # Implicitly adds dependency on basic.target otherwise, which creates
-      # an ordering cycle on boot
-      DefaultDependencies = false;
-      # Normally would be added by DefaultDependencies=
-      Conflicts = [ "shutdown.target" ];
-      Before = [ "shutdown.target" ];
     };
   };
   systemd.tmpfiles.rules = [

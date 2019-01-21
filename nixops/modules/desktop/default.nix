@@ -79,7 +79,7 @@
     # System tools
     i7z atop borgbackup cowsay dnsutils file fortune gnupg hdparm htop iftop iotop kitty python python3 libva-full lm_sensors lolcat mpw oh-my-zsh rustup screen smartmontools snapraid spectre-meltdown-checker stress-ng telnet thefuck tree vim wget wireguard
     # Desktop applications
-    arduino atom calibre chromium clementine codeblocks discord emacs filezilla firebird-emu gnome3.gnome-disk-utility gpodder jetbrains.pycharm-community keepassxc libreoffice-still liferea mate.atril pavucontrol simple-scan thunderbird tor-browser-bundle transmission_gtk transmission_remote_gtk vlc vscode youtube-dl zim zoom-us
+    arduino atom calibre chromium clementine codeblocks discord emacs filezilla firebird-emu gnome3.gnome-disk-utility gpodder jetbrains.pycharm-community keepassxc libreoffice-still liferea mate.atril pavucontrol simple-scan thunderbird tor-browser-bundle transmission_gtk transmission_remote_gtk vokoscreen vlc vscode youtube-dl zim zoom-us
     # Anki and related packages (for LaTeX support)
     anki texlive.combined.scheme-basic tetex
     # Desktop tools

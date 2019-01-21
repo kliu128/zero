@@ -15,14 +15,6 @@
       text = builtins.readFile ./conky-bar.sh;
       executable = true;
     };
-
-    programs.zsh.initExtra = ''
-      sway() {
-        sudo bash -c "echo Launching sway."
-        sway &
-        sudo chrt --pid --rr --reset-on-fork $!
-      }
-    '';
   };
   services.xserver.displayManager.sddm.enable = true;
   environment.systemPackages = with pkgs; [ dunst libnotify ];

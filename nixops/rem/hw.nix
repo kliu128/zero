@@ -177,52 +177,43 @@
         echo "Waiting for mount..."
         sleep 1
       done
-
-      # wait until mount is accessible
-      until ls /mnt/storage; do
-        sleep 1
-      done
     '';
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
     };
     after = [ "lizardfs-master.service" ];
+    wantedBy = [ "multi-user.target" ];
+  };
+  systemd.services.storage = {
+    after = [ "wait-for-storage.service" ];
+    wants = [ "wait-for-storage.service" ];
     before = [
       "nfs-server.service"
       "transmission.service"
       "borgbackup-repo-scintillating.service"
       "syncthing.service"
+      "docker.service"
     ];
-    wantedBy = [ "multi-user.target" ];
   };
   
   # Disk and swap
   # Allow discards on the root partition
   boot.initrd.luks.devices."root".allowDiscards = true;
   services.fstrim.enable = true;
+  boot.consoleLogLevel = 8;
   boot.cleanTmpDir = true;
   boot.tmpOnTmpfs = true;
   boot.kernel.sysctl."vm.dirty_ratio" = 2;
   boot.kernel.sysctl."vm.dirty_background_ratio" = 1;
-  systemd.services.loopback-swap = {
-    enable = true;
-    description = "Configure loopback swap device for /";
-    path = [ pkgs.utillinux ];
-    script = ''
-      swapon $(losetup --find --show /swap)
-    '';
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-    };
-    restartIfChanged = false;
-    wantedBy = [ "multi-user.target" ];
-  };
+  swapDevices = [ {
+    device = "/mnt/ssd/swap";
+    size = 10240;
+  } ];
   systemd.tmpfiles.rules = [
     "w /sys/module/zswap/parameters/enabled - - - - Y"
     "w /sys/module/zswap/parameters/compressor - - - - lz4"
-    "w /sys/module/zswap/parameters/zpool - - - - z3fold"
+    "w /sys/module/zswap/parameters/zpool - - - - zbud"
   ];
 
   # HACKS
@@ -231,12 +222,18 @@
   # But exclude rsyslog by running a script to re-set the priority of rsyslog
   # processes to OTHER. This is (somewhat hilariously) necessary because rsyslog
   # crashes on SCHED_IDLE (big L)
-  systemd.services.fix-mailserver-logging = {
+  systemd.services.apply-scheduler-priorities = {
     enable = true;
     path = with pkgs; [ procps utillinux ];
     script = ''
       if pgrep supervisord; then
         chrt --other -p 0 $(pgrep supervisord)
+      fi
+      if pidof sway; then
+        chrt --rr --reset-on-fork -p 99 $(pidof sway)
+      fi
+      if pidof Xwayland; then
+        chrt --rr --reset-on-fork -p 99 $(pidof Xwayland)
       fi
     '';
     startAt = "minutely";

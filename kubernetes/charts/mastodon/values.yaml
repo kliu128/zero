@@ -1,4 +1,4 @@
-image: "gargron/mastodon:v2.4.0"
+image: "tootsuite/mastodon:latest"
 imagePullPolicy: Always
 
 ## Persistence for assets and system
