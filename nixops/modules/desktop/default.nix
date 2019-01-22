@@ -64,7 +64,7 @@
   programs.chromium.enable = true;
   programs.wireshark.enable = true;
   programs.wireshark.package = pkgs.wireshark-gtk;
-  users.extraUsers.kevin.extraGroups = [ "input" "sway" "wireshark" ];
+  users.extraUsers.kevin.extraGroups = [ "input" "wireshark" ];
 
   # Audio
   hardware.pulseaudio.enable = true;

@@ -21,7 +21,7 @@
   # Video.
   boot.earlyVconsoleSetup = true;
   services.xserver.videoDrivers = [ "amdgpu" ];
-  boot.kernelParams = [ "iommu=pt" ];
+  boot.kernelParams = [ "iommu=pt" "consoleblank=300" ];
 
   # Freeness (that is, not.)
   hardware.enableRedistributableFirmware = true; # for amdgpu

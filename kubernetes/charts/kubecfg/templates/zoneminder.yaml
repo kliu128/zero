@@ -14,27 +14,25 @@ spec:
         app: zoneminder
     spec:
       containers:
-      - image: dlandon/zoneminder
+      - image: zoneminderhq/zoneminder:latest-ubuntu18.04
+        imagePullPolicy: Always
         name: zoneminder
-        securityContext:
-          privileged: true
-        env:
-          - name: SHMMAX
-            value: "50%"
-          - name: TZ
-            value: America/New_York
         volumeMounts:
-        - mountPath: /config
-          name: config
-        - mountPath: /var/cache/zoneminder
+        - mountPath: /var/lib/zoneminder/images
+          subPath: images
           name: vids
-        - mountPath: /data
+        - mountPath: /var/lib/zoneminder/events
+          subPath: events
+          name: vids
+        - mountPath: /var/lib/mysql
           name: data
+        - mountPath: /dev/shm
+          name: shm
       restartPolicy: Always
       volumes:
-      - name: config
-        persistentVolumeClaim:
-          claimName: zoneminder-config
+      - name: shm
+        emptyDir:
+          medium: Memory
       - name: vids
         hostPath:
           path: /mnt/storage/Kevin/Computing/Data/Zoneminder
@@ -42,21 +40,6 @@ spec:
       - name: data
         persistentVolumeClaim:
           claimName: zoneminder-data
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  creationTimestamp: null
-  labels:
-    app: zoneminder
-  name: zoneminder-config
-spec:
-  accessModes:
-  - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Gi
-status: {}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -81,9 +64,9 @@ metadata:
   name: zoneminder
 spec:
   ports:
-  - name: https
-    port: 443
-    targetPort: 443
+  - name: http
+    port: 80
+    targetPort: 80
   selector:
     app: zoneminder
 ---
@@ -98,7 +81,6 @@ metadata:
     nginx.ingress.kubernetes.io/auth-secret: zoneminder-auth
     # message to display with an appropriate context why the authentication is required
     nginx.ingress.kubernetes.io/auth-realm: "Authentication Required - zoneminder"
-    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
   name: zoneminder
 spec:
   tls:
@@ -112,4 +94,4 @@ spec:
       - path: /
         backend:
           serviceName: zoneminder
-          servicePort: 443
+          servicePort: http

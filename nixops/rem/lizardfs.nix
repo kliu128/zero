@@ -6,6 +6,7 @@
   services.lizardfs.master.enable = true;
   services.lizardfs.master.config = ''
     AUTO_RECOVERY = 1
+    REDUNDANCY_LEVEL = 1
     NICE_LEVEL = 5
   '';
   services.lizardfs.master.exports = ''

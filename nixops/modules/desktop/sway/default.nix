@@ -1,6 +1,7 @@
 { config, lib, pkgs, ... }:
 
 {
+  users.extraUsers.kevin.extraGroups = [ "sway" ];
   programs.sway-beta.enable = true;
   programs.sway-beta.extraSessionCommands = ''
     export GDK_BACKEND=x11
