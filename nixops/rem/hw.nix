@@ -13,6 +13,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.initrd.availableKernelModules = [ "ehci_pci" "ahci" "xhci_pci" "usb_storage" "usbhid" "sd_mod" "sr_mod" ];
   boot.kernelModules = [ "kvm-intel" ];
+  boot.blacklistedKernelModules = [ "pstore" "efi_pstore" ];
   boot.kernelPackages = lib.mkForce pkgs.linuxPackages_4_19;
   # exfat support for Nintendo Switch / other SD cards
   boot.supportedFilesystems = [ "btrfs" "ext4" "exfat" ];
@@ -170,9 +171,8 @@
     script = ''
       set -euo pipefail
 
-      # wait until # of lost chunks in ec_2_1 (goal #5) < 10
-      # a good proxy for determining "did the server completely start up?"
-      while [ "$(lizardfs-admin chunks-health localhost 9421 --availability --porcelain | head -n 6 | tail -n 1 | awk '{print $NF}')" -ge 10 ]
+      # Wait for total number of chunks to be < 10
+      while [ "$(lizardfs-admin chunks-health localhost 9421 --availability --porcelain | awk '{s+=$5} END {print s}')" -ge 10 ]
       do
         echo "Waiting for mount..."
         sleep 1
@@ -204,6 +204,7 @@
   boot.consoleLogLevel = 8;
   boot.cleanTmpDir = true;
   boot.tmpOnTmpfs = true;
+  boot.kernel.sysctl."vm.min_free_kbytes" = 512000;
   boot.kernel.sysctl."vm.dirty_ratio" = 2;
   boot.kernel.sysctl."vm.dirty_background_ratio" = 1;
   swapDevices = [ {
@@ -213,8 +214,13 @@
   systemd.tmpfiles.rules = [
     "w /sys/module/zswap/parameters/enabled - - - - Y"
     "w /sys/module/zswap/parameters/compressor - - - - lz4"
-    "w /sys/module/zswap/parameters/zpool - - - - zbud"
+    "w /sys/module/zswap/parameters/zpool - - - - z3fold"
   ];
+  # zramSwap = {
+  #   enable = true;
+  #   memoryPercent = 200;
+  #   compressionAlgorithm = "lz4";
+  # };
 
   # HACKS
 

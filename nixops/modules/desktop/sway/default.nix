@@ -16,7 +16,13 @@
       text = builtins.readFile ./conky-bar.sh;
       executable = true;
     };
+    programs.zsh.initExtra = ''
+      run-sway() {
+        redshift -m drm -O 3700
+        sway
+      }
+    '';
   };
   services.xserver.displayManager.sddm.enable = true;
-  environment.systemPackages = with pkgs; [ dunst libnotify ];
+  environment.systemPackages = with pkgs; [ dunst libnotify redshift ];
 }

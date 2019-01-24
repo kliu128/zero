@@ -18,10 +18,10 @@ spec:
         imagePullPolicy: Always
         name: zoneminder
         volumeMounts:
-        - mountPath: /var/lib/zoneminder/images
+        - mountPath: /var/cache/zoneminder/images
           subPath: images
           name: vids
-        - mountPath: /var/lib/zoneminder/events
+        - mountPath: /var/cache/zoneminder/events
           subPath: events
           name: vids
         - mountPath: /var/lib/mysql
