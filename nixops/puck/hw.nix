@@ -39,12 +39,9 @@
   systemd.tmpfiles.rules = [
     "w /sys/module/zswap/parameters/enabled - - - - Y"
     "w /sys/module/zswap/parameters/compressor - - - - lz4"
-    "w /sys/module/zswap/parameters/zpool - - - - zbud"
+    "w /sys/module/zswap/parameters/zpool - - - - z3fold"
   ];
   
   nix.maxJobs = lib.mkDefault 4;
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
-
-  services.tlp.enable = true; # For laptop
-  powerManagement.powertop.enable = true;
 }
