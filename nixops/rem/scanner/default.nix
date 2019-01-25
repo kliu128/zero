@@ -13,7 +13,7 @@
     enable = true;
     description = "SANE Scanner Button Daemon";
     path = [ pkgs.scanbd ];
-    script = "scanbd -f -c ${./scanbd.conf}";
+    script = "scanbd --foreground --debug=2 --config=${./scanbd.conf}";
     wantedBy = [ "multi-user.target" ];
   };
   # systemd.services."scanbm@" = {
