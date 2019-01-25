@@ -14,6 +14,7 @@
       ./common/io-scheduler.nix
       ./common/kernel.nix
       ./common/nix.nix
+      ./common/security.nix
       ./common/ssh.nix
       ./common/time.nix
       ./common/users.nix
