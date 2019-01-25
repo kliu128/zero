@@ -93,6 +93,7 @@
         ./rem/nfs.nix
         ./rem/nix.nix
         ./rem/samba.nix
+        ./rem/scanner
         ./rem/services.nix
         ./rem/ssh-unlocker.nix
         ./rem/unbound.nix
