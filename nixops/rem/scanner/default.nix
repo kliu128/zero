@@ -12,8 +12,10 @@
   systemd.services.scanbd = {
     enable = true;
     description = "SANE Scanner Button Daemon";
-    path = [ pkgs.scanbd ];
-    script = "scanbd --foreground --debug=2 --config=${./scanbd.conf}";
+    serviceConfig = {
+      Type = "forking";
+      ExecStart = "${pkgs.scanbd}/bin/scanbd --debug=2 --config=${./scanbd.conf}";
+    };
     wantedBy = [ "multi-user.target" ];
   };
   # systemd.services."scanbm@" = {
