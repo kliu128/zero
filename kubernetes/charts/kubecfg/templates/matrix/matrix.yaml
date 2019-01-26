@@ -128,3 +128,8 @@ spec:
         backend:
           serviceName: matrix
           servicePort: 8008
+      - path: /.well-known/matrix
+        backend:
+          serviceName: matrix
+          servicePort: 8008
+

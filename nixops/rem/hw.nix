@@ -212,17 +212,16 @@
     size = 10240;
   } ];
   systemd.tmpfiles.rules = [
-    "w /sys/module/zswap/parameters/enabled - - - - Y"
-    "w /sys/module/zswap/parameters/compressor - - - - lz4"
-    "w /sys/module/zswap/parameters/zpool - - - - z3fold"
+    #"w /sys/module/zswap/parameters/enabled - - - - Y"
+    #"w /sys/module/zswap/parameters/compressor - - - - lz4"
+    #"w /sys/module/zswap/parameters/zpool - - - - z3fold"
 
     "w /sys/class/drm/card0/device/hwmon/hwmon1/pwm1 - - - - 180"
   ];
-  # zramSwap = {
-  #   enable = true;
-  #   memoryPercent = 200;
-  #   compressionAlgorithm = "lz4";
-  # };
+  zramSwap = {
+    enable = true;
+    compressionAlgorithm = "lz4";
+  };
 
   # HACKS
 

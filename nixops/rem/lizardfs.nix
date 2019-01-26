@@ -6,7 +6,7 @@
   services.lizardfs.master.enable = true;
   services.lizardfs.master.config = ''
     AUTO_RECOVERY = 1
-    REDUNDANCY_LEVEL = 1
+    REDUNDANCY_LEVEL = 0
     NICE_LEVEL = 5
   '';
   services.lizardfs.master.exports = ''
@@ -18,7 +18,6 @@
     6 ec_2_1 : $ec(2,1)
     7 ec_3_1 : $ec(3,1)
     8 ec_4_2 : $ec(4,2)
-    9 highio_ec_2_1 : $ec(2,1) { highio highio highio }
   '';
   systemd.services.lizardfs-master = {
     wants = [
@@ -48,6 +47,7 @@
       config = ''
         PERFORM_FSYNC = 0
         NICE_LEVEL = 5
+        HDD_PUNCH_HOLES = 1
       '';
       storageDirectories = [ "/mnt/parity0/mfs" ];
       port = 9422;
@@ -55,8 +55,8 @@
     {
       name = "wdblack1tb";
       config = ''
-        LABEL = highio
         NICE_LEVEL = 5
+        HDD_PUNCH_HOLES = 1
       '';
       storageDirectories = [ "/mnt/data1/mfs" ];
       port = 9423;
@@ -67,13 +67,14 @@
       port = 9426;
       config = ''
         NICE_LEVEL = 5
+        HDD_PUNCH_HOLES = 1
       '';
     }
     {
       name = "wdblue4tb";
       config = ''
-        LABEL = highio
         NICE_LEVEL = 5
+        HDD_PUNCH_HOLES = 1
       '';
       storageDirectories = [ "/mnt/data2/mfs" ];
       port = 9427;
@@ -81,8 +82,8 @@
     {
       name = "toshiba4tb";
       config = ''
-        LABEL = highio
         NICE_LEVEL = 5
+        HDD_PUNCH_HOLES = 1
       '';
       storageDirectories = [ "/mnt/data3/mfs" ];
       port = 9428;
@@ -94,6 +95,7 @@
       config = ''
         PERFORM_FSYNC = 0
         NICE_LEVEL = 5
+        HDD_PUNCH_HOLES = 1
       '';
     }
   ];

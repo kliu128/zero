@@ -91,6 +91,9 @@ metadata:
 data:
   PAPERLESS_OCR_THREADS: '4'
   PAPERLESS_OCR_LANGUAGES: ''
+  PAPERLESS_FORGIVING_OCR: 'true'
+  PAPERLESS_CONVERT_MEMORY_LIMIT: "32000000"
+  PAPERLESS_CONVERT_TMPDIR: /var/tmp/paperless
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

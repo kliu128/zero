@@ -458,7 +458,7 @@ you should place your code here."
 
   (setq org-startup-truncated nil)
   (setq org-startup-indented t)
-  (setq org-agenda-files (file-expand-wildcards "/mnt/storage/Kevin/Personal/Documents/Org Mode/*.org"))
+  (setq org-agenda-files (file-expand-wildcards "~/Personal Documents/Org Mode/*.org"))
   ;; Fix random paste when opening files from Recents on homepage; see
   ;; https://github.com/syl20bnr/spacemacs/issues/5435
   (add-hook 'spacemacs-buffer-mode-hook (lambda ()
