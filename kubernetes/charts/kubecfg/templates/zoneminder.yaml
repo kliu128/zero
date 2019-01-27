@@ -17,6 +17,11 @@ spec:
       - image: zoneminderhq/zoneminder:latest-ubuntu18.04
         imagePullPolicy: Always
         name: zoneminder
+        livenessProbe:
+          httpGet:
+            path: /zm/
+            port: 80
+          initialDelaySeconds: 60
         volumeMounts:
         - mountPath: /var/cache/zoneminder/images
           subPath: images

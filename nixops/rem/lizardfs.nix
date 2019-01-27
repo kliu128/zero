@@ -55,6 +55,7 @@
     {
       name = "wdblack1tb";
       config = ''
+        PERFORM_FSYNC = 0
         NICE_LEVEL = 5
         HDD_PUNCH_HOLES = 1
       '';
@@ -66,6 +67,7 @@
       storageDirectories = [ "/mnt/data0/mfs" ];
       port = 9426;
       config = ''
+        PERFORM_FSYNC = 0
         NICE_LEVEL = 5
         HDD_PUNCH_HOLES = 1
       '';
@@ -73,6 +75,7 @@
     {
       name = "wdblue4tb";
       config = ''
+        PERFORM_FSYNC = 0
         NICE_LEVEL = 5
         HDD_PUNCH_HOLES = 1
       '';
@@ -82,6 +85,7 @@
     {
       name = "toshiba4tb";
       config = ''
+        PERFORM_FSYNC = 0
         NICE_LEVEL = 5
         HDD_PUNCH_HOLES = 1
       '';

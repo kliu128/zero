@@ -1,0 +1,98 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: isso
+  name: isso
+spec:
+  selector:
+    matchLabels:
+      app: isso
+  template:
+    metadata:
+      labels:
+        app: isso
+    spec:
+      containers:
+        - image: wonderfall/isso
+          name: isso
+          ports:
+            - containerPort: 8080
+              name: http
+          resources: {}
+          livenessProbe:
+          volumeMounts:
+            - mountPath: /db
+              name: data
+            - mountPath: /config
+              name: config
+      restartPolicy: Always
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: isso-data
+        - name: config
+          configMap:
+            name: isso-config
+status: {}
+---
+apiVersion: v1
+data:
+  isso.conf: |
+    [general]
+    dbpath = /db/comments.db
+    host = https://potatofrom.space/isso/
+    [server]
+    listen = http://0.0.0.0:8080/
+kind: ConfigMap
+metadata:
+  name: isso-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: isso
+  name: isso
+spec:
+  ports:
+    - name: http
+      port: 8080
+      targetPort: http
+  selector:
+    app: isso
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    app: isso
+  name: isso-data
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+status: {}
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    kubernetes.io/tls-acme: "true"
+  name: isso
+spec:
+  tls:
+    - secretName: isso-tls
+      hosts:
+        - potatofrom.space
+  rules:
+    - host: potatofrom.space
+      http:
+        paths:
+          - path: /isso/
+            backend:
+              serviceName: isso
+              servicePort: http

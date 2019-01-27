@@ -23,6 +23,7 @@
       port = 9423;
       storageDirectories = ["/mnt/250gb-netbook-hdd/mfs"];
       config = ''
+        PERFORM_FSYNC = 0
         HDD_PUNCH_HOLES = 1
       '';
     }
@@ -31,6 +32,7 @@
       port = 9424;
       storageDirectories = ["/mnt/150gb-dell-hdd/mfs"];
       config = ''
+        PERFORM_FSYNC = 0
         HDD_PUNCH_HOLES = 1
       '';
     }

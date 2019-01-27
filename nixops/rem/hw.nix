@@ -216,12 +216,14 @@
     #"w /sys/module/zswap/parameters/compressor - - - - lz4"
     #"w /sys/module/zswap/parameters/zpool - - - - z3fold"
 
-    "w /sys/class/drm/card0/device/hwmon/hwmon1/pwm1 - - - - 180"
+    # "w /sys/class/drm/card0/device/hwmon/hwmon1/pwm1 - - - - 180"
   ];
   zramSwap = {
-    enable = true;
-    compressionAlgorithm = "lz4";
+   enable = true;
+   compressionAlgorithm = "lz4";
   };
+  boot.kernel.sysctl."vm.swappiness" = 100;
+  
 
   # HACKS
 
