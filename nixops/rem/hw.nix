@@ -205,8 +205,6 @@
   boot.cleanTmpDir = true;
   boot.tmpOnTmpfs = true;
   boot.kernel.sysctl."vm.min_free_kbytes" = 512000;
-  boot.kernel.sysctl."vm.dirty_ratio" = 2;
-  boot.kernel.sysctl."vm.dirty_background_ratio" = 1;
   swapDevices = [ {
     device = "/mnt/ssd/swap";
     size = 10240;
@@ -216,7 +214,7 @@
     #"w /sys/module/zswap/parameters/compressor - - - - lz4"
     #"w /sys/module/zswap/parameters/zpool - - - - z3fold"
 
-    # "w /sys/class/drm/card0/device/hwmon/hwmon1/pwm1 - - - - 180"
+    "w /sys/class/drm/card0/device/hwmon/hwmon1/pwm1 - - - - 180"
   ];
   zramSwap = {
    enable = true;

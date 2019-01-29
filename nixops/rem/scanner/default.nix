@@ -47,7 +47,7 @@
       tmpdir="$(mktemp -d)"
       pushd "$tmpdir"
 
-      scanimage --batch=out%d.jpg --format=jpeg --mode Gray -d "fujitsu:ScanSnap S500M:4530" --source "ADF Duplex" --resolution 300
+      scanimage --batch=out%d.jpg --format=jpeg --mode Color -d "fujitsu:ScanSnap S500M:4530" --source "ADF Duplex" --resolution 300
       
       for i in out*.jpg; do convert $i ''${i//jpg/pdf}; done
 
