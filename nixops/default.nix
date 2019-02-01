@@ -93,6 +93,7 @@
         ./rem/netconsole-client.nix
         ./rem/nfs.nix
         ./rem/nix.nix
+        ./rem/resilio.nix
         ./rem/samba.nix
         ./rem/scanner
         ./rem/services.nix

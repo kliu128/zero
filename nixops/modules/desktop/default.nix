@@ -12,6 +12,7 @@
     ./fonts.nix
     ./games.nix
     ./java.nix
+    ./keybase.nix
     ./kubernetes.nix
     ./nintendo-switch.nix
     ./nixops.nix

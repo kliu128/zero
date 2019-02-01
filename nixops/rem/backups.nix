@@ -277,13 +277,22 @@ in {
     script = ''
       rsync -avP /boot /mnt/emergency-backup/boot
     '';
+    startAt = wave-2;
+  };
+  
+  # Mirror services
+  systemd.services.gutenberg-mirror = {
+    enable = true;
+    description = "Gutenberg Mirroring";
+    path = [ pkgs.rsync ];
+    script = ''
+      rsync -av --del ftp.ibiblio.org::gutenberg /mnt/storage/Kevin/Archives/Gutenberg --progress
+    '';
     unitConfig = {
       RequiresMountsFor = [ "/mnt/storage" ];
     };
     startAt = wave-2;
   };
-  
-  # Mirror services
   systemd.services.gas-leak-mirror = {
     description = "Google Drive Gas Leak Data Mirroring";
     path = [ pkgs.rclone ];

@@ -15,6 +15,7 @@
     wants = [ "network-online.target" ];
     serviceConfig = {
       Type = "forking";
+      Restart = "on-failure";
     };
   };
   systemd.tmpfiles.rules = [

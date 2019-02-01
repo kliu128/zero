@@ -13,7 +13,6 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.initrd.availableKernelModules = [ "ehci_pci" "ahci" "xhci_pci" "usb_storage" "usbhid" "sd_mod" "sr_mod" ];
   boot.kernelModules = [ "kvm-intel" ];
-  boot.blacklistedKernelModules = [ "pstore" "efi_pstore" ];
   boot.kernelPackages = lib.mkForce pkgs.linuxPackages_4_19;
   # exfat support for Nintendo Switch / other SD cards
   boot.supportedFilesystems = [ "btrfs" "ext4" "exfat" ];
@@ -203,39 +202,30 @@
   services.fstrim.enable = true;
   boot.consoleLogLevel = 8;
   boot.cleanTmpDir = true;
-  boot.tmpOnTmpfs = true;
-  boot.kernel.sysctl."vm.min_free_kbytes" = 512000;
+  boot.kernel.sysctl."vm.min_free_kbytes" = 256000;
   swapDevices = [ {
     device = "/mnt/ssd/swap";
     size = 10240;
   } ];
   systemd.tmpfiles.rules = [
-    #"w /sys/module/zswap/parameters/enabled - - - - Y"
-    #"w /sys/module/zswap/parameters/compressor - - - - lz4"
-    #"w /sys/module/zswap/parameters/zpool - - - - z3fold"
+    "w /sys/module/zswap/parameters/enabled - - - - Y"
+    "w /sys/module/zswap/parameters/compressor - - - - zstd"
+    "w /sys/module/zswap/parameters/zpool - - - - z3fold"
 
-    "w /sys/class/drm/card0/device/hwmon/hwmon1/pwm1 - - - - 180"
+    # "w /sys/class/drm/card0/device/hwmon/hwmon1/pwm1 - - - - 180"
   ];
-  zramSwap = {
-   enable = true;
-   compressionAlgorithm = "lz4";
-  };
-  boot.kernel.sysctl."vm.swappiness" = 100;
-  
+  # zramSwap = {
+  #   enable = true;
+  #   compressionAlgorithm = "lz4";
+  #   memoryPercent = 100;
+  # };
+  boot.kernel.sysctl."vm.swappiness" = 30;
 
   # HACKS
-
-  # Set Docker processes to IDLE priority
-  # But exclude rsyslog by running a script to re-set the priority of rsyslog
-  # processes to OTHER. This is (somewhat hilariously) necessary because rsyslog
-  # crashes on SCHED_IDLE (big L)
   systemd.services.apply-scheduler-priorities = {
     enable = true;
     path = with pkgs; [ procps utillinux ];
     script = ''
-      if pgrep supervisord; then
-        chrt --other -p 0 $(pgrep supervisord)
-      fi
       if pidof sway; then
         chrt --rr --reset-on-fork -p 99 $(pidof sway)
       fi

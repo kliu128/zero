@@ -31,7 +31,7 @@ spec:
       containers:
         # Main matrix server
         - name: synapse
-          image: matrixdotorg/synapse:latest-py3
+          image: matrixdotorg/synapse:v0.99.0rc3-py3
           imagePullPolicy: Always
           livenessProbe:
             httpGet:
@@ -81,6 +81,8 @@ spec:
               mountPath: /config/potatofrom.space.log.config
             - name: data
               mountPath: /data
+            - name: certs
+              mountPath: /certs
       volumes:
         # Stores SSL keys, media_store
         - name: data
@@ -89,6 +91,9 @@ spec:
         - name: config
           secret:
             secretName: matrix-config
+        - name: certs
+          secret:
+            secretName: matrix-tls
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
