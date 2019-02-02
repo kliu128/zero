@@ -21,7 +21,7 @@
   # Video.
   boot.earlyVconsoleSetup = true;
   services.xserver.videoDrivers = [ "amdgpu" ];
-  boot.kernelParams = [ "iommu=pt" "consoleblank=300" ];
+  boot.kernelParams = [ "iommu=pt" "consoleblank=300" "amdgpu.gpu_recovery=1" ];
 
   # Freeness (that is, not.)
   hardware.enableRedistributableFirmware = true; # for amdgpu
@@ -29,7 +29,7 @@
 
   fileSystems."/" = {
     device = "/dev/mapper/root"; 
-    options = [ "compress=zstd" ];
+    options = [ ];
   };
   boot.initrd.luks.devices."root".device = "/dev/disk/by-uuid/8a1b105c-5772-477e-8b60-49de6ccf4b86";
 
@@ -209,8 +209,9 @@
   } ];
   systemd.tmpfiles.rules = [
     "w /sys/module/zswap/parameters/enabled - - - - Y"
-    "w /sys/module/zswap/parameters/compressor - - - - zstd"
+    "w /sys/module/zswap/parameters/compressor - - - - lz4"
     "w /sys/module/zswap/parameters/zpool - - - - z3fold"
+    "w /sys/module/zswap/parameters/max_pool_percent - - - - 50"
 
     # "w /sys/class/drm/card0/device/hwmon/hwmon1/pwm1 - - - - 180"
   ];
