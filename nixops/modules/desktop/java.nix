@@ -3,14 +3,12 @@
 # Java runtime and development
 
 let
-  jdk = pkgs.openjdk11;
+  jdk = pkgs.jetbrains.jdk;
 in {
   # Use GTK theme, enable antialiasing
   environment.variables._JAVA_OPTIONS = ''
     -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel
     -Dawt.useSystemAAFontSettings=on
-    --module-path=${pkgs.openjfx}/lib
-    --add-modules=javafx.controls,javafx.fxml,javafx.graphics,javafx.media,javafx.swing,javafx.web
   '';
   programs.java = {
     enable = true;
