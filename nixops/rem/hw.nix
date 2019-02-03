@@ -15,8 +15,9 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.kernelPackages = lib.mkForce pkgs.linuxPackages_4_19;
   # exfat support for Nintendo Switch / other SD cards
-  boot.supportedFilesystems = [ "btrfs" "ext4" "exfat" ];
-  virtualisation.docker.storageDriver = "btrfs";
+  boot.supportedFilesystems = [ "btrfs" "ext4" "xfs" "exfat" ];
+  boot.initrd.supportedFilesystems = [ "xfs" ];
+  virtualisation.docker.storageDriver = "overlay2";
 
   # Video.
   boot.earlyVconsoleSetup = true;
@@ -29,7 +30,8 @@
 
   fileSystems."/" = {
     device = "/dev/mapper/root"; 
-    options = [ ];
+    fsType = "xfs";
+    options = [ "defaults" ];
   };
   boot.initrd.luks.devices."root".device = "/dev/disk/by-uuid/8a1b105c-5772-477e-8b60-49de6ccf4b86";
 
