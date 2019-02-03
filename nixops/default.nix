@@ -93,7 +93,6 @@
         ./rem/netconsole-client.nix
         ./rem/nfs.nix
         ./rem/nix.nix
-        ./rem/resilio.nix
         ./rem/samba.nix
         ./rem/scanner
         ./rem/services.nix
@@ -107,7 +106,13 @@
 
       # Options as Kubernetes entry node
       networking.firewall.allowedTCPPorts = [
-        22 25 80 113 143 443 587 631 993 8448 9001 9030 25565 ];
+        22 25 80 113 143 443 587 631 993
+        # TLS turn ports
+        5349 5350
+        8448 9001 9030 25565 ];
+      networking.firewall.allowedUDPPortRanges = [
+        { from = 49152; to = 65535; } # TURN relay
+      ];
 
       systemd.services.cups.enable = false; # don't conflict with docker cups
 
