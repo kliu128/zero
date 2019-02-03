@@ -16,6 +16,10 @@ with lib;
       };
       recursive = true;
     };
+    home.file.".emacs.d/layers/+emacs/orgwiki" = {
+      source = ./orgwiki;
+      recursive = true;
+    };
     home.file.".spacemacs.d/next-spec-day.el".text = builtins.readFile ./next-spec-day.el;
   };
 }

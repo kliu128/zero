@@ -55,6 +55,7 @@ This function should only modify configuration layer settings."
      git
      markdown
      org
+     orgwiki
      shell
      (shell :variables
             shell-default-shell 'multi-term
@@ -566,6 +567,8 @@ you should place your code here."
 
   ;; Set window title
   (setq-default frame-title-format '("%b [%m] — Emacs"))
+
+  (setq org-wiki-location "~/Personal Documents/Org Mode/Wiki/")
 )
 
 ;; Do not write anything past this comment. This is where Emacs will
