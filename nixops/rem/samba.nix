@@ -8,6 +8,9 @@
     extraConfig = ''
       security = user
       map to guest = Bad User
+
+      interfaces = eth0 lo
+      bind interfaces only = yes
     '';
     syncPasswordsByPam = true;
     nsswins = true;
