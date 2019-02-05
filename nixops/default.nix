@@ -93,10 +93,12 @@
         ./rem/netconsole-client.nix
         ./rem/nfs.nix
         ./rem/nix.nix
+        ./rem/printmon.nix
         ./rem/samba.nix
         ./rem/scanner
         ./rem/services.nix
         ./rem/ssh-unlocker.nix
+        ./rem/tor.nix
         ./rem/unbound.nix
         ./rem/vfio.nix
         ./rem/wireguard.nix

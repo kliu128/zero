@@ -3,7 +3,7 @@
 {
   environment.systemPackages = with pkgs; [
     # Games
-    dolphinEmuMaster multimc steam steam-run-native
+    dolphinEmuMaster multimc # steam steam-run-native
     # Wine
     wineWowPackages.unstable winetricks 
   ];

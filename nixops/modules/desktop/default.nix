@@ -76,13 +76,13 @@
     # System tools
     i7z atop borgbackup cool-retro-term cowsay dnsutils file fortune gnupg hdparm htop iftop iotop kitty python python3 libva-full lm_sensors lolcat mpw oh-my-zsh rustup screen smartmontools snapraid spectre-meltdown-checker stress-ng telnet thefuck tree vim wget wireguard
     # Desktop applications
-    arduino atom calibre chromium clementine codeblocks discord emacs filezilla firebird-emu gnome3.gnome-disk-utility jetbrains.pycharm-community keepassxc libreoffice-still liferea mate.atril pavucontrol thunderbird transmission_gtk transmission_remote_gtk vokoscreen vlc vscode youtube-dl zim zoom-us
+    calibre chromium clementine emacs filezilla firebird-emu gnome3.gnome-disk-utility jetbrains.pycharm-community keepassxc libreoffice-still liferea mate.atril pavucontrol thunderbird transmission_gtk transmission_remote_gtk vokoscreen vlc vscode youtube-dl zoom-us
     # Anki and related packages (for LaTeX support)
     anki texlive.combined.scheme-basic tetex
     # Desktop tools
-    appimage-run autokey barrier
+    appimage-run
     # KDE applications
-    kate okular partition-manager spectacle
+    kate partition-manager spectacle
     # Development
     bfg-repo-cleaner docker docker_compose docker-machine gcc git-crypt gnumake
     # VM and DevOps

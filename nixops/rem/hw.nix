@@ -205,9 +205,10 @@
   boot.consoleLogLevel = 8;
   boot.cleanTmpDir = true;
   boot.kernel.sysctl."vm.min_free_kbytes" = 256000;
+  boot.kernel.sysctl."vm.swappiness" = 30;
   swapDevices = [ {
-    device = "/mnt/ssd/swap";
-    size = 10240;
+    device = "/swap";
+    size = 16384;
   } ];
   systemd.tmpfiles.rules = [
     "w /sys/module/zswap/parameters/enabled - - - - Y"
@@ -222,7 +223,6 @@
   #   compressionAlgorithm = "lz4";
   #   memoryPercent = 100;
   # };
-  boot.kernel.sysctl."vm.swappiness" = 30;
 
   # HACKS
   systemd.services.apply-scheduler-priorities = {
