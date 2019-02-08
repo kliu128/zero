@@ -94,6 +94,8 @@ data:
   PAPERLESS_FORGIVING_OCR: 'true'
   PAPERLESS_CONVERT_MEMORY_LIMIT: "32000000"
   PAPERLESS_CONVERT_TMPDIR: /var/tmp/paperless
+  PAPERLESS_TIME_ZONE: America/New_York
+  PAPERLESS_ALLOWED_HOSTS: paperless.potatofrom.space
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
