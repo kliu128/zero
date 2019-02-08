@@ -16,6 +16,10 @@
       text = builtins.readFile ./conky-bar.sh;
       executable = true;
     };
+    home.file.".local/bin/move-pa-sinks.sh" = {
+      text = builtins.readFile ./move-pa-sinks.sh;
+      executable = true;
+    };
     programs.zsh.initExtra = ''
       run-sway() {
         redshift -m drm -O 3700
