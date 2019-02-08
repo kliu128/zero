@@ -76,27 +76,8 @@ in {
     '';
     startAt = wave-3;
   };
-  systemd.services.gsuite-mount = {
-    enable = true;
-    description = "G-Suite Rclone Mount";
-    path = with pkgs; [ rclone fuse ];
-    script = ''
-      set -euo pipefail
-      ${proxyConfig}
-
-      rclone --config /keys/rclone.conf mount --allow-other gsuite-mysmccd-crypt: /mnt/gsuite
-    '';
-    serviceConfig.Type = "notify";
-    serviceConfig.NotifyAccess = "all";
-    wants = [ "network-online.target" ];
-    after = [ "network-online.target" ];
-    wantedBy = [ "remote-fs.target" ];
-  };
-  systemd.tmpfiles.rules = [
-    "d /mnt/gsuite 0755 root root - -"
-  ];
   systemd.services.switch-sync = {
-    enable = true;
+    enable = false;
     path = [ pkgs.rclone ];
     serviceConfig = {
       Nice = 19;

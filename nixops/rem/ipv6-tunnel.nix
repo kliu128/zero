@@ -3,7 +3,7 @@
 {
   systemd.services.ipv6-tunnel = {
     description = "Hurricane Electric IPv6 Tunneling";
-    enable = false;
+    enable = true;
     after = [ "network.target" ];
     wantedBy = [ "multi-user.target" ];
     serviceConfig = {
@@ -24,6 +24,6 @@
     '';
   };
 
-  networking.interfaces.eth0.ipv6.addresses = [ {
+  networking.interfaces.br0.ipv6.addresses = [ {
     address = "2001:470:8990::dead:beef"; prefixLength = 48; } ];
 }

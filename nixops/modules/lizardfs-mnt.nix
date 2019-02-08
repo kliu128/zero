@@ -13,9 +13,13 @@
     wantedBy = [ "remote-fs.target" ];
     after = [ "network-online.target" ];
     wants = [ "network-online.target" ];
+    unitConfig = {
+      StartLimitIntervalSec = 0; # Disable start interval bursting
+    };
     serviceConfig = {
       Type = "forking";
       Restart = "on-failure";
+      RestartSec = "5";
     };
   };
   systemd.tmpfiles.rules = [

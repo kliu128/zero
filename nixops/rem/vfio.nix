@@ -55,6 +55,10 @@
     mode = "777";
   };
 
+  networking.bridges.br0 = {
+    interfaces = [ "eth0" ];
+  };
+
   # Patch for better PulseAudio (for QEMU 2.12)
   # nixpkgs.config.packageOverrides = pkgs: rec {
   #   qemu = pkgs.qemu.overrideAttrs (oldAttrs: rec {

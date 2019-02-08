@@ -76,7 +76,6 @@
         ./modules/cjdns.nix
         ./modules/desktop
         ./modules/docker.nix
-        ./modules/kdeconnect.nix
         ./modules/kubernetes-common.nix
         ./modules/kubernetes-master.nix
         ./modules/lizardfs-mnt.nix
@@ -111,7 +110,12 @@
         22 25 80 113 143 443 587 631 993
         # TLS turn ports
         5349 5350
-        8448 9001 9030 25565 ];
+        # Matrix
+        8448
+        # Tor
+        9001
+        # Minecraft
+        25565 ];
       networking.firewall.allowedUDPPortRanges = [
         { from = 49152; to = 65535; } # TURN relay
       ];

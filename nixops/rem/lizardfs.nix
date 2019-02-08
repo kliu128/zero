@@ -1,10 +1,24 @@
 { config, lib, pkgs, ... }:
 
-{
+let
+  chunkserverDefaults = ''
+    BIND_HOST = 192.168.1.5
+    PERFORM_FSYNC = 0
+    NICE_LEVEL = 5
+    HDD_PUNCH_HOLES = 1
+  '';
+in {
   services.lizardfs.enable = true;
   services.lizardfs.cgiserv.enable = true;
   services.lizardfs.master.enable = true;
+
+  # Bind only on local subnetwork
   services.lizardfs.master.config = ''
+    MASTER_HOST = 192.168.1.5
+    MATOML_LISTEN_HOST = 192.168.1.5
+    MATOCS_LISTEN_HOST = 192.168.1.5
+    MATOCL_LISTEN_HOST = 192.168.1.5
+    MATOTS_LISTEN_HOST = 192.168.1.5
     AUTO_RECOVERY = 1
     REDUNDANCY_LEVEL = 0
     NICE_LEVEL = 5
@@ -44,21 +58,13 @@
   services.lizardfs.chunkservers.servers = [
     {
       name = "parity0";
-      config = ''
-        PERFORM_FSYNC = 0
-        NICE_LEVEL = 5
-        HDD_PUNCH_HOLES = 1
-      '';
+      config = chunkserverDefaults;
       storageDirectories = [ "/mnt/parity0/mfs" ];
       port = 9422;
     }
     {
       name = "wdblack1tb";
-      config = ''
-        PERFORM_FSYNC = 0
-        NICE_LEVEL = 5
-        HDD_PUNCH_HOLES = 1
-      '';
+      config = chunkserverDefaults;
       storageDirectories = [ "/mnt/data1/mfs" ];
       port = 9423;
     }
@@ -66,29 +72,17 @@
       name = "wdgreen15tb";
       storageDirectories = [ "/mnt/data0/mfs" ];
       port = 9426;
-      config = ''
-        PERFORM_FSYNC = 0
-        NICE_LEVEL = 5
-        HDD_PUNCH_HOLES = 1
-      '';
+      config = chunkserverDefaults;
     }
     {
       name = "wdblue4tb";
-      config = ''
-        PERFORM_FSYNC = 0
-        NICE_LEVEL = 5
-        HDD_PUNCH_HOLES = 1
-      '';
+      config = chunkserverDefaults;
       storageDirectories = [ "/mnt/data2/mfs" ];
       port = 9427;
     }
     {
       name = "toshiba4tb";
-      config = ''
-        PERFORM_FSYNC = 0
-        NICE_LEVEL = 5
-        HDD_PUNCH_HOLES = 1
-      '';
+      config = chunkserverDefaults;
       storageDirectories = [ "/mnt/data3/mfs" ];
       port = 9428;
     }
@@ -96,11 +90,7 @@
       name = "seagate8tb";
       storageDirectories = [ "/mnt/data4/mfs" ];
       port = 9429;
-      config = ''
-        PERFORM_FSYNC = 0
-        NICE_LEVEL = 5
-        HDD_PUNCH_HOLES = 1
-      '';
+      config = chunkserverDefaults;
     }
   ];
   networking.firewall.allowedTCPPorts = [ 9421 9422 9423 9426 9427 9428 9429 ];
