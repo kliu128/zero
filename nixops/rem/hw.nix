@@ -16,7 +16,7 @@
   boot.kernelPackages = lib.mkForce pkgs.linuxPackages_4_19;
   # exfat support for Nintendo Switch / other SD cards
   boot.supportedFilesystems = [ "btrfs" "ext4" "xfs" "exfat" ];
-  boot.initrd.supportedFilesystems = [ "xfs" ];
+  boot.initrd.supportedFilesystems = [ "xfs" "btrfs" "ext4" ];
   virtualisation.docker.storageDriver = "overlay2";
 
   # Video.
@@ -142,11 +142,6 @@
     permissions = "400";
     destDir = "/keys";
     keyFile = ../secrets/keys/keyfile-parity0.bin;
-  };
-  boot.initrd.kernelModules = [ "btrfs" ];
-  services.btrfs.autoScrub = {
-    enable = true;
-    fileSystems = [ "/" ];
   };
 
   fileSystems."/mnt/ssd" = {
