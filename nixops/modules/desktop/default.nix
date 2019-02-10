@@ -76,7 +76,7 @@
     # System tools
     i7z atop borgbackup cool-retro-term cowsay dnsutils file fortune gnupg hdparm htop iftop iotop kitty python python3 libva-full lm_sensors lolcat mpw oh-my-zsh rustup screen smartmontools snapraid spectre-meltdown-checker stress-ng telnet thefuck tree vim wget wireguard
     # Desktop applications
-    calibre chromium clementine discord emacs filezilla firebird-emu gnome3.gnome-disk-utility jetbrains.pycharm-community keepassxc libreoffice-still liferea mate.atril pavucontrol thunderbird transmission_gtk transmission_remote_gtk vokoscreen vlc vscode youtube-dl zoom-us
+    calibre chromium clementine discord emacs filezilla firebird-emu gnome3.gnome-disk-utility jetbrains.pycharm-community keepassxc libreoffice-still liferea linphone mate.atril pavucontrol thunderbird transmission_gtk transmission_remote_gtk vokoscreen vlc vscode youtube-dl zoom-us
     # Anki and related packages (for LaTeX support)
     anki texlive.combined.scheme-basic tetex
     # Desktop tools
@@ -312,7 +312,7 @@
     };
 
     # i3
-    xsession.enable = true;
+    xsession.enable = false;
     xsession.initExtra = ''
       # Start polkit agent to allow for superuser operations
       ${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1 &
