@@ -6,7 +6,7 @@
   '';
 
   systemd.services.netconsole = {
-    enable = true;
+    enable = false;
     description = "Initialize netconsole logging to otto";
     serviceConfig = {
       Type = "oneshot";

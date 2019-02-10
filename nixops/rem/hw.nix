@@ -200,24 +200,17 @@
   boot.consoleLogLevel = 8;
   boot.cleanTmpDir = true;
   boot.kernel.sysctl."vm.min_free_kbytes" = 256000;
-  boot.kernel.sysctl."vm.swappiness" = 30;
+  # boot.kernel.sysctl."vm.swappiness" = 30;
+  boot.kernel.sysctl."vm.dirty_ratio" = 2;
+  boot.kernel.sysctl."vm.dirty_background_ratio" = 1;
   swapDevices = [ {
     device = "/swap";
     size = 16384;
   } ];
-  systemd.tmpfiles.rules = [
-    # "w /sys/module/zswap/parameters/enabled - - - - Y"
-    # "w /sys/module/zswap/parameters/compressor - - - - lz4"
-    # "w /sys/module/zswap/parameters/zpool - - - - z3fold"
-    # "w /sys/module/zswap/parameters/max_pool_percent - - - - 50"
-
-    # "w /sys/class/drm/card0/device/hwmon/hwmon1/pwm1 - - - - 180"
-  ];
-  # zramSwap = {
-  #   enable = true;
-  #   compressionAlgorithm = "lz4";
-  #   memoryPercent = 100;
-  # };
+  zramSwap = {
+    enable = true;
+    memoryPercent = 150;
+  };
 
   # HACKS
   systemd.services.apply-scheduler-priorities = {

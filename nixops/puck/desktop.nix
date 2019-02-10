@@ -28,4 +28,6 @@
   
   # Ignore power key (thank you kunal)
   services.logind.extraConfig = "HandlePowerKey=ignore";
+  
+  services.xserver.desktopManager.plasma5.enable = true;
 }
