@@ -22,7 +22,7 @@
   # Video.
   boot.earlyVconsoleSetup = true;
   services.xserver.videoDrivers = [ "amdgpu" ];
-  boot.kernelParams = [ "iommu=pt" "consoleblank=300" "amdgpu.gpu_recovery=1" ];
+  boot.kernelParams = [ "iommu=pt" "consoleblank=300" "amdgpu.gpu_recovery=1" "rqshare=none" ];
 
   # Freeness (that is, not.)
   hardware.enableRedistributableFirmware = true; # for amdgpu
@@ -199,18 +199,17 @@
   services.fstrim.enable = true;
   boot.consoleLogLevel = 8;
   boot.cleanTmpDir = true;
-  boot.kernel.sysctl."vm.min_free_kbytes" = 256000;
-  # boot.kernel.sysctl."vm.swappiness" = 30;
+  boot.kernel.sysctl."vm.min_free_kbytes" = 128000;
   boot.kernel.sysctl."vm.dirty_ratio" = 2;
   boot.kernel.sysctl."vm.dirty_background_ratio" = 1;
   swapDevices = [ {
     device = "/swap";
     size = 16384;
   } ];
-  zramSwap = {
-    enable = true;
-    memoryPercent = 150;
-  };
+  # zramSwap = {
+  #   enable = true;
+  #   memoryPercent = 150;
+  # };
 
   # HACKS
   systemd.services.apply-scheduler-priorities = {
@@ -286,4 +285,12 @@
     after = [ "kubernetes.target" ];
     startAt = "minutely";
   };
+
+  # Proper shutdown in a timely manner
+  # See https://utcc.utoronto.ca/~cks/space/blog/linux/SystemdShutdownWatchdog
+  # Also enable the system watchdog to reboot the system on full freezes
+  systemd.extraConfig = ''
+    RuntimeWatchdogSec=60
+    ShutdownWatchdogSec=15
+  '';
 }
