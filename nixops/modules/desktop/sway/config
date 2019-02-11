@@ -65,9 +65,11 @@ bindsym Mod4+s layout stacking
 bindsym Mod4+space focus mode_toggle
 bindsym Mod4+v split v
 bindsym Mod4+w layout tabbed
+
 bindsym Pause exec swaylock -f
 bindsym Shift+Prior exec notify-send "Enabled screen lock." && pkill -CONT swayidle
 bindsym Shift+Next exec notify-send "Disabled screen lock." && pkill -STOP swayidle
+bindsym Print exec sh -c 'grim -g "$(slurp)" "$HOME/Pictures/Screenshot $(date).png"'
 
 mode "resize" {
     bindsym Down resize grow height 10 px or 10 ppt

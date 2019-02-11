@@ -28,5 +28,5 @@
     '';
   };
   services.xserver.displayManager.sddm.enable = true;
-  environment.systemPackages = with pkgs; [ dunst libnotify redshift ];
+  environment.systemPackages = with pkgs; [ dunst libnotify redshift grim slurp ];
 }
