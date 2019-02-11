@@ -11,6 +11,8 @@ spec:
       labels:
         app: matrix-db
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: rem
       containers:
         - name: db
           image: postgres:10-alpine
