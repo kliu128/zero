@@ -6,6 +6,7 @@
     "${builtins.fetchTarball https://github.com/rycee/home-manager/archive/master.tar.gz}/nixos"
 
     ./android.nix
+    ./audio-bt.nix
     ./dotnet.nix
     ./emacs
     ./firefox.nix
@@ -62,15 +63,6 @@
   programs.wireshark.enable = true;
   programs.wireshark.package = pkgs.wireshark-gtk;
   users.extraUsers.kevin.extraGroups = [ "input" "wireshark" ];
-
-  # Audio
-  hardware.pulseaudio.enable = true;
-  hardware.pulseaudio.extraConfig = ''
-    load-module module-switch-on-connect
-  '';
-  
-  hardware.bluetooth.enable = true;
-  hardware.pulseaudio.package = pkgs.pulseaudioFull;
 
   environment.systemPackages = with pkgs; [
     # System tools
