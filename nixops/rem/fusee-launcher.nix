@@ -1,16 +1,9 @@
 { config, lib, pkgs, ... }:
 
 {
-  systemd.services.fusee-launcher = {
-    enable = true;
-    path = [ pkgs.fusee-launcher ];
-    wantedBy = [ "multi-user.target" ];
-    script = ''
-      while true; do
-        fusee-launcher -w ${../hekate_ctcaer_4.6.bin} || true
-      done
-    '';
-    serviceConfig.Nice = 19;
-    serviceConfig.CPUQuota = "2%";
-  };
+  home-manager.users.kevin.programs.zsh.initExtra = ''
+    fusee() {
+      ${pkgs.fusee-launcher}/bin/fusee-launcher -w ${../hekate_ctcaer_4.6.bin}
+    }
+  '';
 }
