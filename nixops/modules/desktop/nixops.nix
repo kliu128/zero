@@ -11,8 +11,8 @@ with lib;
       src = fetchFromGitHub {
         owner = "NixOS";
         repo = "nixops";
-        rev = "e795b963f626162221ccccee9464a3a973a94e98";
-        sha256 = "1zd5c7mkx1s0fd0a5q7hsmp7p7a69nknxza0941in1py3lcv5pz9";
+        rev = "8ed39f9cadddd1d35a67096d0109151ae6ddc8b5";
+        sha256 = "1ninymk1jcvh3b1q0wgnmiya95rx8rdf9pw4hw3kffbg1izzp91c";
       };
 
       postInstall = ''

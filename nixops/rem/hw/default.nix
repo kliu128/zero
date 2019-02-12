@@ -6,6 +6,7 @@
 {
   imports =
     [ <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
+      ./ck.nix
     ];
 
   # Boot
@@ -13,16 +14,15 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.initrd.availableKernelModules = [ "ehci_pci" "ahci" "xhci_pci" "usb_storage" "usbhid" "sd_mod" "sr_mod" ];
   boot.kernelModules = [ "kvm-intel" ];
-  boot.kernelPackages = lib.mkForce pkgs.linuxPackages_4_19;
   # exfat support for Nintendo Switch / other SD cards
-  boot.supportedFilesystems = [ "btrfs" "ext4" "xfs" "exfat" ];
+  boot.supportedFilesystems = [ "btrfs" "ext4" "xfs" "exfat" "zfs" ];
   boot.initrd.supportedFilesystems = [ "xfs" "btrfs" "ext4" ];
   virtualisation.docker.storageDriver = "overlay2";
 
   # Video.
   boot.earlyVconsoleSetup = true;
   services.xserver.videoDrivers = [ "amdgpu" ];
-  boot.kernelParams = [ "iommu=pt" "consoleblank=300" "amdgpu.gpu_recovery=1" "rqshare=none" ];
+  boot.kernelParams = [ "iommu=pt" "consoleblank=300" "amdgpu.gpu_recovery=1" ];
 
   # Freeness (that is, not.)
   hardware.enableRedistributableFirmware = true; # for amdgpu
@@ -60,7 +60,7 @@
   deployment.keys."keyfile-data0.bin" = {
     permissions = "400";
     destDir = "/keys";
-    keyFile = ../secrets/keys/keyfile-data0.bin;
+    keyFile = ../../secrets/keys/keyfile-data0.bin;
   };
 
   fileSystems."/mnt/data1" = {
@@ -76,7 +76,7 @@
   deployment.keys."keyfile-data1.bin" = {
     permissions = "400";
     destDir = "/keys";
-    keyFile = ../secrets/keys/keyfile-data1.bin;
+    keyFile = ../../secrets/keys/keyfile-data1.bin;
   };
 
   fileSystems."/mnt/data2" = {
@@ -92,7 +92,7 @@
   deployment.keys."keyfile-data2.bin" = {
     permissions = "400";
     destDir = "/keys";
-    keyFile = ../secrets/keys/keyfile-data2.bin;
+    keyFile = ../../secrets/keys/keyfile-data2.bin;
   };
 
   fileSystems."/mnt/data3" = {
@@ -108,7 +108,7 @@
   deployment.keys."keyfile-data3.bin" = {
     permissions = "400";
     destDir = "/keys";
-    keyFile = ../secrets/keys/keyfile-data3.bin;
+    keyFile = ../../secrets/keys/keyfile-data3.bin;
   };
 
   # Seagate Expansion external hard drive
@@ -125,7 +125,7 @@
   deployment.keys."keyfile-data4.bin" = {
     permissions = "400";
     destDir = "/keys";
-    keyFile = ../secrets/keys/keyfile-data4.bin;
+    keyFile = ../../secrets/keys/keyfile-data4.bin;
   };
   # Seagate Backup Plus Hub
   fileSystems."/mnt/parity0" = {
@@ -141,7 +141,7 @@
   deployment.keys."keyfile-parity0.bin" = {
     permissions = "400";
     destDir = "/keys";
-    keyFile = ../secrets/keys/keyfile-parity0.bin;
+    keyFile = ../../secrets/keys/keyfile-parity0.bin;
   };
 
   fileSystems."/mnt/ssd" = {
@@ -157,18 +157,20 @@
   deployment.keys."keyfile-vms.bin" = {
     permissions = "400";
     destDir = "/keys";
-    keyFile = ../secrets/keys/keyfile-vms.bin;
+    keyFile = ../../secrets/keys/keyfile-vms.bin;
   };
 
   systemd.services.wait-for-storage = {
     enable = true;
     description = "Wait for Grand Stores mount to populate";
-    path = [ pkgs.gawk pkgs.lizardfs ];
+    path = [ pkgs.gawk pkgs.lizardfs pkgs.netcat-gnu ];
     script = ''
-      set -euo pipefail
-
       # Wait for total number of chunks to be < 10
-      while [ "$(lizardfs-admin chunks-health localhost 9421 --availability --porcelain | awk '{s+=$5} END {print s}')" -ge 10 ]
+      while ! nc -z 192.168.1.5 9421; do   
+        sleep 0.1 # wait for 1/10 of the second before check again
+      done
+
+      while [ "$(lizardfs-admin chunks-health 192.168.1.5 9421 --availability --porcelain | awk '{s+=$5} END {print s}')" -ge 10 ]
       do
         echo "Waiting for mount..."
         sleep 1
@@ -178,7 +180,6 @@
       Type = "oneshot";
       RemainAfterExit = true;
     };
-    after = [ "lizardfs-master.service" ];
     wantedBy = [ "multi-user.target" ];
   };
   systemd.services.storage = {
@@ -199,9 +200,6 @@
   services.fstrim.enable = true;
   boot.consoleLogLevel = 8;
   boot.cleanTmpDir = true;
-  boot.kernel.sysctl."vm.min_free_kbytes" = 128000;
-  boot.kernel.sysctl."vm.dirty_ratio" = 2;
-  boot.kernel.sysctl."vm.dirty_background_ratio" = 1;
   swapDevices = [ {
     device = "/swap";
     size = 16384;

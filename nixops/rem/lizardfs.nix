@@ -22,6 +22,7 @@ in {
     AUTO_RECOVERY = 1
     REDUNDANCY_LEVEL = 0
     NICE_LEVEL = 5
+    USE_BDB_FOR_NAME_STORAGE = 1
   '';
   services.lizardfs.master.exports = ''
     192.168.1.0/24 / rw,maproot=0

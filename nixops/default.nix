@@ -83,7 +83,7 @@
         ./rem/bluray.nix
         ./rem/desktop.nix
         ./rem/fusee-launcher.nix
-        ./rem/hw.nix
+        ./rem/hw
         ./rem/initrd-ssh.nix
         ./rem/ipv6-tunnel.nix
         ./rem/kindle.nix
@@ -104,6 +104,7 @@
       ];
 
       networking.hostName = "rem";
+      networking.hostId = "9e3812ac";
 
       # Options as Kubernetes entry node
       networking.firewall.allowedTCPPorts = [
