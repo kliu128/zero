@@ -6,6 +6,7 @@
 {
   imports =
     [ <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
+      ./amd-fan.nix
       ./ck.nix
     ];
 
@@ -204,10 +205,6 @@
     device = "/swap";
     size = 16384;
   } ];
-  # zramSwap = {
-  #   enable = true;
-  #   memoryPercent = 150;
-  # };
 
   # HACKS
   systemd.services.apply-scheduler-priorities = {
