@@ -205,6 +205,7 @@
     device = "/swap";
     size = 16384;
   } ];
+  boot.kernel.sysctl."vm.swappiness" = 10;
 
   # HACKS
   systemd.services.apply-scheduler-priorities = {

@@ -5,8 +5,15 @@ repositories:
     url: https://s3-eu-west-1.amazonaws.com/coreos-charts/stable/
   - name: gitlab
     url: https://charts.gitlab.io
+  - name: rook-stable
+    url: https://charts.rook.io/stable
 
 releases:
+  - name: rook
+    namespace: rook
+    chart: rook-stable/rook-ceph
+    values:
+      - ./values/rook.yaml
   - name: nginx-ingress
     namespace: kube-system
     chart: stable/nginx-ingress
@@ -22,17 +29,17 @@ releases:
     version: ^0.2.10
     values:
       - ./values/cert-manager.yaml
-  - name: prometheus-operator
-    namespace: monitoring
-    chart: coreos/prometheus-operator
-    values:
-      - ./values/prometheus-operator.yaml
-  - name: kube-prometheus
-    namespace: monitoring
-    chart: coreos/kube-prometheus
-    values:
-      - ./values/kube-prometheus.yaml
-      - ./values/kube-prometheus.secret.yaml
+  # - name: prometheus-operator
+  #   namespace: monitoring
+  #   chart: coreos/prometheus-operator
+  #   values:
+  #     - ./values/prometheus-operator.yaml
+  # - name: kube-prometheus
+  #   namespace: monitoring
+  #   chart: coreos/kube-prometheus
+  #   values:
+  #     - ./values/kube-prometheus.yaml
+  #     - ./values/kube-prometheus.secret.yaml
   - name: gitlab
     namespace: default
     chart: gitlab/gitlab
