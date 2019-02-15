@@ -16,7 +16,7 @@
   boot.initrd.availableKernelModules = [ "ehci_pci" "ahci" "xhci_pci" "usb_storage" "usbhid" "sd_mod" "sr_mod" ];
   boot.kernelModules = [ "kvm-intel" ];
   # exfat support for Nintendo Switch / other SD cards
-  boot.supportedFilesystems = [ "btrfs" "ext4" "xfs" "exfat" "zfs" ];
+  boot.supportedFilesystems = [ "btrfs" "ext4" "xfs" "exfat" ];
   boot.initrd.supportedFilesystems = [ "xfs" "btrfs" "ext4" ];
   virtualisation.docker.storageDriver = "overlay2";
 
@@ -205,7 +205,10 @@
     device = "/swap";
     size = 16384;
   } ];
-  boot.kernel.sysctl."vm.swappiness" = 10;
+  zramSwap = {
+    enable = true;
+    memoryPercent = 150;
+  };
 
   # HACKS
   systemd.services.apply-scheduler-priorities = {

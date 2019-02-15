@@ -9,7 +9,7 @@
       security = user
       map to guest = Bad User
 
-      interfaces = 192.168.1.5
+      interfaces = 192.168.1.5 192.168.122.1
       bind interfaces only = yes
     '';
     syncPasswordsByPam = true;

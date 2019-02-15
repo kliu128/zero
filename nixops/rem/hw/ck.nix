@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 {
-  boot.kernelParams = [ "rqshare=smp" ];
+  # boot.kernelParams = [ "rqshare=smp" ];
   boot.kernelPackages = lib.mkForce pkgs.linuxPackages_4_19;
   boot.kernelPatches = [
     {

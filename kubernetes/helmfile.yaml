@@ -9,11 +9,11 @@ repositories:
     url: https://charts.rook.io/stable
 
 releases:
-  - name: rook
-    namespace: rook
+  - name: rook-ceph
+    namespace: rook-ceph-system
     chart: rook-stable/rook-ceph
     values:
-      - ./values/rook.yaml
+      - ./values/rook-ceph.yaml
   - name: nginx-ingress
     namespace: kube-system
     chart: stable/nginx-ingress
