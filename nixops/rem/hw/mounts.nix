@@ -177,7 +177,7 @@
   };
 
   systemd.services.gdrive-mount = {
-    description = "batchfiles99@gmail.com Rclone FUSE mount";
+    description = "batchfiles99@gmail.com rclone FUSE mount";
     after = [ "network-online.target" ];
     wants = [ "network-online.target" ];
     wantedBy = [ "multi-user.target" ];
