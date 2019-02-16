@@ -37,6 +37,7 @@
     enable = true;
     memoryPercent = 150;
   };
+  boot.sysctl."vm.dirty_ratio" = 1;
 
   # HACKS
   systemd.services.apply-scheduler-priorities = {

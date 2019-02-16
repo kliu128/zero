@@ -2,6 +2,6 @@
 
 {
   services.udev.extraRules = ''
-    # ACTION=="add|change", SUBSYSTEM=="hwmon", ATTR{name}=="amdgpu", ATTR{pwm1}="220"
+    ACTION=="add|change", SUBSYSTEM=="hwmon", ATTR{name}=="amdgpu", ATTR{pwm1}="220"
   '';
 }
