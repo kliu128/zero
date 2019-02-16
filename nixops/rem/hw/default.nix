@@ -33,11 +33,13 @@
     device = "/swap";
     size = 16384;
   } ];
-  zramSwap = {
-    enable = true;
-    memoryPercent = 150;
-  };
-  boot.sysctl."vm.dirty_ratio" = 1;
+  boot.kernel.sysctl."vm.dirty_ratio" = 1;
+
+  systemd.tmpfiles.rules = [
+    "w /sys/module/zswap/parameters/enabled - - - - Y"
+    "w /sys/module/zswap/parameters/compressor - - - - zstd"
+    "w /sys/module/zswap/parameters/zpool - - - - z3fold"
+  ];
 
   # HACKS
   systemd.services.apply-scheduler-priorities = {
