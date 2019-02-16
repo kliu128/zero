@@ -21,7 +21,3 @@ rbac:
 tcp:
   22: default/gitlab-gitlab-shell:22
   113: default/matrix-irc-hashbang:113
-  8448: default/matrix:8448
-  8545: default/parity:8545
-  9001: default/tor:9001
-  9030: default/tor:9030

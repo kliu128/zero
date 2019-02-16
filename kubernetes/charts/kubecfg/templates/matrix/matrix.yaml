@@ -9,11 +9,6 @@ spec:
   - name: http
     targetPort: 8008
     port: 8008
-  - name: https
-    targetPort: 8448
-    port: 8448
-  - name: turn
-    port: 3478
 ---
 apiVersion: apps/v1
 kind: StatefulSet
@@ -31,7 +26,7 @@ spec:
       containers:
         # Main matrix server
         - name: synapse
-          image: matrixdotorg/synapse:v0.99.0
+          image: matrixdotorg/synapse:v0.99.1.1
           imagePullPolicy: Always
           livenessProbe:
             httpGet:
@@ -49,8 +44,6 @@ spec:
           ports:
             - containerPort: 8008
               name: http
-            - containerPort: 8448
-              name: https
           volumeMounts:
             - name: config
               subPath: homeserver.yaml
@@ -81,8 +74,6 @@ spec:
               mountPath: /config/potatofrom.space.log.config
             - name: data
               mountPath: /data
-            - name: certs
-              mountPath: /certs
       volumes:
         # Stores SSL keys, media_store
         - name: data
@@ -91,9 +82,6 @@ spec:
         - name: config
           secret:
             secretName: matrix-config
-        - name: certs
-          secret:
-            secretName: matrix-tls
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
