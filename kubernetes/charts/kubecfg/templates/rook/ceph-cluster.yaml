@@ -153,32 +153,31 @@ subjects:
 - kind: ServiceAccount
   name: rook-ceph-mgr
   namespace: rook-ceph
-# ---
-# apiVersion: ceph.rook.io/v1
-# kind: CephCluster
-# metadata:
-#   name: rook-ceph
-#   namespace: rook-ceph
-# spec:
-#   cephVersion:
-#     # see the "Cluster Settings" section below for more details on which image of ceph to run
-#     image: ceph/ceph:v13.2.4-20190109
-#   dataDirHostPath: /var/lib/rook
-#   dashboard:
-#     enable: true
-#   mon:
-#     count: 3
-#     allowMultiplePerNode: true
-#   storage:
-#     useAllNodes: false
-#     useAllDevices: false
-#     deviceFilter:
-#     location:
-#     nodes:
-#       - name: rem
-#         devices:
-#           - name: loop0
-#           - name: loop1
-#           - name: loop2
-#         config:
-#           storeType: bluestore
+---
+apiVersion: ceph.rook.io/v1
+kind: CephCluster
+metadata:
+  name: rook-ceph
+  namespace: rook-ceph
+spec:
+  cephVersion:
+    # see the "Cluster Settings" section below for more details on which image of ceph to run
+    image: ceph/ceph:v13.2.4-20190109
+  dataDirHostPath: /var/lib/rook
+  dashboard:
+    enable: true
+  mon:
+    count: 3
+    allowMultiplePerNode: true
+  storage:
+    useAllNodes: false
+    useAllDevices: false
+    deviceFilter:
+    location:
+    nodes:
+      - name: rem
+        directories:
+          - path: /mnt/data2/ceph
+          - path: /mnt/data3/ceph
+        config:
+          storeType: filestore

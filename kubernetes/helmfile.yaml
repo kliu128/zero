@@ -26,7 +26,7 @@ releases:
   - name: cert-manager
     namespace: kube-system
     chart: stable/cert-manager
-    version: ^0.2.10
+    version: 0.5.0
     values:
       - ./values/cert-manager.yaml
   # - name: prometheus-operator
