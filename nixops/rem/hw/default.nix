@@ -38,7 +38,7 @@
   systemd.tmpfiles.rules = [
     "w /sys/module/zswap/parameters/enabled - - - - Y"
     "w /sys/module/zswap/parameters/compressor - - - - zstd"
-    "w /sys/module/zswap/parameters/zpool - - - - z3fold"
+    "w /sys/module/zswap/parameters/zpool - - - - zsmalloc"
   ];
 
   # HACKS

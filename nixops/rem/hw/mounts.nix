@@ -168,6 +168,7 @@
     after = [ "wait-for-storage.service" ];
     wants = [ "wait-for-storage.service" ];
     before = [
+      "samba-smbd.service"
       "nfs-server.service"
       "transmission.service"
       "borgbackup-repo-scintillating.service"
