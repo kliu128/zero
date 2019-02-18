@@ -5,15 +5,8 @@ repositories:
     url: https://s3-eu-west-1.amazonaws.com/coreos-charts/stable/
   - name: gitlab
     url: https://charts.gitlab.io
-  - name: rook-stable
-    url: https://charts.rook.io/stable
 
 releases:
-  - name: rook-ceph
-    namespace: rook-ceph-system
-    chart: rook-stable/rook-ceph
-    values:
-      - ./values/rook-ceph.yaml
   - name: nginx-ingress
     namespace: kube-system
     chart: stable/nginx-ingress
