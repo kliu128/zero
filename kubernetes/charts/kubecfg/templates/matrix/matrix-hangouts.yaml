@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: matrix-hangouts
+spec:
+  selector:
+    matchLabels:
+      app: matrix-hangouts
+  template:
+    metadata:
+      labels:
+        app: matrix-hangouts
+    spec:
+      containers:
+        - name: hangouts
+          image: registry.potatofrom.space/kevin/matrix-puppet-hangouts
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: config
+              subPath: hangouts-registration.yaml
+              mountPath: /usr/src/app/hangouts-registration.yaml
+            - name: config
+              subPath: hangouts-config.json
+              mountPath: /usr/src/app/config.json
+            - name: hangups
+              mountPath: /root/.cache/hangups
+      volumes:
+        - name: config
+          secret:
+            secretName: matrix-config
+        - name: hangups
+          persistentVolumeClaim:
+            claimName: matrix-hangups-data
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    app: matrix
+  name: matrix-hangups-data
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Mi
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: matrix-hangouts
+spec:
+  selector:
+    app: matrix-hangouts
+  ports:
+  - name: http
+    targetPort: 8090
+    port: 8090

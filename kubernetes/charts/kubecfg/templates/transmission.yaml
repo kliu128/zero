@@ -43,13 +43,23 @@ spec:
             privileged: true
           resources: {}
           volumeMounts:
-            - mountPath: /data
-              name: files
+            - mountPath: /data/completed
+              name: completed
+            - mountPath: /data/incomplete
+              name: incomplete
+            - mountPath: /data/transmission-home
+              name: data
       restartPolicy: Always
       volumes:
-        - name: files
+        - name: completed
           hostPath:
-            path: /mnt/storage/Kevin/Incoming
+            path: /mnt/storage/Kevin/Incoming/completed
+        - name: incomplete
+          hostPath:
+            path: /mnt/storage/Kevin/Incoming/incomplete
+        - name: data
+          persistentVolumeClaim:
+            claimName: transmission-data
             
 status: {}
 ---
@@ -66,6 +76,21 @@ spec:
       targetPort: 9091
   selector:
     app: transmission
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    app: transmission
+  name: transmission-data
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+status: {}
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress

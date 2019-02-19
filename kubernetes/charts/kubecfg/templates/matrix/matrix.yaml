@@ -52,6 +52,9 @@ spec:
               subPath: discord-registration.yaml
               mountPath: /config/discord-registration.yaml
             - name: config
+              subPath: hangouts-registration.yaml
+              mountPath: /config/hangouts-registration.yaml
+            - name: config
               subPath: telegram-registration.yaml
               mountPath: /config/telegram-registration.yaml
             - name: config
