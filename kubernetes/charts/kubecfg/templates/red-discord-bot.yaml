@@ -14,27 +14,32 @@ spec:
         app: red-discord-bot
     spec:
       containers:
-        - image: pejter/red-discordbot:slim
+        - image: calebj/red-discordbot
           name: red-discord-bot
           resources: {}
           volumeMounts:
-            - mountPath: /app/data
+            - mountPath: /data/red/data
               name: data
               subPath: data
-            - mountPath: /app/cogs
+            - mountPath: /data/red/cogs
               name: data
               subPath: cogs
+            - mountPath: /data/red/cogs/everyone-bot.py
+              name: cogs
+              subPath: everyone-bot.py
       restartPolicy: Always
       volumes:
         - name: data
           persistentVolumeClaim:
             claimName: red-discord-bot-data
+        - name: cogs
+          configMap:
+            name: red-discord-bot-cogs
 status: {}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  creationTimestamp: null
   labels:
     app: red-discord-bot
   name: red-discord-bot-data
@@ -44,4 +49,11 @@ spec:
   resources:
     requests:
       storage: 20Gi
-status: {}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: red-discord-bot-cogs
+data:
+  everyone-bot.py: |-
+{{ .Files.Get "everyone-bot.py" | indent 4 }}
