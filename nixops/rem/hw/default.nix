@@ -7,7 +7,7 @@
   imports =
     [ <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
       ./amd-fan.nix
-      ./ck.nix
+      ./kernel.nix
       ./mounts.nix
     ];
 

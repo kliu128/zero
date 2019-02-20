@@ -2,7 +2,7 @@
 
 {
   boot.kernelParams = [  ];
-  boot.kernelPackages = lib.mkForce pkgs.linuxPackages_4_19;
+  boot.kernelPackages = lib.mkForce pkgs.linuxPackages_4_20;
   # boot.kernelPatches = [
   #   {
   #       name = "ck";
