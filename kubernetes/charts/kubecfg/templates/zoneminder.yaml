@@ -33,11 +33,17 @@ spec:
           name: data
         - mountPath: /dev/shm
           name: shm
+        - mountPath: /etc/mysql/conf.d/checksums.cnf
+          name: config
+          subPath: checksums.cnf
       restartPolicy: Always
       volumes:
       - name: shm
         emptyDir:
           medium: Memory
+      - name: config
+        configMap:
+          name: zoneminder-config
       - name: vids
         hostPath:
           path: /mnt/storage/Kevin/Computing/Data/Zoneminder
@@ -45,6 +51,17 @@ spec:
       - name: data
         persistentVolumeClaim:
           claimName: zoneminder-data
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: zoneminder-config
+  labels:
+    app: zoneminder
+data:
+  checksums.cnf: |
+    [mysqld]
+    innodb_log_checksums = ON
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
