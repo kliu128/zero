@@ -35,12 +35,11 @@ spec:
             initialDelaySeconds: 60
             periodSeconds: 30
             timeoutSeconds: 30
-          resources:
-            limits:
-              memory: 2Gi
           env:
             - name: SYNAPSE_CONFIG_PATH
               value: /config/homeserver.yaml
+            - name: SYNAPSE_CACHE_FACTOR
+              value: "2.0"
           ports:
             - containerPort: 8008
               name: http
