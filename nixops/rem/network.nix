@@ -1,6 +1,23 @@
 { config, lib, pkgs, ... }:
 
 {
+  networking.useNetworkd = true;
+  networking.useDHCP = true;
+  networking.interfaces.br0.macAddress = "74:d4:35:e2:52:9b";
+  systemd.network.enable = true;
+  systemd.network.networks."99-main".enable = false;
+
+  systemd.services.remove-eth0-ip = {
+    enable = true;
+    path = [ pkgs.iproute ];
+    wantedBy = [ "multi-user.target" ];
+    script = ''
+      ip addr del 192.168.1.5/24 dev eth0
+    '';
+    serviceConfig.RemainAfterExit = true;
+    serviceConfig.Type = "oneshot";
+  };
+
   systemd.services.ipv6-tunnel = {
     description = "Hurricane Electric IPv6 Tunneling";
     enable = true;

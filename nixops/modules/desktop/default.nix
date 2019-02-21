@@ -71,7 +71,7 @@
     # Desktop applications
     calibre chromium clementine discord emacs filezilla firebird-emu gnome3.gnome-disk-utility keepassxc libreoffice-still liferea linphone mate.atril pavucontrol thunderbird transmission_gtk transmission_remote_gtk vokoscreen vlc vscode youtube-dl zoom-us
     # Anki and related packages (for LaTeX support)
-    anki texlive.combined.scheme-basic tetex
+    # anki texlive.combined.scheme-basic tetex
     # Desktop tools
     appimage-run
     # KDE applications

@@ -85,11 +85,11 @@
         ./rem/fusee-launcher.nix
         ./rem/hw
         ./rem/initrd-ssh.nix
-        ./rem/ipv6-tunnel.nix
         ./rem/kindle.nix
         ./rem/lizardfs.nix
         ./rem/monitoring.nix
         ./rem/netconsole-client.nix
+        ./rem/network.nix
         ./rem/nfs.nix
         ./rem/nix.nix
         ./rem/printmon.nix

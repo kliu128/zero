@@ -82,6 +82,7 @@
   # Make critical services restart on failure
   systemd.services.kube-scheduler.serviceConfig.Restart = "always";
   systemd.services.flannel.serviceConfig.Restart = "always";
+  systemd.services.flannel.path = [ pkgs.iptables ];
 
   systemd.services.clean-up-flannel-ips = {
     enable = true;
