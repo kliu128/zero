@@ -6,6 +6,10 @@
     # Ripping
     k3b makemkv dvdisaster rubyripper flac
   ];
+  home-manager.users.kevin.home.file.".local/bin/ripper" = {
+    executable = true;
+    source = ./ripper.py;
+  };
 
   boot.kernelModules = [ "sg" ]; # for MakeMKV
 
