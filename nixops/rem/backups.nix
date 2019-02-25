@@ -223,7 +223,7 @@ in {
       "sh:/var/log/*"
     ];
     extraCreateArgs = "--one-file-system --stats --progress -v";
-    paths = "/";
+    paths = [ "/" "/mnt/ssd" ];
     repo = "/mnt/storage/Kevin/Backups/Systems/storage-borg";
     prune.keep = {
       daily = 7;

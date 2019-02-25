@@ -48,7 +48,7 @@ data:
     {
       "default_hs_url": "https://matrix.org",
       "default_is_url": "https://vector.im",
-      "brand": "Riot",
+      "brand": "Potatoriot",
       "integrations_ui_url": "https://dimension.potatofrom.space/riot",
       "integrations_rest_url": "https://dimension.potatofrom.space/api/v1/scalar",
       "integrations_widgets_urls": ["https://dimension.potatofrom.space/widgets"],
@@ -61,11 +61,13 @@ data:
         "feature_sticker_messages": "labs",
         "feature_jitsi": "labs",
         "feature_tag_panel": "enable",
-        "feature_lazyloading": "enable",
         "feature_keybackup": "labs",
         "feature_custom_status": "labs",
+        "feature_custom_tags": "labs",
+        "feature_lazyloading": "enable",
         "feature_tabbed_settings": "labs",
-        "feature_sas": "labs"
+        "feature_sas": "labs",
+        "feature_room_breadcrumbs": "labs"
       },
       "roomDirectory": {
         "servers": [

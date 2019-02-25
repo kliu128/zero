@@ -11,7 +11,6 @@
   defaults = {
     imports = [
       ./common/firewall.nix
-      ./common/io-scheduler.nix
       ./common/kernel.nix
       ./common/nix.nix
       ./common/security.nix

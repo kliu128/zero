@@ -9,6 +9,7 @@
       ./amd-fan.nix
       ./kernel.nix
       ./mounts.nix
+      ./io-scheduler.nix
     ];
 
   # Boot
@@ -33,7 +34,8 @@
     device = "/swap";
     size = 16384;
   } ];
-  boot.kernel.sysctl."vm.dirty_ratio" = 1;
+  boot.kernel.sysctl."vm.dirty_ratio" = 2;
+  boot.kernel.sysctl."vm.dirty_background_ratio" = 2;
   boot.kernel.sysctl."vm.min_free_kbytes" = 256000;
 
   # systemd.tmpfiles.rules = [

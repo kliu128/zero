@@ -30,7 +30,7 @@
 
   fileSystems."/mnt/250gb-netbook-hdd" = {
     device = "/dev/mapper/250gb-netbook-hdd";
-    options = [ "errors=remount-ro" "noatime" "noexec" "nodev" ];
+    options = [ "errors=remount-ro" "noatime" "lazytime" "noexec" "nodev" ];
     encrypted = {
       enable = true;
       blkDev = "/dev/disk/by-uuid/58c60ce6-0ced-430f-b354-c2e1c46d6b74";
@@ -46,7 +46,7 @@
 
   fileSystems."/mnt/150gb-dell-hdd" = {
     device = "/dev/mapper/150gb-dell-hdd";
-    options = [ "errors=remount-ro" "noatime" "noexec" "nodev" ];
+    options = [ "errors=remount-ro" "noatime" "lazytime" "noexec" "nodev" ];
     encrypted = {
       enable = true;
       blkDev = "/dev/disk/by-uuid/4762f1cf-75bf-42b2-b39d-d8288c4509ad";

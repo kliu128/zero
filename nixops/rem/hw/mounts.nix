@@ -31,7 +31,7 @@
 
   fileSystems."/mnt/data0" = {
     device = "/dev/mapper/data0";
-    options = [ "errors=remount-ro" "noatime" "noexec" "nodev" ];
+    options = [ "errors=remount-ro" "noatime" "lazytime" "noexec" "nodev" ];
     encrypted = {
       enable = true;
       blkDev = "/dev/disk/by-uuid/6addfbee-f237-41b3-9a2b-8ced3d57f410";
@@ -63,7 +63,7 @@
 
   fileSystems."/mnt/data2" = {
     device = "/dev/mapper/data2";
-    options = [ "errors=remount-ro" "noatime" "noexec" "nodev" ];
+    options = [ "errors=remount-ro" "noatime" "lazytime" "noexec" "nodev" ];
     encrypted = {
       enable = true;
       blkDev = "/dev/disk/by-uuid/57e6c20c-ab5e-42b0-a984-2444a80aa516";
@@ -79,7 +79,7 @@
 
   fileSystems."/mnt/data3" = {
     device = "/dev/mapper/data3";
-    options = [ "errors=remount-ro" "noatime" "noexec" "nodev" ];
+    options = [ "errors=remount-ro" "noatime" "lazytime" "noexec" "nodev" ];
     encrypted = {
       enable = true;
       blkDev = "/dev/disk/by-uuid/c4742594-f01c-4eee-927e-1535d9f222fc";
@@ -96,7 +96,7 @@
   # Seagate Expansion external hard drive
   fileSystems."/mnt/data4" = {
     device = "/dev/mapper/data4";
-    options = [ "errors=remount-ro" "noatime" "noexec" "nodev" ];
+    options = [ "errors=remount-ro" "noatime" "lazytime" "noexec" "nodev" ];
     encrypted = {
       enable = true;
       blkDev = "/dev/disk/by-uuid/1351af37-7548-4787-a53f-594ad892b7e3";
@@ -112,7 +112,7 @@
   # Seagate Backup Plus Hub
   fileSystems."/mnt/parity0" = {
     device = "/dev/mapper/parity0";
-    options = [ "errors=remount-ro" "noatime" "noexec" "nodev" ];
+    options = [ "errors=remount-ro" "noatime" "lazytime" "noexec" "nodev" ];
     encrypted = {
       enable = true;
       blkDev = "/dev/disk/by-uuid/b9eb89d2-c5f8-4eb1-b1c0-601af8b8877c";
