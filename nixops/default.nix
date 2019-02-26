@@ -15,6 +15,7 @@
       ./common/security.nix
       ./common/ssh.nix
       ./common/time.nix
+      ./common/tinc.nix
       ./common/users.nix
     ];
 
@@ -37,6 +38,7 @@
         ./otto/initrd-ssh.nix
         ./otto/lizardfs.nix
         ./otto/netconsole-receiver.nix
+        ./otto/tinc.nix
       ];
 
       networking.hostName = "otto";
@@ -95,6 +97,7 @@
         ./rem/scanner
         ./rem/services.nix
         ./rem/ssh-unlocker.nix
+        ./rem/tinc.nix
         ./rem/tor.nix
         ./rem/unbound.nix
         ./rem/vfio.nix
@@ -102,7 +105,6 @@
       ];
 
       networking.hostName = "rem";
-      networking.hostId = "9e3812ac";
 
       # Options as Kubernetes entry node
       networking.firewall.allowedTCPPorts = [
