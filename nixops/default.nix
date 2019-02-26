@@ -11,7 +11,6 @@
   defaults = {
     imports = [
       ./common/firewall.nix
-      ./common/kernel.nix
       ./common/nix.nix
       ./common/security.nix
       ./common/ssh.nix
