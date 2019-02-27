@@ -26,7 +26,7 @@
   otto =
     { config, pkgs, lib, ... }:
     {
-      deployment.targetHost = "192.168.1.11";
+      deployment.targetHost = "10.99.0.2";
       deployment.hasFastConnection = true;
 
       imports = [
@@ -49,7 +49,7 @@
   puck =
     { config, pkgs, lib, ... }:
     {
-      deployment.targetHost = (import ./wireguard.nix).ips.puck;
+      deployment.targetHost = "10.99.0.3";
 
       imports = [
         ./modules/desktop
@@ -70,7 +70,7 @@
   rem =
     { config, pkgs, lib, ... }:
     {
-      deployment.targetHost = "192.168.1.5";
+      deployment.targetHost = "10.99.0.1";
       deployment.hasFastConnection = true;
 
       imports = [
