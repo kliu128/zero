@@ -2,7 +2,7 @@
 
 {
   # Configure NixOS/nix
-  nix.optimise.automatic = true;
+  nix.autoOptimiseStore = true;
   nixpkgs.config.allowUnfree = true;
   nix.buildCores = 0; # use all available CPU cores
   nix.daemonNiceLevel = 19;

@@ -68,4 +68,6 @@
   };
   networking.firewall.allowedTCPPorts = [ 655 ];
   networking.firewall.allowedUDPPorts = [ 655 ];
+  systemd.services."network-addresses-tinc.omnimesh".after = [ "tinc.omnimesh.service" ];
+  systemd.services."network-link-tinc.omnimesh".after = [ "tinc.omnimesh.service" ];
 }

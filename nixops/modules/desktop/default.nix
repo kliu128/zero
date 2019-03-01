@@ -69,9 +69,9 @@
     # System tools
     i7z atop borgbackup cool-retro-term cowsay dnsutils file fortune gnupg hdparm htop iftop iotop kitty libva-full lm_sensors lolcat mpw oh-my-zsh rustup screen smartmontools snapraid spectre-meltdown-checker stress-ng telnet thefuck tree vim wget wireguard
     # Desktop applications
-    calibre chromium clementine discord emacs filezilla firebird-emu gnome3.gnome-disk-utility keepassxc libreoffice-still liferea linphone mate.atril pavucontrol thunderbird transmission_gtk transmission_remote_gtk vokoscreen vlc vscode youtube-dl zoom-us
+    calibre chromium clementine discord emacs gnome3.gnome-disk-utility keepassxc libreoffice-still liferea linphone mate.atril pavucontrol thunderbird transmission_gtk transmission_remote_gtk vokoscreen vlc vscode youtube-dl zoom-us
     # Anki and related packages (for LaTeX support)
-    # anki texlive.combined.scheme-basic tetex
+    anki texlive.combined.scheme-basic tetex
     # Desktop tools
     appimage-run
     # KDE applications

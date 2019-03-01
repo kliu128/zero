@@ -19,7 +19,6 @@
       ./common/users.nix
     ];
 
-    networking.domain = "potatofrom.space";
     time.timeZone = "America/New_York";
   };
 

@@ -99,7 +99,7 @@
     path = with pkgs; [ kubectl gnugrep coreutils ];
     script = ''
       set -euo pipefail
-
+      export KUBECONFIG=/etc/kubernetes/cluster-admin.kubeconfig
       for pod in $(kubectl get pod | grep CrashLoopBackOff | cut -d " " -f1); do
         if kubectl describe pod "$pod" | grep "OCI runtime create failed" >/dev/null; then
           echo "Deleting broken pod state $pod"

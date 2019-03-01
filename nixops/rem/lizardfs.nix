@@ -2,7 +2,7 @@
 
 let
   chunkserverDefaults = ''
-    BIND_HOST = 192.168.1.5
+    BIND_HOST = 10.99.0.1
     PERFORM_FSYNC = 0
     NICE_LEVEL = 5
     HDD_PUNCH_HOLES = 1
@@ -14,20 +14,19 @@ in {
 
   # Bind only on local subnetwork
   services.lizardfs.master.config = ''
-    MASTER_HOST = 192.168.1.5
-    MATOML_LISTEN_HOST = 192.168.1.5
-    MATOCS_LISTEN_HOST = 192.168.1.5
-    MATOCL_LISTEN_HOST = 192.168.1.5
-    MATOTS_LISTEN_HOST = 192.168.1.5
+    MASTER_HOST = 10.99.0.1
+    MATOML_LISTEN_HOST = 10.99.0.1
+    MATOCS_LISTEN_HOST = 10.99.0.1
+    MATOCL_LISTEN_HOST = 10.99.0.1
+    MATOTS_LISTEN_HOST = 10.99.0.1
     AUTO_RECOVERY = 1
     REDUNDANCY_LEVEL = 0
     NICE_LEVEL = 5
     USE_BDB_FOR_NAME_STORAGE = 1
   '';
   services.lizardfs.master.exports = ''
-    192.168.1.0/24 / rw,maproot=0
-    192.168.1.0/24 . rw,maproot=0
-    10.100.0.0/24 / rw,maproot=0
+    10.99.0.0/24 / rw,maproot=0
+    10.99.0.0/24 . rw,maproot=0
   '';
   services.lizardfs.master.goals = ''
     6 ec_2_1 : $ec(2,1)
@@ -55,7 +54,7 @@ in {
       OOMScoreAdjust = -1000;
     };
   };
-  services.lizardfs.chunkservers.masterHost = "192.168.1.5";
+  services.lizardfs.chunkservers.masterHost = "10.99.0.1";
   services.lizardfs.chunkservers.servers = [
     {
       name = "parity0";
@@ -94,5 +93,5 @@ in {
       config = chunkserverDefaults;
     }
   ];
-  networking.firewall.allowedTCPPorts = [ 9421 9422 9423 9426 9427 9428 9429 ];
+  networking.firewall.allowedTCPPorts = [ 9420 9421 9422 9423 9426 9427 9428 9429 ];
 }

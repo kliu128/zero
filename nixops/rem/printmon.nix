@@ -2,10 +2,11 @@
 
 {
   systemd.services.printmon = {
+    enable = false;
     description = "Printmon API Server";
-    path = with pkgs; [ yarn ];
+    path = with pkgs; [ yarn nodejs-10_x ];
     script = ''
-      cd /home/kevin/Projects/printmon
+      cd /home/kevin/Projects/printmon/server
       PORT=4005 yarn start
     '';
     serviceConfig = {
