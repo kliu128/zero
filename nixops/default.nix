@@ -105,6 +105,7 @@
       ];
 
       networking.hostName = "rem";
+      networking.hostId = "a23c4bef";
 
       # Options as Kubernetes entry node
       networking.firewall.allowedTCPPorts = [

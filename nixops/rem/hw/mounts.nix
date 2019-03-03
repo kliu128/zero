@@ -2,8 +2,28 @@
 
 {
   # exfat support for Nintendo Switch / other SD cards
-  boot.supportedFilesystems = [ "btrfs" "ext4" "xfs" "exfat" ];
+  boot.supportedFilesystems = [ "btrfs" "ext4" "xfs" "exfat" "zfs" ];
   boot.initrd.supportedFilesystems = [ "xfs" "btrfs" "ext4" ];
+
+  boot.zfs = {
+    forceImportRoot = false;
+    forceImportAll = false;
+  };
+
+  systemd.services.zfs-compressed-mount = {
+    wants = [ "wait-for-storage.service" ];
+    after = [ "wait-for-storage.service" ];
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+    };
+    path = [ pkgs.zfs ];
+    restartIfChanged = false;
+    script = ''
+      zpool import grand -d /mnt/storage/
+    '';
+  };
 
   fileSystems."/" = {
     device = "/dev/mapper/root"; 
