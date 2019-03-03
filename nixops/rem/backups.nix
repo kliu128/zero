@@ -88,7 +88,7 @@ in {
     startAt = wave-3;
   };
   systemd.services.switch-sync = {
-    enable = false;
+    enable = true;
     path = [ pkgs.rclone ];
     serviceConfig = {
       Nice = 19;
@@ -100,8 +100,9 @@ in {
       ${proxyConfig}
 
       rclone --config /keys/rclone.conf \
-             sync "gsuite-mysmccd:Cleartext/Nintendo Switch/comm-stash/" "/mnt/storage/Kevin/Computing/ROMs/Nintendo Switch/" \
-             -v --transfers=4 --modify-window=1s
+             sync "gsuite-mysmccd:Cleartext/Nintendo Switch/Wznx/" "/mnt/storage/Kevin/Computing/ROMs/Nintendo Switch/" \
+             -v --transfers=4 --modify-window=1s --delete-during \
+             --include base/** --include demo/** --include demo_updates/** --include dlc/** --include updates/** --delete-excluded
       chown -R kevin:users "/mnt/storage/Kevin/Computing/ROMs/Nintendo Switch"
     '';
     startAt = wave-2;
