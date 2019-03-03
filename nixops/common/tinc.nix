@@ -12,6 +12,7 @@
     '';
     hosts = {
       rem = ''
+        Compression = 10
         Address = potatofrom.space 655
         Ed25519PublicKey = T7VbcnZFoMzNZh6mpP1m8hqMgdw7bDqrfrO/TFZZlAI
 
@@ -30,6 +31,7 @@
         -----END RSA PUBLIC KEY-----
         '';
       otto = ''
+        Compression = 10
         Address = 192.168.1.11
         Port = 655
         Ed25519PublicKey = ojKpm3CHG06B+2ugM5HFHtOlssQ9g3WGplGINk3h/LO
@@ -49,6 +51,7 @@
         -----END RSA PUBLIC KEY-----
       '';
       puck = ''
+        Compression = 10
         Ed25519PublicKey = V4//lY5FierUZvtbDt92cUIOS4pMf87Zm7HsTsj25TB
         -----BEGIN RSA PUBLIC KEY-----
         MIICCgKCAgEAreVL2TENzNGvKTg9r/hZSFUwGp/uF9oqVIMzyApI3mUMKM/7XJ2t
