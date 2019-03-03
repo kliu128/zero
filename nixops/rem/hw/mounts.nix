@@ -9,22 +9,10 @@
     forceImportRoot = false;
     forceImportAll = false;
   };
-
-  systemd.services.zfs-compressed-mount = {
-    wants = [ "wait-for-storage.service" ];
-    after = [ "wait-for-storage.service" ];
-    wantedBy = [ "multi-user.target" ];
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-    };
-    path = [ pkgs.zfs ];
-    restartIfChanged = false;
-    script = ''
-      zpool import grand -d /mnt/storage/
-    '';
-  };
-
+  boot.extraModprobeConfig = ''
+    options zfs zfs_vdev_aggregation_limit=16777220
+  '';
+  
   fileSystems."/" = {
     device = "/dev/mapper/root"; 
     fsType = "xfs";
@@ -115,8 +103,9 @@
 
   # Seagate Expansion external hard drive
   fileSystems."/mnt/data4" = {
-    device = "/dev/mapper/data4";
-    options = [ "errors=remount-ro" "noatime" "lazytime" "noexec" "nodev" ];
+    device = "data4";
+    fsType = "zfs";
+    options = [ "noatime" "lazytime" "noexec" "nodev" ];
     encrypted = {
       enable = true;
       blkDev = "/dev/disk/by-uuid/1351af37-7548-4787-a53f-594ad892b7e3";
