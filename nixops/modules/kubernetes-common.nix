@@ -5,6 +5,7 @@
   services.kubernetes = {
     easyCerts = true;
     masterAddress = "rem";
+    apiserverAddress = "https://rem:6443";
     kubelet = {
       allowPrivileged = true;
       # Disable swap warning, and make it so that pods aren't evacuated from nodes due 
@@ -13,12 +14,14 @@
     };
     apiserver.allowPrivileged = true;
     apiserver.securePort = 6443;
-    apiserver.bindAddress = "192.168.1.5";
+    apiserver.bindAddress = "10.99.0.1";
+    apiserver.advertiseAddress = "10.99.0.1";
     flannel.enable = true;
     addons.dashboard.enable = true;
     addons.dashboard.rbac.enable = true;
     addons.dns.enable = true;
   };
+  services.flannel.iface = "tinc.omnimesh";
   networking.firewall = {
     allowedTCPPorts = [
       # Kubernetes - kubelet, etcd, apiserver
@@ -47,7 +50,7 @@
     wantedBy = [ "timers.target" ];
   };
   networking.hosts = {
-    "192.168.1.5" = ["rem"];
-    "192.168.1.11" = ["otto"];
+    "10.99.0.1" = ["rem"];
+    "10.99.0.2" = ["otto"];
   };
 }

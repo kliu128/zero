@@ -58,7 +58,6 @@
         ./puck/power.nix
         ./puck/tinc.nix
         ./puck/touchscreen-fix.nix
-        ./puck/wireguard.nix
         ./puck/wireless.nix
       ];
 
@@ -101,7 +100,6 @@
         ./rem/tor.nix
         ./rem/unbound.nix
         ./rem/vfio.nix
-        ./rem/wireguard.nix
       ];
 
       networking.hostName = "rem";

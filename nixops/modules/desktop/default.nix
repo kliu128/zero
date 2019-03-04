@@ -50,7 +50,7 @@
 
   # Printing configuration
   services.printing.enable = true;
-  services.printing.clientConf = "ServerName ${(import ../../wireguard.nix).ips.rem}";
+  services.printing.clientConf = "ServerName 10.99.0.1";
 
   services.syncthing = {
     enable = true;
@@ -67,7 +67,7 @@
 
   environment.systemPackages = with pkgs; [
     # System tools
-    i7z atop borgbackup cool-retro-term cowsay dnsutils file fortune gnupg hdparm htop iftop iotop kitty libva-full lm_sensors lolcat mpw oh-my-zsh rustup screen smartmontools snapraid spectre-meltdown-checker stress-ng telnet thefuck tree vim wget wireguard
+    i7z atop borgbackup cool-retro-term cowsay dnsutils file fortune gnupg hdparm htop iftop iotop kitty libva-full lm_sensors lolcat mpw oh-my-zsh rustup screen smartmontools snapraid spectre-meltdown-checker stress-ng telnet thefuck tree vim wget
     # Desktop applications
     calibre chromium clementine discord emacs gnome3.gnome-disk-utility keepassxc libreoffice-still liferea linphone mate.atril pavucontrol thunderbird transmission_gtk transmission_remote_gtk vokoscreen vlc vscode youtube-dl zoom-us
     # Anki and related packages (for LaTeX support)
@@ -181,17 +181,17 @@
           port = 843;
         };
         otto = {
-          hostname = "192.168.1.11";
+          hostname = "10.99.0.2";
           user = "kevin";
           port = 843;
         };
         puck = {
-          hostname = (import ../../wireguard.nix).ips.puck;
+          hostname = "10.99.0.3";
           user = "kevin";
           port = 843;
         };
         rem = {
-          hostname = (import ../../wireguard.nix).ips.rem;
+          hostname = "10.99.0.1";
           user = "kevin";
           port = 843;
         };
