@@ -3,9 +3,7 @@
 let
   chunkserverDefaults = ''
     BIND_HOST = 10.99.0.1
-    PERFORM_FSYNC = 0
-    NICE_LEVEL = 5
-    HDD_PUNCH_HOLES = 1
+    ${(import ../lizardfs-config.nix).chunkserver}
   '';
 in {
   services.lizardfs.enable = true;
@@ -19,10 +17,12 @@ in {
     MATOCS_LISTEN_HOST = 10.99.0.1
     MATOCL_LISTEN_HOST = 10.99.0.1
     MATOTS_LISTEN_HOST = 10.99.0.1
+
     AUTO_RECOVERY = 1
     REDUNDANCY_LEVEL = 0
     NICE_LEVEL = 5
     USE_BDB_FOR_NAME_STORAGE = 1
+    LOAD_FACTOR_PENALTY = 0.5
   '';
   services.lizardfs.master.exports = ''
     10.99.0.0/24 / rw,maproot=0
@@ -59,7 +59,7 @@ in {
     {
       name = "parity0";
       config = chunkserverDefaults;
-      storageDirectories = [ "/mnt/parity0/mfs" ];
+      storageDirectories = [ "*/mnt/parity0/mfs" ];
       port = 9422;
     }
     {
