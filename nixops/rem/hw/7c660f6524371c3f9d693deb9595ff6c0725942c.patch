@@ -1,0 +1,21 @@
+From 7c660f6524371c3f9d693deb9595ff6c0725942c Mon Sep 17 00:00:00 2001
+From: Steven Barrett <steven@liquorix.net>
+Date: Tue, 12 Feb 2019 21:09:06 -0600
+Subject: [PATCH] muqss: backport export of 'sched_smt_present' from fair.c
+
+---
+ kernel/sched/MuQSS.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/kernel/sched/MuQSS.c b/kernel/sched/MuQSS.c
+index 95b34728255d2..6617880feecbe 100644
+--- a/kernel/sched/MuQSS.c
++++ b/kernel/sched/MuQSS.c
+@@ -235,6 +235,7 @@ int __weak arch_sd_sibling_asym_packing(void)
+ 
+ #ifdef CONFIG_SCHED_SMT
+ DEFINE_STATIC_KEY_FALSE(sched_smt_present);
++EXPORT_SYMBOL_GPL(sched_smt_present);
+ #endif
+ 
+ #else
