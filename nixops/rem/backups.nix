@@ -87,6 +87,17 @@ in {
     '';
     startAt = wave-3;
   };
+  systemd.services.gsuite-mount = {
+    description = "G-Suite rclone FUSE mount";
+    after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
+    wantedBy = [ "multi-user.target" ];
+    path = [ pkgs.fuse ];
+    serviceConfig = {
+      Type = "notify";
+      ExecStart = "${pkgs.rclone}/bin/rclone --config /keys/rclone.conf mount gsuite-mysmccd-crypt: /mnt/gsuite --vfs-cache-mode minimal --allow-other --uid 1000 --gid 100";
+    };
+  };
   systemd.services.switch-sync = {
     enable = true;
     path = [ pkgs.rclone ];

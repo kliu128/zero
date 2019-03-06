@@ -21,8 +21,8 @@ in {
     AUTO_RECOVERY = 1
     REDUNDANCY_LEVEL = 0
     NICE_LEVEL = 5
-    USE_BDB_FOR_NAME_STORAGE = 1
     LOAD_FACTOR_PENALTY = 0.5
+    PREFER_LOCAL_CHUNKSERVER = 0
   '';
   services.lizardfs.master.exports = ''
     10.99.0.0/24 / rw,maproot=0
