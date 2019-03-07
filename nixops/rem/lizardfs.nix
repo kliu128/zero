@@ -59,7 +59,7 @@ in {
     {
       name = "parity0";
       config = chunkserverDefaults;
-      storageDirectories = [ "*/mnt/parity0/mfs" ];
+      storageDirectories = [ "/mnt/parity0/mfs" ];
       port = 9422;
     }
     {

@@ -58,6 +58,9 @@
   networking.bridges.br0 = {
     interfaces = [ "eth0" ];
   };
+  systemd.nspawn.coder = {
+    enable = true;
+  };
 
   # Patch for better PulseAudio (for QEMU 2.12)
   # nixpkgs.config.packageOverrides = pkgs: rec {
