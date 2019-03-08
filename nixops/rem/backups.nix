@@ -99,7 +99,7 @@ in {
     };
   };
   systemd.services.switch-sync = {
-    enable = true;
+    enable = false;
     path = [ pkgs.rclone ];
     serviceConfig = {
       Nice = 19;
