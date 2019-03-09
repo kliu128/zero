@@ -4,8 +4,8 @@
   # Kubernetes
   services.kubernetes = {
     easyCerts = true;
-    masterAddress = "rem";
-    apiserverAddress = "https://rem:6443";
+    masterAddress = "rem.i.potatofrom.space";
+    apiserverAddress = "https://rem.i.potatofrom.space:6443";
     kubelet = {
       allowPrivileged = true;
       # Disable swap warning, and make it so that pods aren't evacuated from nodes due 
@@ -48,9 +48,5 @@
     enable = true;
     timerConfig.OnUnitActiveSec = 600; # every 5 min
     wantedBy = [ "timers.target" ];
-  };
-  networking.hosts = {
-    "10.99.0.1" = ["rem"];
-    "10.99.0.2" = ["otto"];
   };
 }

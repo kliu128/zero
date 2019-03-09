@@ -1,8 +1,11 @@
 { config, lib, pkgs, ... }:
 
 {
-  # configure tinc service
-  # ----------------------
+  networking.hosts = {
+    "10.99.0.1" = ["rem.i.potatofrom.space"];
+    "10.99.0.2" = ["otto.i.potatofrom.space"];
+    "10.99.0.3" = ["puck.i.potatofrom.space"];
+  };
   services.tinc.networks."omnimesh"= {
     interfaceType = "tap";
     chroot = false;

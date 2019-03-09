@@ -181,17 +181,17 @@
           port = 843;
         };
         otto = {
-          hostname = "10.99.0.2";
+          hostname = "otto.i.potatofrom.space";
           user = "kevin";
           port = 843;
         };
         puck = {
-          hostname = "10.99.0.3";
+          hostname = "puck.i.potatofrom.space";
           user = "kevin";
           port = 843;
         };
         rem = {
-          hostname = "10.99.0.1";
+          hostname = "rem.i.potatofrom.space";
           user = "kevin";
           port = 843;
         };
