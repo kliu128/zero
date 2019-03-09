@@ -557,6 +557,13 @@
           command man "$@"
       }
 
+      archive() {
+        pushd /mnt/storage/Kevin/Personal/Code/ArchiveBox
+        echo Sending links $@ to Docker archiver
+        echo $@ | docker-compose exec -T archivebox /bin/archive
+        popd
+      }
+
       export PATH=$HOME/.cargo/bin:$PATH:$HOME/bin:$HOME/Android/Sdk/ndk-bundle:$HOME/Android/Sdk/platform-tools:$HOME/.local/bin
       if [[ "$DISPLAY" ]]; then
         # Use graphical emacs
