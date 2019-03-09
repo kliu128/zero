@@ -21,9 +21,8 @@
 
   # Video.
   boot.earlyVconsoleSetup = true;
-  boot.consoleLogLevel = 8;
   services.xserver.videoDrivers = [ "amdgpu" ];
-  boot.kernelParams = [ "iommu=pt" "consoleblank=300" "amdgpu.gpu_recovery=1" ];
+  boot.kernelParams = [ "consoleblank=300" "amdgpu.gpu_recovery=1" ];
 
   # Freeness (that is, not.)
   hardware.enableRedistributableFirmware = true; # for amdgpu

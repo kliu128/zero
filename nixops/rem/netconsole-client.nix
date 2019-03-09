@@ -1,9 +1,9 @@
 { config, lib, pkgs, ... }:
 
 {
-  # boot.extraModprobeConfig = ''
-  #   options netconsole netconsole=6666@192.168.1.5/eth0,6666@192.168.1.11/
-  # '';
+  boot.extraModprobeConfig = ''
+    options netconsole netconsole=6666@192.168.1.5/br0,6666@192.168.1.11/
+  '';
 
   systemd.services.netconsole = {
     enable = false;
