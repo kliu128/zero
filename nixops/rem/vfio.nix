@@ -58,8 +58,12 @@
   networking.bridges.br0 = {
     interfaces = [ "eth0" ];
   };
-  systemd.nspawn.coder = {
+  systemd.services.coder = {
     enable = true;
+    description = "VSCode Coder Service";
+    path = [ pkgs.systemd ];
+    script = "systemd-nspawn -bUD /var/lib/machines/coder";
+    wantedBy = [ "multi-user.target" ];
   };
 
   # Patch for better PulseAudio (for QEMU 2.12)
