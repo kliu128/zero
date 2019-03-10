@@ -5,12 +5,6 @@
 
 {
   home-manager.users.kevin = {
-    home.packages = with pkgs; [ xorg.xbacklight ];
-    xsession.windowManager.i3.extraConfig = ''
-      # screen brightness controls
-      bindsym XF86MonBrightnessUp exec xbacklight -inc 10
-      bindsym XF86MonBrightnessDown exec xbacklight -dec 10
-    '';
     pam.sessionVariables = {
       # Enable touchscreen support for Firefox
       # see https://support.mozilla.org/en-US/questions/1091627
@@ -28,7 +22,4 @@
   
   # Ignore power key (thank you kunal)
   services.logind.extraConfig = "HandlePowerKey=ignore";
-  
-  services.xserver.desktopManager.plasma5.enable = true;
-  environment.systemPackages = with pkgs; [ arc-kde-theme ];
 }

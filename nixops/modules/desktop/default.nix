@@ -10,16 +10,17 @@
     ./dotnet.nix
     ./emacs
     ./firefox.nix
+    ./flatpak.nix
     ./fonts.nix
     ./games.nix
     ./java.nix
+    ./kdeconnect.nix
     ./keybase.nix
     ./kubernetes.nix
     ./nintendo-switch.nix
     ./nixops.nix
     ./npm.nix
     ./python.nix
-    ./sway
     ./trash.nix
     ./u2f.nix
     ./wincompat.nix
@@ -59,7 +60,6 @@
   };
   networking.firewall.allowedTCPPorts = [ 22000 ];
 
-  services.flatpak.enable = true;
   programs.chromium.enable = true;
   programs.wireshark.enable = true;
   programs.wireshark.package = pkgs.wireshark-gtk;
@@ -67,26 +67,28 @@
 
   environment.systemPackages = with pkgs; [
     # System tools
-    i7z atop borgbackup cool-retro-term cowsay dnsutils file fortune gnupg hdparm htop iftop iotop kitty libva-full lm_sensors lolcat mpw oh-my-zsh rustup screen smartmontools snapraid spectre-meltdown-checker stress-ng telnet thefuck tree vim wget
+    i7z atop borgbackup cowsay dnsutils file fortune gnupg hdparm htop iftop iotop lm_sensors lolcat p7zip rustup smartmontools spectre-meltdown-checker stress-ng telnet thefuck tree vim wget
     # Desktop applications
-    calibre chromium clementine discord emacs gnome3.gnome-calculator gnome3.gnome-disk-utility keepassxc libreoffice-still liferea linphone mate.atril pavucontrol thunderbird transmission_gtk transmission_remote_gtk vokoscreen vlc vscode youtube-dl zoom-us
+    calibre chromium clementine cool-retro-term discord emacs libreoffice-still liferea pavucontrol thunderbird transmission_gtk transmission_remote_gtk vlc vscode youtube-dl zoom-us
     # Anki and related packages (for LaTeX support)
     anki texlive.combined.scheme-basic tetex
     # Desktop tools
     appimage-run
     # KDE applications
-    kate partition-manager spectacle
     # Development
-    bfg-repo-cleaner docker docker_compose docker-machine gcc git-crypt gnumake
+    bfg-repo-cleaner docker docker_compose gcc git-crypt gnumake
     # VM and DevOps
     virtmanager
     # Desktop environment
-    arandr blueman gnome3.cheese conky gnome3.nautilus gnome3.file-roller gvfs i3lock p7zip system-config-printer scrot xautolock xcape
+    arc-kde-theme gnome3.cheese mate.atril kitty
+    ark kate partition-manager spectacle kdesu kcalc
     # Image editing
     gwenview krita
   ];
 
   environment.variables.GIO_EXTRA_MODULES = [ "${pkgs.gvfs}/lib/gio/modules" ];
+
+  services.xserver.desktopManager.plasma5.enable = true;
   
   # Must be done on the system level (not the home-manager level) to install
   # zsh completion for packages in environment.systemPackages
@@ -208,37 +210,6 @@
       };
     };
 
-    # Desktop services
-    services.dunst.enable = true;
-    services.dunst.settings = {
-      global = {
-        follow = "mouse";
-        geometry = "300x5-30+20";
-        indicate_hidden = true;
-        shrink = false;
-        transparency = 0;
-        notification_height = 0;
-        separator_height = 2;
-        padding = 8;
-        horizontal_padding = 8;
-        frame_width = 3;
-        frame_color = "#AAAAAA";
-        separator_color = "auto";
-        sort = true;
-        font = "Monospace 10";
-        line_height = 0;
-        markup = "full";
-        format = "<b>%s</b>\\n%b";
-        alignment = "left";
-        show_age_threshold = 60;
-        word_wrap = true;
-        ellipsize = "middle";
-        ignore_newline = false;
-        stack_duplicates = true;
-        hide_duplicate_count = false;
-        show_indicators = true;
-      };
-    };
     services.gpg-agent.enable = true;
     services.redshift = {
       enable = true;
@@ -285,8 +256,6 @@
       '';
     };
 
-    home.file.".conkyrc".text = builtins.readFile ./.conkyrc;
-
     # GTK & Qt
     gtk = {
       enable = true;
@@ -304,234 +273,12 @@
       useGtkTheme = true;
     };
 
-    # i3
-    xsession.enable = false;
-    xsession.initExtra = ''
-      # Start polkit agent to allow for superuser operations
-      ${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1 &
-    '';
     pam.sessionVariables = {
       GPODDER_HOME = "/home/kevin/.config/gPodder";
       GPODDER_DOWNLOAD_DIR = "/mnt/storage/Kevin/Audio/Podcasts";
       # Use system Qt theme for Calibre
       CALIBRE_USE_SYSTEM_THEME = "true";
     };
-
-    xsession.windowManager.i3 = let
-      modifier = "Mod4";
-    in {
-      enable = true;
-      package = pkgs.i3-gaps;
-      config = {
-        bars = [ ];
-        fonts = [ "pango: Fira Code 10" ];
-        gaps = {
-          inner = 4;
-          outer = 6;
-          smartGaps = true;
-        };
-        keybindings = {
-          # Extend default i3 binds
-
-          # Vim movement
-          "${modifier}+h" = "focus left";
-          "${modifier}+j" = "focus down";
-          "${modifier}+k" = "focus up";
-          "${modifier}+l" = "focus right";
-
-          # Vim movement for windows
-          "${modifier}+Shift+h" = "move left";
-          "${modifier}+Shift+j" = "move down";
-          "${modifier}+Shift+k" = "move up";
-          "${modifier}+Shift+l" = "move right";
-
-          # Menu and term
-          "${modifier}+d" = ''exec "PATH=$PATH:$HOME/.local/bin rofi -combi-modi drun,run,window -show combi -modi combi -font 'Fira Code 11'"'';
-          "${modifier}+Return" = "exec kitty tmux attach";
-
-          # Scratchpad
-          "${modifier}+Shift+minus" = "move scratchpad";
-          "${modifier}+minus" = "scratchpad show";
-
-          # Locking
-          "Pause" = "exec xautolock -locknow && sleep 5 && pgrep i3lock && xset dpms force off";
-          "Shift+Pause" = "exec xautolock -toggle && ${pkgs.libnotify}/bin/notify-send 'Toggled screen locking.'";
-        };
-        modifier = modifier;
-        startup = [
-          { command = "nitrogen --restore"; notification = false; }
-          { command = "xcape"; notification = false; }
-          { command = ''xautolock -time 5 -locker "i3lock" -corners ----''; notification = false; }
-          { command = "xset s 290"; notification = false; }
-          #{ command = "autokey-gtk"; notification = false; }
-          { command = "ibus-daemon"; notification = false; }
-          { command = "kdeconnect-indicator"; notification = false; }
-          { command = "${pkgs.feh}/bin/feh --bg-fill ${./bg.jpg}"; notification = false; }
-        ];
-      };
-      extraConfig = ''
-        # COLORS & BAR
-        # ============
-        # Base16 Unikitty by Josh W Lewis (@joshwlewis)
-        # template by Matt Parnell, @parnmatt
-
-        set $base00 #2e2a31
-        set $base01 #4b484e
-        set $base02 #69666b
-        set $base03 #878589
-        set $base04 #a5a3a6
-        set $base05 #c3c2c4
-        set $base06 #e1e0e1
-        set $base07 #ffffff
-        set $base08 #d8137f
-        set $base09 #d65407
-        set $base0A #dc8a0e
-        set $base0B #17ad98
-        set $base0C #149bda
-        set $base0D #7864fa
-        set $base0E #b33ce8
-        set $base0F #d41acd
-
-        client.focused $base0D $base0D $base00 $base01
-        client.focused_inactive $base02 $base02 $base03 $base01
-        client.unfocused $base01 $base01 $base03 $base01
-        client.urgent $base02 $base08 $base07 $base08
-
-        bar {
-            status_command bash ${./conky-bar.sh}
-            i3bar_command i3bar -t
-            font pango:Fira Code
-            position top
-            
-            colors {
-                separator $base03
-                background $base01
-                statusline $base05
-                focused_workspace $base0C $base0D $base00
-                active_workspace $base02 $base02 $base07
-                inactive_workspace $base01 $base01 $base03
-                urgent_workspace $base08 $base08 $base07
-            }
-        }
-
-        # split in vertical orientation
-        bindsym Mod4+v split v
-
-        # enter fullscreen mode for the focused container
-        bindsym Mod4+f fullscreen toggle
-
-        # change container layout (stacked, tabbed, toggle split)
-        bindsym Mod4+s layout stacking
-        bindsym Mod4+w layout tabbed
-        bindsym Mod4+e layout toggle split
-
-        # toggle tiling / floating
-        bindsym Mod4+Shift+space floating toggle
-
-        # change focus between tiling / floating windows
-        bindsym Mod4+space focus mode_toggle
-
-        # focus the parent container
-        bindsym Mod4+a focus parent
-
-        # focus the child container
-        #bindsym Mod4+d focus child
-
-        # Define names for default workspaces for which we configure key bindings later on.
-        # We use variables to avoid repeating the names in multiple places.
-        set $ws1 "1"
-        set $ws2 "2"
-        set $ws3 "3"
-        set $ws4 "4"
-        set $ws5 "5"
-        set $ws6 "6"
-        set $ws7 "7"
-        set $ws8 "8"
-        set $ws9 "9"
-        set $ws10 "10"
-
-
-        # switch to workspace
-        bindsym Mod4+1 workspace $ws1
-        bindsym Mod4+2 workspace $ws2
-        bindsym Mod4+3 workspace $ws3
-        bindsym Mod4+4 workspace $ws4
-        bindsym Mod4+5 workspace $ws5
-        bindsym Mod4+6 workspace $ws6
-        bindsym Mod4+7 workspace $ws7
-        bindsym Mod4+8 workspace $ws8
-        bindsym Mod4+9 workspace $ws9
-        bindsym Mod4+0 workspace $ws10
-
-        # move focused container to workspace
-        bindsym Mod4+Shift+1 move container to workspace $ws1
-        bindsym Mod4+Shift+2 move container to workspace $ws2
-        bindsym Mod4+Shift+3 move container to workspace $ws3
-        bindsym Mod4+Shift+4 move container to workspace $ws4
-        bindsym Mod4+Shift+5 move container to workspace $ws5
-        bindsym Mod4+Shift+6 move container to workspace $ws6
-        bindsym Mod4+Shift+7 move container to workspace $ws7
-        bindsym Mod4+Shift+8 move container to workspace $ws8
-        bindsym Mod4+Shift+9 move container to workspace $ws9
-        bindsym Mod4+Shift+0 move container to workspace $ws10
-        # kill focused window
-        bindsym Mod4+Shift+q kill
-
-        # reload the configuration file
-        bindsym Mod4+Shift+c reload
-        # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-        bindsym Mod4+Shift+r restart
-        # exit i3 (logs you out of your X session)
-        bindsym Mod4+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
-
-        # resize window (you can also use the mouse for that)
-        mode "resize" {
-                # These bindings trigger as soon as you enter the resize mode
-
-                # Pressing left will shrink the window’s width.
-                # Pressing right will grow the window’s width.
-                # Pressing up will shrink the window’s height.
-                # Pressing down will grow the window’s height.
-                bindsym $left       resize shrink width 10 px or 10 ppt
-                bindsym $down       resize grow height 10 px or 10 ppt
-                bindsym $up         resize shrink height 10 px or 10 ppt
-                bindsym $right      resize grow width 10 px or 10 ppt
-
-                # same bindings, but for the arrow keys
-                bindsym Left        resize shrink width 10 px or 10 ppt
-                bindsym Down        resize grow height 10 px or 10 ppt
-                bindsym Up          resize shrink height 10 px or 10 ppt
-                bindsym Right       resize grow width 10 px or 10 ppt
-
-                # back to normal: Enter or Escape or Mod4+r
-                bindsym Return mode "default"
-                bindsym Escape mode "default"
-                bindsym Mod4+r mode "default"
-        }
-
-        bindsym Mod4+r mode "resize"
-      '';
-    };
-
-    # Compositor
-    services.compton = {
-      enable = true;
-      vSync = "opengl-swc";
-      fade = true;
-      fadeDelta = 5;
-      backend = "glx";
-    };
-    # Allow Compton to be used with OpenGL -- see
-    # https://github.com/ValveSoftware/steam-for-linux/issues/5434#issuecomment-379027036
-    home.file.".drirc".text = ''
-      <driconf>
-        <device driver="amdgpu">
-          <application name="compton" executable="compton">
-            <option name="allow_rgb10_configs" value="false" />
-          </application>
-        </device>
-      </driconf>
-    '';
 
     # Keyboard
     home.keyboard.layout = "us";
