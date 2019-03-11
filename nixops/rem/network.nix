@@ -16,6 +16,7 @@
       ip addr del 192.168.1.5/24 dev eth0
     '';
     serviceConfig.RemainAfterExit = true;
+    restartIfChanged = false;
     serviceConfig.Type = "oneshot";
   };
 

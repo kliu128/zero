@@ -81,13 +81,14 @@
     virtmanager
     # Desktop environment
     arc-kde-theme gnome3.cheese mate.atril kitty
-    ark kate partition-manager spectacle kdesu kcalc
+    ark unar kate partition-manager spectacle kdesu kcalc
     # Image editing
     gwenview krita
   ];
 
   environment.variables.GIO_EXTRA_MODULES = [ "${pkgs.gvfs}/lib/gio/modules" ];
 
+  services.xserver.displayManager.sddm.enable = true;
   services.xserver.desktopManager.plasma5.enable = true;
   
   # Must be done on the system level (not the home-manager level) to install
