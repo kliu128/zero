@@ -67,7 +67,8 @@ data:
         "feature_lazyloading": "enable",
         "feature_tabbed_settings": "labs",
         "feature_sas": "labs",
-        "feature_room_breadcrumbs": "labs"
+        "feature_room_breadcrumbs": "labs",
+        "feature_state_counters": "labs"
       },
       "roomDirectory": {
         "servers": [
