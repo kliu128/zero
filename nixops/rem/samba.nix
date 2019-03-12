@@ -8,9 +8,6 @@
     extraConfig = ''
       security = user
       map to guest = Bad User
-
-      interfaces = 192.168.1.5 192.168.122.1
-      bind interfaces only = yes
     '';
     syncPasswordsByPam = false;
     nsswins = false;
@@ -20,12 +17,21 @@
         "path" = "/mnt/storage";
         "read only" = false;
         "acl allow execute always" = true; # Allow executing EXEs from network
+        "allow hosts" = "192.168.1. 10.99.0.3";
+      };
+      home = {
+        "browseable" = "yes";
+        "path" = "/home/kevin";
+        "read only" = false;
+        "acl allow execute always" = true; # Allow executing EXEs from network
+        "allow hosts" = "10.99.0.3"; # puck only
       };
       pluralsight = {
         "browseable" = "yes";
         "guest ok" = "yes"; # allow anybody to view
         "path" = "/mnt/storage/Kevin/Videos/Pluralsight";
         "read only" = true;
+        "allow hosts" = "192.168.1.";
       };
     };
   };
