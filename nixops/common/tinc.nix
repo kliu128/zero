@@ -2,8 +2,8 @@
 
 {
   networking.hosts = {
-    "10.99.0.1" = ["rem.i.potatofrom.space"];
-    "10.99.0.2" = ["otto.i.potatofrom.space"];
+    "10.99.0.1" = ["rem.i.potatofrom.space" "rem"];
+    "10.99.0.2" = ["otto.i.potatofrom.space" "otto"];
     "10.99.0.3" = ["puck.i.potatofrom.space"];
   };
   services.tinc.networks."omnimesh"= {

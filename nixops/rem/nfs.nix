@@ -13,6 +13,6 @@
       /srv/nfs 192.168.1.0/24(rw,fsid=0,sync,no_root_squash,crossmnt)
     '';
   };
-  systemd.services."nfs-server".restartIfCahnged = false;
+  systemd.services."nfs-server".restartIfChanged = false;
 }
 
