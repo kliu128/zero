@@ -226,10 +226,10 @@
         {
           "team.showWelcomeMessage": false,
           "git.enableSmartCommit": true,
-          "workbench.colorTheme": "Kimbie Dark",
+          "workbench.colorTheme": "Solarized Light",
           // Suppress the warning that the .NET CLI is not on the path.
           "csharp.suppressDotnetInstallWarning": true,
-          "files.autoSave": "onFocusChange",
+          "files.autoSave": false,
           "telemetry.enableTelemetry": false,
           "workbench.iconTheme": "vs-nomo-dark",
           "editor.fontFamily": "Fira Code",
@@ -261,11 +261,11 @@
     gtk = {
       enable = true;
       iconTheme = {
-        name = "Papirus-Dark";
+        name = "Papirus-Light";
         package = pkgs.papirus-icon-theme;
       };
       theme = {
-        name = "Arc-Dark";
+        name = "Arc";
         package = pkgs.arc-theme;
       };
     };
