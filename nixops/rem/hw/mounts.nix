@@ -120,8 +120,9 @@
   };
   # Seagate Backup Plus Hub
   fileSystems."/mnt/parity0" = {
-    device = "/dev/mapper/parity0";
-    options = [ "errors=remount-ro" "noatime" "lazytime" "noexec" "nodev" ];
+    device = "parity0";
+    fsType = "zfs";
+    options = [ "noatime" "lazytime" "noexec" "nodev" ];
     encrypted = {
       enable = true;
       blkDev = "/dev/disk/by-uuid/b9eb89d2-c5f8-4eb1-b1c0-601af8b8877c";
