@@ -21,12 +21,12 @@ spec:
             value: "--allow_remote_gui_rpc"
           - name: BOINC_GUI_RPC_PASSWORD
             value: {{ .Values.boinc_amd.password | quote }}
-        image: pneumaticat/boinc
+        image: boinc/client:amd
         resources:
           limits:
             amd.com/gpu: 1
         volumeMounts:
-        - mountPath: /var/lib/boinc-client
+        - mountPath: /var/lib/boinc
           name: data
         restartPolicy: Always
       volumes:

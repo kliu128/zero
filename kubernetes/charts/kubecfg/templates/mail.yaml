@@ -35,15 +35,17 @@ spec:
               containerPort: 993
           env:
             - name: ENABLE_CLAMAV
-              value: '0'
+              value: '1'
             - name: ENABLE_AMAVIS
-              value: '0'
+              value: '1'
             - name: ENABLE_SPAMASSASSIN
               value: '1'
             - name: PERMIT_DOCKER
               value: network
             - name: OVERRIDE_HOSTNAME
               value: mail.potatofrom.space
+            - name: SA_KILL
+              value: "1000.00"
             - name: SSL_TYPE
               value: 'manual'
             - name: SSL_CERT_PATH
@@ -59,6 +61,9 @@ spec:
             - secretRef:
                 name: mailserver.mailgun-relayhost
           volumeMounts:
+            - name: config
+              subPath: after.dovecot.sieve
+              mountPath: /tmp/docker-mailserver/after.dovecot.sieve
             - name: config
               subPath: postfix-accounts.cf
               mountPath: /tmp/docker-mailserver/postfix-accounts.cf
