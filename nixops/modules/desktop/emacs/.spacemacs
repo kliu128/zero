@@ -492,7 +492,7 @@ you should place your code here."
   (setq org-agenda-start-on-weekday nil)
   (setq org-agenda-skip-scheduled-if-done t)
   (setq org-agenda-skip-deadline-if-done t)
-  (setq org-agenda-skip-deadline-prewarning-if-scheduled 4) ;; days
+  (setq org-agenda-skip-deadline-prewarning-if-scheduled 365) ;; days
   (setq org-agenda-skip-scheduled-if-deadline-is-shown t)
   (setq org-agenda-compact-blocks t)
 
