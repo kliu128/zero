@@ -36,27 +36,6 @@
   } ];
   boot.kernel.sysctl."vm.min_free_kbytes" = 256000;
 
-  # systemd.tmpfiles.rules = [
-  #   "w /sys/module/zswap/parameters/compressor - - - - zstd"
-  #   "w /sys/module/zswap/parameters/zpool - - - - z3fold"
-  #   "w /sys/module/zswap/parameters/enabled - - - - Y"
-  # ];
-
-  # HACKS
-  systemd.services.apply-scheduler-priorities = {
-    enable = true;
-    path = with pkgs; [ procps utillinux ];
-    script = ''
-      if pidof sway; then
-        chrt --rr --reset-on-fork -p 99 $(pidof sway)
-      fi
-      if pidof Xwayland; then
-        chrt --rr --reset-on-fork -p 99 $(pidof Xwayland)
-      fi
-    '';
-    startAt = "minutely";
-  };
-
   # Reset keyboard on bootup (Pok3r)
   # Otherwise keys get dropped, for some reason
   # Same with webcam - mic breaks

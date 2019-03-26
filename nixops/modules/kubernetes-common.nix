@@ -31,6 +31,7 @@
   };
   services.nfs.server.enable = true;
   systemd.services.flannel.path = [ pkgs.iptables ];
+  systemd.services.mk-docker-opts.restartIfChanged = false;
 
   systemd.services.clean-up-flannel-ips = {
     enable = true;

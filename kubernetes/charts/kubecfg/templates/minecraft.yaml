@@ -20,16 +20,18 @@ spec:
               value: "TRUE"
             # Set Minecraft version and opts
             - name: VERSION
-              value: "1.10.2"
+              value: "1.13.2"
             - name: TYPE
-              value: FORGE
-            - name: FORGEVERSION
-              value: 12.18.3.2477
+              value: VANILLA
+            # - name: FORGEVERSION
+            #   value: 12.18.3.2477
             - name: MEMORY
-              value: 2G
+              value: 1500M
             # Minecraft config
             - name: DIFFICULTY
               value: hard
+            - name: JVM_XX_OPTS
+              value: -XX:+DisableExplicitGC -XX:+UseConcMarkSweepGC -XX:MaxGCPauseMillis=80 -XX:+UseStringDeduplication -XX:+UseCompressedOops -XX:+UseCodeCacheFlushing
             - name: OPS
               value: nitroignika,WildTaegr
             - name: ENABLE_QUERY
@@ -45,8 +47,8 @@ spec:
             - name: data
               mountPath: /data
           # Allow for attaching
-          tty: true
-          stdin: true
+          # tty: true
+          # stdin: true
       nodeSelector:
         kubernetes.io/hostname: rem
       hostNetwork: true

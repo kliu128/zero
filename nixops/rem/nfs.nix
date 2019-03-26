@@ -13,6 +13,9 @@
       /srv/nfs 192.168.1.0/24(rw,fsid=0,sync,no_root_squash,crossmnt)
     '';
   };
-  systemd.services."nfs-server".restartIfChanged = false;
+  systemd.services.nfs-server.restartIfChanged = false;
+  systemd.services.nfs-idmapd.restartIfChanged = false;
+  systemd.services.nfs-mountd.restartIfChanged = false;
+  systemd.services.rpc-statd.restartIfChanged = false;
 }
 

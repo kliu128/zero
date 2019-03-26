@@ -13,6 +13,7 @@
     ./flatpak.nix
     ./fonts.nix
     ./games.nix
+    ./gnome.nix
     ./java.nix
     ./kdeconnect.nix
     ./keybase.nix
@@ -69,7 +70,7 @@
     # System tools
     i7z atop borgbackup cowsay dnsutils file fortune gnupg hdparm htop iftop iotop lm_sensors lolcat p7zip rustup smartmontools spectre-meltdown-checker stress-ng telnet thefuck tree vim wget
     # Desktop applications
-    calibre chromium clementine cool-retro-term discord emacs libreoffice-still liferea pavucontrol gnome3.pomodoro thunderbird transmission_gtk transmission_remote_gtk vlc vscode youtube-dl zoom-us
+    calibre chromium clementine cool-retro-term discord libreoffice-still liferea pavucontrol gnome3.pomodoro thunderbird transmission_gtk transgui vlc vscode youtube-dl zoom-us
     # Anki and related packages (for LaTeX support)
     anki texlive.combined.scheme-basic tetex
     # Desktop tools
@@ -79,17 +80,7 @@
     bfg-repo-cleaner docker docker_compose gcc git-crypt gnumake
     # VM and DevOps
     virtmanager
-    # Desktop environment
-    arc-kde-theme gnome3.cheese mate.atril kitty
-    ark unar kate partition-manager spectacle kdesu kcalc
-    # Image editing
-    gwenview krita
   ];
-
-  environment.variables.GIO_EXTRA_MODULES = [ "${pkgs.gvfs}/lib/gio/modules" ];
-
-  services.xserver.displayManager.sddm.enable = true;
-  services.xserver.desktopManager.plasma5.enable = true;
   
   # Must be done on the system level (not the home-manager level) to install
   # zsh completion for packages in environment.systemPackages
@@ -212,13 +203,6 @@
     };
 
     services.gpg-agent.enable = true;
-    services.redshift = {
-      enable = true;
-      provider = "manual"; # Provide own longitude + latitude
-      latitude = "42";
-      longitude = "-71";
-      tray = true;
-    };
 
     # Visual Studio Code config
     home.file.".config/Code/User/settings.json" = {

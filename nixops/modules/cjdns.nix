@@ -2,7 +2,7 @@
 
 {
   services.cjdns = {
-    enable = true;
+    enable = false;
     UDPInterface = {
       bind = "0.0.0.0:43211";
       connectTo = {

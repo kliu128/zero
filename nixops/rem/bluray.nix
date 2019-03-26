@@ -11,6 +11,10 @@
     source = ./ripper.py;
   };
 
+  users.extraUsers.kevin.extraGroups = [ "cdrom" ];
+
+  boot.kernel.sysctl."dev.cdrom.autoclose" = 0; # Stop CD drive from double-closing
+
   boot.kernelModules = [ "sg" ]; # for MakeMKV
 
   # Enable blu-ray support in vlc/etc.

@@ -15,6 +15,7 @@
     serviceConfig = {
       Type = "forking";
       ExecStart = "${pkgs.scanbd}/bin/scanbd --debug=2 --config=${./scanbd.conf}";
+      Restart = "always";
     };
     wantedBy = [ "multi-user.target" ];
   };

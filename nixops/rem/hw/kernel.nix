@@ -3,7 +3,6 @@
 {
   # boot.kernelParams = [ "rqshare=smp" ];
   boot.kernelPackages = pkgs.linuxPackages_4_19;
-  # programs.criu.enable = true;
   # nixpkgs.config.packageOverrides = pkgs: rec {
   #   kubernetes = pkgs.kubernetes.overrideAttrs (oldAttrs: rec {
   #     postPatch = ''
@@ -12,4 +11,5 @@
   #     '';
   #   });
   # };
+  # systemd.services.kubelet.restartIfChanged = false;
 }

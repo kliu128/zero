@@ -15,11 +15,11 @@
   
   fileSystems."/" = {
     device = "/dev/mapper/root"; 
-    fsType = "xfs";
+    fsType = "ext4";
     options = [ "defaults" ];
   };
   boot.initrd.luks.devices."root" = {
-    device = "/dev/disk/by-uuid/8a1b105c-5772-477e-8b60-49de6ccf4b86";
+    device = "/dev/disk/by-id/ata-Samsung_SSD_860_EVO_500GB_S3Z1NB0K384615J-part2";
     allowDiscards = true;
   };
   # Allow discards on the root partition
@@ -192,6 +192,7 @@
     after = [ "network-online.target" ];
     wants = [ "network-online.target" ];
     wantedBy = [ "multi-user.target" ];
+    restartIfChanged = false;
     path = [ pkgs.fuse ];
     serviceConfig = {
       Type = "notify";

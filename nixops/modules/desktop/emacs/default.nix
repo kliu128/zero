@@ -4,6 +4,7 @@ with import <nixpkgs> {};
 with lib;
 
 {
+  environment.systemPackages = with pkgs; [ emacs ];
   home-manager.users.kevin = {
     # Emacs
     home.file.".spacemacs".text = builtins.readFile ./.spacemacs;

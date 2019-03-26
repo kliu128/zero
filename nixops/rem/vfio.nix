@@ -59,12 +59,26 @@
     interfaces = [ "eth0" ];
   };
   systemd.services.coder = {
-    enable = true;
+    enable = false;
     description = "VSCode Coder Service";
     path = [ pkgs.systemd ];
     script = "systemd-nspawn -bUD /var/lib/machines/coder";
     wantedBy = [ "multi-user.target" ];
   };
+  virtualisation.anbox.enable = true;
+  systemd.network.netdevs.anbox-dummy = {
+    enable = true;
+    netdevConfig.Name = "anbox-dummy";
+    netdevConfig.Kind = "dummy";
+  }; 
+  systemd.network.networks.anbox-dummy = {
+    enable = true;
+    matchConfig.Name = "anbox-dummy";
+    networkConfig = {
+      Bridge = "anbox0";
+      DHCP = "no";
+    };
+  }; 
 
   # Patch for better PulseAudio (for QEMU 2.12)
   # nixpkgs.config.packageOverrides = pkgs: rec {
