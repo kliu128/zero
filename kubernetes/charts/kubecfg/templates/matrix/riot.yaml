@@ -21,13 +21,12 @@ spec:
         app: riot
     spec:
       containers:
-        - image: registry.potatofrom.space/kevin/riot-web:latest
+        - image: avhost/docker-matrix-riot
           name: riot-web
           resources: {}
           volumeMounts:
-          - mountPath: /usr/share/nginx/html/config.json
+          - mountPath: /data
             name: config
-            subPath: config.json
       restartPolicy: Always
       volumes:
         - name: config

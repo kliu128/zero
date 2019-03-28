@@ -42,13 +42,13 @@
       export PATH=${lib.makeBinPath [ pkgs.coreutils pkgs.sane-backends pkgs.imagemagick pkgs.ghostscript ]}
       set -x
 
-      date="$(date --iso-8601=seconds)"
-      filename="Scan $date.pdf"
-      exec 3>&1 1>>"/srv/paperless-incoming/$filename.log" 2>&1
+      # Paperless date format - see https://github.com/the-paperless-project/paperless/blob/e3a616ebc3796f65f8c780daa13044aa0c380fe8/docs/guesswork.rst
+      date="$(date --utc +'%Y%m%d%H%M%SZ')"
+      filename="$date - Untitled Scan.pdf"
       tmpdir="$(mktemp -d)"
       pushd "$tmpdir"
 
-      scanimage --batch=out%d.jpg --format=jpeg --mode Color -d "fujitsu:ScanSnap S500M:4530" --source "ADF Duplex" --resolution 300
+      scanimage --batch=out%d.jpg --format=jpeg --mode Color -d "fujitsu:ScanSnap S500M:4530" --source "ADF Duplex" --resolution 150
       
       for i in out*.jpg; do convert $i ''${i//jpg/pdf}; done
 

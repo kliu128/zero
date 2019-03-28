@@ -13,8 +13,6 @@ spec:
       labels:
         app: archiveteam-warrior
     spec:
-      nodeSelector:
-        kubernetes.io/hostname: rem
       containers:
         - image: archiveteam/warrior-dockerfile
           name: archiveteam-warrior
@@ -22,17 +20,14 @@ spec:
             - name: DOWNLOADER
               value: Pneumaticat
             - name: SELECTED_PROJECT
-              value: flickr
+              value: auto
             - name: CONCURRENT_ITEMS
-              value: "20"
+              value: "6"
           ports:
             - containerPort: 8001
               name: http
-          resources: {}
           livenessProbe:
             httpGet:
               path: /
               port: 8001
             initialDelaySeconds: 240
-      restartPolicy: Always
-status: {}
