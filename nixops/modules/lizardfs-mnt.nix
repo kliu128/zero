@@ -20,6 +20,7 @@
       Type = "forking";
       Restart = "on-failure";
       RestartSec = "5";
+      Nice = 5;
     };
   };
   systemd.tmpfiles.rules = [

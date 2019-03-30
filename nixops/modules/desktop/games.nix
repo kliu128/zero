@@ -3,7 +3,7 @@
 {
   environment.systemPackages = with pkgs; [
     # Games
-    dolphinEmuMaster multimc steam steam-run-native
+    dolphinEmuMaster factorio multimc steam steam-run-native
     # Wine
     wineWowPackages.unstable winetricks 
   ];
@@ -26,7 +26,7 @@
     winetricks = pkgs.winetricks.override { wine = pkgs.wineWowPackages.unstable; };
     factorio = pkgs.factorio.override {
       username = "Pneumaticat";
-      password = builtins.readFile ../secrets/factorio-password.txt;
+      token = builtins.readFile ../../secrets/factorio-token.txt;
     };
   };
 }

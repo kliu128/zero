@@ -30,8 +30,6 @@ spec:
             # Minecraft config
             - name: DIFFICULTY
               value: hard
-            - name: JVM_XX_OPTS
-              value: -XX:+DisableExplicitGC -XX:+UseConcMarkSweepGC -XX:MaxGCPauseMillis=80 -XX:+UseStringDeduplication -XX:+UseCompressedOops -XX:+UseCodeCacheFlushing
             - name: OPS
               value: nitroignika,WildTaegr
             - name: ENABLE_QUERY
