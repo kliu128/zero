@@ -37,6 +37,7 @@
         ./otto/initrd-ssh.nix
         ./otto/lizardfs.nix
         ./otto/netconsole-receiver.nix
+        ./otto/reverse-proxy.nix
         ./otto/tinc.nix
       ];
 
