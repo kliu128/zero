@@ -36,6 +36,11 @@
   } ];
   boot.kernel.sysctl."vm.min_free_kbytes" = 256000;
 
+  services.earlyoom = {
+    enable = true;
+    enableDebugInfo = true;
+  };
+
   # Reset keyboard on bootup (Pok3r)
   # Otherwise keys get dropped, for some reason
   # Same with webcam - mic breaks
