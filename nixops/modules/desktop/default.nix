@@ -140,6 +140,9 @@
         key = "8792E2260F507DA00F0DB58E2160C3EB40A944EC";
         signByDefault = true;
       };
+      extraConfig = {
+        credential.helper = "libsecret";
+      };
     };
 
     home.file.".local/share/thunderbird-signature.png".source = ./signature.html;
