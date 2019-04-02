@@ -32,7 +32,7 @@
         4AJYUc9WHs0G9JtYln8saFCYaFXRVlD92bldthXuaUalH/BRcBvTvYCz+00Der4x
         iQB8PPr1bq2qqslUmYjAj5XUzniNohcilSs8v2oMbNtACDWoweNO9NMCAwEAAQ==
         -----END RSA PUBLIC KEY-----
-        '';
+      '';
       otto = ''
         Compression = 10
         Address = 192.168.1.11
@@ -69,6 +69,17 @@
         0y5I4dIpHxwbLO9+xZRi1dBJoiBNT7ynXSUztM7wa0RWGcKp3cf5GkRNBgL76a5F
         MyrrG+I440h6hfUR5vkSdzVi7mpYqLCJEzhe2UgeXQMNRIUYkoy4J58CAwEAAQ==
         -----END RSA PUBLIC KEY-----
+      '';
+      momo = ''
+        -----BEGIN RSA PUBLIC KEY-----
+        MIIBCgKCAQEAoF/cvSKWBniIEOGQpZ56hug3Ticp7fgEq71mkCGpYk9o+5gm3qjo
+        OpsNdPJ/RiEzrJsLRpvkj15J4fduh8XBsRNRR6VF6G+21SH5EA1OK/xKQqB4mvcN
+        kHE+C3p8PoDiTa3k3xI5XwTC6QnIqKetEG82eE38mwBf2i4sCHfTBdPc3GOc8A75
+        aleLfPKSNo3Rx3+WtpISQDqi1XPtEYWRomDTThWCsZwBhk5DluQjRg/XiPpQRzgc
+        06WC9BBsPg5tjGnFfk1SZ3WLo954vZdum1Jle/Vq7k3ij7BoNVBl3bV+drMAYcuO
+        sAJSVJQFf28/LWf5IAn50jRMvcC2IFWFgQIDAQAB
+        -----END RSA PUBLIC KEY-----
+        Ed25519PublicKey = Zexdm7zGAEakqj4JGYYKawKcyDm80iaCktt0k+Va66F
       '';
     };
   };

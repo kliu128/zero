@@ -25,9 +25,6 @@
       Type = "notify";
       NotifyAccess = "all";
     };
-    unitConfig = {
-      PartOf = "anbox-vnc.service";
-    };
     path = with pkgs; [ xvfb_run anbox systemd coreutils ];
     # See https://github.com/anbox/anbox/issues/597 for XDG_RUNTIME_DIR
     script = ''
@@ -48,6 +45,7 @@
     script = ''
       exec x11vnc -many -display :99 -localhost
     '';
+    unitConfig.PartOf = "anbox-session-manager.service";
     after = [ "anbox-session-manager.service" ];
     wantedBy = [ "multi-user.target" ];
   };

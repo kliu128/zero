@@ -22,6 +22,9 @@
       }
       table {
         ^((.+\.)|())potatofrom\.space$ 10.99.0.1
+        ^((.+\.)|())scintillating\.us$ 192.168.1.3
+        ^((.+\.)|())scintillate\.me$ 192.168.1.3
+        ^backend\.delph\.us$ 192.168.1.3
       }
     '';
   };

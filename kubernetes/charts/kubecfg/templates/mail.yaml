@@ -40,8 +40,6 @@ spec:
               value: '0'
             - name: ENABLE_SPAMASSASSIN
               value: '1'
-            - name: PERMIT_DOCKER
-              value: network
             - name: OVERRIDE_HOSTNAME
               value: mail.potatofrom.space
             - name: SA_KILL
