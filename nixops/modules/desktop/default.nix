@@ -72,7 +72,7 @@
     # Desktop applications
     calibre chromium clementine cool-retro-term discord libreoffice-still liferea pavucontrol gnome3.pomodoro thunderbird transmission_gtk transgui vlc vscode youtube-dl zoom-us
     # Anki and related packages (for LaTeX support)
-    anki texlive.combined.scheme-basic tetex
+    anki polar-bookshelf texlive.combined.scheme-basic tetex
     # Desktop tools
     appimage-run
     # KDE applications
