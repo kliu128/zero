@@ -211,18 +211,17 @@
     home.file.".config/Code/User/settings.json" = {
       text = ''
         {
-          "team.showWelcomeMessage": false,
           "git.enableSmartCommit": true,
           "workbench.colorTheme": "Solarized Light",
           "files.autoSave": "off",
-          "update.channel": "none",
+          "update.mode": "none",
           "telemetry.enableTelemetry": false,
-          "workbench.iconTheme": "seti",
           "editor.fontFamily": "Fira Code",
           "editor.fontLigatures": true,
           "editor.wordWrap": "on",
           "editor.tabSize": 2,
-          "window.titleBarStyle": "custom"
+          "window.titleBarStyle": "custom",
+          "typescript.updateImportsOnFileMove.enabled": "always"
         }
       '';
     };

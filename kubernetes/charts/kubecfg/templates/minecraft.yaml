@@ -26,7 +26,7 @@ spec:
             # - name: FORGEVERSION
             #   value: 12.18.3.2477
             - name: MEMORY
-              value: 1500M
+              value: 1G
             # Minecraft config
             - name: DIFFICULTY
               value: hard
