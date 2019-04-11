@@ -13,7 +13,7 @@
     ./flatpak.nix
     ./fonts.nix
     ./games.nix
-    ./gnome.nix
+    ./kde.nix
     ./java.nix
     ./kdeconnect.nix
     ./keybase.nix
@@ -221,7 +221,8 @@
           "editor.wordWrap": "on",
           "editor.tabSize": 2,
           "window.titleBarStyle": "custom",
-          "typescript.updateImportsOnFileMove.enabled": "always"
+          "typescript.updateImportsOnFileMove.enabled": "always",
+          "editor.suggestSelection": "first"
         }
       '';
     };

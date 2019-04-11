@@ -13,8 +13,7 @@ spec:
     spec:
       containers:
         - name: discord
-          image: pneumaticat/matrix-appservice-discord:latest
-          imagePullPolicy: Always
+          image: halfshot/matrix-appservice-discord:develop
           ports:
             - containerPort: 9005
               name: discord

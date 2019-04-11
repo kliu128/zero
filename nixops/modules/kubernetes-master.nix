@@ -3,6 +3,7 @@
 {
   # Kubernetes
   services.kubernetes.roles = [ "node" "master" ];
+  networking.firewall.allowedTCPPorts = [ 8888 ]; # cfssl
 
   services.etcd = {
     extraConf = {

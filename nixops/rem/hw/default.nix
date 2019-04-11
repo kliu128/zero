@@ -18,8 +18,7 @@
   boot.initrd.kernelModules = [ "amdkfd" "amdgpu" ]; # for early KMS
   boot.initrd.availableKernelModules = [ "ehci_pci" "ahci" "xhci_pci" "usb_storage" "usbhid" "sd_mod" "sr_mod" ];
   boot.kernelModules = [ "kvm-intel" ];
-  virtualisation.docker.storageDriver = "overlay2";
-
+  services.earlyoom.enable = true;
   # Video.
   boot.earlyVconsoleSetup = true;
   services.xserver.videoDrivers = [ "amdgpu" ];
@@ -31,8 +30,10 @@
   
   boot.cleanTmpDir = true;
   swapDevices = [ {
-    device = "/swap";
-    size = 16384;
+    device = "/dev/disk/by-id/ata-Samsung_SSD_860_EVO_500GB_S3Z1NB0K384615J-part3";
+    randomEncryption = {
+      enable = true;
+    };
   } ];
 
 

@@ -15,6 +15,8 @@
     wants = [ "network-online.target" ];
     unitConfig = {
       StartLimitIntervalSec = 0; # Disable start interval bursting
+      MemoryMax = "512M";
+      CapabilityBoundingSet = "~CAP_SYS_NICE";
     };
     serviceConfig = {
       Type = "forking";

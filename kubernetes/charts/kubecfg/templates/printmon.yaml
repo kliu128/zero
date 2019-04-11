@@ -1,0 +1,42 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: printmon
+spec:
+  ports:
+  - protocol: TCP
+    port: 4005
+    targetPort: 4005
+    name: http
+---
+kind: Endpoints
+apiVersion: v1
+metadata:
+  name: printmon
+subsets:
+  - addresses:
+    - ip: 192.168.1.5
+    ports:
+    - protocol: TCP
+      port: 4005
+      name: http
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/tls-acme: "true"
+  name: printmon
+spec:
+  tls:
+    - secretName: printmon-tls
+      hosts:
+        - printmon.potatofrom.space
+  rules:
+    - host: printmon.potatofrom.space
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: printmon
+              servicePort: 4005

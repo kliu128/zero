@@ -2,27 +2,26 @@
 
 {
   # exfat support for Nintendo Switch / other SD cards
-  boot.supportedFilesystems = [ "btrfs" "ext4" "xfs" "exfat" "zfs" ];
-  boot.initrd.supportedFilesystems = [ "xfs" "btrfs" "ext4" ];
+  boot.supportedFilesystems = [ "btrfs" "ext4" "exfat" "zfs" ];
+  boot.initrd.supportedFilesystems = [ "zfs" ];
 
   boot.zfs = {
     forceImportRoot = false;
     forceImportAll = false;
+    enableUnstable = true;
+    requestEncryptionCredentials = true;
   };
-  boot.extraModprobeConfig = ''
-    options zfs zfs_vdev_aggregation_limit=16777220
-  '';
+  services.kubernetes.path = [ pkgs.zfsUnstable ];
   
   fileSystems."/" = {
-    device = "/dev/mapper/root"; 
-    fsType = "ext4";
-    options = [ "defaults" ];
+    device = "rpool/nixos/root"; 
+    fsType = "zfs";
   };
-  boot.initrd.luks.devices."root" = {
-    device = "/dev/disk/by-id/ata-Samsung_SSD_860_EVO_500GB_S3Z1NB0K384615J-part2";
-    allowDiscards = true;
-  };
-  # Allow discards on the root partition
+  fileSystems."/var/lib/docker" =
+    { device = "/mnt/ssd/docker";
+      options = [ "bind" ];
+    };
+  virtualisation.docker.storageDriver = "overlay2";
   services.fstrim.enable = true;
 
   fileSystems."/boot" =
