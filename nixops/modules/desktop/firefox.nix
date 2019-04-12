@@ -6,7 +6,6 @@ in {
   nixpkgs.overlays = [
     (import nixpkgs-mozilla)
   ];
-  nixpkgs.config.firefox.enableAdobeFlash = true;
   environment.systemPackages = with pkgs; [
     latest.firefox-nightly-bin
   ];

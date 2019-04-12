@@ -19,5 +19,5 @@ in {
   environment.etc."intellij-jdk".source = pkgs.jetbrains.jdk;
 
   # Install IntelliJ
-  environment.systemPackages = with pkgs; [ jetbrains.idea-community eclipses.eclipse-sdk ];
+  environment.systemPackages = with pkgs; [ jetbrains.idea-community ];
 }

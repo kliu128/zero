@@ -17,7 +17,7 @@
   };
   systemd.services.anbox-container-manager.unitConfig.PartOf = "anbox-session-manager.service";
   systemd.services.anbox-session-manager = {
-    enable = true;
+    enable = false;
     description = "Anbox: Android in a Box";
     serviceConfig = {
       User = "kevin";
@@ -39,7 +39,7 @@
     wantedBy = [ "multi-user.target" ];
   };
   systemd.services.anbox-vnc = {
-    enable = true;
+    enable = false;
     description = "Anbox X11VNC Server";
     path = with pkgs; [ x11vnc ];
     script = ''
