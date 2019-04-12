@@ -1,0 +1,42 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: coder
+spec:
+  ports:
+  - protocol: TCP
+    port: 8443
+    targetPort: 8443
+    name: http
+---
+kind: Endpoints
+apiVersion: v1
+metadata:
+  name: coder
+subsets:
+  - addresses:
+    - ip: 10.99.0.1
+    ports:
+    - protocol: TCP
+      port: 8443
+      name: http
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/tls-acme: "true"
+  name: coder
+spec:
+  tls:
+    - secretName: coder-tls
+      hosts:
+        - code.potatofrom.space
+  rules:
+    - host: code.potatofrom.space
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: coder
+              servicePort: 8443
