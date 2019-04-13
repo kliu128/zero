@@ -49,6 +49,7 @@
     fi
   '';
 
+  security.pam.services.login.u2fAuth = true;
   security.pam.services.sddm.u2fAuth = true;
   security.pam.services.kde.u2fAuth = true;
   security.pam.u2f = {
