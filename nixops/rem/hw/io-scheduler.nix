@@ -6,6 +6,4 @@
     ACTION=="add|change", KERNEL=="sd*[!0-9]|sr*|nvme0n*", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="mq-deadline"
     ACTION=="add|change", KERNEL=="sd*[!0-9]|sr*|nvme0n*", ATTR{queue/rotational}=="1", ATTR{queue/scheduler}="bfq"
   '';
-
-  zramSwap.enable = true;
 }
