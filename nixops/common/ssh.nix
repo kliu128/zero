@@ -14,13 +14,11 @@
     jails.ssh-iptables = "enabled = true";
   };
   users.extraUsers.kevin.openssh.authorizedKeys.keys = [
-    (import ../ssh-keys.nix).kevin-rem
-    (import ../ssh-keys.nix).kevin-emilia
-    (import ../ssh-keys.nix).kevin-xt1575
+    (import ../ssh-keys.nix).yubikey
   ];
   users.extraUsers.root.openssh.authorizedKeys.keys = [
-    # For NixOps, use rem's key
-    (import ../ssh-keys.nix).kevin-rem
+    # For NixOps, deploy using yubikey
+    (import ../ssh-keys.nix).yubikey
   ];
   networking.firewall.allowedTCPPorts = [ 843 ];
 

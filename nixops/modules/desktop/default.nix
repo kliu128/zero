@@ -13,6 +13,7 @@
     ./flatpak.nix
     ./fonts.nix
     ./games.nix
+    ./gpg.nix
     ./kde.nix
     ./java.nix
     ./kdeconnect.nix
@@ -68,7 +69,7 @@
 
   environment.systemPackages = with pkgs; [
     # System tools
-    i7z atop borgbackup cowsay dnsutils file fortune gnupg hdparm htop iftop iotop lm_sensors lolcat p7zip rustup smartmontools spectre-meltdown-checker stress-ng telnet thefuck tree vim wget
+    i7z atop borgbackup cowsay dnsutils file fortune hdparm htop iftop iotop lm_sensors lolcat p7zip rustup smartmontools spectre-meltdown-checker stress-ng telnet thefuck tree vim wget
     # Desktop applications
     calibre chromium clementine cool-retro-term discord libreoffice-still liferea pavucontrol gnome3.pomodoro thunderbird transmission_gtk transgui vlc vscode youtube-dl zoom-us
     # Anki and related packages (for LaTeX support)
@@ -137,7 +138,7 @@
       userEmail = "kevin@potatofrom.space";
       package = pkgs.gitAndTools.gitFull;
       signing = {
-        key = "8792E2260F507DA00F0DB58E2160C3EB40A944EC";
+        key = "B351E549821994C7B843BB0F5A824102DFE3DD86";
         signByDefault = true;
       };
       extraConfig = {
@@ -204,8 +205,6 @@
         };
       };
     };
-
-    services.gpg-agent.enable = true;
 
     # Visual Studio Code config
     home.file.".config/Code/User/settings.json" = {
@@ -309,12 +308,6 @@
       alias yarn="yarn --emoji true"
 
       eval $(thefuck --alias)
-
-      # Set GPG TTY (for SSH sessions, etc.)
-      export GPG_TTY=$(tty)
-
-      # Refresh gpg-agent tty in case user switches into an X session
-      gpg-connect-agent updatestartuptty /bye >/dev/null
 
       # MOTD
       print -P "Welcome to \e[1m\e[36m$(cat /etc/hostname)%F{reset_color}\e[0m\!"

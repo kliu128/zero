@@ -10,7 +10,7 @@
       port = 844;
       authorizedKeys = [
         # Laptop is able to ssh in and unlock
-        (import ../ssh-keys.nix).kevin-emilia-rsa
+        (import ../ssh-keys.nix).yubikey
       ];
     };
   };
