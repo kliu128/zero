@@ -13,5 +13,8 @@
         (import ../ssh-keys.nix).yubikey
       ];
     };
+    postCommands = ''z
+      echo "zfs load-key -a; killall zfs" >> /root/.profile
+    '';
   };
 }
