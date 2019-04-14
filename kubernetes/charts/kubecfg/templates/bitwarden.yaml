@@ -19,6 +19,8 @@ spec:
           env:
             - name: SIGNUPS_ALLOWED
               value: "false"
+            - name: DOMAIN
+              value: https://pw.potatofrom.space
           livenessProbe:
             httpGet:
               path: /
