@@ -15,6 +15,7 @@ spec:
     spec:
       containers:
       - image: zoneminderhq/zoneminder:latest-ubuntu18.04
+        command: [/bin/sh, "-c", "rm /var/lib/mysql/ib_logfile*; /usr/local/bin/entrypoint.sh"]
         imagePullPolicy: Always
         name: zoneminder
         livenessProbe:
