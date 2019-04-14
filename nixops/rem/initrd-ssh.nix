@@ -11,6 +11,7 @@
       authorizedKeys = [
         # Laptop is able to ssh in and unlock
         (import ../ssh-keys.nix).yubikey
+        (import ../ssh-keys.nix).yubikey-backup
       ];
     };
     postCommands = ''z

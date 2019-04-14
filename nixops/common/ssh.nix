@@ -15,10 +15,12 @@
   };
   users.extraUsers.kevin.openssh.authorizedKeys.keys = [
     (import ../ssh-keys.nix).yubikey
+    (import ../ssh-keys.nix).yubikey-backup
   ];
   users.extraUsers.root.openssh.authorizedKeys.keys = [
     # For NixOps, deploy using yubikey
     (import ../ssh-keys.nix).yubikey
+    (import ../ssh-keys.nix).yubikey-backup
   ];
   networking.firewall.allowedTCPPorts = [ 843 ];
 
