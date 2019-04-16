@@ -1,0 +1,78 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: rainloop
+  name: rainloop
+spec:
+  selector:
+    matchLabels:
+      app: rainloop
+  template:
+    metadata:
+      labels:
+        app: rainloop
+    spec:
+      containers:
+      - image: hardware/rainloop
+        name: rainloop
+        env:
+          - name: LOG_TO_STDOUT
+            value: "true"
+        volumeMounts:
+        - mountPath: /rainloop/data
+          name: data
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: rainloop-data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: rainloop
+  name: rainloop
+spec:
+  ports:
+  - name: http
+    port: 8888
+    targetPort: 8888
+  selector:
+    app: rainloop
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    app: rainloop
+  name: rainloop-data
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/tls-acme: 'true'
+    # matches upload max size default of rainloop; see
+    # https://hub.docker.com/r/hardware/rainloop
+    nginx.ingress.kubernetes.io/proxy-body-size: 25m
+  name: rainloop
+spec:
+  tls:
+    - secretName: rainloop-tls
+      hosts:
+        - mail.potatofrom.space
+  rules:
+  - host: mail.potatofrom.space
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: rainloop
+          servicePort: http

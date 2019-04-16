@@ -1,8 +1,7 @@
 { config, lib, pkgs, ... }:
 
 {
-  home-manager.users.kevin = {
-    services.keybase.enable = true;
-  };
+  services.keybase.enable = true;
+  services.kbfs.enable = true;
   environment.systemPackages = with pkgs; [ keybase keybase-gui ];
 }

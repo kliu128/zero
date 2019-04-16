@@ -40,6 +40,8 @@ spec:
               value: '0'
             - name: ENABLE_SPAMASSASSIN
               value: '1'
+            - name: ENABLE_MANAGESIEVE
+              value: '1'
             - name: OVERRIDE_HOSTNAME
               value: mail.potatofrom.space
             - name: SA_KILL

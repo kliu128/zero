@@ -7,9 +7,10 @@
   imports =
     [ <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
       ./amd-fan.nix
+      ./io-scheduler.nix
       ./kernel.nix
       ./mounts.nix
-      ./io-scheduler.nix
+      ./swap.nix
     ];
 
   # Boot
@@ -18,7 +19,7 @@
   boot.initrd.kernelModules = [ "amdkfd" "amdgpu" ]; # for early KMS
   boot.initrd.availableKernelModules = [ "ehci_pci" "ahci" "xhci_pci" "usb_storage" "usbhid" "sd_mod" "sr_mod" ];
   boot.kernelModules = [ "kvm-intel" ];
-  services.earlyoom.enable = true;
+  
   # Video.
   boot.earlyVconsoleSetup = true;
   services.xserver.videoDrivers = [ "amdgpu" ];
@@ -29,13 +30,6 @@
   hardware.cpu.intel.updateMicrocode = true;
   
   boot.cleanTmpDir = true;
-  swapDevices = [ {
-    device = "/dev/disk/by-id/ata-Samsung_SSD_860_EVO_500GB_S3Z1NB0K384615J-part3";
-    randomEncryption = {
-      enable = true;
-    };
-  } ];
-
 
   # Reset keyboard on bootup (Pok3r)
   # Otherwise keys get dropped, for some reason

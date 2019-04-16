@@ -107,7 +107,9 @@
 
       # Options as Kubernetes entry node
       networking.firewall.allowedTCPPorts = [
-        22 25 80 113 143 443 587 631 993
+        22 80 113 443 631
+        # Mail ports
+        25 143 587 993 4190
         # TLS turn ports
         5349 5350
         # Matrix

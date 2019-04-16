@@ -20,10 +20,10 @@
     bindings = [
       # Shift key - create /tmp/inhibit_yubikey_lock on press, delete on
       # release
-      { keys = [ 42 ];
+      { keys = [ 1 ];
         events = [ "key" ];
         command = "${pkgs.coreutils}/bin/touch /tmp/inhibit_yubikey_lock"; }
-      { keys = [ 42 ];
+      { keys = [ 1 ];
         events = [ "rel" ];
         command = "${pkgs.coreutils}/bin/rm /tmp/inhibit_yubikey_lock"; }
     ];
