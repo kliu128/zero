@@ -68,7 +68,7 @@
     # System tools
     i7z atop borgbackup cowsay dnsutils file fortune hdparm htop iftop iotop lm_sensors lolcat p7zip rustup smartmontools spectre-meltdown-checker stress-ng telnet thefuck tree vim wget
     # Desktop applications
-    calibre chromium clementine cool-retro-term discord libreoffice-still liferea pavucontrol gnome3.pomodoro thunderbird transmission_gtk transgui vlc vscode youtube-dl zoom-us
+    calibre chromium clementine cool-retro-term discord libreoffice-still liferea pavucontrol gnome3.pomodoro thunderbird tor-browser-bundle-bin transmission_gtk transgui vlc vscode youtube-dl zoom-us
     # Anki and related packages (for LaTeX support)
     anki polar-bookshelf texlive.combined.scheme-basic tetex
     # Desktop tools

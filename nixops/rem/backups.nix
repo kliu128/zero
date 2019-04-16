@@ -230,6 +230,7 @@ in {
       passphrase = builtins.readFile ../secrets/storage-borg-password.txt;
     };
     exclude = [
+      "sh:/mnt/ssd/docker/*"
       "sh:/home/*/.cache/*"
       "sh:/var/lib/docker/*"
       "sh:/var/lib/kubernetes/*"

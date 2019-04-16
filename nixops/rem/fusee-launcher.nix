@@ -1,9 +1,7 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, fetchurl, pkgs, ... }:
 
 {
-  home-manager.users.kevin.programs.zsh.initExtra = ''
-    fusee() {
-      ${pkgs.fusee-launcher}/bin/fusee-launcher -w ${../hekate_ctcaer_4.6.bin}
-    }
+  services.udev.extraRules = ''
+    ACTION=="add", ENV{ID_BUS}=="usb", ENV{ID_VENDOR_ID}=="0955", ENV{ID_MODEL_ID}=="7321", RUN+="${pkgs.fusee-launcher}/bin/fusee-launcher -w ${../hekate_ctcaer_4.6.bin}"
   '';
 }
