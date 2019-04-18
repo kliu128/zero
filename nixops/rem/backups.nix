@@ -246,7 +246,7 @@ in {
       weekly = 4;
       monthly = 3;
     };
-    startAt = wave-2;
+    startAt = wave-1;
   };
   environment.etc."keys/backups.borg-key" = {
     mode = "400";

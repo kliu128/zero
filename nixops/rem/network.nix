@@ -3,7 +3,7 @@
 {
   networking.useNetworkd = true;
   networking.useDHCP = true;
-  networking.interfaces.br0.macAddress = "74:d4:35:e2:52:9b";
+  systemd.network.networks."40-br0".linkConfig.MACAddress = "74:d4:35:e2:52:9b";
   systemd.network.networks."40-br0".networkConfig.DHCP = lib.mkForce "ipv4";
   systemd.network.enable = true;
   systemd.network.networks."99-main".enable = false;

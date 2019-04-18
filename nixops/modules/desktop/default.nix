@@ -19,10 +19,10 @@
     ./kdeconnect.nix
     ./keybase.nix
     ./kubernetes.nix
-    ./nintendo-switch.nix
     ./nixops.nix
     ./npm.nix
     ./python.nix
+    ./redshift.nix
     ./trash.nix
     ./u2f.nix
     ./wincompat.nix
@@ -237,23 +237,6 @@
 
         set -g default-terminal "tmux-256color"
       '';
-    };
-
-    # GTK & Qt
-    gtk = {
-      enable = true;
-      iconTheme = {
-        name = "Papirus-Light";
-        package = pkgs.papirus-icon-theme;
-      };
-      theme = {
-        name = "Arc";
-        package = pkgs.arc-theme;
-      };
-    };
-    qt = {
-      enable = true;
-      useGtkTheme = true;
     };
 
     pam.sessionVariables = {

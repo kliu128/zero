@@ -36,7 +36,10 @@
   environment.etc."wake.sh".source = pkgs.writeScript "wake" ''
     #!${pkgs.stdenv.shell}
     export PATH=${lib.makeBinPath [ pkgs.xorg.xset ]}
-    XAUTHORITY=/tmp/xauth-1000-_0 xset -display ":0" dpms force on
+    
+    if [ -f /tmp/xauth-1000-_0 ]; then
+      XAUTHORITY=/tmp/xauth-1000-_0 xset -display ":0" dpms force on
+    fi
   '';
 
   environment.etc."lock.sh".source = pkgs.writeScript "lock" ''
