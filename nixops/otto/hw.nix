@@ -9,8 +9,11 @@
     ];
 
   boot.initrd.availableKernelModules = [ "ahci" "ohci_pci" "ehci_pci" "firewire_ohci" "usb_storage" "usbhid" "sd_mod" "sr_mod" ];
-  boot.kernelPackages = pkgs.linuxPackages_4_14;
-  boot.kernelModules = [ "kvm-amd" ];
+  boot.kernelPackages = pkgs.linuxPackages_4_19;
+  boot.kernelParams = [ "scsi_mod.use_blk_mq=Y" ];
+  services.udev.extraRules = ''
+    ACTION=="add|change", KERNEL=="sd*[!0-9]|sr*|nvme0n*", ATTR{queue/scheduler}="bfq"
+  '';
   hardware.cpu.amd.updateMicrocode = true;
   
   boot.extraModulePackages = [ ];
@@ -66,6 +69,10 @@
     device = "/swap";
     size = 4096;
   } ];
+  zramSwap = {
+    enable = true;
+    memoryPercent = 100;
+  };
   
   nix.maxJobs = lib.mkDefault 4;
 }

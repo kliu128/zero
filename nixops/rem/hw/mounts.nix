@@ -17,10 +17,10 @@
     device = "rpool/nixos/root"; 
     fsType = "zfs";
   };
-  fileSystems."/var/lib/docker" =
-    { device = "/mnt/ssd/docker";
-      options = [ "bind" ];
-    };
+  fileSystems."/var/lib/docker" = {
+    device = "/dev/zvol/rpool/docker"; 
+    fsType = "ext4";
+  };
   virtualisation.docker.storageDriver = "overlay2";
   services.fstrim.enable = true;
 
@@ -135,16 +135,6 @@
     keyFile = ../../secrets/keys/keyfile-parity0.bin;
   };
 
-  fileSystems."/mnt/ssd" = {
-    device = "/dev/mapper/vms";
-    options = [ "errors=remount-ro" ];
-    encrypted = {
-      enable = true;
-      blkDev = "/dev/disk/by-uuid/4b7a4578-fde4-4802-a93b-3351ec538bfc";
-      keyFile = "/mnt-root/keys/keyfile-vms.bin";
-      label = "vms";
-    };
-  };
   deployment.keys."keyfile-vms.bin" = {
     permissions = "400";
     destDir = "/keys";

@@ -11,7 +11,6 @@
   services.udev.packages = [ pkgs.yubikey-personalization-gui ];
 
   services.udev.extraRules = ''
-    ACTION=="add", ENV{ID_BUS}=="usb", ENV{ID_MODEL_ID}=="0407", ENV{ID_VENDOR_ID}=="1050", RUN+="${pkgs.bash}/bin/bash /etc/wake.sh"
     ACTION=="remove", ENV{ID_BUS}=="usb", ENV{ID_MODEL_ID}=="0407", ENV{ID_VENDOR_ID}=="1050", RUN+="${pkgs.bash}/bin/bash /etc/lock.sh"
   '';
 

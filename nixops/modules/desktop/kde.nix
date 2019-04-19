@@ -4,5 +4,9 @@
   services.xserver.displayManager.sddm.enable = true;
   services.xserver.desktopManager.plasma5.enable = true;
 
-  environment.systemPackages = with pkgs; [ ark kate spectacle ];
+  environment.systemPackages = with pkgs; [
+    ark kate spectacle
+
+    papirus-icon-theme arc-theme
+  ];
 }
