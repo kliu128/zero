@@ -498,14 +498,16 @@ you should place your code here."
 
   (setq org-extend-today-until 6)
   (setq org-agenda-custom-commands
-        '(("c" "All agenda view"
+        `(("c" "All agenda view"
            ((org-agenda-list "" ((org-agenda-overriding-header "")
                         (org-super-agenda-groups
                          '((:name "Events"
                                   :and (:time-grid t :todo nil))
                            (:name "Upcoming"
                                   ;; Anything due tomorrow, to-do during the day
-                                  :and (:not (:tag "@night") :not (:scheduled future) :deadline (before "<+2d>"))
+                                  :and (:not (:tag "@night")
+                                        :not (:scheduled future)
+                                        :deadline (before ,(org-read-date nil nil "+2d")))
                                   :and (:not (:tag "@night") :habit t))
                            (:name "Nightly"
                                   :and (:not (:scheduled future) :tag "@night"))

@@ -8,5 +8,6 @@
   '';
   home-manager.users.kevin.home.file.".npmrc".text = ''
     prefix=~/.npm-global
+    scripts-prepend-node-path=true
   '';
 }

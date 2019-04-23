@@ -12,8 +12,8 @@ with lib;
       source = fetchFromGitHub {
         owner = "syl20bnr";
         repo = "spacemacs";
-        rev = "69a89cc41243cfb189238a2297fde4498d7fcf6d";
-        sha256 = "0mpv5wf55qqc305wgf98as2yk5i9f9h7wcgns066zm5fkm40lqak";
+        rev = "504fd6c1206239391f5c46ab1740088c0beac159";
+        sha256 = "0c77j56qkf0rf8d8877k38c9hqmzdhq34papgir4z5vay6sqnfl6";
       };
       recursive = true;
     };

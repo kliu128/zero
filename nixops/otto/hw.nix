@@ -65,14 +65,10 @@
     keyFile = ../secrets/keys/keyfile-150gb-dell-hdd.bin;
   };
 
-  swapDevices = [ {
-    device = "/swap";
-    size = 4096;
-  } ];
-  zramSwap = {
-    enable = true;
-    memoryPercent = 100;
-  };
+  # swapDevices = [ {
+  #   device = "/swap";
+  #   size = 4096;
+  # } ];
   
   nix.maxJobs = lib.mkDefault 4;
 }

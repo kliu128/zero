@@ -49,7 +49,6 @@
     }
   '';
 
-  environment.systemPackages = with pkgs; [ cpuset looking-glass-client ];
   environment.etc."libvirt/hooks/qemu" = {
     source = ./vfio.sh;
     mode = "777";

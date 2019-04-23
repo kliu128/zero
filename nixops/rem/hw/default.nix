@@ -16,7 +16,7 @@
   # Boot
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.initrd.kernelModules = [ "amdkfd" "amdgpu" ]; # for early KMS
+  boot.initrd.kernelModules = [ "amdgpu" ]; # for early KMS
   boot.initrd.availableKernelModules = [ "ehci_pci" "ahci" "xhci_pci" "usb_storage" "usbhid" "sd_mod" "sr_mod" ];
   boot.kernelModules = [ "kvm-intel" ];
   

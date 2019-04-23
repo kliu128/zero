@@ -1,14 +1,20 @@
 { config, lib, pkgs, ... }:
 
 {
-  services.transmission = {
+  systemd.services.matrix-discord = {
     enable = true;
-    settings = {
-      download-dir = "/mnt/storage/Kevin/Incoming/local";
-      incomplete-dir-enabled = false;
+    path = with pkgs; [ nix ];
+    script = ''
+      cd /home/kevin/Projects/matrix-appservice-discord
+      nix-shell -I nixpkgs=/etc/nixos/nixpkgs -p sqlite gcc python2 nodePackages.npm nodejs-8_x --run "npm install && npm start"
+    '';
+    serviceConfig = {
+      User = "kevin";
+      Group = "users";
     };
+    wants = [ "network-online.target" ];
+    after = [ "network-online.target" ];
+    wantedBy = [ "multi-user.target" ];
   };
-  systemd.tmpfiles.rules = [
-    "d /mnt/storage/Kevin/Incoming/local 0770 transmission transmission - -"
-  ];
+  networking.firewall.allowedTCPPorts = [ 9005 ];
 }

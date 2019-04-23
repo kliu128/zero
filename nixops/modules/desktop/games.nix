@@ -5,7 +5,7 @@
     # Games
     dolphinEmuMaster factorio multimc steam steam-run-native
     # Wine
-    wineWowPackages.unstable winetricks 
+    wineWowPackages.staging winetricks 
   ];
 
   hardware.opengl.driSupport32Bit = true; # for steam and wine

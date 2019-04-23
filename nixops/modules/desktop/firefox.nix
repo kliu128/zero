@@ -7,7 +7,7 @@ in {
     (import nixpkgs-mozilla)
   ];
   environment.systemPackages = with pkgs; [
-    latest.firefox-nightly-bin
+    firefox-beta-bin
   ];
   environment.variables = {
     # Trick firefox so it doesn't create new profiles, see https://github.com/mozilla/nixpkgs-mozilla/issues/163

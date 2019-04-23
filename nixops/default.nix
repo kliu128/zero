@@ -30,8 +30,8 @@
 
       imports = [
         ./modules/docker.nix
-        ./modules/kubernetes-common.nix
-        ./modules/kubernetes-node.nix
+        # ./modules/kubernetes-common.nix
+        # ./modules/kubernetes-node.nix
         ./modules/lizardfs-mnt.nix
         ./otto/hw.nix
         ./otto/initrd-ssh.nix

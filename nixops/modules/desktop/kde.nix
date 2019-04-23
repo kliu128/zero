@@ -5,7 +5,7 @@
   services.xserver.desktopManager.plasma5.enable = true;
 
   environment.systemPackages = with pkgs; [
-    ark kate spectacle
+    ark kate okular spectacle
 
     papirus-icon-theme arc-theme
   ];

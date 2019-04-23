@@ -12,17 +12,22 @@
     requestEncryptionCredentials = true;
   };
   services.kubernetes.path = [ pkgs.zfsUnstable ];
+  boot.extraModprobeConfig = ''
+    options zfs zvol_request_sync=1 zvol_threads=8
+  '';
   
   fileSystems."/" = {
     device = "rpool/nixos/root"; 
     fsType = "zfs";
   };
-  fileSystems."/var/lib/docker" = {
-    device = "/dev/zvol/rpool/docker"; 
-    fsType = "ext4";
-  };
   virtualisation.docker.storageDriver = "overlay2";
   services.fstrim.enable = true;
+
+  fileSystems."/var/lib/docker" =
+    { device = "/dev/zvol/rpool/docker";
+      fsType = "ext4";
+      options = [ "errors=remount-ro" ];
+    };
 
   fileSystems."/boot" =
     { device = "/dev/disk/by-uuid/725D-8B6F";
