@@ -12,14 +12,12 @@
     requestEncryptionCredentials = true;
   };
   services.kubernetes.path = [ pkgs.zfsUnstable ];
-  boot.extraModprobeConfig = ''
-    options zfs zvol_request_sync=1 zvol_threads=8
-  '';
   
   fileSystems."/" = {
     device = "rpool/nixos/root"; 
     fsType = "zfs";
   };
+  boot.kernelParams = [ "zfs.zvol_request_sync=1" "zfs.zfs_prefetch_disable=1" ];
   virtualisation.docker.storageDriver = "overlay2";
   services.fstrim.enable = true;
 
