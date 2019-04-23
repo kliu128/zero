@@ -9,6 +9,7 @@
       ./amd-fan.nix
       ./io-scheduler.nix
       ./kernel.nix
+      ./me.nix
       ./mounts.nix
       ./swap.nix
     ];
