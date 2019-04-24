@@ -17,7 +17,7 @@
     device = "rpool/nixos/root"; 
     fsType = "zfs";
   };
-  boot.kernelParams = [ "zfs.zvol_request_sync=1" "zfs.zfs_prefetch_disable=1" ];
+  boot.kernelParams = [ "zfs.zfs_prefetch_disable=1" ];
   virtualisation.docker.storageDriver = "overlay2";
   services.fstrim.enable = true;
 
