@@ -231,14 +231,16 @@ in {
     };
     exclude = [
       "sh:/mnt/ssd/docker/*"
+      "sh:/home/*/keybase"
       "sh:/home/*/.cache/*"
       "sh:/var/lib/docker/*"
       "sh:/var/lib/kubernetes/*"
       "sh:/var/log/*"
       "sh:/var/tmp/*"
       "sh:/var/cache/*"
+      "sh:/var/lib/sddm/*" # /var/lib/sddm/keybase
     ];
-    extraCreateArgs = "--one-file-system --stats --progress -v";
+    extraCreateArgs = "--one-file-system --stats";
     paths = [ "/" "/mnt/ssd" ];
     repo = "/mnt/data3/storage-borg";
     prune.keep = {

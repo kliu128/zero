@@ -1,6 +1,5 @@
 global:
   edition: ce
-  gitlabVersion: 11.6.3
   hosts:
     domain: potatofrom.space
   ingress:

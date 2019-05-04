@@ -7,8 +7,9 @@ in {
     (import nixpkgs-mozilla)
   ];
   environment.systemPackages = with pkgs; [
-    firefox-beta-bin
+    latest.firefox-nightly-bin
   ];
+  nixpkgs.config.firefox.enableAdobeFlash = true;
   environment.variables = {
     # Trick firefox so it doesn't create new profiles, see https://github.com/mozilla/nixpkgs-mozilla/issues/163
     SNAP_NAME = "firefox";

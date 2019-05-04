@@ -25,6 +25,7 @@
         ^((.+\.)|())scintillating\.us$ 192.168.1.3
         ^((.+\.)|())scintillate\.me$ 192.168.1.3
         ^backend\.delph\.us$ 192.168.1.3
+        ^chat\.delph\.us$ 192.168.1.3
       }
     '';
   };

@@ -6,7 +6,7 @@
     path = with pkgs; [ nix ];
     script = ''
       cd /home/kevin/Projects/matrix-appservice-discord
-      nix-shell -I nixpkgs=/etc/nixos/nixpkgs -p sqlite gcc python2 nodePackages.npm nodejs-8_x --run "npm install && npm start"
+      nix-shell -I nixpkgs=/etc/nixos/nixpkgs -p sqlite gcc python2 nodePackages.npm nodejs-8_x --run "npm start"
     '';
     serviceConfig = {
       User = "kevin";

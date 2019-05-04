@@ -497,11 +497,22 @@ you should place your code here."
   (setq org-agenda-compact-blocks t)
 
   (setq org-extend-today-until 6)
-  (setq org-agenda-custom-commands
-        `(("c" "All agenda view"
-           ((org-agenda-list "" ((org-agenda-overriding-header "")
-                        (org-super-agenda-groups
-                         '((:name "Events"
+  (org-super-agenda-mode)
+
+  (defun kev-mark-done-and-archive ()
+    (interactive)
+    (org-todo 'done)
+    (org-archive-subtree))
+  (defun kev-mark-done ()
+    (interactive)
+    (org-todo 'done))
+  (defun kev-mark-skipped ()
+    (interactive)
+    (org-todo "SKIPPED"))
+  (defun kev-agenda ()
+    (interactive)
+    (let ((org-super-agenda-groups
+                         `((:name "Events"
                                   :and (:time-grid t :todo nil))
                            (:name "Upcoming"
                                   ;; Anything due tomorrow, to-do during the day
@@ -524,23 +535,14 @@ you should place your code here."
                                   :todo ("WAITING"))
                            (:name "Backlog"
                                   :order 98
-                                  :anything)))))))))
-  (org-super-agenda-mode)
-
-  (defun kev-mark-done-and-archive ()
-    (interactive)
-    (org-todo 'done)
-    (org-archive-subtree))
-  (defun kev-mark-done ()
-    (interactive)
-    (org-todo 'done))
-  (defun kev-mark-skipped ()
-    (interactive)
-    (org-todo "SKIPPED"))
+                                  :anything))))
+        (org-agenda-list)))
   (add-hook 'org-mode-hook
             (lambda () (local-set-key (kbd "<normal-state> SPC o a") 'kev-mark-done-and-archive)))
   (add-hook 'org-mode-hook
             (lambda () (local-set-key (kbd "<normal-state> SPC o d") 'kev-mark-done)))
+  (add-hook 'org-mode-hook
+            (lambda () (local-set-key (kbd "<normal-state> SPC o c") 'kev-agenda)))
   (add-hook 'org-mode-hook
             (lambda () (local-set-key (kbd "<normal-state> SPC o s") 'kev-mark-skipped)))
   ;; transparency!
