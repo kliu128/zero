@@ -12,7 +12,21 @@
     requestEncryptionCredentials = true;
   };
   services.kubernetes.path = [ pkgs.zfsUnstable ];
-  boot.kernelParams = [ "zfs.zfs_sync_taskq_batch_pct=10" ];
+  boot.kernelParams = [ "zfs.zvol_request_sync=1" ];
+
+  systemd.services.zfs-renice = {
+    enable = true;
+    description = "Renice ZFS IO threads";
+    path = [ pkgs.procps pkgs.utillinux ];
+    script = ''
+      while true; do
+        renice -n 5 -p $(pgrep z_wr_iss) || true
+        renice -n 5 -p $(pgrep z_rd_int) || true
+        sleep 1
+      done
+    '';
+    wantedBy = [ "multi-user.target" ];
+  };
   
   fileSystems."/" = {
     device = "rpool/nixos/root"; 

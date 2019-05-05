@@ -20,20 +20,20 @@ spec:
               value: "TRUE"
             # Set Minecraft version and opts
             - name: VERSION
-              value: "1.13.2"
+              value: "1.12.2"
             - name: TYPE
-              value: VANILLA
-            # - name: FORGEVERSION
-            #   value: 12.18.3.2477
+              value: FORGE
+            - name: FORGEVERSION
+              value: 14.23.5.2836
             - name: MEMORY
-              value: 1G
+              value: 6G
             # Minecraft config
             - name: DIFFICULTY
               value: hard
             - name: JVM_XX_OPTS
-              value: -XX:+UseG1GC -XX:+UnlockExperimentalVMOptions -XX:MaxGCPauseMillis=100 -XX:+DisableExplicitGC -XX:TargetSurvivorRatio=90 -XX:G1NewSizePercent=50 -XX:G1MaxNewSizePercent=80 -XX:G1MixedGCLiveThresholdPercent=35 -XX:+AlwaysPreTouch -XX:+ParallelRefProcEnabled -Dusing.aikars.flags=mcflags.emc.gs
+              value: -XX:+UseG1GC -XX:+UnlockExperimentalVMOptions -XX:MaxGCPauseMillis=100 -XX:+DisableExplicitGC -XX:TargetSurvivorRatio=90 -XX:G1NewSizePercent=50 -XX:G1MaxNewSizePercent=80 -XX:G1MixedGCLiveThresholdPercent=35 -XX:+ParallelRefProcEnabled -Dusing.aikars.flags=mcflags.emc.gs
             - name: OPS
-              value: nitroignika,WildTaegr
+              value: Ajaxi
             - name: ENABLE_QUERY
               value: "TRUE"
             - name: ANNOUNCE_PLAYER_ACHIEVEMENTS
