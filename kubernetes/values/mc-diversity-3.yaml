@@ -1,0 +1,5 @@
+minecraftServer:
+  motd: "Diversity 3"
+  type: VANILLA
+  version: 1.13.2
+  difficulty: normal

@@ -1,0 +1,8 @@
+minecraftServer:
+  motd: "Forever Stranded / kevloo hosting biz"
+  jvmOpts: -Xms1G -Xmx5G
+  jvmXxOpts: "-XX:+ExplicitGCInvokesConcurrent -XX:+ExplicitGCInvokesConcurrentAndUnloadsClasses -Dsun.rmi.dgc.server.gcInterval=2147483646 -XX:+UnlockExperimentalVMOptions -XX:MaxGCPauseMillis=50 -XX:UseSSE=3"
+  type: FORGE
+  version: 1.10.2
+  forgeVersion: 12.18.3.2511
+  difficulty: normal

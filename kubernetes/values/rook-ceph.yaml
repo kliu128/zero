@@ -1,3 +1,0 @@
-agent:
-  libModulesDirPath: /run/booted-system/kernel-modules/lib/modules
-  mounts: nix=/nix/store:/nix/store

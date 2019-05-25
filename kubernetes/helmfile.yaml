@@ -22,17 +22,6 @@ releases:
     version: 0.5.0
     values:
       - ./values/cert-manager.yaml
-  # - name: prometheus-operator
-  #   namespace: monitoring
-  #   chart: coreos/prometheus-operator
-  #   values:
-  #     - ./values/prometheus-operator.yaml
-  # - name: kube-prometheus
-  #   namespace: monitoring
-  #   chart: coreos/kube-prometheus
-  #   values:
-  #     - ./values/kube-prometheus.yaml
-  #     - ./values/kube-prometheus.secret.yaml
   - name: gitlab
     namespace: default
     chart: gitlab/gitlab
@@ -46,6 +35,18 @@ releases:
     values:
       - ./values/mastodon.yaml
       - ./values/mastodon.secret.yaml
+  - name: mc-forever-stranded
+    namespace: default
+    chart: ./charts/minecraft
+    values:
+      - ./values/mc.yaml
+      - ./values/mc-forever-stranded.yaml
+  - name: mc-diversity-3
+    namespace: default
+    chart: ./charts/minecraft
+    values:
+      - ./values/mc.yaml
+      - ./values/mc-diversity-3.yaml
   - name: nextcloud
     namespace: default
     chart: ./charts/nextcloud

@@ -1,0 +1,13 @@
+resources:
+  # unbounded
+  requests:
+    memory:
+    cpu:
+minecraftServer:
+  eula: "TRUE"
+  pvp: true
+  serviceType: ClusterIP
+  query:
+    enabled: true
+  rcon:
+    enabled: true
