@@ -30,6 +30,9 @@ spec:
         - name: synapse
           image: matrixdotorg/synapse
           imagePullPolicy: Always
+          resources:
+            limits:
+              memory: 4G
           livenessProbe:
             httpGet:
               path: /_matrix/client/versions
@@ -61,9 +64,6 @@ spec:
             - name: config
               subPath: whatsapp-registration.yaml
               mountPath: /config/whatsapp-registration.yaml
-            - name: config
-              subPath: purple-registration.yaml
-              mountPath: /config/purple-registration.yaml
             - name: config
               subPath: facebook-registration.yaml
               mountPath: /config/facebook-registration.yaml

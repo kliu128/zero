@@ -9,7 +9,7 @@
     ];
 
   boot.initrd.availableKernelModules = [ "ahci" "ohci_pci" "ehci_pci" "firewire_ohci" "usb_storage" "usbhid" "sd_mod" "sr_mod" ];
-  boot.kernelPackages = pkgs.linuxPackages_4_19;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelParams = [ "scsi_mod.use_blk_mq=Y" ];
   services.udev.extraRules = ''
     ACTION=="add|change", KERNEL=="sd*[!0-9]|sr*|nvme0n*", ATTR{queue/scheduler}="bfq"

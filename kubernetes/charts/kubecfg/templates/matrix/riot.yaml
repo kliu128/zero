@@ -21,13 +21,13 @@ spec:
         app: riot
     spec:
       containers:
-        - image: avhost/docker-matrix-riot
+        - image: vectorim/riot-web:develop
+          imagePullPolicy: Always
           name: riot-web
-          resources: {}
           volumeMounts:
-          - mountPath: /data
+          - mountPath: /app/config.json
             name: config
-      restartPolicy: Always
+            subPath: config.json
       volumes:
         - name: config
           configMap:
@@ -40,12 +40,9 @@ metadata:
   labels:
     app: riot
 data:
-  riot.im.conf: |
-    -p 80
-    -A 0.0.0.0
   config.json: |
     {
-      "default_hs_url": "https://matrix.org",
+      "default_hs_url": "https://potatofrom.space",
       "default_is_url": "https://vector.im",
       "brand": "Potatoriot",
       "integrations_ui_url": "https://dimension.potatofrom.space/riot",
@@ -67,7 +64,9 @@ data:
         "feature_tabbed_settings": "labs",
         "feature_sas": "labs",
         "feature_room_breadcrumbs": "labs",
-        "feature_state_counters": "labs"
+        "feature_state_counters": "labs",
+        "feature_reactions": "labs",
+        "feature_message_editing": "labs"
       },
       "roomDirectory": {
         "servers": [

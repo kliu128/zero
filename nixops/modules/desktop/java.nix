@@ -3,7 +3,7 @@
 # Java runtime and development
 
 let
-  jdk = pkgs.jetbrains.jdk;
+  jdk = pkgs.jdk11;
 in {
   # Use GTK theme, enable antialiasing
   environment.variables._JAVA_OPTIONS = ''

@@ -32,38 +32,22 @@
     "r! /tmp/inhibit_yubikey_lock"
   ];
 
-  environment.etc."wake.sh".source = pkgs.writeScript "wake" ''
-    #!${pkgs.stdenv.shell}
-    export PATH=${lib.makeBinPath [ pkgs.xorg.xset ]}
-    
-    if [ -f /tmp/xauth-1000-_0 ]; then
-      XAUTHORITY=/tmp/xauth-1000-_0 xset -display ":0" dpms force on
-    fi
-  '';
-
   environment.etc."lock.sh".source = pkgs.writeScript "lock" ''
     #!${pkgs.stdenv.shell}
-    export PATH=${lib.makeBinPath [ pkgs.systemd pkgs.xorg.xset ]}
+    export PATH=${lib.makeBinPath [ pkgs.systemd pkgs.xorg.xset pkgs.sway ]}
 
     if [ ! -f /tmp/inhibit_yubikey_lock ]; then
       loginctl lock-sessions
-      XAUTHORITY=/tmp/xauth-1000-_0 xset -display ":0" dpms force off
     fi
+
+    SWAYSOCK=$(echo /run/user/1000/sway*.sock) swaylock
   '';
 
   security.pam.services.login.u2fAuth = true;
-  security.pam.services.sddm.u2fAuth = true;
-  security.pam.services.kde.u2fAuth = true;
+  security.pam.services.swaylock.u2fAuth = true;
+  security.pam.services.sudo.u2fAuth = true;
   security.pam.u2f = {
-    control = "required";
+    control = "sufficient";
     authFile = ./u2f-mappings;
   };
-  security.pam.services.sudo.text = ''
-    account required pam_unix.so
-    auth sufficient ${pkgs.pam_u2f}/lib/security/pam_u2f.so authfile=${./u2f-mappings}
-    auth sufficient pam_unix.so likeauth try_first_pass
-    auth required pam_deny.so
-    password sufficient pam_unix.so nullok sha512
-    session required pam_unix.so
-  '';
 }

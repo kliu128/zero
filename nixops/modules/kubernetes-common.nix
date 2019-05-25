@@ -34,6 +34,12 @@
   systemd.services.mk-docker-opts.restartIfChanged = false;
   systemd.services.mk-docker-opts.serviceConfig.RemainAfterExit = true;
 
+  boot.kernel.sysctl = {
+    "net.ipv4.neigh.default.gc_thresh1" = 80000;
+    "net.ipv4.neigh.default.gc_thresh2" = 90000;
+    "net.ipv4.neigh.default.gc_thresh3" = 100000;
+  };
+
   systemd.services.clean-up-flannel-ips = {
     enable = true;
     description = "Clean up Flannel IPs";

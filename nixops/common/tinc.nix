@@ -16,6 +16,7 @@
     hosts = {
       rem = ''
         Compression = 10
+        Subnet = 0.0.0.0/0
         Address = potatofrom.space 655
         Ed25519PublicKey = T7VbcnZFoMzNZh6mpP1m8hqMgdw7bDqrfrO/TFZZlAI
 

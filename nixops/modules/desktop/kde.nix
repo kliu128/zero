@@ -1,17 +1,19 @@
 { config, lib, pkgs, ... }:
 
 {
-  # services.xserver.displayManager.sddm.enable = true;
-  # services.xserver.desktopManager.plasma5.enable = true;
-  # services.xserver.desktopManager.mate.enable = true;
   services.xserver.displayManager.gdm.enable = true;
-  services.xserver.displayManager.gdm.wayland = false;
+  services.xserver.displayManager.gdm.wayland = true;
   services.xserver.desktopManager.gnome3.enable = true;
+  programs.sway.enable = true;
   networking.networkmanager.enable = false;
 
   environment.systemPackages = with pkgs; [
-    # ark kate gnome3.evince spectacle
-
     papirus-icon-theme arc-theme
   ];
+
+  # Disable laggy services
+  systemd.user.services.gvfs-udisks2-volume-monitor.enable = lib.mkForce false;
+
+  nixpkgs.config.firefox.enableGnomeExtensions = true;
+  services.gnome3.chrome-gnome-shell.enable = true;
 }

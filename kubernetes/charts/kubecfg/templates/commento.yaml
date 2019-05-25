@@ -15,6 +15,10 @@ spec:
         - image: registry.gitlab.com/commento/commento
           name: commento
           env:
+            - name: COMMENTO_FORBID_NEW_OWNERS
+              value: "true"
+            - name: COMMENTO_GZIP_STATIC
+              value: "true"
             - name: COMMENTO_ORIGIN
               value: "https://commento.potatofrom.space"
             - name: COMMENTO_PORT

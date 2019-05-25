@@ -9,28 +9,25 @@ metadata:
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 spec:
-  replicas: 1
   strategy:
     type: Recreate
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app: {{ template "nextcloud.name" . }}-collabora-code
     spec:
-      nodeSelector:
-        kubernetes.io/hostname: rem
       containers:
       - image: collabora/code
         env:
           - name: domain
             value: {{ .Values.lamp.ingress.domain | replace "." "\\." | quote }}
+          - name: SLEEPFORDEBUGGER
+            value: "0"
         name: code
         securityContext:
           capabilities:
             add:
               - MKNOD
-status: {}
 ---
 apiVersion: v1
 kind: Service

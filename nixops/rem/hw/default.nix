@@ -7,7 +7,6 @@
   imports =
     [ <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
       ./amd-fan.nix
-      ./io-scheduler.nix
       ./kernel.nix
       ./me.nix
       ./mounts.nix
@@ -17,14 +16,16 @@
   # Boot
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.initrd.kernelModules = [ "amdkfd" "amdgpu" ]; # for early KMS
+  boot.initrd.kernelModules = [ "amdgpu" ]; # for early KMS
   boot.initrd.availableKernelModules = [ "ehci_pci" "ahci" "xhci_pci" "usb_storage" "usbhid" "sd_mod" "sr_mod" ];
   boot.kernelModules = [ "kvm-intel" ];
+
+  services.earlyoom.enable = true;
   
   # Video.
   boot.earlyVconsoleSetup = true;
   services.xserver.videoDrivers = [ "amdgpu" ];
-  boot.kernelParams = [ "consoleblank=300" "amdgpu.gpu_recovery=1" ];
+  boot.kernelParams = [ "consoleblank=300" "usbcore.autosuspend=-1" ];
 
   # Freeness (that is, not.)
   hardware.enableRedistributableFirmware = true; # for amdgpu
@@ -39,17 +40,6 @@
     description = "Keyboard & Webcam Pro 9000 Reset";
     script = ''
       set -x
-      for X in /sys/bus/usb/devices/*
-      do
-          if [ -e "$X/idVendor" ] && [ -e "$X/idProduct" ] \
-          && [ 04d9 = $(cat "$X/idVendor") ] && [ 0141 = $(cat "$X/idProduct") ]
-          then
-              echo 0 >"$X/authorized"
-              sleep 1
-              echo 1 >"$X/authorized"
-          fi
-      done
-
       for X in /sys/bus/usb/devices/*
       do
           if [ -e "$X/idVendor" ] && [ -e "$X/idProduct" ] \

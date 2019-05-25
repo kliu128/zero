@@ -30,6 +30,7 @@
 
       imports = [
         ./modules/docker.nix
+        # ./modules/boinc.nix
         # ./modules/kubernetes-common.nix
         # ./modules/kubernetes-node.nix
         ./modules/lizardfs-mnt.nix

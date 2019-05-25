@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 {
-  boot.kernelPackages = pkgs.linuxPackages_4_19;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
   # nixpkgs.config.packageOverrides = pkgs: rec {
   # kubernetes = pkgs.kubernetes.overrideAttrs (oldAttrs: rec {
   #   postPatch = ''

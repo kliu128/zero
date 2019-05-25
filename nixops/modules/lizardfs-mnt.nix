@@ -3,26 +3,27 @@
 {
   systemd.services.storage = {
     enable = true;
-    description = "Grand Stores Mount";
+    description = "Grand Stores LizardFS Mount";
     path = [ pkgs.lizardfs pkgs.kmod ];
     restartIfChanged = false; # don't want the filesystem falling out from under processes
     script = ''
       modprobe fuse
-      mfsmount -o nodev,big_writes,allow_other,nonempty,mfsmaster=10.99.0.1 /mnt/storage
+      mfsmount -o nodev,big_writes,allow_other,nonempty,mfsmaster=10.99.0.1,mfsnice=0 /mnt/storage
     '';
     wantedBy = [ "remote-fs.target" ];
     after = [ "network-online.target" ];
     wants = [ "network-online.target" ];
     unitConfig = {
       StartLimitIntervalSec = 0; # Disable start interval bursting
-      MemoryMax = "512M";
-      CapabilityBoundingSet = "~CAP_SYS_NICE";
     };
     serviceConfig = {
       Type = "forking";
       Restart = "on-failure";
       RestartSec = "5";
-      Nice = 5;
+      Nice = 0;
+      MemoryHigh = "1G";
+      MemorySwapMax = "512M";
+      ExecStartPre = "-${pkgs.utillinux}/bin/umount -l /mnt/storage";
     };
   };
   systemd.tmpfiles.rules = [

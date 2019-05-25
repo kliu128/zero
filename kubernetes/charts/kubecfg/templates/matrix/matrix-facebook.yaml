@@ -1,16 +1,8 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
-  labels:
-    app: matrix-facebook
   name: matrix-facebook
 spec:
-  replicas: 1
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxUnavailable: 0
-      maxSurge: 1
   selector:
     matchLabels:
       app: matrix-facebook
@@ -21,53 +13,28 @@ spec:
     spec:
       containers:
         - name: facebook
-          image: registry.potatofrom.space/kevin/matrix-puppet-facebook
-          imagePullPolicy: Always
-          readinessProbe:
-            tcpSocket:
-              port: 8090
-            initialDelaySeconds: 5
-            periodSeconds: 10
-          livenessProbe:
-            tcpSocket:
-              port: 8090
-            initialDelaySeconds: 1200 # 20 min
-            periodSeconds: 10
-          ports:
-            - containerPort: 8090
-              name: facebook
+          image: tulir/mautrix-facebook:latest
           volumeMounts:
-            - name: config
-              subPath: facebook-registration.yaml
-              mountPath: /usr/src/app/facebook-registration.yaml
-            - name: config
-              subPath: facebook-config.json
-              mountPath: /usr/src/app/config.json
-            - name: facebook-appstate
-              subPath: appstate.json
-              mountPath: /usr/src/app/appstate.json
+            # config in PVC to avoid EROFS error
+            - name: data
+              mountPath: /data
       volumes:
-        - name: config
-          secret:
-            secretName: matrix-config
-        - name: facebook-appstate
+        - name: data
           persistentVolumeClaim:
-            claimName: matrix-facebook-appstate
+            claimName: matrix-facebook-data
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  creationTimestamp: null
   labels:
     app: matrix-facebook
-  name: matrix-facebook-appstate
+  name: matrix-facebook-data
 spec:
   accessModes:
   - ReadWriteOnce
   resources:
     requests:
       storage: 1Gi
-status: {}
 ---
 apiVersion: v1
 kind: Service
@@ -80,62 +47,3 @@ spec:
   - name: http
     targetPort: 8090
     port: 8090
-
----
-kind: Role
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: matrix-facebook-restart
-rules:
-- apiGroups:
-  - extensions
-  - apps
-  resources:
-  - deployments
-  - replicasets
-  verbs:
-  - 'patch'
-  - 'get'
----
-kind: RoleBinding
-apiVersion: rbac.authorization.k8s.io/v1beta1
-metadata:
-  name: matrix-facebook-restart
-subjects:
-- kind: ServiceAccount
-  name: sa-matrix-facebook-restart
-roleRef:
-  kind: Role
-  name: matrix-facebook-restart
-  apiGroup: ""
----
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: sa-matrix-facebook-restart
----
-apiVersion: batch/v1beta1
-kind: CronJob
-metadata:
-  name: matrix-facebook-restart
-spec:
-  schedule: "0 */6 * * *"
-  concurrencyPolicy: Forbid
-  jobTemplate:
-    spec:
-      template:
-        spec:
-          serviceAccountName: sa-matrix-facebook-restart
-          containers:
-          - name: kubectl
-            image: lachlanevenson/k8s-kubectl:latest
-            command:
-            - /bin/sh
-            - -c
-            - kubectl patch deployment matrix-facebook -p '{"spec":{"template":{"metadata":{"labels":{"restarted-by":"'${POD_NAME}'"}}}}}'
-            env:
-              - name: POD_NAME
-                valueFrom:
-                  fieldRef:
-                    fieldPath: metadata.name
-          restartPolicy: OnFailure

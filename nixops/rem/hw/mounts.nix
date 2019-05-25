@@ -11,29 +11,29 @@
     enableUnstable = true;
     requestEncryptionCredentials = true;
   };
-  services.kubernetes.path = [ pkgs.zfsUnstable ];
-  boot.kernelParams = [ "zfs.zvol_request_sync=1" ];
 
-  systemd.services.zfs-renice = {
+  services.kubernetes.path = [ pkgs.zfsUnstable ];
+
+  systemd.services.renice = {
     enable = true;
-    description = "Renice ZFS IO threads";
+    description = "Renice ZFS IO threads & others";
     path = [ pkgs.procps pkgs.utillinux ];
     script = ''
       while true; do
-        renice -n 5 -p $(pgrep z_wr_iss) || true
-        renice -n 5 -p $(pgrep z_rd_int) || true
+        renice -n 0 -p $(pgrep z) || true
+        renice -n 0 -p $(pgrep spl) || true
         sleep 1
       done
     '';
     wantedBy = [ "multi-user.target" ];
   };
-  
+
   fileSystems."/" = {
     device = "rpool/nixos/root"; 
     fsType = "zfs";
   };
   virtualisation.docker.storageDriver = "overlay2";
-  services.fstrim.enable = true;
+  services.fstrim.enable = false;
 
   fileSystems."/var/lib/docker" =
     { device = "/dev/zvol/rpool/docker";
