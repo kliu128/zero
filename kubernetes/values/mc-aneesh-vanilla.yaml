@@ -1,8 +1,10 @@
 minecraftServer:
-  motd: "Forever Stranded / kevloo hosting biz"
-  jvmOpts: -Xms1G -Xmx5G
+  motd: "Vanilla / Kevloo Hosting"
+  jvmOpts: -Xmx1G
   jvmXxOpts: "-XX:+ExplicitGCInvokesConcurrent -XX:+ExplicitGCInvokesConcurrentAndUnloadsClasses -Dsun.rmi.dgc.server.gcInterval=2147483646 -XX:+UnlockExperimentalVMOptions -XX:MaxGCPauseMillis=50 -XX:UseSSE=3"
-  type: FORGE
-  version: 1.10.2
-  forgeVersion: 12.18.3.2511
+  type: VANILLA
+  version: LATEST
   difficulty: normal
+  levelSeed: "-1469446201797389856"
+  ops:
+    - nitroignika

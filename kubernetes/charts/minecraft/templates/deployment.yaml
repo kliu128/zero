@@ -124,11 +124,6 @@ spec:
         - name: JVM_XX_OPTS
           value: {{ .Values.minecraftServer.jvmXxOpts | quote }}
 
-        {{- if .Values.minecraftServer.rcon.enabled }}
-        - name: ENABLE_RCON
-          value: "true"
-        {{- end }}
-
         {{- if .Values.minecraftServer.query.enabled }}
         - name: ENABLE_QUERY
           value: "true"
@@ -143,6 +138,8 @@ spec:
         volumeMounts:
         - name: datadir
           mountPath: /data
+        stdin: true
+        tty: true
       volumes:
       - name: datadir
       {{- if .Values.persistence.dataDir.enabled }}

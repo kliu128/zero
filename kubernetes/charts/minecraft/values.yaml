@@ -101,12 +101,6 @@ minecraftServer:
   jvmOpts: "-Xmx512M -Xms512M"
   jvmXxOpts: ""
   serviceType: LoadBalancer
-  rcon:
-    # If you enable this, make SURE to change your password below.
-    enabled: false
-    port: 25575
-    password: "CHANGEME!"
-    serviceType: LoadBalancer
 
   query:
     # If you enable this, your server will be "published" to Gamespy

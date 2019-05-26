@@ -35,12 +35,12 @@ releases:
     values:
       - ./values/mastodon.yaml
       - ./values/mastodon.secret.yaml
-  - name: mc-forever-stranded
+  - name: mc-aneesh-vanilla
     namespace: default
     chart: ./charts/minecraft
     values:
       - ./values/mc.yaml
-      - ./values/mc-forever-stranded.yaml
+      - ./values/mc-aneesh-vanilla.yaml
   - name: mc-diversity-3
     namespace: default
     chart: ./charts/minecraft

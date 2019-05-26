@@ -9,5 +9,3 @@ minecraftServer:
   serviceType: ClusterIP
   query:
     enabled: true
-  rcon:
-    enabled: true
