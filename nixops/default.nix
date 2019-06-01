@@ -29,15 +29,15 @@
       deployment.hasFastConnection = true;
 
       imports = [
-        ./modules/docker.nix
-        # ./modules/boinc.nix
+        # ./modules/docker.nix
+        ./modules/boinc.nix
         # ./modules/kubernetes-common.nix
         # ./modules/kubernetes-node.nix
         ./modules/lizardfs-mnt.nix
         ./otto/hw.nix
         ./otto/initrd-ssh.nix
         ./otto/lizardfs.nix
-        ./otto/netconsole-receiver.nix
+        # ./otto/netconsole-receiver.nix
         ./otto/reverse-proxy.nix
         ./otto/tinc.nix
       ];

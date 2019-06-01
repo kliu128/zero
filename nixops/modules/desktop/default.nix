@@ -22,6 +22,7 @@
     ./nixops.nix
     ./npm.nix
     ./python.nix
+    ./syncthing.nix
     ./trash.nix
     ./u2f.nix
     ./wincompat.nix
@@ -50,13 +51,6 @@
   # Printing configuration
   services.printing.enable = true;
   services.printing.clientConf = "ServerName 10.99.0.1";
-
-  services.syncthing = {
-    enable = true;
-    user = "kevin";
-    dataDir = "/home/kevin/.config/syncthing";
-  };
-  networking.firewall.allowedTCPPorts = [ 22000 ];
 
   programs.chromium.enable = true;
   users.extraUsers.kevin.extraGroups = [ "input" ];

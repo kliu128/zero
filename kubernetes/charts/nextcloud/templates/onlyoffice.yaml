@@ -17,17 +17,23 @@ spec:
         app: {{ template "nextcloud.name" . }}-collabora-code
     spec:
       containers:
-      - image: collabora/code
+      - image: onlyoffice/documentserver
+        imagePullPolicy: Always
         env:
           - name: domain
             value: {{ .Values.lamp.ingress.domain | replace "." "\\." | quote }}
           - name: SLEEPFORDEBUGGER
             value: "0"
+          - name: extra_params
+            value: --o:ssl.enable=false --o:ssl.termination=true --o:storage.wopi.host=::ffff:10.1.[0-9]+.[0-9]+ --o:net.post_allow.host=::ffff:10.1.[0-9]+.[0-9]+ 
         name: code
-        securityContext:
-          capabilities:
-            add:
-              - MKNOD
+        volumeMounts:
+        - name: datadir
+          mountPath: /var/lib/onlyoffice
+      volumes:
+        - name: datadir
+          persistentVolumeClaim:
+            claimName: {{ $fullName }}-onlyoffice-data
 ---
 apiVersion: v1
 kind: Service
@@ -42,6 +48,22 @@ spec:
   ports:
   - name: http
     port: 9980
-    targetPort: 9980
+    targetPort: 80
   selector:
     app: {{ template "nextcloud.name" . }}-collabora-code
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ $fullName }}-onlyoffice-data
+  labels:
+    app: {{ template "nextcloud.name" . }}
+    chart: {{ template "nextcloud.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi

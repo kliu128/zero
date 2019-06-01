@@ -5,6 +5,7 @@
   boot.supportedFilesystems = [ "btrfs" "ext4" "exfat" "zfs" ];
   boot.initrd.supportedFilesystems = [ "zfs" ];
 
+  boot.kernelParams = [ "zfs.zfs_arc_max=1073741824" ]; # 1 GB arc max
   boot.zfs = {
     forceImportRoot = false;
     forceImportAll = false;
@@ -22,6 +23,7 @@
       while true; do
         renice -n 0 -p $(pgrep z) || true
         renice -n 0 -p $(pgrep spl) || true
+        chrt --idle --pid --all-tasks 0 $(pgrep --full boinc-nv) || true
         sleep 1
       done
     '';

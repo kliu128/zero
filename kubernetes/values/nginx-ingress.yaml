@@ -21,5 +21,3 @@ rbac:
   create: true
 tcp:
   113: default/matrix-irc-hashbang:113
-  25566: default/mc-diversity-3-minecraft:25565
-  25567: default/mc-aneesh-vanilla-minecraft:25565

@@ -83,6 +83,9 @@ minecraftServer:
   motd: "Welcome to Minecraft on Kubernetes!"
   # If true, enable player-vs-player damage.
   pvp: false
+  # Server port
+  port: 25565
+  allowFlight: false
   # One of: DEFAULT, FLAT, LARGEBIOMES, AMPLIFIED, CUSTOMIZED
   levelType: DEFAULT
   # When levelType == FLAT or CUSTOMIZED, this can be used to further customize map generation.

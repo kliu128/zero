@@ -16,6 +16,7 @@ spec:
       labels:
         app: {{ template "minecraft.fullname" . }}
     spec:
+      hostNetwork: true
       securityContext:
         runAsUser: {{ .Values.securityContext.runAsUser }}
         fsGroup: {{ .Values.securityContext.fsGroup }}
@@ -123,6 +124,12 @@ spec:
           value: {{ .Values.minecraftServer.jvmOpts | quote }}
         - name: JVM_XX_OPTS
           value: {{ .Values.minecraftServer.jvmXxOpts | quote }}
+        - name: OVERRIDE_SERVER_PROPERTIES
+          value: "true"
+        - name: SERVER_PORT
+          value: {{ .Values.minecraftServer.port | quote }}
+        - name: ALLOW_FLIGHT
+          value: {{ .Values.minecraftServer.allowFlight | quote }}
 
         {{- if .Values.minecraftServer.query.enabled }}
         - name: ENABLE_QUERY

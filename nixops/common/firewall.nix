@@ -6,4 +6,5 @@
   networking.firewall.enable = true;
   networking.firewall.allowPing = true;
   networking.firewall.rejectPackets = true;
+  networking.firewall.logRefusedConnections = false;
 }

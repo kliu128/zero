@@ -21,7 +21,7 @@
     ORIGINAL_GATEWAY=`ip route show | grep ^default | cut -d ' ' -f 2-5`
 
     sudo ip route add $REMOTEADDRESS $ORIGINAL_GATEWAY
-    sudo ip route add 0.0.0.0/1 via $VPN_GATEWAY dev $INTERFACE
+    #sudo ip route add 0.0.0.0/1 via $VPN_GATEWAY dev $INTERFACE
   '';
 
   environment.etc."tinc/omnimesh/hosts/rem-down".source = pkgs.writeScript "rem-down" ''
@@ -31,6 +31,6 @@
     ORIGINAL_GATEWAY=`ip route show | grep ^default | cut -d ' ' -f 2-5`
 
     sudo ip route del $REMOTEADDRESS $ORIGINAL_GATEWAY
-    sudo ip route del 0.0.0.0/1 dev $INTERFACE
+    #sudo ip route del 0.0.0.0/1 dev $INTERFACE
   '';
 }

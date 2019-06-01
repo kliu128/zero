@@ -1,5 +1,10 @@
 minecraftServer:
   motd: "Diversity 3"
+  jvmOpts: -Xmx2G
   type: VANILLA
   version: 1.13.2
   difficulty: normal
+  allowFlight: true
+  port: 25565
+  query:
+    port: 25565
