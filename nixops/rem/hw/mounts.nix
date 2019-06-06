@@ -23,7 +23,6 @@
       while true; do
         renice -n 0 -p $(pgrep z) || true
         renice -n 0 -p $(pgrep spl) || true
-        chrt --idle --pid --all-tasks 0 $(pgrep --full boinc-nv) || true
         sleep 1
       done
     '';

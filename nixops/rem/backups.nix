@@ -157,30 +157,6 @@ in {
     wantedBy = [ "timers.target" ];
   };
 
-  systemd.services.matrix-recorder = {
-    description = "Matrix Recorder";
-    path = [ pkgs.nodejs pkgs.curl ];
-    script = ''
-      set -xeuo pipefail
-
-      while [[ "$(curl -s -o /dev/null -w '''%{http_code}''' https://potatofrom.space)" != "200" ]]; do
-        sleep 5
-      done
-
-      cd '/mnt/storage/Kevin/Backups/Online Services/matrix-recorder'
-      node matrix-recorder.js ./logs &
-      sleep 1200 # 20 min should be sufficient to get the day's messages
-      kill %1
-    '';
-    serviceConfig = {
-      User = "kevin";
-      Group = "users";
-    };
-    wants = [ "storage.service" "docker.service" "network-online.target" ];
-    after = [ "storage.service" "docker.service" "network-online.target" ];
-    startAt = wave-2;
-  };
-
   systemd.services.photo-sync = {
     description = "Sync 7+ Day Old Photos from Phone to PC";
     path = [ pkgs.rsync ];

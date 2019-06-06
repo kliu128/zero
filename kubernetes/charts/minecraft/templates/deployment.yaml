@@ -140,7 +140,7 @@ spec:
 
         ports:
         - name: minecraft
-          containerPort: 25565
+          containerPort: {{ .Values.minecraftServer.port }}
           protocol: TCP
         volumeMounts:
         - name: datadir

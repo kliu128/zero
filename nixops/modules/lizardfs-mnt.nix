@@ -22,7 +22,6 @@
       RestartSec = "5";
       Nice = 0;
       MemoryHigh = "1G";
-      MemorySwapMax = "512M";
       ExecStartPre = "-${pkgs.utillinux}/bin/umount -l /mnt/storage";
     };
   };
