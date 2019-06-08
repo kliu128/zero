@@ -1,7 +1,7 @@
 minecraftServer:
   motd: "Vanilla / Kevloo Hosting"
   jvmOpts: -Xmx1G
-  jvmXxOpts: "-XX:+ExplicitGCInvokesConcurrent -XX:+ExplicitGCInvokesConcurrentAndUnloadsClasses -Dsun.rmi.dgc.server.gcInterval=2147483646 -XX:+UnlockExperimentalVMOptions -XX:MaxGCPauseMillis=50 -XX:UseSSE=3"
+  jvmXxOpts: "-XX:+UseG1GC"
   type: SPIGOT
   version: 1.14.2
   difficulty: normal

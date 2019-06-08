@@ -17,6 +17,5 @@
     wants = [ "nfs-server.service" ];
     restartIfChanged = false;
   };
-  systemd.services.docker.serviceConfig.CPUSchedulingPolicy = "idle";
   users.extraUsers.kevin.extraGroups = [ "docker" ];
 }

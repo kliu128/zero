@@ -34,7 +34,8 @@
     fsType = "zfs";
   };
   virtualisation.docker.storageDriver = "overlay2";
-  services.fstrim.enable = false;
+  services.fstrim.enable = true;
+  systemd.services.fstrim.serviceConfig.ExecStartPre = "${pkgs.zfsUnstable}/bin/zpool trim rpool";
 
   fileSystems."/var/lib/docker" =
     { device = "/dev/zvol/rpool/docker";

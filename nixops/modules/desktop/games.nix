@@ -5,7 +5,7 @@
     # Games
     dolphinEmuMaster factorio multimc steam steam-run-native
     # Wine
-    wineWowPackages.staging winetricks 
+    wineWowPackages.staging winetricks samba # for ntlm_auth
   ];
 
   hardware.opengl.driSupport32Bit = true; # for steam and wine
