@@ -6,9 +6,9 @@ spec:
   selector:
     app: matrix
   ports:
-  - name: http
-    targetPort: 8008
-    port: 8008
+    - name: http
+      targetPort: 8008
+      port: 8008
 ---
 apiVersion: apps/v1
 kind: StatefulSet
@@ -23,12 +23,10 @@ spec:
       labels:
         app: matrix
     spec:
-      nodeSelector:
-        kubernetes.io/hostname: rem
       containers:
         # Main matrix server
         - name: synapse
-          image: matrixdotorg/synapse
+          image: matrixdotorg/synapse:v1.0.0rc1
           imagePullPolicy: Always
           resources:
             limits:
@@ -43,8 +41,6 @@ spec:
           env:
             - name: SYNAPSE_CONFIG_PATH
               value: /config/homeserver.yaml
-            - name: SYNAPSE_CACHE_FACTOR
-              value: "2.0"
           ports:
             - containerPort: 8008
               name: http
@@ -90,13 +86,12 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  creationTimestamp: null
   labels:
     app: matrix
   name: matrix-data
 spec:
   accessModes:
-  - ReadWriteOnce
+    - ReadWriteOnce
   resources:
     requests:
       storage: 20Gi
@@ -106,7 +101,7 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   annotations:
-    kubernetes.io/tls-acme: 'true'
+    kubernetes.io/tls-acme: "true"
     nginx.ingress.kubernetes.io/proxy-body-size: 100m
     nginx.ingress.kubernetes.io/proxy-connect-timeout: "14400"
     nginx.ingress.kubernetes.io/proxy-send-timeout: "14400"
@@ -118,15 +113,18 @@ spec:
       hosts:
         - potatofrom.space
   rules:
-  - host: potatofrom.space
-    http:
-      paths:
-      - path: /_matrix
-        backend:
-          serviceName: matrix
-          servicePort: 8008
-      - path: /.well-known/matrix
-        backend:
-          serviceName: matrix
-          servicePort: 8008
-
+    - host: potatofrom.space
+      http:
+        paths:
+          - path: /_matrix
+            backend:
+              serviceName: matrix
+              servicePort: 8008
+          - path: /_synapse
+            backend:
+              serviceName: matrix
+              servicePort: 8008
+          - path: /.well-known/matrix
+            backend:
+              serviceName: matrix
+              servicePort: 8008

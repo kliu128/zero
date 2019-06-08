@@ -14,43 +14,43 @@ spec:
         app: zoneminder
     spec:
       containers:
-      - image: zoneminderhq/zoneminder:latest-ubuntu18.04
-        imagePullPolicy: Always
-        name: zoneminder
-        livenessProbe:
-          httpGet:
-            path: /zm/
-            port: 80
-          initialDelaySeconds: 60
-        volumeMounts:
-        - mountPath: /var/cache/zoneminder/images
-          subPath: images
-          name: vids
-        - mountPath: /var/cache/zoneminder/events
-          subPath: events
-          name: vids
-        - mountPath: /var/lib/mysql
-          name: data
-        - mountPath: /dev/shm
-          name: shm
-        - mountPath: /etc/mysql/conf.d/checksums.cnf
-          name: config
-          subPath: checksums.cnf
+        - image: zoneminderhq/zoneminder:latest-ubuntu18.04
+          imagePullPolicy: Always
+          name: zoneminder
+          livenessProbe:
+            httpGet:
+              path: /zm/
+              port: 80
+            initialDelaySeconds: 60
+          volumeMounts:
+            - mountPath: /var/cache/zoneminder/images
+              subPath: images
+              name: vids
+            - mountPath: /var/cache/zoneminder/events
+              subPath: events
+              name: vids
+            - mountPath: /var/lib/mysql
+              name: data
+            - mountPath: /dev/shm
+              name: shm
+            - mountPath: /etc/mysql/conf.d/checksums.cnf
+              name: config
+              subPath: checksums.cnf
       restartPolicy: Always
       volumes:
-      - name: shm
-        emptyDir:
-          medium: Memory
-      - name: config
-        configMap:
-          name: zoneminder-config
-      - name: vids
-        hostPath:
-          path: /mnt/storage/Kevin/Computing/Data/Zoneminder
-          type: Directory
-      - name: data
-        persistentVolumeClaim:
-          claimName: zoneminder-data
+        - name: shm
+          emptyDir:
+            medium: Memory
+        - name: config
+          configMap:
+            name: zoneminder-config
+        - name: vids
+          hostPath:
+            path: /mnt/storage/Kevin/Computing/Data/Zoneminder
+            type: Directory
+        - name: data
+          persistentVolumeClaim:
+            claimName: zoneminder-data
 ---
 kind: ConfigMap
 apiVersion: v1
@@ -72,7 +72,7 @@ metadata:
   name: zoneminder-data
 spec:
   accessModes:
-  - ReadWriteOnce
+    - ReadWriteOnce
   resources:
     requests:
       storage: 20Gi
@@ -86,9 +86,9 @@ metadata:
   name: zoneminder
 spec:
   ports:
-  - name: http
-    port: 80
-    targetPort: 80
+    - name: http
+      port: 80
+      targetPort: 80
   selector:
     app: zoneminder
 ---
@@ -96,13 +96,7 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   annotations:
-    kubernetes.io/tls-acme: 'true'
-    # type of authentication
-    nginx.ingress.kubernetes.io/auth-type: basic
-    # name of the secret that contains the user/password definitions
-    nginx.ingress.kubernetes.io/auth-secret: zoneminder-auth
-    # message to display with an appropriate context why the authentication is required
-    nginx.ingress.kubernetes.io/auth-realm: "Authentication Required - zoneminder"
+    kubernetes.io/tls-acme: "true"
   name: zoneminder
 spec:
   tls:
@@ -110,10 +104,10 @@ spec:
       hosts:
         - zm.potatofrom.space
   rules:
-  - host: zm.potatofrom.space
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: zoneminder
-          servicePort: http
+    - host: zm.potatofrom.space
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: zoneminder
+              servicePort: http
