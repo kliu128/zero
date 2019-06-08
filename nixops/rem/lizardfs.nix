@@ -93,5 +93,8 @@ in {
       config = chunkserverDefaults;
     }
   ];
-  networking.firewall.allowedTCPPorts = [ 9420 9421 9422 9423 9426 9427 9428 9429 ];
+  networking.firewall.allowedTCPPorts = [ 
+    # Metalogger
+    9419
+    9420 9421 9422 9423 9426 9427 9428 9429 ];
 }
