@@ -84,9 +84,7 @@
 
   # Proper shutdown in a timely manner
   # See https://utcc.utoronto.ca/~cks/space/blog/linux/SystemdShutdownWatchdog
-  # Also enable the system watchdog to reboot the system on full freezes
   systemd.extraConfig = ''
-    RuntimeWatchdogSec=60
     ShutdownWatchdogSec=15
   '';
 }

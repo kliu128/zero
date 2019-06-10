@@ -194,20 +194,4 @@
       "docker.service"
     ];
   };
-
-  systemd.services.gdrive-mount = {
-    description = "batchfiles99@gmail.com rclone FUSE mount";
-    after = [ "network-online.target" ];
-    wants = [ "network-online.target" ];
-    wantedBy = [ "multi-user.target" ];
-    restartIfChanged = false;
-    path = [ pkgs.fuse ];
-    serviceConfig = {
-      Type = "notify";
-      ExecStart = "${pkgs.rclone}/bin/rclone --config /keys/rclone.conf mount gdrive-batchfiles: /mnt/gdrive --vfs-cache-mode minimal --allow-other --uid 1000 --gid 100";
-    };
-  };
-  systemd.tmpfiles.rules = [
-    "d /mnt/gdrive 0755 root root -"
-  ];
 }

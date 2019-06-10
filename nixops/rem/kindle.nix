@@ -27,6 +27,8 @@
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICuhNYOw//qjZTsQT99TavXaLAJLHmaDXV4YZowNWSMS root@kindle"
     ];
+    # Able to see all processes (for htop view)
+    extraGroups = [ "proc" ];
   };
   home-manager.users.kindle.home.packages = [ pkgs.htop ];
 }
