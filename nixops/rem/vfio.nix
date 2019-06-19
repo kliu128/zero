@@ -58,7 +58,7 @@
     interfaces = [ "eth0" ];
   };
   systemd.services.coder = {
-    enable = true;
+    enable = false;
     description = "VSCode Coder Service";
     path = [ pkgs.systemd ];
     script = "systemd-nspawn -bUD /var/lib/machines/coder";

@@ -21,6 +21,11 @@
         };
       };
       folders = {
+        "/home/kevin/Books" = {
+          id = "viyof-qyadp";
+          label = "Books";
+          devices = [ "rem" "puck" "momo" ];
+        };
         "/home/kevin/Personal Documents" = {
           id = "skrpu-wk5qc";
           label = "Documents";

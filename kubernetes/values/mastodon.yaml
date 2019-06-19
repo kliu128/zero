@@ -1,4 +1,4 @@
-image: tootsuite/mastodon:v2.8.4
+image: tootsuite/mastodon:v2.9.0
 persistence:
   size: 25Gi
 ingress:
@@ -29,7 +29,7 @@ config:
   # ALTERNATE_DOMAINS: example1.com,example2.com
   # Registrations
   # Single user mode will disable registrations and redirect frontpage to the first profile
-  SINGLE_USER_MODE: "true"
+  SINGLE_USER_MODE: "false"
   # Prevent registrations with following e-mail domains
   # EMAIL_DOMAIN_BLACKLIST: example1.com|example2.de|etc
   # Only allow registrations with the following e-mail domains
@@ -42,8 +42,8 @@ config:
   # then set SMTP_AUTH_METHOD and SMTP_OPENSSL_VERIFY_MODE to 'none' and
   # *comment* SMTP_LOGIN and SMTP_PASSWORD (leaving them blank is not enough).
   SMTP_SERVER: potatofrom.space
-  SMTP_PORT: '587'
-  SMTP_FROM_ADDRESS: notifications@fedi.potatofrom.space
+  SMTP_PORT: '10587'
+  SMTP_FROM_ADDRESS: mastodon-notifications@potatofrom.space
   #SMTP_DOMAIN:  # defaults to LOCAL_DOMAIN
   # delivery method can also be sendmail
   #SMTP_DELIVERY_METHOD: smtp

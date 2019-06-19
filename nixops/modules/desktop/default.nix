@@ -57,9 +57,9 @@
 
   environment.systemPackages = with pkgs; [
     # System tools
-    atop borgbackup cowsay dnsutils file fortune hdparm htop iftop iotop lm_sensors lolcat man-pages p7zip rustup smartmontools spectre-meltdown-checker stress-ng telnet thefuck tree vim wget
+    ansible atop borgbackup cowsay dnsutils file fortune hdparm htop iftop iotop lm_sensors lolcat man-pages opentimestamps-client p7zip rustup smartmontools spectre-meltdown-checker stress-ng telnet thefuck tree vim wget
     # Desktop applications
-    calibre chromium discord gpodder libreoffice-fresh liferea pavucontrol gnome3.pomodoro thunderbird tor-browser-bundle-bin transmission_gtk transgui vlc vscodium youtube-dl zoom-us
+    calibre chromium discord filezilla gpodder libreoffice-fresh liferea pavucontrol gnome3.pomodoro thunderbird tor-browser-bundle-bin transmission_gtk transgui vlc vscodium youtube-dl zoom-us
     # Anki and related packages (for LaTeX support)
     anki polar-bookshelf texlive.combined.scheme-basic tetex
     # Desktop tools
@@ -123,6 +123,11 @@
           hostname = "server.scintillate.me";
           user = "kevin";
           port = 843;
+        };
+        carta = {
+          hostname = "potatofrom.space";
+          user = "kevin";
+          port = 846;
         };
         otto = {
           hostname = "otto.i.potatofrom.space";

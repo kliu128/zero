@@ -8,18 +8,6 @@
   systemd.network.enable = true;
   systemd.network.networks."99-main".enable = false;
 
-  systemd.services.remove-eth0-ip = {
-    enable = true;
-    path = [ pkgs.iproute ];
-    wantedBy = [ "multi-user.target" ];
-    script = ''
-      ip addr del 192.168.1.5/24 dev eth0
-    '';
-    serviceConfig.RemainAfterExit = true;
-    restartIfChanged = false;
-    serviceConfig.Type = "oneshot";
-  };
-
   systemd.services.ipv6-tunnel = {
     description = "Hurricane Electric IPv6 Tunneling";
     enable = true;
@@ -45,4 +33,8 @@
 
   networking.interfaces.br0.ipv6.addresses = [ {
     address = "2001:470:8990::dead:beef"; prefixLength = 48; } ];
+  # Fix failing network upon big NixOS updates
+  systemd.services.systemd-networkd.restartIfChanged = false;
+  systemd.services.systemd-resolved.restartIfChanged = false;
+  systemd.services.unbound.restartIfChanged = false;
 }

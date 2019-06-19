@@ -42,35 +42,27 @@ in {
   };
   systemd.services.gsuite-backup = {
     enable = true;
-    description = "G-Suite Rclone Backup";
+    description = "G-Suite Restic Backup";
     path = [ pkgs.rclone pkgs.restic pkgs.gnugrep ];
     serviceConfig = {
       Nice = 19;
       SyslogIdentifier = "gsuite-backup";
+      IPAccounting = true;
+      CPUAccounting = true;
+      MemoryHigh = "512M";
     };
     script = ''
       set -euo pipefail
 
       # Backup with monthly backup dirs and revisioned suffixes in each
 
+      ${proxyConfig}
+
       dir_format="+%Y-%m"
       monthly_backup_dir="$(env TZ=Etc/UTC date "$dir_format")"
       backup_suffix="$(env TZ=Etc/UTC date +"__%Y_%m_%d_%H%M%SZ")"
       # Prune the backup dir from 6 months ago
       prune_backup_dir="$(env TZ=Etc/UTC date --date="-6 months" "$dir_format")"
-
-      ${proxyConfig}
-
-      # env RESTIC_PASSWORD_FILE=${../secrets/gsuite-backup-password.txt} \
-      #   XDG_CACHE_HOME=/var/cache/gsuite-backup \
-      #   RCLONE_CONFIG=/keys/rclone.conf \
-      #   restic --option=rclone.connections=16 \
-      #          --option=rclone.args='serve restic --stdio -v --drive-use-trash=false' \
-      #          --repo=rclone:gsuite-mysmccd:restic \
-      #          --verbose \
-      #          backup /mnt/storage/Kevin \
-      #          --exclude '/mnt/storage/Kevin/Incoming/**/*' 2>&1 \
-      #   | grep -v "can not obtain extended attribute system.richacl"
 
       rclone --config /keys/rclone.conf \
              sync /mnt/storage/Kevin gsuite-mysmccd-crypt:/Data/current \
@@ -84,20 +76,21 @@ in {
              --delete-excluded -v --modify-window=1s --delete-during
       rclone --config /keys/rclone.conf \
              purge -v "gsuite-mysmccd-crypt:/Data/old/$prune_backup_dir" || true
+
+      # export RESTIC_PASSWORD_FILE=${../secrets/gsuite-backup-password.txt}
+      # export XDG_CACHE_HOME=/var/cache/gsuite-backup
+      # export RCLONE_CONFIG=/keys/rclone.conf
+      # r() {
+      #   restic --option=rclone.args='serve restic --stdio --drive-use-trash=false' --repo=rclone:gsuite-mysmccd:restic $@
+      # }
+
+      # r backup /mnt/storage/Kevin \
+      #        --exclude '/mnt/storage/Kevin/Incoming/**/*'
+      # r forget \
+      #        --keep-daily 7 --keep-weekly 5 --keep-monthly 12 --keep-yearly 10 \
+      #        --prune
     '';
     startAt = wave-3;
-  };
-  systemd.services.gsuite-mount = {
-    description = "G-Suite rclone FUSE mount";
-    after = [ "network-online.target" ];
-    wants = [ "network-online.target" ];
-    wantedBy = [ "multi-user.target" ];
-    restartIfChanged = false;
-    path = [ pkgs.fuse ];
-    serviceConfig = {
-      Type = "notify";
-      ExecStart = "${pkgs.rclone}/bin/rclone --config /keys/rclone.conf mount gsuite-mysmccd-crypt: /mnt/gsuite --vfs-cache-mode minimal --allow-other --uid 1000 --gid 100";
-    };
   };
   systemd.services.switch-sync = {
     enable = false;

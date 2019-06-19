@@ -7,7 +7,7 @@ global:
   smtp:
     enabled: true
     address: potatofrom.space
-    port: 587
+    port: 10587
     user_name: gitlab@potatofrom.space
     password:
       secret: gitlab-smtp

@@ -3,11 +3,11 @@
 let
   nixpkgs-mozilla = builtins.fetchTarball https://github.com/mozilla/nixpkgs-mozilla/archive/master.tar.gz;
 in {
-  nixpkgs.overlays = [
-    (import nixpkgs-mozilla)
-  ];
+  # nixpkgs.overlays = [
+  #   (import nixpkgs-mozilla)
+  # ];
   environment.systemPackages = with pkgs; [
-    latest.firefox-nightly-bin
+    firefox
   ];
   nixpkgs.config.firefox.enableAdobeFlash = true;
   environment.variables = {

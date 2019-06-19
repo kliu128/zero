@@ -5,7 +5,7 @@
   boot.supportedFilesystems = [ "btrfs" "ext4" "exfat" "zfs" ];
   boot.initrd.supportedFilesystems = [ "zfs" ];
 
-  boot.kernelParams = [ "zfs.zfs_arc_max=1073741824" ]; # 1 GB arc max
+  boot.kernelParams = [ "zfs.zfs_arc_max=1073741824" ]; # 512 MB arc max
   boot.zfs = {
     forceImportRoot = false;
     forceImportAll = false;
@@ -18,12 +18,13 @@
   systemd.services.renice = {
     enable = true;
     description = "Renice ZFS IO threads & others";
-    path = [ pkgs.procps pkgs.utillinux ];
+    path = [ pkgs.procps pkgs.utillinux pkgs.schedtool ];
     script = ''
       while true; do
         renice -n 0 -p $(pgrep z) || true
         renice -n 0 -p $(pgrep spl) || true
-        sleep 1
+        schedtool -D $(cat /sys/fs/cgroup/unified/system.slice/docker.service/cgroup.procs) || true
+        sleep 5
       done
     '';
     wantedBy = [ "multi-user.target" ];
@@ -193,5 +194,30 @@
       "syncthing.service"
       "docker.service"
     ];
+  };
+
+  systemd.services.gsuite-mount = {
+    description = "G-Suite rclone FUSE mount";
+    after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
+    wantedBy = [ "multi-user.target" ];
+    restartIfChanged = false;
+    path = [ pkgs.fuse ];
+    serviceConfig = {
+      Type = "notify";
+      ExecStart = "${pkgs.rclone}/bin/rclone --config /keys/rclone.conf mount gsuite-mysmccd-crypt: /mnt/gsuite --vfs-cache-mode minimal --allow-other --uid 1000 --gid 100";
+    };
+  };
+  systemd.services.gdrive-mount = {
+    description = "Google Drive batchfiles99@gmail.com rclone FUSE mount";
+    after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
+    wantedBy = [ "multi-user.target" ];
+    restartIfChanged = false;
+    path = [ pkgs.fuse ];
+    serviceConfig = {
+      Type = "notify";
+      ExecStart = "${pkgs.rclone}/bin/rclone --config /keys/rclone.conf mount gdrive-batchfiles: /mnt/gdrive --vfs-cache-mode minimal --allow-other --uid 1000 --gid 100";
+    };
   };
 }
