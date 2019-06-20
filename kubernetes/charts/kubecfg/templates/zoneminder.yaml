@@ -111,3 +111,38 @@ spec:
             backend:
               serviceName: zoneminder
               servicePort: http
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: zoneminder
+spec:
+  podSelector:
+    matchLabels:
+      app: zoneminder
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  # nginx-ingress only
+  - from:
+    - podSelector:
+        matchLabels:
+          app: nginx-ingress
+    ports:
+    - protocol: TCP
+      port: 80
+  egress:
+  # Allow egress to cameras
+  - to:
+    - ipBlock:
+        cidr: 192.168.1.6/32
+    ports:
+    - protocol: TCP
+      port: 8081
+  - to:
+    - ipBlock:
+        cidr: 192.168.1.7/32
+    ports:
+    - protocol: TCP
+      port: 8081
