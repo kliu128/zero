@@ -8,14 +8,12 @@ spec:
   replicas: 1
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app: dl
     spec:
       containers:
         - image: nginx
           name: nginx
-          resources: {}
           volumeMounts:
             - mountPath: /usr/share/nginx/html
               name: files
@@ -82,3 +80,23 @@ spec:
             backend:
               serviceName: dl
               servicePort: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: dl
+spec:
+  podSelector:
+    matchLabels:
+      app: dl
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: nginx-ingress
+    ports:
+    - protocol: TCP
+      port: 80
