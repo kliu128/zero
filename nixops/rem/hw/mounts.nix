@@ -17,13 +17,12 @@
 
   systemd.services.renice = {
     enable = true;
-    description = "Renice ZFS IO threads & others";
-    path = [ pkgs.procps pkgs.utillinux pkgs.schedtool ];
+    description = "Renice ZFS IO threads";
+    path = [ pkgs.procps pkgs.utillinux ];
     script = ''
       while true; do
         renice -n 0 -p $(pgrep z) || true
         renice -n 0 -p $(pgrep spl) || true
-        schedtool -D $(cat /sys/fs/cgroup/unified/system.slice/docker.service/cgroup.procs) || true
         sleep 5
       done
     '';

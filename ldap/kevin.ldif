@@ -1,0 +1,10 @@
+dn: uid=kevin,ou=users,dc=potatofrom,dc=space
+objectClass: top
+objectClass: inetOrgPerson
+objectClass: person
+objectClass: organizationalPerson
+uid: kevin
+cn: Kevin Liu
+mail: kevin@potatofrom.space
+sn: Liu
+givenName: Kevin

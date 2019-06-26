@@ -1,0 +1,4 @@
+dn: ou=users,dc=potatofrom,dc=space
+ou: users
+description: Users of Zero
+objectClass: organizationalUnit

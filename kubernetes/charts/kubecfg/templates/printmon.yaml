@@ -1,24 +1,57 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: printmon
+spec:
+  selector:
+    matchLabels:
+      app: printmon
+  template:
+    metadata:
+      labels:
+        app: printmon
+    spec:
+      containers:
+        - name: printmon
+          image: pneumaticat/printmon
+          command: [yarn, start, --data-directory, /data]
+          envFrom:
+            - secretRef:
+                name: printmon-config
+          ports:
+            - containerPort: 4005
+              name: http
+          volumeMounts:
+            - name: data
+              mountPath: /data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: printmon-data
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    app: printmon
+  name: printmon-data
+spec:
+  accessModes: [ReadWriteOnce]
+  resources:
+    requests:
+      storage: 250Mi
+---
 kind: Service
 apiVersion: v1
 metadata:
   name: printmon
 spec:
+  selector:
+    app: printmon
   ports:
-  - protocol: TCP
-    port: 4005
-    targetPort: 4005
-    name: http
----
-kind: Endpoints
-apiVersion: v1
-metadata:
-  name: printmon
-subsets:
-  - addresses:
-    - ip: 192.168.1.5
-    ports:
     - protocol: TCP
       port: 4005
+      targetPort: http
       name: http
 ---
 apiVersion: extensions/v1beta1

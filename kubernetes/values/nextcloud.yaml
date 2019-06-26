@@ -22,10 +22,10 @@ collabora:
   ingress:
     enabled: true
     hosts: 
-      - office.potatofrom.space
+      - officex.potatofrom.space
     tls:
       - secretName: collabora-code-tls
         hosts:
-          - office.potatofrom.space
+          - officex.potatofrom.space
     annotations:
       kubernetes.io/tls-acme: 'true'

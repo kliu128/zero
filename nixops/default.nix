@@ -94,7 +94,6 @@
         ./rem/network.nix
         ./rem/nfs.nix
         ./rem/nix.nix
-        ./rem/printmon.nix
         ./rem/samba.nix
         ./rem/scanner
         ./rem/services.nix

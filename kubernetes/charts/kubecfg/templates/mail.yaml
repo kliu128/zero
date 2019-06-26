@@ -35,25 +35,25 @@ spec:
               containerPort: 993
           env:
             - name: ENABLE_CLAMAV
-              value: '0'
+              value: "0"
             - name: ENABLE_AMAVIS
-              value: '0'
+              value: "0"
             - name: ENABLE_SPAMASSASSIN
-              value: '1'
+              value: "1"
             - name: ENABLE_MANAGESIEVE
-              value: '1'
+              value: "1"
             - name: OVERRIDE_HOSTNAME
               value: mail.potatofrom.space
             - name: SA_KILL
               value: "1000.00"
             - name: SSL_TYPE
-              value: 'manual'
+              value: "manual"
             - name: SSL_CERT_PATH
-              value: '/etc/ssl/mailserver/tls.crt'
+              value: "/etc/ssl/mailserver/tls.crt"
             - name: SSL_KEY_PATH
-              value: '/etc/ssl/mailserver/tls.key'
+              value: "/etc/ssl/mailserver/tls.key"
             - name: ONE_DIR
-              value: '1'
+              value: "1"
             - name: TLS_LEVEL
               value: intermediate # TLS v1-1.2 + broad compatibility
               # Required for Nextcloud compatibility
@@ -61,6 +61,9 @@ spec:
             - secretRef:
                 name: mailserver.mailgun-relayhost
           volumeMounts:
+            - name: config
+              subPath: dovecot.cf
+              mountPath: /tmp/docker-mailserver/dovecot.cf
             - name: config
               subPath: after.dovecot.sieve
               mountPath: /tmp/docker-mailserver/after.dovecot.sieve
@@ -119,7 +122,7 @@ metadata:
   name: mailserver-data-claim
 spec:
   accessModes:
-  - ReadWriteOnce
+    - ReadWriteOnce
   resources:
     requests:
       storage: 20Gi
@@ -134,7 +137,7 @@ metadata:
   name: mailserver-state
 spec:
   accessModes:
-  - ReadWriteOnce
+    - ReadWriteOnce
   resources:
     requests:
       storage: 20Gi
@@ -147,7 +150,7 @@ metadata:
   labels:
     app: mailserver
   annotations:
-    kubernetes.io/tls-acme: 'true'
+    kubernetes.io/tls-acme: "true"
 spec:
   rules:
     - host: example.com

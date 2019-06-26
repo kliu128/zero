@@ -31,14 +31,6 @@
   # Enable the X11 windowing system.
   services.xserver.enable = true;
   
-  # iBus
-  i18n.inputMethod = {
-    enabled = "ibus";
-    ibus = {
-      engines = [ pkgs.ibus-engines.uniemoji pkgs.ibus-engines.libpinyin pkgs.ibus-engines.table-chinese pkgs.ibus-engines.table ];
-    };
-  };
-
   # Fwupd
   services.fwupd.enable = true;
 
@@ -57,7 +49,7 @@
 
   environment.systemPackages = with pkgs; [
     # System tools
-    ansible atop borgbackup cowsay dnsutils file fortune hdparm htop iftop iotop lm_sensors lolcat man-pages opentimestamps-client p7zip rustup smartmontools spectre-meltdown-checker stress-ng telnet thefuck tree vim wget
+    atop borgbackup cowsay dnsutils file fortune hdparm htop iftop iotop lm_sensors lolcat man-pages opentimestamps-client p7zip rustup smartmontools spectre-meltdown-checker stress-ng telnet thefuck tree vim wget
     # Desktop applications
     calibre chromium discord filezilla gpodder libreoffice-fresh liferea pavucontrol gnome3.pomodoro thunderbird tor-browser-bundle-bin transmission_gtk transgui vlc vscodium youtube-dl zoom-us
     # Anki and related packages (for LaTeX support)
@@ -68,7 +60,7 @@
     # Development
     bfg-repo-cleaner docker docker_compose gcc git-crypt gnumake insomnia
     # VM and DevOps
-    virtmanager
+    ansible vagrant virtmanager
   ];
   
   # Must be done on the system level (not the home-manager level) to install

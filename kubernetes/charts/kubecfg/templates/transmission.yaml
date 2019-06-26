@@ -10,7 +10,6 @@ spec:
       app: transmission
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app: transmission
     spec:
@@ -31,9 +30,7 @@ spec:
             - name: TRANSMISSION_PEX_ENABLED
               value: "false"
             - name: LOCAL_NETWORK
-              value: 10.0.0.0/24
-            - name: TRANSMISSION_WEB_UI
-              value: combustion
+              value: 192.168.0.0/16
           envFrom:
             - secretRef:
                 name: transmission-pia-auth
@@ -41,7 +38,6 @@ spec:
           name: transmission
           securityContext:
             privileged: true
-          resources: {}
           volumeMounts:
             - mountPath: /data/completed
               name: completed
@@ -60,8 +56,6 @@ spec:
         - name: data
           persistentVolumeClaim:
             claimName: transmission-data
-            
-status: {}
 ---
 apiVersion: v1
 kind: Service
@@ -80,13 +74,12 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  creationTimestamp: null
   labels:
     app: transmission
   name: transmission-data
 spec:
   accessModes:
-  - ReadWriteOnce
+    - ReadWriteOnce
   resources:
     requests:
       storage: 2Gi

@@ -1,0 +1,138 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: sogo
+  name: sogo
+spec:
+  selector:
+    matchLabels:
+      app: sogo
+  template:
+    metadata:
+      labels:
+        app: sogo
+    spec:
+      containers:
+        - image: oursource/sogo
+          name: sogo
+          ports:
+            - containerPort: 80
+              name: http
+          volumeMounts:
+            - mountPath: /etc/stunnel/smtp.conf
+              name: sogo-config
+              subPath: stunnel-mail.conf
+              readOnly: true
+            - mountPath: /etc/sogo/sogo.conf
+              name: sogo-config
+              subPath: sogo.conf
+              readOnly: true
+            - mountPath: /srv
+              name: data
+        - image: postgres:11-alpine
+          name: db
+          env:
+            - name: POSTGRES_DB
+              value: sogo
+            - name: POSTGRES_USER
+              value: sogo
+            - name: POSTGRES_PASSWORD
+              value: "{{ .Values.sogo.db_password }}"
+          ports:
+            - containerPort: 5432
+              name: postgres
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: db
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: sogo-data
+        - name: db
+          persistentVolumeClaim:
+            claimName: sogo-db
+        - name: sogo-config
+          secret:
+            secretName: sogo
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: sogo
+  name: sogo
+spec:
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
+  selector:
+    app: sogo
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    app: sogo
+  name: sogo-data
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+status: {}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    app: sogo
+  name: sogo-db
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+status: {}
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/tls-acme: "true"
+  name: sogo
+spec:
+  tls:
+    - secretName: sogo-tls
+      hosts:
+        - office.potatofrom.space
+  rules:
+    - host: office.potatofrom.space
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: sogo
+              servicePort: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: sogo
+spec:
+  podSelector:
+    matchLabels:
+      app: sogo
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app: nginx-ingress
+      ports:
+        - protocol: TCP
+          port: 80

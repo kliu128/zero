@@ -24,6 +24,8 @@ releases:
       - ./values/cert-manager.yaml
   - name: gitlab
     namespace: default
+    labels:
+      has-migrations: "true"
     chart: gitlab/gitlab
     version: 1.9.1
     values:
@@ -31,6 +33,8 @@ releases:
       - ./values/gitlab.secret.yaml
   - name: mastodon
     namespace: default
+    labels:
+      has-migrations: "true"
     chart: ./charts/mastodon
     values:
       - ./values/mastodon.yaml

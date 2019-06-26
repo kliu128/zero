@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: openldap
+  name: openldap
+spec:
+  selector:
+    matchLabels:
+      app: openldap
+  template:
+    metadata:
+      labels:
+        app: openldap
+    spec:
+      containers:
+        - image: osixia/openldap
+          name: openldap
+          args: [--copy-service]
+          env:
+            - name: LDAP_ORGANIZATION
+              value: Zero
+            - name: LDAP_DOMAIN
+              value: potatofrom.space
+            - name: LDAP_TLS
+              value: "false"
+            - name: LDAP_ADMIN_PASSWORD
+              value: "{{ .Values.ldap.password }}"
+          ports:
+            - containerPort: 389
+              name: ldap
+          volumeMounts:
+            - mountPath: /var/lib/ldap
+              name: data
+              subPath: database
+            - mountPath: /etc/ldap/slapd.d
+              name: data
+              subPath: slap
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: openldap-data
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    app: openldap
+  name: openldap-data
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: openldap
+  name: openldap
+spec:
+  ports:
+    - name: ldap
+      port: 389
+      targetPort: ldap
+  selector:
+    app: openldap
+---
+
