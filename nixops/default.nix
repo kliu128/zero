@@ -99,7 +99,6 @@
         ./rem/services.nix
         ./rem/ssh-unlocker.nix
         ./rem/tinc.nix
-        ./rem/unbound.nix
         ./rem/vfio.nix
       ];
 
