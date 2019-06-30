@@ -3,11 +3,18 @@
 {
   networking.useNetworkd = true;
   networking.useDHCP = true;
-  systemd.network.networks."40-br0".linkConfig.MACAddress = "74:d4:35:e2:52:9b";
-  systemd.network.networks."40-br0".networkConfig.DHCP = lib.mkForce "ipv4";
   systemd.network.enable = true;
   services.resolved.dnssec = "false";
-  systemd.network.networks."99-main".enable = false;
+  systemd.network.networks = {
+    "40-eth0" = {
+      matchConfig = { Name = "eth0"; };
+      DHCP = "yes";
+    };
+    "99-main" = {
+      matchConfig = { Name = "*"; };
+      linkConfig = { Unmanaged = true; };
+    };
+  };
 
   # Fix failing network upon big NixOS updates
   systemd.services.systemd-networkd.restartIfChanged = false;

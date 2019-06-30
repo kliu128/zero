@@ -17,6 +17,8 @@ controller:
     add-headers: default/headers
   headers:
     X-Clacks-Overhead: GNU Terry Pratchett, GNU Jacob Goyette
+  service:
+    type: NodePort
 rbac:
   create: true
 tcp:

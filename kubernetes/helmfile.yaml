@@ -10,7 +10,7 @@ releases:
   - name: nginx-ingress
     namespace: kube-system
     chart: stable/nginx-ingress
-    version: 1.1.2
+    version: 1.7.0
     values:
       - ./values/nginx-ingress.yaml
   - name: nfs-client-provisioner
@@ -51,6 +51,11 @@ releases:
     values:
       - ./values/mc.yaml
       - ./values/mc-diversity-3.yaml
+  - name: factorio
+    namespace: default
+    chart: stable/factorio
+    values:
+      - ./values/factorio.yaml
   - name: nextcloud
     namespace: default
     chart: ./charts/nextcloud

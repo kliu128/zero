@@ -55,11 +55,8 @@
     mode = "777";
   };
 
-  networking.bridges.br0 = {
-    interfaces = [ "eth0" ];
-  };
   systemd.services.coder = {
-    enable = false;
+    enable = true;
     description = "VSCode Coder Service";
     path = [ pkgs.systemd ];
     script = "systemd-nspawn -bUD /var/lib/machines/coder";

@@ -6,9 +6,9 @@ spec:
   selector:
     app: matrix-dimension
   ports:
-  - name: http
-    targetPort: 8184
-    port: 8184
+    - name: http
+      targetPort: 8184
+      port: 8184
 ---
 apiVersion: apps/v1
 kind: StatefulSet
@@ -26,13 +26,12 @@ spec:
       containers:
         - image: turt2live/matrix-dimension
           name: matrix-dimension
-          resources: {}
           volumeMounts:
-          - mountPath: /data
-            name: db
-          - mountPath: /data/config.yaml
-            subPath: default.yaml
-            name: config
+            - mountPath: /data
+              name: db
+            - mountPath: /data/config.yaml
+              subPath: default.yaml
+              name: config
       restartPolicy: Always
       volumes:
         - name: config
@@ -129,7 +128,7 @@ metadata:
   name: matrix-dimension-db
 spec:
   accessModes:
-  - ReadWriteOnce
+    - ReadWriteOnce
   resources:
     requests:
       storage: 1Gi
@@ -139,7 +138,7 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   annotations:
-    kubernetes.io/tls-acme: 'true'
+    kubernetes.io/tls-acme: "true"
   name: matrix-dimension
 spec:
   tls:
@@ -147,10 +146,10 @@ spec:
       hosts:
         - dimension.potatofrom.space
   rules:
-  - host: dimension.potatofrom.space
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: matrix-dimension
-          servicePort: 8184
+    - host: dimension.potatofrom.space
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: matrix-dimension
+              servicePort: 8184

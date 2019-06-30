@@ -5,15 +5,14 @@
   boot.supportedFilesystems = [ "btrfs" "ext4" "exfat" "zfs" ];
   boot.initrd.supportedFilesystems = [ "zfs" ];
 
-  boot.kernelParams = [ "zfs.zfs_arc_max=1073741824" ]; # 512 MB arc max
   boot.zfs = {
     forceImportRoot = false;
     forceImportAll = false;
-    enableUnstable = true;
+    enableUnstable = false;
     requestEncryptionCredentials = true;
   };
 
-  services.kubernetes.path = [ pkgs.zfsUnstable ];
+  services.kubernetes.path = [ pkgs.zfs ];
 
   systemd.services.renice = {
     enable = true;
@@ -35,7 +34,7 @@
   };
   virtualisation.docker.storageDriver = "overlay2";
   services.fstrim.enable = true;
-  systemd.services.fstrim.serviceConfig.ExecStartPre = "${pkgs.zfsUnstable}/bin/zpool trim rpool";
+  systemd.services.fstrim.serviceConfig.ExecStartPre = "${pkgs.zfs}/bin/zpool trim rpool";
 
   fileSystems."/var/lib/docker" =
     { device = "/dev/zvol/rpool/docker";

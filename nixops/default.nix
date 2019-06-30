@@ -117,7 +117,9 @@
         # Tor
         9001
         # Minecraft
-        25565 25566 25567 25568 25569 25570 ];
+        25565 25566 25567 25568 25569 25570
+        # Factorio
+        34197 ];
       networking.firewall.allowedUDPPortRanges = [
         { from = 49152; to = 65535; } # TURN relay
       ];
