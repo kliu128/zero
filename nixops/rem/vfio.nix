@@ -62,7 +62,7 @@
     script = "systemd-nspawn -bUD /var/lib/machines/coder";
     wantedBy = [ "multi-user.target" ];
   };
-  networking.firewall.allowedTCPPorts = [ 8443 9050 ];
+  networking.firewall.allowedTCPPorts = [ 8443 ];
 
   # Patch for better PulseAudio (for QEMU 2.12)
   # nixpkgs.config.packageOverrides = pkgs: rec {
