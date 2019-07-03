@@ -15,6 +15,7 @@ spec:
   template:
     metadata:
       labels:
+        postgresql-postgresql-client: "true"
         app: {{ template "fullname" . }}-web
     spec:
       # hack xd

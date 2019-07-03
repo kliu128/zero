@@ -13,6 +13,7 @@ spec:
   template:
     metadata:
       labels:
+        postgresql-postgresql-client: "true"
         app: {{ template "fullname" . }}-sidekiq
     spec:
       containers:

@@ -10,6 +10,9 @@ metadata:
     chart: "{{.Chart.Name}}-{{.Chart.Version}}"
 spec:
   template:
+    metadata:
+      labels:
+        postgresql-postgresql-client: "true"
     spec:
       restartPolicy: OnFailure
       containers:

@@ -6,7 +6,7 @@
     "${builtins.fetchTarball https://github.com/rycee/home-manager/archive/master.tar.gz}/nixos"
 
     ./android.nix
-    ./audio-bt.nix
+    ./audio
     ./dotnet.nix
     ./emacs
     ./firefox.nix

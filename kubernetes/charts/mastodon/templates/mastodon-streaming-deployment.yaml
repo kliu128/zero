@@ -15,6 +15,7 @@ spec:
   template:
     metadata:
       labels:
+        postgresql-postgresql-client: "true"
         app: {{ template "fullname" . }}-streaming
     spec:
       containers:

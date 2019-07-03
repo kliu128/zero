@@ -62,6 +62,13 @@ releases:
     values:
       - ./values/nextcloud.yaml
       - ./values/nextcloud.secret.yaml
+  - name: postgresql
+    namespace: default
+    chart: stable/postgresql
+    version: 5.3.10
+    values:
+      - ./values/postgresql.yaml
+      - ./values/postgresql.secret.yaml
   - name: kubecfg
     namespace: default
     chart: ./charts/kubecfg

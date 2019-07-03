@@ -20,9 +20,11 @@ persistence:
 
 
 postgresql:
-  # Also include postgres password here
-  postgresUser: changeme
-  postgresPassword: changeme
+  user: changeme
+  password: changeme
+  host: localhost
+  database: mastodon
+  port: 5432
 redis:
   usePassword: false
   master:

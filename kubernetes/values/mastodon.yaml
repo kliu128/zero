@@ -5,9 +5,9 @@ ingress:
   enabled: true
   tls: true
 postgresql:
-  imageTag: "10"
-  postgresUser: mastodon
-  postgresDatabase: mastodon
+  user: mastodon
+  database: mastodon
+  host: postgresql-postgresql
 config:
   # Optional ElasticSearch configuration
   # ES_ENABLED: true
