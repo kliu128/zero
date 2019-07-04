@@ -8,7 +8,7 @@
     restartIfChanged = false; # don't want the filesystem falling out from under processes
     script = ''
       modprobe fuse
-      mfsmount -o nodev,big_writes,allow_other,nonempty,mfsmaster=10.99.0.1,mfsnice=0 /mnt/storage
+      mfsmount -o nodev,big_writes,allow_other,nonempty,mfsmaster=10.99.0.1,mfsnice=5 /mnt/storage
     '';
     wantedBy = [ "remote-fs.target" ];
     after = [ "network-online.target" ];
@@ -20,7 +20,6 @@
       Type = "forking";
       Restart = "on-failure";
       RestartSec = "5";
-      Nice = 0;
       MemoryHigh = "1G";
       ExecStartPre = "-${pkgs.utillinux}/bin/umount -l /mnt/storage";
     };
