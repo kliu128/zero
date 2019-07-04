@@ -41,7 +41,7 @@ in {
     startAt = wave-1;
   };
   systemd.services.gsuite-backup = {
-    enable = true;
+    enable = false;
     description = "G-Suite Restic Backup";
     path = [ pkgs.rclone pkgs.restic pkgs.gnugrep ];
     serviceConfig = {
@@ -93,7 +93,7 @@ in {
     startAt = wave-3;
   };
   systemd.services.switch-sync = {
-    enable = true;
+    enable = false;
     path = [ pkgs.rclone ];
     serviceConfig = {
       Nice = 19;
@@ -226,12 +226,12 @@ in {
   systemd.services.borgbackup-job-root-backup.serviceConfig.SuccessExitStatus = [ 1 ];
 
   # Backup hosting for Scintillating
-  services.borgbackup.repos.scintillating = {
-    # Placeholder
-    authorizedKeys = [ (import ../ssh-keys.nix).root-karmaxer ];
-    path = "/mnt/storage/Kevin/Backups/Systems/scintillating-borg";
-    quota = "250G";
-  };
+  # services.borgbackup.repos.scintillating = {
+  #   # Placeholder
+  #   authorizedKeys = [ (import ../ssh-keys.nix).root-karmaxer ];
+  #   path = "/mnt/storage/Kevin/Backups/Systems/scintillating-borg";
+  #   quota = "250G";
+  # };
 
   # /boot backup
   systemd.services.boot-backup = {
