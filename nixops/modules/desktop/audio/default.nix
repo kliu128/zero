@@ -13,15 +13,18 @@
   hardware.bluetooth.enable = true;
 
   home-manager.users.kevin.systemd.user.services.pulseaudio-mono = {
-    User = {
+    Unit = {
       Description = "Pulseaudio Mono Daemon";
       Requires = "pulseaudio.service";
       After = "pulseaudio.service";
     };
 
     Service = {
-      Environment = "PATH=${lib.makeBinPath [ pkgs.python3Packages.dbus-python pkgs.python3Packages.pygobject3 ]}";
-      ExecStart = "${pkgs.python3}/bin/ ${./pulseaudio-mono.py}";
+      ExecStart = "${pkgs.python3.withPackages(pkgs: [ pkgs.dbus-python pkgs.pygobject3 ])}/bin/python3 ${./pulseaudio-mono.py}";
+    };
+
+    Install = {
+      WantedBy = [ "default.target" ];
     };
   };
 }

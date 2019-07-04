@@ -82,7 +82,8 @@
         ./rem/android.nix
         ./rem/backups.nix
         ./rem/bluray.nix
-        # ./rem/boinc.nix
+        # ./rem/boinc.
+        ./rem/coder.nix
         ./rem/desktop.nix
         ./rem/fusee-launcher.nix
         ./rem/hw
