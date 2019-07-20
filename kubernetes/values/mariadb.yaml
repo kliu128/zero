@@ -1,0 +1,4 @@
+rootUser:
+  forcePassword: true
+replication:
+  enabled: false

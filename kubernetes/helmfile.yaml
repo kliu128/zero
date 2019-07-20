@@ -69,6 +69,13 @@ releases:
     values:
       - ./values/postgresql.yaml
       - ./values/postgresql.secret.yaml
+  - name: mariadb
+    namespace: default
+    chart: stable/mariadb
+    version: 6.5.9
+    values:
+      - ./values/mariadb.yaml
+      - ./values/mariadb.secret.yaml
   - name: kubecfg
     namespace: default
     chart: ./charts/kubecfg

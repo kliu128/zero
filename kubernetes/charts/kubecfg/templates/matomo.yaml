@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: matomo
+  name: matomo
+spec:
+  selector:
+    matchLabels:
+      app: matomo
+  template:
+    metadata:
+      labels:
+        app: matomo
+    spec:
+      containers:
+        - image: bitnami/matomo
+          env:
+            - name: MATOMO_DATABASE_USER
+              value: matomo
+            - name: MARIADB_HOST
+              value: mariadb
+            - name: MATOMO_DATABASE_NAME
+              value: matomo
+            - name: MATOMO_DATABASE_PASSWORD
+              value: {{ .Values.matomo.password }}
+          name: matomo
+          volumeMounts:
+            - mountPath: /bitnami
+              name: data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: matomo-data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: matomo
+  name: matomo
+spec:
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+  selector:
+    app: matomo
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    app: matomo
+  name: matomo-data
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 200Mi
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/tls-acme: "true"
+  name: matomo
+spec:
+  tls:
+    - secretName: matomo-tls
+      hosts:
+        - matomo.potatofrom.space
+  rules:
+    - host: matomo.potatofrom.space
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: matomo
+              servicePort: 80
