@@ -1,0 +1,42 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: pufferpanel
+spec:
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+    name: http
+---
+kind: Endpoints
+apiVersion: v1
+metadata:
+  name: pufferpanel
+subsets:
+  - addresses:
+    - ip: 192.168.1.12
+    ports:
+    - protocol: TCP
+      port: 80
+      name: http
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/tls-acme: "true"
+  name: pufferpanel
+spec:
+  tls:
+    - secretName: pufferpanel-tls
+      hosts:
+        - mc.potatofrom.space
+  rules:
+    - host: mc.potatofrom.space
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: pufferpanel
+              servicePort: http
