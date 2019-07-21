@@ -36,7 +36,6 @@
         ./otto/hw.nix
         ./otto/initrd-ssh.nix
         # ./otto/netconsole-receiver.nix
-        ./otto/reverse-proxy.nix
         ./otto/tinc.nix
       ];
 
