@@ -121,6 +121,11 @@
           user = "kevin";
           port = 846;
         };
+        coder = {
+          hostname = "rem.i.potatofrom.space";
+          user = "kevin";
+          port = 1843;
+        };
         otto = {
           hostname = "otto.i.potatofrom.space";
           user = "kevin";

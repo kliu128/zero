@@ -21,7 +21,7 @@
         proto tls
       }
       table {
-        ^((.+\.)|())potatofrom\.space$ 10.99.0.1
+        ^((.+\.)|())potatofrom\.space$ 10.99.0.1 proxy_protocol
         ^((.+\.)|())scintillating\.us$ 192.168.1.3 proxy_protocol
         ^((.+\.)|())scintillate\.me$ 192.168.1.3 proxy_protocol
         ^backend\.delph\.us$ 192.168.1.3 proxy_protocol

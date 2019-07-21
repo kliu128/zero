@@ -8,5 +8,5 @@
     script = "systemd-nspawn -bUD /var/lib/machines/coder";
     wantedBy = [ "multi-user.target" ];
   };
-  networking.firewall.allowedTCPPorts = [ 8443 3000 8545 9545 ];
+  networking.firewall.allowedTCPPorts = [ 1843 8443 3000 8545 9545 ];
 }

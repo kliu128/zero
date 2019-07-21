@@ -33,10 +33,8 @@
         # ./modules/boinc.nix
         # ./modules/kubernetes-common.nix
         # ./modules/kubernetes-node.nix
-        ./modules/lizardfs-mnt.nix
         ./otto/hw.nix
         ./otto/initrd-ssh.nix
-        ./otto/lizardfs.nix
         # ./otto/netconsole-receiver.nix
         ./otto/reverse-proxy.nix
         ./otto/tinc.nix
@@ -78,7 +76,6 @@
         ./modules/docker.nix
         ./modules/kubernetes-common.nix
         ./modules/kubernetes-master.nix
-        ./modules/lizardfs-mnt.nix
         ./rem/android.nix
         ./rem/backups.nix
         ./rem/bluray.nix
@@ -89,7 +86,6 @@
         ./rem/hw
         ./rem/initrd-ssh.nix
         ./rem/kindle.nix
-        ./rem/lizardfs.nix
         ./rem/monitoring.nix
         ./rem/netconsole-client.nix
         ./rem/network.nix

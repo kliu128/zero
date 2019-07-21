@@ -45,18 +45,19 @@
   fileSystems."/boot" =
     { device = "/dev/disk/by-uuid/725D-8B6F";
       fsType = "vfat";
+      options = [ "nofail" ];
     };
   
   # Backup filesystems
   fileSystems."/mnt/emergency-backup" = {
     device = "/dev/disk/by-uuid/df38ed6d-7404-4065-bd2e-aed453f9c34e";
-    options = [ "errors=remount-ro" ];
+    options = [ "errors=remount-ro" "nofail" ];
     fsType = "ext4";
   };
 
-  fileSystems."/mnt/data0" = {
-    device = "/dev/mapper/data0";
-    options = [ "errors=remount-ro" "noatime" "lazytime" "noexec" "nodev" ];
+  fileSystems."data0" = {
+    device = "none";
+    options = [ "nofail" ];
     encrypted = {
       enable = true;
       blkDev = "/dev/disk/by-uuid/6addfbee-f237-41b3-9a2b-8ced3d57f410";
@@ -70,9 +71,9 @@
     keyFile = ../../secrets/keys/keyfile-data0.bin;
   };
 
-  fileSystems."/mnt/data1" = {
-    device = "/dev/mapper/data1";
-    options = [ "compress=zstd" ];
+  fileSystems."data1" = {
+    device = "none";
+    options = [ "nofail" ];
     encrypted = {
       enable = true;
       blkDev = "/dev/disk/by-uuid/dff62bd6-6e2f-4e77-b1b0-226a13aa0581";
@@ -86,9 +87,9 @@
     keyFile = ../../secrets/keys/keyfile-data1.bin;
   };
 
-  fileSystems."/mnt/data2" = {
-    device = "/dev/mapper/data2";
-    options = [ "errors=remount-ro" "noatime" "lazytime" "noexec" "nodev" ];
+  fileSystems."data2" = {
+    device = "none";
+    options = [ "nofail" ];
     encrypted = {
       enable = true;
       blkDev = "/dev/disk/by-uuid/57e6c20c-ab5e-42b0-a984-2444a80aa516";
@@ -102,9 +103,9 @@
     keyFile = ../../secrets/keys/keyfile-data2.bin;
   };
 
-  fileSystems."/mnt/data3" = {
+  fileSystems."/mnt/storage" = {
     device = "/dev/mapper/data3";
-    options = [ "errors=remount-ro" "noatime" "lazytime" "noexec" "nodev" ];
+    options = [ "nofail" "compress=zstd" ];
     encrypted = {
       enable = true;
       blkDev = "/dev/disk/by-uuid/c4742594-f01c-4eee-927e-1535d9f222fc";
@@ -119,10 +120,9 @@
   };
 
   # Seagate Expansion external hard drive
-  fileSystems."/mnt/data4" = {
-    device = "data4";
-    fsType = "zfs";
-    options = [ "noatime" "lazytime" "noexec" "nodev" ];
+  fileSystems."data4" = {
+    device = "none";
+    options = [ "nofail" ];
     encrypted = {
       enable = true;
       blkDev = "/dev/disk/by-uuid/1351af37-7548-4787-a53f-594ad892b7e3";
@@ -136,10 +136,9 @@
     keyFile = ../../secrets/keys/keyfile-data4.bin;
   };
   # Seagate Backup Plus Hub
-  fileSystems."/mnt/parity0" = {
-    device = "parity0";
-    fsType = "zfs";
-    options = [ "noatime" "lazytime" "noexec" "nodev" ];
+  fileSystems."parity0" = {
+    device = "none";
+    options = [ "nofail" ];
     encrypted = {
       enable = true;
       blkDev = "/dev/disk/by-uuid/b9eb89d2-c5f8-4eb1-b1c0-601af8b8877c";
@@ -180,18 +179,6 @@
       RemainAfterExit = true;
     };
     wantedBy = [ "multi-user.target" ];
-  };
-  systemd.services.storage = {
-    after = [ "wait-for-storage.service" ];
-    wants = [ "wait-for-storage.service" ];
-    before = [
-      "samba-smbd.service"
-      "nfs-server.service"
-      "transmission.service"
-      "borgbackup-repo-scintillating.service"
-      "syncthing.service"
-      "docker.service"
-    ];
   };
 
   systemd.services.gsuite-mount = {
