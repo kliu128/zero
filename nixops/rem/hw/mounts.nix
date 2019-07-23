@@ -113,6 +113,13 @@
       label = "data3";
     };
   };
+
+  services.btrfs.autoScrub = {
+    enable = true;
+    fileSystems = [ "/mnt/storage" ];
+    interval = "monthly";
+  };
+
   deployment.keys."keyfile-data3.bin" = {
     permissions = "400";
     destDir = "/keys";
