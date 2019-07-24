@@ -3,7 +3,17 @@
 {
   networking.usePredictableInterfaceNames = false;
 
-  networking.interfaces.usb0.ipv4.addresses = [ { address = "192.168.15.201"; prefixLength = 24; } ];
+  systemd.network.networks = {
+    "40-usb0" = {
+      matchConfig = { Name = "usb0"; };
+      networkConfig = {
+        Address = "192.168.15.201/24";
+        DHCP = "no";
+        # Avoid networkd crash with https://github.com/systemd/systemd/issues/12452
+        LinkLocalAddressing = "ipv4";
+      };
+    };
+  };
   systemd.services.kindle-status = {
     enable = true;
     path = [ pkgs.sshpass pkgs.openssh ];

@@ -164,30 +164,6 @@
     destDir = "/keys";
     keyFile = ../../secrets/keys/keyfile-vms.bin;
   };
-
-  systemd.services.wait-for-storage = {
-    enable = true;
-    description = "Wait for Grand Stores mount to populate";
-    path = [ pkgs.gawk pkgs.lizardfs pkgs.netcat-gnu ];
-    script = ''
-      # Wait for total number of chunks to be < 10
-      while ! nc -z 10.99.0.1 9421; do   
-        sleep 0.1 # wait for 1/10 of the second before check again
-      done
-
-      while [ "$(lizardfs-admin chunks-health 10.99.0.1 9421 --availability --porcelain | awk '{s+=$5} END {print s}')" -ge 10 ]
-      do
-        echo "Waiting for mount..."
-        sleep 1
-      done
-    '';
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-    };
-    wantedBy = [ "multi-user.target" ];
-  };
-
   systemd.services.gsuite-mount = {
     description = "G-Suite rclone FUSE mount";
     after = [ "network-online.target" ];
