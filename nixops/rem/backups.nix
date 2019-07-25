@@ -192,26 +192,23 @@ in {
 
   # Root filesystem backup
   services.borgbackup.jobs.root = {
-    doInit = false; # Already exists
+    doInit = true;
     compression = "auto,zstd";
     encryption = {
       mode = "repokey";
       passphrase = builtins.readFile ../secrets/storage-borg-password.txt;
     };
     exclude = [
-      "sh:/mnt/ssd/docker/*"
-      "sh:/home/*/keybase"
       "sh:/home/*/.cache/*"
       "sh:/var/lib/docker/*"
       "sh:/var/lib/kubernetes/*"
       "sh:/var/log/*"
       "sh:/var/tmp/*"
       "sh:/var/cache/*"
-      "sh:/var/lib/sddm/*" # /var/lib/sddm/keybase
     ];
     extraCreateArgs = "--one-file-system --stats";
-    paths = [ "/" "/mnt/ssd" ];
-    repo = "/mnt/data3/storage-borg";
+    paths = [ "/" ];
+    repo = "/mnt/storage/Kevin/Backups/Systems/storage-borg";
     prune.keep = {
       daily = 7;
       weekly = 4;
