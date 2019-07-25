@@ -7,20 +7,23 @@ metadata:
     kubernetes.io/tls-acme: "true"
     nginx.ingress.kubernetes.io/proxy-body-size: "0"
     nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      rewrite ^(/webmail)$ $1/ permanent;
   labels:
     app: mailu
     role: mail
     tier: backend
 spec:
   tls:
-  - hosts:
-    - "mail.potatofrom.space"
-    secretName: letsencrypt-webmail # If unsure how to generate these, check out https://github.com/ployst/docker-letsencrypt
+  - hosts: {{ toYaml .Values.mailu.hosts | nindent 4 }}
+    secretName: mailu-tls # If unsure how to generate these, check out https://github.com/ployst/docker-letsencrypt
   rules:
-    - host: "mail.potatofrom.space"
+  {{- range .Values.mailu.hosts }}
+    - host: "{{ . }}"
       http:
         paths:
         - path: /webmail/(.*)
           backend:
             serviceName: webmail
             servicePort: 80
+  {{- end }}

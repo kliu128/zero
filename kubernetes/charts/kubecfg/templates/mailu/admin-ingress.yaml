@@ -15,18 +15,18 @@ metadata:
     tier: backend
 spec:
   tls:
-  - hosts:
-    - mail.potatofrom.space
-    - potatofrom.space
+  - hosts: {{ toYaml .Values.mailu.hosts | nindent 4 }}
     secretName: mailu-tls # If unsure how to generate these, check out https://github.com/ployst/docker-letsencrypt
   rules:
-  - host: "mail.potatofrom.space"
+  {{- range .Values.mailu.hosts }}
+  - host: "{{ . }}"
     http:
       paths:
       - path: "/admin"
         backend:
           serviceName: admin
           servicePort: 80
+  {{- end }}
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -45,18 +45,18 @@ metadata:
     tier: backend
 spec:
   tls:
-  - hosts:
-    - mail.potatofrom.space
-    - potatofrom.space
+  - hosts: {{ toYaml .Values.mailu.hosts | nindent 4 }}
     secretName: mailu-tls # If unsure how to generate these, check out https://github.com/ployst/docker-letsencrypt
   rules:
-  - host: "mail.potatofrom.space"
+  {{- range .Values.mailu.hosts }}
+  - host: "{{ . }}"
     http:
       paths:
       - path: "/admin/ui(/|$)(.*)"
         backend:
           serviceName: admin
           servicePort: 80
+  {{- end }}
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -75,15 +75,15 @@ metadata:
     tier: backend
 spec:
   tls:
-  - hosts:
-    - mail.potatofrom.space
-    - potatofrom.space
+  - hosts: {{ toYaml .Values.mailu.hosts | nindent 4 }}
     secretName: mailu-tls # If unsure how to generate these, check out https://github.com/ployst/docker-letsencrypt
   rules:
-  - host: "mail.potatofrom.space"
+  {{- range .Values.mailu.hosts }}
+  - host: "{{ . }}"
     http:
       paths:
       - path: "/admin/static(/|$)(.*)"
         backend:
           serviceName: admin
           servicePort: 80
+  {{- end }}

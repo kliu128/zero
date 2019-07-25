@@ -1,0 +1,4 @@
+mailu:
+  hosts:
+    - mail.potatofrom.space
+    - mail.hack3.co

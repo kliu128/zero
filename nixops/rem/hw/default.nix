@@ -23,7 +23,7 @@
   # Video.
   boot.earlyVconsoleSetup = true;
   services.xserver.videoDrivers = [ "amdgpu" ];
-  boot.kernelParams = [ "consoleblank=300" "usbcore.autosuspend=-1" "amdgpu.gpu_recovery=1" ];
+  boot.kernelParams = [ "consoleblank=300" ];
 
   # Freeness (that is, not.)
   hardware.enableRedistributableFirmware = true; # for amdgpu

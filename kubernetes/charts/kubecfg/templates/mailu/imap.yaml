@@ -44,8 +44,8 @@ spec:
             cpu: 1000m
       volumes:
         - name: maildata
-          persistentVolumeClaim:
-            claimName: mail-storage
+          hostPath:
+            path: /srv/nfs/pvcs/default-mail-storage-pvc-dc7d9793-ae19-11e9-9d16-74d435e2529b
 ---
 apiVersion: v1
 kind: Service
