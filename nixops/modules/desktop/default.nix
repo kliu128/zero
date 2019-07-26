@@ -125,11 +125,6 @@
           user = "kevin";
           port = 1843;
         };
-        otto = {
-          hostname = "otto.i.potatofrom.space";
-          user = "kevin";
-          port = 843;
-        };
         puck = {
           hostname = "puck.i.potatofrom.space";
           user = "kevin";

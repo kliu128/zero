@@ -21,28 +21,6 @@
 
     time.timeZone = "America/New_York";
   };
-
-  otto =
-    { config, pkgs, lib, ... }:
-    {
-      deployment.targetHost = "10.99.0.2";
-      deployment.hasFastConnection = true;
-
-      imports = [
-        # ./modules/docker.nix
-        # ./modules/boinc.nix
-        # ./modules/kubernetes-common.nix
-        # ./modules/kubernetes-node.nix
-        ./otto/hw.nix
-        ./otto/initrd-ssh.nix
-        # ./otto/netconsole-receiver.nix
-        ./otto/tinc.nix
-      ];
-
-      networking.hostName = "otto";
-
-      system.stateVersion = "unstable";
-    };
   
   puck =
     { config, pkgs, lib, ... }:
@@ -78,7 +56,6 @@
         ./rem/android.nix
         ./rem/backups.nix
         ./rem/bluray.nix
-        # ./rem/boinc.
         ./rem/coder.nix
         ./rem/desktop.nix
         ./rem/fusee-launcher.nix
@@ -86,7 +63,6 @@
         ./rem/initrd-ssh.nix
         ./rem/kindle.nix
         ./rem/monitoring.nix
-        ./rem/netconsole-client.nix
         ./rem/network.nix
         ./rem/nfs.nix
         ./rem/nix.nix

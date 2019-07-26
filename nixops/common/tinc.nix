@@ -3,7 +3,6 @@
 {
   networking.hosts = {
     "10.99.0.1" = ["rem.i.potatofrom.space" "rem"];
-    "10.99.0.2" = ["otto.i.potatofrom.space" "otto"];
     "10.99.0.3" = ["puck.i.potatofrom.space"];
   };
   services.tinc.networks."omnimesh"= {
@@ -32,26 +31,6 @@
         9V8pl4hn7HRNqWWqNtyCT2yAg026Ows1ph1dFT0pDUJeGH/LAJgLzWpi80yvURls
         4AJYUc9WHs0G9JtYln8saFCYaFXRVlD92bldthXuaUalH/BRcBvTvYCz+00Der4x
         iQB8PPr1bq2qqslUmYjAj5XUzniNohcilSs8v2oMbNtACDWoweNO9NMCAwEAAQ==
-        -----END RSA PUBLIC KEY-----
-      '';
-      otto = ''
-        Compression = 1
-        Address = 192.168.1.11
-        Port = 655
-        Ed25519PublicKey = ojKpm3CHG06B+2ugM5HFHtOlssQ9g3WGplGINk3h/LO
-
-        -----BEGIN RSA PUBLIC KEY-----
-        MIICCgKCAgEA4TSibLys3gXeaXCF41QnR7enwAwoJOPiFTPtG4um5doNS0CF79ez
-        EhiqYCISJlVyDKpOHneL/pGBUGF6wAwvewvKsZIYR2LEUAyz5bQxjyJV2S1RdK/j
-        V8U1sqbv06R2WFJBnMr4Mqte7tPs462/7ndWYFdWZJ4Gu28LZ5ATyP/zD5A11jJo
-        +Ba9w2BYG48UqQkB77SJbI5/fWSIg1hwOTBh/1zz9/JeLoOLOJxmHiQqzpnHhc1q
-        g/D5sByfo6XHUQBPym9kaQcFjGZK3sgbBW5YUGZoj9EWlrUrknX4IU9eBjyq/m8N
-        AMlonKuEUHaslW7X5GfLDVhgHGGfMRXP1e99E10wvUuJBHFLpBwtzjlQBs/00WQT
-        fONp2EnwMhUqtywi+6G7xJZF8M3HwSL+OdNUTw4GRHvKbIR8B4irFkfqosr9melV
-        6GXih/z3Tsc6CP+QRDsFvo6Gt41gvfRBRMHjbWKUSdC2ekVy2EKUmrdFifA0dHSa
-        YNWwuIrvK/hILcVZ0iYJC9S3wDWkZHFu8EcmEotEnadLPC6iLPamnvmRrpe8TV7v
-        vf+/QKotJFMUqh5ll8pu4jodXonnMJJN/QfBJ57mad60T7oXbzplbmS9sqoUpwSU
-        P4Q8pjAiqocAr8BRf5A1PcAPvlpFW3tZFpCVthQyh/+dIRXVx647NfsCAwEAAQ==
         -----END RSA PUBLIC KEY-----
       '';
       puck = ''
