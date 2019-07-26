@@ -220,7 +220,6 @@ in {
     mode = "400";
     text = builtins.readFile ../secrets/keys/backups.borg-key;
   };
-  systemd.services.borgbackup-job-root-backup.serviceConfig.SuccessExitStatus = [ 1 ];
 
   # Backup hosting for Scintillating
   services.borgbackup.repos.scintillating = {

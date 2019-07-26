@@ -164,6 +164,11 @@
     destDir = "/keys";
     keyFile = ../../secrets/keys/keyfile-vms.bin;
   };
+
+  # ZFS backups image
+  #boot.zfs.extraPools = [ "backups" ];
+
+  # Virtual drives
   systemd.services.gsuite-mount = {
     description = "G-Suite rclone FUSE mount";
     after = [ "network-online.target" ];

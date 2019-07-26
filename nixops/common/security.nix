@@ -6,4 +6,9 @@
   
   boot.kernel.sysctl."kernel.dmesg_restrict" = 1;
   boot.kernel.sysctl."kernel.core_pattern" = "|${pkgs.coreutils}/bin/false";
+
+  services.earlyoom.enable = true;
+  services.earlyoom.freeSwapThreshold = 40;
+
+  systemd.units."sys-fs-fuse-connections.mount".enable = false;
 }

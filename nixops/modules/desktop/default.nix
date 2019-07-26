@@ -16,7 +16,6 @@
     ./gpg.nix
     ./kde.nix
     ./java.nix
-    ./kdeconnect.nix
     ./keybase.nix
     ./kubernetes.nix
     ./nixops.nix
