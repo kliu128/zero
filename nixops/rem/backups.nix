@@ -105,9 +105,8 @@ in {
       ${proxyConfig}
 
       rclone --config /keys/rclone.conf \
-             sync "gsuite-mysmccd:Cleartext/hbg/" "/mnt/storage/Kevin/Computing/ROMs/Nintendo Switch/" \
-             -v --transfers=4 --modify-window=1s --delete-during \
-             --include "NSP Dumps/**"
+             sync "gsuite-mysmccd:Cleartext/hbg/" "gsuite-mysmccd-crypt:/Extended/Switch ROMs" \
+             -v --transfers=4 --modify-window=1s --delete-during
       chown -R kevin:users "/mnt/storage/Kevin/Computing/ROMs/Nintendo Switch"
     '';
     startAt = wave-2;

@@ -9,6 +9,4 @@
 
   services.earlyoom.enable = true;
   services.earlyoom.freeSwapThreshold = 40;
-
-  systemd.units."sys-fs-fuse-connections.mount".enable = false;
 }
