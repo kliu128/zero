@@ -1,9 +1,9 @@
 { config, lib, pkgs, ... }:
 
 {
-  networking.firewall.allowedTCPPorts = [ 2222 ];
+  networking.firewall.allowedTCPPorts = [ 2222 19000 19001 ];
   services.stunnel = {
-    enable = true;
+    enable = false;
     servers.ssh = {
       accept = 2222;
       connect = 843;

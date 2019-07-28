@@ -14,19 +14,19 @@ spec:
         app: matomo
     spec:
       containers:
-        - image: bitnami/matomo
+        - image: matomo:3.11.0
           env:
-            - name: MATOMO_DATABASE_USER
+            - name: MYSQL_USER
               value: matomo
-            - name: MARIADB_HOST
+            - name: MYSQL_DATABASE_HOST
               value: mariadb
-            - name: MATOMO_DATABASE_NAME
+            - name: MYSQL_DATABASE
               value: matomo
-            - name: MATOMO_DATABASE_PASSWORD
+            - name: MYSQL_PASSWORD
               value: {{ .Values.matomo.password }}
           name: matomo
           volumeMounts:
-            - mountPath: /bitnami
+            - mountPath: /var/www/html
               name: data
       volumes:
         - name: data
