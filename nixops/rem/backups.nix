@@ -215,6 +215,7 @@ in {
     };
     startAt = wave-1;
   };
+  systemd.services.borgbackup-job-root.serviceConfig.SuccessExitStatus = [ 1 ];
   environment.etc."keys/backups.borg-key" = {
     mode = "400";
     text = builtins.readFile ../secrets/keys/backups.borg-key;
@@ -270,7 +271,7 @@ in {
         sync \
         --verbose --drive-formats ods,odt,odp,svg \
         --drive-alternate-export \
-        "gdrive-batchfiles:Scintillating" "/mnt/storage/Kevin/Backups/Scintillating/Mirror"
+        "gdrive-batchfiles:Sci" "/mnt/storage/Kevin/Backups/Scintillating/Mirror"
     '';
     readWritePaths = [ "/mnt/storage/Kevin/Backups/Scintillating/Mirror" "/keys" ];
     repo = "/mnt/storage/Kevin/Backups/Scintillating/Borg";
