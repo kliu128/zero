@@ -10,7 +10,10 @@
     package = pkgs.pulseaudioFull;
     extraModules = [ pkgs.pulseaudio-modules-bt ];
   };
-  hardware.bluetooth.enable = true;
+  hardware.bluetooth = {
+    enable = true;
+    package = pkgs.bluezFull;
+  };
 
   home-manager.users.kevin.systemd.user.services.pulseaudio-mono = {
     Unit = {

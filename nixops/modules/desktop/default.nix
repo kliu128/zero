@@ -52,7 +52,13 @@
     # Desktop applications
     calibre chromium discord filezilla gpodder libreoffice-fresh liferea pavucontrol gnome3.pomodoro thunderbird tor-browser-bundle-bin transmission_gtk transgui vlc vscodium youtube-dl zoom-us
     # Anki and related packages (for LaTeX support)
-    anki polar-bookshelf texlive.combined.scheme-basic tetex
+    anki polar-bookshelf 
+    (texlive.combine {
+      inherit (texlive)
+
+      scheme-basic
+      ;
+    })
     # Desktop tools
     appimage-run
     # KDE applications

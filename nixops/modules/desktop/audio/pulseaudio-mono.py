@@ -3,6 +3,7 @@ import dbus
 import os
 import subprocess
 import re
+import time
 from functools import partial
 
 if sys.version_info >= (3,):
@@ -54,6 +55,17 @@ class AudioLogic(object):
         return index
 
 
+def on_new_card(obj, card):
+    card_tmp = obj.conn.get_object("org.PulseAudio.Core1.Card", card, introspect=False)
+    cardname = card_tmp.Get("org.PulseAudio.Core1.Card","Name")
+    print("New card detected with name", cardname)
+
+    if cardname == "bluez_card.BC_F2_92_57_3D_09":
+        subprocess.call(["pacmd", "set-card-profile", cardname, "a2dp_sink"])
+        subprocess.call(["pacmd", "set-card-profile", cardname, "headset_head_unit"])
+        subprocess.call(["pacmd", "set-card-profile", cardname, "a2dp_sink"])
+
+
 def on_new_sink(obj, sink):
     """
     On a new sink, if it's the bluetooth one, load module-remap-sink
@@ -70,7 +82,7 @@ def on_new_sink(obj, sink):
     
     if sinkname != "bluez_sink.BC_F2_92_57_3D_09.a2dp_sink":
         return
-
+    
     obj.headphones_sink = sink
 
     if "remapped" not in sinkname:
@@ -93,5 +105,6 @@ if __name__ == "__main__":
     
     al = AudioLogic()
     al.add_signal_receiver(partial(on_new_sink,al), signal_name="NewSink")
+    al.add_signal_receiver(partial(on_new_card,al), signal_name="NewCard")
     al.add_signal_receiver(partial(on_removed_sink,al), signal_name="SinkRemoved")
     loop.run()
