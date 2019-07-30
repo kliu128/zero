@@ -20,8 +20,8 @@
     path = [ pkgs.procps pkgs.utillinux ];
     script = ''
       while true; do
-        renice -n 0 -p $(pgrep z) || true
-        renice -n 0 -p $(pgrep spl) || true
+        renice -n 5 -p $(pgrep z) || true
+        renice -n 5 -p $(pgrep spl) || true
         sleep 5
       done
     '';

@@ -19,12 +19,12 @@
     ./keybase.nix
     ./kubernetes.nix
     ./nixops.nix
-    ./npm.nix
     ./python.nix
     ./syncthing.nix
     ./trash.nix
     ./u2f.nix
     ./wincompat.nix
+    ./yarn.nix
   ];
   
   # Enable the X11 windowing system.
