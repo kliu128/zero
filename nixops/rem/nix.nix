@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 
 {
-  nix.nixPath = [ "nixpkgs=/etc/nixos/nixpkgs" "nixos-config=/etc/nixos/configuration.nix" ];
+  environment.etc."nixos/nixpkgs".enable = false;
   nix.maxJobs = lib.mkDefault 8;
 }

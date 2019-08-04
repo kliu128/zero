@@ -13,7 +13,4 @@
 
   # Disable laggy services
   systemd.user.services.gvfs-udisks2-volume-monitor.enable = lib.mkForce false;
-
-  nixpkgs.config.firefox.enableGnomeExtensions = true;
-  services.gnome3.chrome-gnome-shell.enable = true;
 }

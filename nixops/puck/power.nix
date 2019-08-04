@@ -9,4 +9,8 @@
   boot.kernel.sysctl."kernel.nmi_watchdog" = 0;
   services.tlp.enable = true; # For laptop
   powerManagement.powertop.enable = true;
+  services.undervolt = {
+    enable = true;
+    coreOffset = "-110";
+  };
 }
