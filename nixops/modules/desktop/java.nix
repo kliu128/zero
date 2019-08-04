@@ -15,9 +15,10 @@ in {
     package = jdk;
   };
 
-  # Alias so IntelliJ knows where Java is located
-  environment.etc.intellij-jdk.source = pkgs.jetbrains.jdk;
-  environment.etc.system-jdk.source = jdk;
+  # Easy aliases for different java versions
+  environment.etc."jdks/system".source = jdk;
+  environment.etc."jdks/intellij".source = pkgs.jetbrains.jdk;
+  environment.etc."jdks/java8".source = pkgs.openjdk8;
 
   # Install IntelliJ
   environment.systemPackages = with pkgs; [ jetbrains.idea-community ];

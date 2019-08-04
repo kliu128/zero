@@ -20,6 +20,7 @@
     ./kubernetes.nix
     ./nixops.nix
     ./python.nix
+    ./rust.nix
     ./syncthing.nix
     ./trash.nix
     ./u2f.nix
@@ -48,9 +49,9 @@
 
   environment.systemPackages = with pkgs; [
     # System tools
-    atop borgbackup cowsay dnsutils file fortune hdparm htop iftop iotop lm_sensors lolcat man-pages opentimestamps-client p7zip rustup smartmontools spectre-meltdown-checker stress-ng telnet thefuck tree vim wget
+    atop borgbackup cowsay dnsutils file fortune hdparm htop iftop iotop lm_sensors lolcat man-pages opentimestamps-client p7zip smartmontools spectre-meltdown-checker stress-ng telnet thefuck tree vim wget
     # Desktop applications
-    calibre chromium discord filezilla gpodder libreoffice-fresh liferea pavucontrol gnome3.pomodoro thunderbird tor-browser-bundle-bin transmission_gtk transgui vlc vscodium youtube-dl zoom-us
+    calibre chromium discord filezilla gpodder libreoffice-fresh liferea mpv pavucontrol gnome3.pomodoro thunderbird tor-browser-bundle-bin transmission_gtk transgui vscodium youtube-dl zoom-us
     # Anki and related packages (for LaTeX support)
     anki polar-bookshelf 
     (texlive.combine {

@@ -296,4 +296,11 @@ in {
     destDir = "/keys";
     text = builtins.readFile ../secrets/pia-proxy.txt;
   };
+
+  services.snapper = {
+    configs."storage" = {
+      fstype = "btrfs";
+      subvolume = "/mnt/storage";
+    };
+  };
 }

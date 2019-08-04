@@ -8,4 +8,7 @@
   nix.optimise.automatic = true;
   nix.gc.automatic = true;
   nix.gc.options = "--delete-older-than 1d";
+  nix.extraOptions = ''
+    binary-caches-parallel-connections = 4
+  '';
 }
