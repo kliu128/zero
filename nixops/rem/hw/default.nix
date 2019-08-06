@@ -23,14 +23,6 @@
   # Video.
   boot.earlyVconsoleSetup = true;
   services.xserver.videoDrivers = [ "amdgpu" ];
-  services.xserver.config = ''
-Section "Device"
-  Identifier "Card0"
-  Driver "amdgpu"
-  Option "EnablePageFlip" "off"
-  Option "TearFree" "off"
-EndSection
-  '';
   boot.kernelParams = [ "consoleblank=300" ];
 
   # Freeness (that is, not.)

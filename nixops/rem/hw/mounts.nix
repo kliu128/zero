@@ -11,11 +11,9 @@
     enableUnstable = false;
     requestEncryptionCredentials = true;
   };
-  # 2GB max arc
-  boot.kernelParams = [ "zfs.zfs_arc_max=1147483648" ];
   services.kubernetes.path = [ pkgs.zfs ];
   systemd.services.renice = {
-    enable = true;
+    enable = false;
     description = "Renice ZFS IO threads";
     path = [ pkgs.procps pkgs.utillinux ];
     script = ''
