@@ -36,7 +36,11 @@
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
-  # 80x50 mode
-  boot.loader.systemd-boot.consoleMode = "1";
   boot.loader.efi.canTouchEfiVariables = true;
+
+  # Disable the gpu.
+  hardware.nvidiaOptimus.disable = true;
+
+  # Windows dual-boot compatibility
+  time.hardwareClockInLocalTime = true;
 }

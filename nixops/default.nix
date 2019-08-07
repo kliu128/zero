@@ -15,7 +15,6 @@
       ./common/nix.nix
       ./common/security.nix
       ./common/ssh.nix
-      ./common/time.nix
       ./common/tinc.nix
       ./common/users.nix
     ];
@@ -109,13 +108,14 @@
   you =
     { config, pkgs, lib, ... }:
     {
-      deployment.targetHost = "192.168.1.197";
+      deployment.targetHost = "10.99.0.4";
 
       imports = [
         ./modules/desktop
         ./modules/docker.nix
         ./systems/you/desktop.nix
         ./systems/you/hw.nix
+        ./systems/you/power.nix
         ./systems/you/tinc.nix
       ];
 
