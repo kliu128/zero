@@ -31,11 +31,11 @@
       imports = [
         ./modules/desktop
         ./modules/docker.nix
-        ./puck/desktop.nix
-        ./puck/hw.nix
-        ./puck/power.nix
-        ./puck/tinc.nix
-        ./puck/wireless.nix
+        ./systems/puck/desktop.nix
+        ./systems/puck/hw.nix
+        ./systems/puck/power.nix
+        ./systems/puck/tinc.nix
+        ./systems/puck/wireless.nix
       ];
 
       networking.hostName = "puck";
@@ -54,25 +54,25 @@
         ./modules/docker.nix
         ./modules/kubernetes-common.nix
         ./modules/kubernetes-master.nix
-        ./rem/android.nix
-        ./rem/backups.nix
-        ./rem/bluray.nix
-        ./rem/coder.nix
-        ./rem/desktop.nix
-        ./rem/fusee-launcher.nix
-        ./rem/hw
-        ./rem/initrd-ssh.nix
-        ./rem/kindle.nix
-        ./rem/monitoring.nix
-        ./rem/network.nix
-        ./rem/nfs.nix
-        ./rem/nix.nix
-        ./rem/samba.nix
-        ./rem/scanner
-        ./rem/services.nix
-        ./rem/ssh-unlocker.nix
-        ./rem/tinc.nix
-        ./rem/vfio.nix
+        ./systems/rem/android.nix
+        ./systems/rem/backups.nix
+        ./systems/rem/bluray.nix
+        ./systems/rem/coder.nix
+        ./systems/rem/desktop.nix
+        ./systems/rem/fusee-launcher.nix
+        ./systems/rem/hw
+        ./systems/rem/initrd-ssh.nix
+        ./systems/rem/kindle.nix
+        ./systems/rem/monitoring.nix
+        ./systems/rem/network.nix
+        ./systems/rem/nfs.nix
+        ./systems/rem/nix.nix
+        ./systems/rem/samba.nix
+        ./systems/rem/scanner
+        ./systems/rem/services.nix
+        ./systems/rem/ssh-unlocker.nix
+        ./systems/rem/tinc.nix
+        ./systems/rem/vfio.nix
       ];
 
       networking.hostName = "rem";
@@ -104,5 +104,22 @@
       # servers. You should change this only after NixOS release notes say you
       # should.
       system.stateVersion = "unstable"; # Did you read the comment?
+    };
+  
+  you =
+    { config, pkgs, lib, ... }:
+    {
+      deployment.targetHost = "192.168.1.197";
+
+      imports = [
+        ./modules/desktop
+        ./modules/docker.nix
+        ./systems/you/desktop.nix
+        ./systems/you/hw.nix
+        ./systems/you/tinc.nix
+      ];
+
+      networking.hostName = "you";
+      system.stateVersion = "19.09";
     };
 }

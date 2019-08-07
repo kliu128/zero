@@ -66,7 +66,7 @@
   deployment.keys."keyfile-data0.bin" = {
     permissions = "400";
     destDir = "/keys";
-    keyFile = ../../secrets/keys/keyfile-data0.bin;
+    keyFile = ../../../secrets/keys/keyfile-data0.bin;
   };
 
   fileSystems."data1" = {
@@ -82,7 +82,7 @@
   deployment.keys."keyfile-data1.bin" = {
     permissions = "400";
     destDir = "/keys";
-    keyFile = ../../secrets/keys/keyfile-data1.bin;
+    keyFile = ../../../secrets/keys/keyfile-data1.bin;
   };
 
   fileSystems."data2" = {
@@ -98,7 +98,7 @@
   deployment.keys."keyfile-data2.bin" = {
     permissions = "400";
     destDir = "/keys";
-    keyFile = ../../secrets/keys/keyfile-data2.bin;
+    keyFile = ../../../secrets/keys/keyfile-data2.bin;
   };
 
   fileSystems."/mnt/storage" = {
@@ -121,7 +121,7 @@
   deployment.keys."keyfile-data3.bin" = {
     permissions = "400";
     destDir = "/keys";
-    keyFile = ../../secrets/keys/keyfile-data3.bin;
+    keyFile = ../../../secrets/keys/keyfile-data3.bin;
   };
 
   # Seagate Expansion external hard drive
@@ -138,7 +138,7 @@
   deployment.keys."keyfile-data4.bin" = {
     permissions = "400";
     destDir = "/keys";
-    keyFile = ../../secrets/keys/keyfile-data4.bin;
+    keyFile = ../../../secrets/keys/keyfile-data4.bin;
   };
   # Seagate Backup Plus Hub
   fileSystems."parity0" = {
@@ -154,13 +154,13 @@
   deployment.keys."keyfile-parity0.bin" = {
     permissions = "400";
     destDir = "/keys";
-    keyFile = ../../secrets/keys/keyfile-parity0.bin;
+    keyFile = ../../../secrets/keys/keyfile-parity0.bin;
   };
 
   deployment.keys."keyfile-vms.bin" = {
     permissions = "400";
     destDir = "/keys";
-    keyFile = ../../secrets/keys/keyfile-vms.bin;
+    keyFile = ../../../secrets/keys/keyfile-vms.bin;
   };
 
   # ZFS backups image

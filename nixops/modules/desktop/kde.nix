@@ -5,7 +5,6 @@
   services.xserver.displayManager.gdm.wayland = false;
   services.xserver.desktopManager.gnome3.enable = true;
   programs.sway.enable = true;
-  networking.networkmanager.enable = false;
 
   environment.systemPackages = with pkgs; [
     papirus-icon-theme arc-theme

@@ -18,4 +18,8 @@ in {
   environment.etc."nixos/nixpkgs" = {
     source = /etc/nixos/nixpkgs;
   };
+
+  # Increase open file limit to avoid running out of file descriptors when
+  # deploying NixOS
+  systemd.extraConfig = "DefaultLimitNOFILE=1048576";
 }

@@ -6,12 +6,12 @@
     enable = true;
     ssh = {
       enable = true;
-      hostRSAKey = ../secrets/rem-dropbear-ssh-key;
+      hostRSAKey = ../../secrets/rem-dropbear-ssh-key;
       port = 844;
       authorizedKeys = [
         # Laptop is able to ssh in and unlock
-        (import ../ssh-keys.nix).yubikey
-        (import ../ssh-keys.nix).yubikey-backup
+        (import ../../ssh-keys.nix).yubikey
+        (import ../../ssh-keys.nix).yubikey-backup
       ];
     };
     postCommands = ''

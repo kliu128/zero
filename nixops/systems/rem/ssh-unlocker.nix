@@ -15,16 +15,16 @@
   deployment.keys."unlocker_id_rsa" = {
     permissions = "400";
     destDir = "/keys/ssh-unlocker";
-    text = builtins.readFile ../secrets/ssh-unlocker/unlocker_id_rsa;
+    text = builtins.readFile ../../secrets/ssh-unlocker/unlocker_id_rsa;
   };
   deployment.keys."hosts.json" = {
     permissions = "400";
     destDir = "/keys/ssh-unlocker";
-    text = builtins.readFile ../secrets/ssh-unlocker/hosts.json;
+    text = builtins.readFile ../../secrets/ssh-unlocker/hosts.json;
   };
   deployment.keys."known_hosts" = {
     permissions = "400";
     destDir = "/keys/ssh-unlocker";
-    text = builtins.readFile ../secrets/ssh-unlocker/known_hosts;
+    text = builtins.readFile ../../secrets/ssh-unlocker/known_hosts;
   };
 }

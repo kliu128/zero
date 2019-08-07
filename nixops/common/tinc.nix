@@ -4,6 +4,7 @@
   networking.hosts = {
     "10.99.0.1" = ["rem.i.potatofrom.space" "rem"];
     "10.99.0.3" = ["puck.i.potatofrom.space"];
+    "10.99.0.4" = ["you.i.potatofrom.space"];
   };
   services.tinc.networks."omnimesh"= {
     interfaceType = "tap";
@@ -61,6 +62,18 @@
         sAJSVJQFf28/LWf5IAn50jRMvcC2IFWFgQIDAQAB
         -----END RSA PUBLIC KEY-----
         Ed25519PublicKey = Zexdm7zGAEakqj4JGYYKawKcyDm80iaCktt0k+Va66F
+      '';
+      you = ''
+        Compression = 1
+        -----BEGIN RSA PUBLIC KEY-----
+        MIIBCgKCAQEAvRMf+bEagxHtKFb9XtVyfqf2xyWJC6aeTQ74Fp+Rss0ZyifcWOQn
+        +WwqsvLb0PIWrFouZIztSzQwRlOBWFq8TJJuQQFnubDslYxsMUcZLY72OKelB8SK
+        Iw7wG+pwv8eYVrCh8orN4bSbLBXk1wq1MPnffRLXvHIdZwtFI5en0Bb06PyGJyDv
+        pQFItzY0A3yo4ABJqO1N33SRdhF+f1ji38F7U+Yz8PQhTwR8uBsuA+JKO4KOiFJ5
+        pfiKIe+Rta+/O/xDxSGN5iGTnQzgxVmyRA1lzFl1titz92CTzy2aSY2HhtQ/WExx
+        stEdeUV3ytGyuPWp3kbf1UoLb2InD2pGYwIDAQAB
+        -----END RSA PUBLIC KEY-----
+        Ed25519PublicKey = MTcrqYlHJAZAu3NvePmF1R+2HKuOj5a6/zLXVz5Ic/C
       '';
     };
   };

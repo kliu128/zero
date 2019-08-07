@@ -7,7 +7,7 @@
     servers.ssh = {
       accept = 2222;
       connect = 843;
-      cert = ../secrets/stunnel.pem;
+      cert = ../../secrets/stunnel.pem;
     };
   };
 
@@ -27,6 +27,6 @@
   deployment.keys."hack3bot.token" = {
     permissions = "600"; # rclone must be able to modify
     destDir = "/keys";
-    text = builtins.readFile ../secrets/hack3bot.token;
+    text = builtins.readFile ../../secrets/hack3bot.token;
   };
 }

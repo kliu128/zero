@@ -73,6 +73,8 @@
   # zsh completion for packages in environment.systemPackages
   programs.zsh.enable = true;
 
+  systemd.services.cups-browsed.enable = false;
+
   home-manager.users.kevin = {
     programs.home-manager.enable = true;
 
@@ -151,6 +153,11 @@
           hostname = "35.211.16.173";
           port = 22;
           user = "kevin";
+        };
+        you = {
+          hostname = "you.i.potatofrom.space";
+          user = "kevin";
+          port = 843;
         };
       };
     };

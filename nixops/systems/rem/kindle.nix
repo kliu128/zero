@@ -28,7 +28,7 @@
   deployment.keys."kindle-root-password.txt" = {
     permissions = "400";
     destDir = "/keys";
-    text = builtins.readFile ../secrets/kindle-root-password.txt;
+    text = builtins.readFile ../../secrets/kindle-root-password.txt;
   };
   users.users.kindle = {
     home = "/home/kindle";

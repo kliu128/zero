@@ -10,10 +10,6 @@
 
   hardware.opengl.driSupport32Bit = true; # for steam and wine
 
-  # Set limits for esync.
-  # see https://github.com/NixOS/nixpkgs/issues/45492
-  systemd.extraConfig = "DefaultLimitNOFILE=1048576";
-
   security.pam.loginLimits = [{
     domain = "*";
     type = "hard";

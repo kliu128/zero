@@ -77,7 +77,7 @@ in {
       rclone --config /keys/rclone.conf \
              purge -v "gsuite-mysmccd-crypt:/Data/old/$prune_backup_dir" || true
 
-      # export RESTIC_PASSWORD_FILE=${../secrets/gsuite-backup-password.txt}
+      # export RESTIC_PASSWORD_FILE=${../../secrets/gsuite-backup-password.txt}
       # export XDG_CACHE_HOME=/var/cache/gsuite-backup
       # export RCLONE_CONFIG=/keys/rclone.conf
       # r() {
@@ -172,7 +172,7 @@ in {
     compression = "lzma";
     encryption = {
       mode = "repokey";
-      passphrase = builtins.readFile ../secrets/emergency-borg-password.txt;
+      passphrase = builtins.readFile ../../secrets/emergency-borg-password.txt;
     };
     paths = [
       "/mnt/storage/Kevin/Personal/Documents"
@@ -195,7 +195,7 @@ in {
     compression = "auto,zstd";
     encryption = {
       mode = "repokey";
-      passphrase = builtins.readFile ../secrets/storage-borg-password.txt;
+      passphrase = builtins.readFile ../../secrets/storage-borg-password.txt;
     };
     exclude = [
       "sh:/home/*/.cache/*"
@@ -218,13 +218,13 @@ in {
   systemd.services.borgbackup-job-root.serviceConfig.SuccessExitStatus = [ 1 ];
   environment.etc."keys/backups.borg-key" = {
     mode = "400";
-    text = builtins.readFile ../secrets/keys/backups.borg-key;
+    text = builtins.readFile ../../secrets/keys/backups.borg-key;
   };
 
   # Backup hosting for Scintillating
   services.borgbackup.repos.scintillating = {
     # Placeholder
-    authorizedKeys = [ (import ../ssh-keys.nix).root-karmaxer ];
+    authorizedKeys = [ (import ../../ssh-keys.nix).root-karmaxer ];
     path = "/mnt/storage/Kevin/Backups/Systems/scintillating-borg";
     quota = "250G";
   };
@@ -289,12 +289,12 @@ in {
   deployment.keys."rclone.conf" = {
     permissions = "600"; # rclone must be able to modify
     destDir = "/keys";
-    text = builtins.readFile ../secrets/rclone.conf.initial;
+    text = builtins.readFile ../../secrets/rclone.conf.initial;
   };
   deployment.keys."pia-proxy.txt" = {
     permissions = "400";
     destDir = "/keys";
-    text = builtins.readFile ../secrets/pia-proxy.txt;
+    text = builtins.readFile ../../secrets/pia-proxy.txt;
   };
 
   services.snapper = {
