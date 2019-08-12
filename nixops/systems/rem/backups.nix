@@ -93,7 +93,7 @@ in {
     startAt = wave-3;
   };
   systemd.services.switch-sync = {
-    enable = true;
+    enable = false;
     path = [ pkgs.rclone ];
     serviceConfig = {
       Nice = 19;
@@ -281,6 +281,39 @@ in {
       monthly = 6;
     };
     startAt = wave-2;
+  };
+
+  systemd.services.gsuite-mount = {
+    description = "G-Suite rclone FUSE mount";
+    after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
+    wantedBy = [ "multi-user.target" ];
+    restartIfChanged = false;
+    path = [ pkgs.fuse pkgs.rclone ];
+    serviceConfig = {
+      Type = "notify";
+      NotifyAccess = "all";
+    };
+    script = ''
+      ${proxyConfig}
+      rclone --config /keys/rclone.conf mount gsuite-mysmccd-crypt: /mnt/gsuite --vfs-cache-mode minimal --allow-other --uid 1000 --gid 100
+    '';
+  };
+  systemd.services.gsuite-unencrypted-mount = {
+    description = "G-Suite rclone FUSE mount (unencrypted)";
+    after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
+    wantedBy = [ "multi-user.target" ];
+    restartIfChanged = false;
+    path = [ pkgs.fuse pkgs.rclone ];
+    serviceConfig = {
+      Type = "notify";
+      NotifyAccess = "all";
+    };
+    script = ''
+      ${proxyConfig}
+      rclone --config /keys/rclone.conf mount gsuite-mysmccd: /mnt/gsuite-root --vfs-cache-mode minimal --allow-other --uid 1000 --gid 100
+    '';
   };
 
   # Can't just include it into nix config because rclone modifies it

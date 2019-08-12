@@ -16,7 +16,6 @@
     after = [ "nfs-server.service" ];
     wants = [ "nfs-server.service" ];
     restartIfChanged = false;
-    serviceConfig.CPUSchedulingPolicy = "idle";
   };
   users.extraUsers.kevin.extraGroups = [ "docker" ];
 }

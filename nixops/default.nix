@@ -38,6 +38,8 @@
       ];
 
       networking.hostName = "puck";
+      networking.hostId = "0fc12bac";
+
       system.stateVersion = "unstable";
     };
 
@@ -120,6 +122,8 @@
       ];
 
       networking.hostName = "you";
+      networking.hostId = "b9123efc";
+
       system.stateVersion = "19.09";
     };
 }

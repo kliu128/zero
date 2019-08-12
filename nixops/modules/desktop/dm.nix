@@ -2,9 +2,9 @@
 
 {
   services.xserver.displayManager.gdm.enable = true;
+  # Prevents auto-VT switching when wayland = true for some reason
   services.xserver.displayManager.gdm.wayland = false;
   services.xserver.desktopManager.gnome3.enable = true;
-  programs.sway.enable = true;
 
   environment.systemPackages = with pkgs; [
     papirus-icon-theme arc-theme

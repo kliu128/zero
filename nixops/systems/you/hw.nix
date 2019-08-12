@@ -10,7 +10,6 @@
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelPackages = lib.mkForce pkgs.linuxPackages_latest;
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
@@ -26,7 +25,14 @@
       fsType = "vfat";
     };
 
-  swapDevices = [ ];
+  swapDevices = [
+    {
+      device = "/swap";
+      size = 16384;
+    }
+  ];
+  boot.resumeDevice = "/dev/mapper/root";
+  boot.kernelParams = [ "resume_offset=8800256" ];
 
   nix.maxJobs = lib.mkDefault 8;
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
@@ -34,13 +40,25 @@
   i18n.consoleFont = lib.mkDefault "${pkgs.terminus_font}/share/consolefonts/ter-u28n.psf.gz";
   boot.earlyVconsoleSetup = true;
 
-  # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
+  # Configure GRUB with hidpi support
+  boot.loader.grub = {
+    enable = true;
+    efiSupport = true;
+    useOSProber = true;
+    # Use an OpenType font (auto-converted to grub pf2) so that we can set a
+    # custom font size
+    font = "${pkgs.fira-code}/share/fonts/opentype/FiraCode-Regular.otf";
+    # Double the default font of 16 for 200% scaling
+    fontSize = 32;
+    device = "nodev"; # Disable MBR installation
+  };
   boot.loader.efi.canTouchEfiVariables = true;
 
   # Disable the gpu.
   hardware.nvidiaOptimus.disable = true;
 
-  # Windows dual-boot compatibility
+  # Windows dual-boot compatibility - time compat
   time.hardwareClockInLocalTime = true;
+
+  services.xserver.videoDrivers = [ "intel" ];
 }

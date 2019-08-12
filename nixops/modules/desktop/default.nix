@@ -7,6 +7,7 @@
 
     ./android.nix
     ./audio
+    ./dm.nix
     ./dotnet.nix
     ./emacs
     ./firefox.nix
@@ -14,7 +15,6 @@
     ./fonts.nix
     ./games.nix
     ./gpg.nix
-    ./kde.nix
     ./java.nix
     ./keybase.nix
     ./kubernetes.nix
