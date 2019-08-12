@@ -1,9 +1,15 @@
 { config, lib, pkgs, ... }:
 
 {
-  services.xserver.displayManager.gdm.enable = true;
-  # Prevents auto-VT switching when wayland = true for some reason
-  services.xserver.displayManager.gdm.wayland = false;
+  services.xserver.displayManager.gdm = {
+    enable = true;
+    # Prevents auto-VT switching when wayland = true for some reason
+    wayland = false;
+    autoLogin = {
+      enable = true;
+      user = "kevin";
+    };
+  };
   services.xserver.desktopManager.gnome3.enable = true;
 
   environment.systemPackages = with pkgs; [
