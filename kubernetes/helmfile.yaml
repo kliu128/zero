@@ -5,6 +5,8 @@ repositories:
     url: https://s3-eu-west-1.amazonaws.com/coreos-charts/stable/
   - name: gitlab
     url: https://charts.gitlab.io
+  - name: jetstack
+    url: https://charts.jetstack.io
 
 releases:
   - name: nginx-ingress
@@ -17,9 +19,11 @@ releases:
     namespace: kube-system
     chart: ./charts/nfs-client-provisioner
   - name: cert-manager
+    labels:
+      c: tru
     namespace: kube-system
-    chart: stable/cert-manager
-    version: 0.5.0
+    chart: jetstack/cert-manager
+    version: 0.9.1
     values:
       - ./values/cert-manager.yaml
   - name: gitlab

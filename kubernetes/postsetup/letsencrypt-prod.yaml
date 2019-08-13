@@ -9,5 +9,11 @@ spec:
     email: kevin@potatofrom.space
     privateKeySecretRef:
       name: letsencrypt-prod
-    # Enable the HTTP-01 challenge provider
-    http01: {}
+  ## Configure the challenge solvers.
+  solvers:
+  # An empty selector will 'match' all Certificate resources that
+  # reference this Issuer.
+  - selector: {}
+    http01:
+      ingress:
+        class: ""
