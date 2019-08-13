@@ -4,6 +4,7 @@
   # exfat support for Nintendo Switch / other SD cards
   boot.supportedFilesystems = [ "btrfs" "ext4" "exfat" "zfs" ];
   boot.initrd.supportedFilesystems = [ "zfs" ];
+  boot.kernelParams = [ "zfs.zfs_arc_max=4294967296" ];
 
   boot.zfs = {
     forceImportRoot = false;

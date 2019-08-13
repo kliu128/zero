@@ -39,18 +39,12 @@ releases:
     values:
       - ./values/mastodon.yaml
       - ./values/mastodon.secret.yaml
-  - name: mc-aneesh-vanilla
+  - name: mc-will-sf4
     namespace: default
     chart: ./charts/minecraft
     values:
       - ./values/mc.yaml
-      - ./values/mc-aneesh-vanilla.yaml
-  - name: mc-diversity-3
-    namespace: default
-    chart: ./charts/minecraft
-    values:
-      - ./values/mc.yaml
-      - ./values/mc-diversity-3.yaml
+      - ./values/mc-will-sf4.yaml
   - name: factorio
     namespace: default
     chart: stable/factorio

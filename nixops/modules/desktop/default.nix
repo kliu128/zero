@@ -7,6 +7,7 @@
 
     ./android.nix
     ./audio
+    ./chromium.nix
     ./dm.nix
     ./dotnet.nix
     ./emacs
@@ -44,14 +45,13 @@
   services.printing.enable = true;
   services.printing.clientConf = "ServerName 10.99.0.1";
 
-  programs.chromium.enable = true;
   users.extraUsers.kevin.extraGroups = [ "input" ];
 
   environment.systemPackages = with pkgs; [
     # System tools
     atop borgbackup cowsay dnsutils file fortune hdparm htop iftop iotop lm_sensors lolcat man-pages opentimestamps-client p7zip smartmontools spectre-meltdown-checker stress-ng telnet thefuck tree vim wget
     # Desktop applications
-    calibre chromium discord filezilla gpodder libreoffice-fresh liferea mpv pavucontrol gnome3.pomodoro thunderbird tor-browser-bundle-bin transmission_gtk transgui vscodium youtube-dl zoom-us
+    calibre discord filezilla gpodder libreoffice-fresh liferea mpv pavucontrol gnome3.pomodoro thunderbird tor-browser-bundle-bin transmission_gtk transgui vscodium youtube-dl zoom-us
     # Anki and related packages (for LaTeX support)
     anki polar-bookshelf 
     (texlive.combine {

@@ -1,10 +1,6 @@
 { config, lib, pkgs, ... }:
 
 {
-  boot.kernel.sysctl = {
-    "vm.min_free_kbytes" = 256000;
-  };
-  boot.kernelParams = [ "amdgpu.gpu_recovery=1" ];
   nixpkgs.config.packageOverrides = pkgs: rec {
     kubernetes = pkgs.kubernetes.overrideAttrs (oldAttrs: rec {
       postPatch = ''

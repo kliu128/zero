@@ -22,7 +22,7 @@
   
   # Video.
   boot.earlyVconsoleSetup = true;
-  services.xserver.videoDrivers = [ "modesetting" "amdgpu" ];
+  services.xserver.videoDrivers = [ "amdgpu" ];
   boot.kernelParams = [ "consoleblank=300" ];
 
   # Freeness (that is, not.)
@@ -53,6 +53,21 @@
       Type = "oneshot";
       RemainAfterExit = true;
     };
+    wantedBy = [ "multi-user.target" ];
+  };
+  systemd.services.drop-caches = {
+    description = "Drop caches to increase system responsiveness";
+    path = [ pkgs.gawk ];
+    script = ''
+      set -euo pipefail
+      while true; do
+        while [ "$(awk '/MemFree/ { printf "%.0f\n", $2 }' /proc/meminfo)" -gt 256000 ]; do
+          sleep 1
+        done
+        echo Free memory reached lower limit, dropping caches.
+        echo 3 > /proc/sys/vm/drop_caches
+      done
+    '';
     wantedBy = [ "multi-user.target" ];
   };
   systemd.services.kube-container-clearer = {
