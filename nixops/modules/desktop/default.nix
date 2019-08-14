@@ -49,7 +49,7 @@
 
   environment.systemPackages = with pkgs; [
     # System tools
-    atop borgbackup cowsay dnsutils file fortune hdparm htop iftop iotop lm_sensors lolcat man-pages opentimestamps-client p7zip smartmontools spectre-meltdown-checker stress-ng telnet thefuck tree vim wget
+    atop borgbackup cowsay dnsutils file fortune hdparm htop iftop iotop lm_sensors lolcat man-pages opentimestamps-client p7zip schedtool smartmontools spectre-meltdown-checker stress-ng telnet thefuck tree vim wget
     # Desktop applications
     calibre discord filezilla gpodder libreoffice-fresh liferea mpv pavucontrol gnome3.pomodoro thunderbird tor-browser-bundle-bin transmission_gtk transgui vscodium youtube-dl zoom-us
     # Anki and related packages (for LaTeX support)
