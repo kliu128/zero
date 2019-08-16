@@ -22,7 +22,7 @@
   
   # Video.
   boot.earlyVconsoleSetup = true;
-  services.xserver.videoDrivers = [ "modesetting" "amdgpu" ];
+  services.xserver.videoDrivers = [ "amdgpu" ];
   boot.kernelParams = [ "consoleblank=300" ];
 
   # Freeness (that is, not.)
