@@ -4,7 +4,7 @@
   virtualisation.libvirtd.enable = true;
   boot.kernelParams = [
     # Turn on IOMMU for VFIO
-    "intel_iommu=on"
+    #"intel_iommu=on"
     # Disable transparent hugepages; it makes QEMU take much longer to start,
     # as it has to allocate a ton of hugepages at the beginning, which can be
     # slow due to memory fragmentation.
