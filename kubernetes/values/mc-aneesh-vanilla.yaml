@@ -1,0 +1,16 @@
+minecraftServer:
+  motd: "Vanilla / Kevloo Hosting"
+  jvmOpts: -Xmx1G
+  jvmXxOpts: "-XX:+UseG1GC"
+  type: SPIGOT
+  version: 1.14.2
+  difficulty: normal
+  levelSeed: "-1469446201797389856"
+  port: 25566
+  query:
+    port: 25566
+  ops:
+    - nitroignika
+securityContext:
+  runAsUser: 1007
+  fsGroup: 100

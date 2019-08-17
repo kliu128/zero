@@ -43,6 +43,12 @@ releases:
     values:
       - ./values/mastodon.yaml
       - ./values/mastodon.secret.yaml
+  - name: mc-aneesh-vanilla
+    namespace: default
+    chart: ./charts/minecraft
+    values:
+      - ./values/mc.yaml
+      - ./values/mc-aneesh-vanilla.yaml
   - name: mc-will-sf4
     namespace: default
     chart: ./charts/minecraft
