@@ -141,6 +141,22 @@
     destDir = "/keys";
     keyFile = ../../../secrets/keys/keyfile-data4.bin;
   };
+  # External WD Green 1 TB
+  fileSystems."wdgreen1tb" = {
+    device = "none";
+    options = [ "nofail" ];
+    encrypted = {
+      enable = true;
+      blkDev = "/dev/disk/by-uuid/9b1fa77c-20eb-4b05-a44b-a25275ff78fb";
+      keyFile = "/mnt-root/keys/keyfile-wdgreen1tb.bin";
+      label = "wdgreen1tb";
+    };
+  };
+  deployment.keys."keyfile-wdgreen1tb.bin" = {
+    permissions = "400";
+    destDir = "/keys";
+    keyFile = ../../../secrets/keys/keyfile-wdgreen1tb.bin;
+  };
   # Seagate Backup Plus Hub
   fileSystems."parity0" = {
     device = "none";
