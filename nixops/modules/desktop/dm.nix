@@ -18,4 +18,5 @@
 
   # Disable laggy services
   systemd.user.services.gvfs-udisks2-volume-monitor.enable = lib.mkForce false;
+  programs.sway.enable = true;
 }

@@ -83,10 +83,6 @@
       userName = "Kevin Liu";
       userEmail = "kevin@potatofrom.space";
       package = pkgs.gitAndTools.gitFull;
-      signing = {
-        key = "B351E549821994C7B843BB0F5A824102DFE3DD86";
-        signByDefault = true;
-      };
       extraConfig = {
         credential.helper = "libsecret";
       };

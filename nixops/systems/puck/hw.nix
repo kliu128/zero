@@ -13,9 +13,8 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
   boot.kernelModules = [ "kvm-intel" ];
-  boot.kernelPackages = lib.mkForce pkgs.kernelPackages_5_2;
   boot.extraModulePackages = [ ];
-  boot.kernelPackages = pkgs.linuxPackages;
+  boot.kernelPackages = lib.mkForce pkgs.linuxPackages_latest;
   hardware.cpu.intel.updateMicrocode = true;
 
   fileSystems."/" =

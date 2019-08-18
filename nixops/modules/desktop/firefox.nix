@@ -7,7 +7,7 @@ in {
     (import nixpkgs-mozilla)
   ];
   environment.systemPackages = with pkgs; [
-    latest.firefox-nightly-bin
+    firefox
   ];
   nixpkgs.config.firefox.enableAdobeFlash = true;
   environment.variables = {

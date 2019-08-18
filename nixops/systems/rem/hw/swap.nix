@@ -9,5 +9,5 @@
   boot.kernel.sysctl = {
     "vm.dirty_background_ratio" = 1;
     "vm.dirty_ratio" = 2;
-  }
+  };
 }
