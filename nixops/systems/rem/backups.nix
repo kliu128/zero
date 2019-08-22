@@ -273,7 +273,9 @@ in {
     };
     script = ''
       ${proxyConfig}
-      rclone --config /keys/rclone.conf mount gsuite-mysmccd-crypt: /mnt/gsuite --vfs-cache-mode minimal --allow-other --uid 1000 --gid 100
+      rclone --config /keys/rclone.conf mount gsuite-mysmccd-crypt: \
+        /mnt/gsuite --vfs-cache-mode minimal --drive-use-trash=false \
+        --allow-other --uid 1000 --gid 100
     '';
   };
   systemd.services.gsuite-unencrypted-mount = {
@@ -291,6 +293,7 @@ in {
       ${proxyConfig}
       rclone --config /keys/rclone.conf \
         mount gsuite-mysmccd: /mnt/gsuite-root \
+        --drive-use-trash=false \
         --vfs-cache-mode writes --vfs-cache-max-size 5G --cache-dir /mnt/storage/tmp \
         --allow-other --allow-non-empty --uid 1000 --gid 100
     '';
