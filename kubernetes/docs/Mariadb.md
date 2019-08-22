@@ -31,3 +31,11 @@ To upgrade this helm chart:
 
       ROOT_PASSWORD=$(kubectl get secret --namespace default mariadb -o jsonpath="{.data.mariadb-root-password}" | base64 --decode)
       helm upgrade mariadb stable/mariadb --set rootUser.password=$ROOT_PASSWORD
+
+## Creating a new database
+
+```
+CREATE DATABASE `mydb`;
+CREATE USER 'myuser' IDENTIFIED BY 'mypassword';
+GRANT ALL privileges ON `mydb`.* TO 'myuser'@'%';
+FLUSH PRIVILEGES;

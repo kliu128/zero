@@ -10,7 +10,6 @@ spec:
       app: monica
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app: monica
     spec:
@@ -20,31 +19,10 @@ spec:
             - secretRef:
                 name: monica-secret
           name: monica
-          ports:
-            - containerPort: 80
-              name: http
           volumeMounts:
             - mountPath: /var/www/monica/storage
               name: data
-        - name: db
-          env:
-            - name: MYSQL_DATABASE
-              value: monica
-            - name: MYSQL_USER
-              value: {{ .Values.monica.db.user | quote }}
-            - name: MYSQL_PASSWORD
-              value: {{ .Values.monica.db.password | quote }}
-            - name: MYSQL_RANDOM_ROOT_PASSWORD
-              value: "true"
-          image: mariadb
-          volumeMounts:
-            - name: db
-              mountPath: /var/lib/mysql
-      restartPolicy: Always
       volumes:
-        - name: db
-          persistentVolumeClaim:
-            claimName: monica-db
         - name: data
           persistentVolumeClaim:
             claimName: monica-data
@@ -63,20 +41,6 @@ spec:
       targetPort: http
   selector:
     app: monica
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  labels:
-    app: monica
-  name: monica-db
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 2Gi
-status: {}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
