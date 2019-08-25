@@ -107,41 +107,7 @@ in {
     '';
     startAt = wave-2;
   };
-  systemd.services.gschool-sync = {
-    enable = true;
-    description = "School Drive Synchronization";
-    path = [ pkgs.rclone ];
-    serviceConfig = {
-      Nice = 19;
-    };
-    script = ''
-      set -xeuo pipefail
-      # Skip gdocs because often I may convert a document to Google Doc for peer editing
-      rclone --config /keys/rclone.conf copy /mnt/storage/Kevin/Personal/Documents/School gsuite-school:Sync/ --drive-skip-gdocs
-    '';
-  };
-  systemd.timers.gschool-sync = {
-    enable = true;
-    timerConfig.OnActiveSec = 3600;
-    wantedBy = [ "timers.target" ];
-  };
-
-  systemd.services.photo-sync = {
-    description = "Sync 7+ Day Old Photos from Phone to PC";
-    path = [ pkgs.rsync ];
-    serviceConfig = {
-      User = "kevin";
-      Group = "users";
-    };
-    script = ''
-      set -euo pipefail
-      cd "/mnt/storage/Kevin/Personal/Media/SYNCED OnePlus 6t Current Photos"
-      find . -type f -mtime +7 -print0 | 
-        rsync -0avP --remove-source-files --files-from=- ./ "../UNSORTED OnePlus 6t Camera Roll"
-    '';
-    startAt = wave-2;
-  };
-
+  
   # BorgBackup jobs
   services.borgbackup.jobs.emergency-backup = {
     repo = "/mnt/emergency-backup/emergency-borg";
@@ -298,6 +264,44 @@ in {
         --allow-other --allow-non-empty --uid 1000 --gid 100
     '';
   };
+  systemd.services.gschool-mount = {
+    description = "School Google Drive Mount";
+    after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
+    wantedBy = [ "multi-user.target" ];
+    restartIfChanged = false;
+    path = [ pkgs.fuse pkgs.rclone ];
+    serviceConfig = {
+      Type = "notify";
+      NotifyAccess = "all";
+    };
+    script = ''
+      rclone --config /keys/rclone.conf \
+        mount gsuite-school: /mnt/gschool \
+        --drive-use-trash=false --read-only \
+        --allow-other --allow-non-empty --uid 1000 --gid 100
+    '';
+  };
+  services.borgbackup.jobs.gschool = {
+    compression = "auto,zstd";
+    doInit = true;
+    encryption = {
+      mode = "authenticated-blake2";
+      passphrase = "";
+    };
+    extraCreateArgs = "--stats --progress -v";
+    paths = [ "/mnt/gschool/ABRHS Communal Study" ];
+    repo = "/mnt/storage/Kevin/Backups/ABRHS Communal Study";
+    privateTmp = false;
+    prune.keep = {
+      daily = 7;
+      weekly = 4;
+      monthly = 6;
+    };
+    startAt = wave-2;
+  };
+  systemd.services.borgbackup-job-gschool.serviceConfig.ProtectSystem = lib.mkForce false;
+  systemd.services.borgbackup-job-gschool.serviceConfig.ReadWritePaths = lib.mkForce [];
 
   # Can't just include it into nix config because rclone modifies it
   # periodically

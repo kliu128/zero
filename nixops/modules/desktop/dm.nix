@@ -10,10 +10,11 @@
       user = "kevin";
     };
   };
+  systemd.services.accounts-daemon.restartIfChanged = false;
   services.xserver.desktopManager.gnome3.enable = true;
 
   environment.systemPackages = with pkgs; [
-    papirus-icon-theme arc-theme
+    papirus-icon-theme arc-theme waybar kitty
   ];
 
   # Disable laggy services
