@@ -21,6 +21,7 @@
     ./kubernetes.nix
     ./nixops.nix
     ./python.nix
+    ./rice
     ./rust.nix
     ./syncthing.nix
     ./trash.nix
