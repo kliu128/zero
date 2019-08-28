@@ -31,6 +31,20 @@
   
   boot.cleanTmpDir = true;
 
+  systemd.services.renice = {
+    enable = true;
+    description = "Renice services for increased responsiveness";
+    path = [ pkgs.coreutils pkgs.procps ];
+    script = ''
+      while true; do
+        renice -n 5 -p $(pgrep --parent 2 z) 2>/dev/null >/dev/null || true
+        renice -n 5 -p $(pgrep --parent 2 spl) 2>/dev/null >/dev/null || true
+        sleep 0.5
+      done
+    '';
+    wantedBy = [ "multi-user.target" ];
+  };
+
   # Reset keyboard on bootup (Pok3r)
   # Otherwise keys get dropped, for some reason
   # Same with webcam - mic breaks
@@ -61,7 +75,7 @@
     script = ''
       set -euo pipefail
       while true; do
-        while [ "$(awk '/MemFree/ { printf "%.0f\n", $2 }' /proc/meminfo)" -gt 256000 ]; do
+        while [ "$(awk '/MemFree/ { printf "%.0f\n", $2 }' /proc/meminfo)" -gt 512000 ]; do
           sleep 1
         done
         echo Free memory reached lower limit, dropping caches.

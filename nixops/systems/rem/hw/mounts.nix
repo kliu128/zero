@@ -13,20 +13,7 @@
     requestEncryptionCredentials = true;
   };
   services.kubernetes.path = [ pkgs.zfs ];
-  systemd.services.renice = {
-    enable = false;
-    description = "Renice ZFS IO threads";
-    path = [ pkgs.procps pkgs.utillinux ];
-    script = ''
-      while true; do
-        renice -n 5 -p $(pgrep z) || true
-        renice -n 5 -p $(pgrep spl) || true
-        sleep 5
-      done
-    '';
-    wantedBy = [ "multi-user.target" ];
-  };
-
+  
   fileSystems."/" = {
     device = "rpool/nixos/root"; 
     fsType = "zfs";
