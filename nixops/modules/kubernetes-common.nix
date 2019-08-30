@@ -45,4 +45,7 @@
   systemd.services.kubelet-online = {
     script = pkgs.lib.mkForce "sleep 1";
   };
+
+  # Calico requires RP filter not to be set to "loose"
+  boot.kernel.sysctl."net.ipv4.conf.all.rp_filter" = 1;
 }

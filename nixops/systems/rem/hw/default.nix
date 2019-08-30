@@ -22,28 +22,14 @@
   
   # Video.
   boot.earlyVconsoleSetup = true;
-  services.xserver.videoDrivers = [ "modesetting" "amdgpu" ];
-  boot.kernelParams = [ "consoleblank=300" ];
+  services.xserver.videoDrivers = [ "amdgpu" ];
+  boot.kernelParams = [ "consoleblank=300" "usb_storage.quirks=0bc2:ab38:" ];
 
   # Freeness (that is, not.)
   hardware.enableRedistributableFirmware = true; # for amdgpu
   hardware.cpu.intel.updateMicrocode = true;
   
   boot.cleanTmpDir = true;
-
-  systemd.services.renice = {
-    enable = true;
-    description = "Renice services for increased responsiveness";
-    path = [ pkgs.coreutils pkgs.procps ];
-    script = ''
-      while true; do
-        renice -n 5 -p $(pgrep --parent 2 z) 2>/dev/null >/dev/null || true
-        renice -n 5 -p $(pgrep --parent 2 spl) 2>/dev/null >/dev/null || true
-        sleep 0.5
-      done
-    '';
-    wantedBy = [ "multi-user.target" ];
-  };
 
   # Reset keyboard on bootup (Pok3r)
   # Otherwise keys get dropped, for some reason
@@ -67,21 +53,6 @@
       Type = "oneshot";
       RemainAfterExit = true;
     };
-    wantedBy = [ "multi-user.target" ];
-  };
-  systemd.services.drop-caches = {
-    description = "Drop caches to increase system responsiveness";
-    path = [ pkgs.gawk ];
-    script = ''
-      set -euo pipefail
-      while true; do
-        while [ "$(awk '/MemFree/ { printf "%.0f\n", $2 }' /proc/meminfo)" -gt 512000 ]; do
-          sleep 1
-        done
-        echo Free memory reached lower limit, dropping caches.
-        echo 3 > /proc/sys/vm/drop_caches
-      done
-    '';
     wantedBy = [ "multi-user.target" ];
   };
   systemd.services.kube-container-clearer = {
