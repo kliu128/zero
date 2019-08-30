@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: matrix-puppet-discord
+spec:
+  selector:
+    matchLabels:
+      app: matrix-puppet-discord
+  template:
+    metadata:
+      labels:
+        app: matrix-puppet-discord
+    spec:
+      containers:
+        - name: discord
+          image: pneumaticat/mx-puppet-discord
+          volumeMounts:
+            - name: config
+              subPath: puppet-discord-registration.yaml
+              mountPath: /usr/src/app/discord-registration.yaml
+            - name: config
+              subPath: puppet-discord-config.yaml
+              mountPath: /usr/src/app/config.yaml
+            - name: data
+              mountPath: /data
+      volumes:
+        - name: config
+          secret:
+            secretName: matrix-config
+        - name: data
+          persistentVolumeClaim:
+            claimName: matrix-puppet-discord-data
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    app: matrix
+  name: matrix-puppet-discord-data
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: matrix-puppet-discord
+spec:
+  selector:
+    app: matrix-puppet-discord
+  ports:
+    - name: http
+      targetPort: 8434
+      port: 8434
