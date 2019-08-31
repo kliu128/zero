@@ -22,7 +22,7 @@
   
   # Video.
   boot.earlyVconsoleSetup = true;
-  services.xserver.videoDrivers = [ "amdgpu" ];
+  services.xserver.videoDrivers = [ "modesetting" "amdgpu" ];
   boot.kernelParams = [ "consoleblank=300" "usb_storage.quirks=0bc2:ab38:" ];
 
   # Freeness (that is, not.)
@@ -77,6 +77,19 @@
     };
     wants = [ "kubernetes.target" ];
     after = [ "kubernetes.target" ];
+    startAt = "minutely";
+  };
+
+  # Run continuously since Kubelet tries to enable panic_on_oops
+  systemd.services.sysctl-adjust = {
+    description = "Adjust Sysctl";
+    path = with pkgs; [ procps ];
+    script = ''
+      sysctl -w kernel.panic_on_oops=0
+    '';
+    serviceConfig = {
+      Type = "oneshot";
+    };
     startAt = "minutely";
   };
 
