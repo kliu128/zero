@@ -30,11 +30,16 @@ spec:
             name: maildata
             subPath: overrides
         ports:
-          - containerPort: 2102
-          - containerPort: 2525
-          - containerPort: 143
-          - containerPort: 993
-          - containerPort: 4190
+          - name: imap-auth
+            containerPort: 2102
+          - name: imap-transport
+            containerPort: 2525
+          - name: pop3
+            containerPort: 110
+          - name: imap-default
+            containerPort: 143
+          - name: sieve
+            containerPort: 4190
         resources:
           requests:
             memory: 1Gi
@@ -62,6 +67,9 @@ spec:
     role: mail
     tier: backend
   ports:
+  - name: pop3
+    port: 110
+    protocol: TCP
   - name: imap-auth
     port: 2102
     protocol: TCP
@@ -70,9 +78,6 @@ spec:
     protocol: TCP
   - name: imap-default
     port: 143
-    protocol: TCP
-  - name: imap-ssl
-    port: 993
     protocol: TCP
   - name: sieve
     port: 4190

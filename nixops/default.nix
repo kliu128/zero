@@ -83,7 +83,7 @@
       networking.firewall.allowedTCPPorts = [
         22 80 113 443 631
         # Mail ports
-        25 143 587 993 4190
+        25 110 143 587 993 995 4190
         # TLS turn ports
         5349 5350
         # Matrix
