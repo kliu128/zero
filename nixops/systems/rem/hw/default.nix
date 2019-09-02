@@ -59,7 +59,6 @@
     description = "Clear Broken Kubernetes Pods";
     path = with pkgs; [ kubectl gnugrep coreutils ];
     script = ''
-      set -euo pipefail
       export KUBECONFIG=/etc/kubernetes/cluster-admin.kubeconfig
       for pod in $(kubectl get pod | grep CrashLoopBackOff | cut -d " " -f1); do
         if kubectl describe pod "$pod" | grep "OCI runtime create failed" >/dev/null; then
@@ -71,6 +70,10 @@
       for pod in $(kubectl get pod | grep ImagePullBackOff | cut -d " " -f1); do
         kubectl delete pod --wait=false "$pod"
       done
+
+      if kubectl logs matrix-puppet-discord-0 | grep "Unexpected token <"; then
+        kubectl delete pod --wait=false matrix-puppet-discord-0
+      fi
     '';
     serviceConfig = {
       Type = "oneshot";

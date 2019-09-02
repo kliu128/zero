@@ -246,7 +246,9 @@
       # Convenient aliases
       alias k=kubectl
       # Enable yarn with emoji
-      alias yarn="yarn --emoji true"
+      y() {
+        yarn 2>&1 "$@" --color --emoji | grep -vE '(warning|info)'
+      }
 
       eval $(thefuck --alias)
 
