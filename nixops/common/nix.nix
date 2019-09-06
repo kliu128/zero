@@ -15,10 +15,6 @@ in {
   nix.extraOptions = ''
     binary-caches-parallel-connections = 4
   '';
-  nix.nixPath = [ "nixpkgs=/etc/nixos/nixpkgs" ];
-  environment.etc."nixos/nixpkgs" = {
-    source = /etc/nixos/nixpkgs;
-  };
 
   # Increase open file limit to avoid running out of file descriptors when
   # deploying NixOS

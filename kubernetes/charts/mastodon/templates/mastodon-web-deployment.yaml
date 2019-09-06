@@ -18,9 +18,6 @@ spec:
         postgresql-postgresql-client: "true"
         app: {{ template "fullname" . }}-web
     spec:
-      # hack xd
-      nodeSelector:
-        kubernetes.io/hostname: rem
       containers:
       - name: {{ template "fullname" . }}-web
         image: {{ .Values.image | quote }}

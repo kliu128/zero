@@ -6,7 +6,6 @@
 {
   imports =
     [ <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
-      ./amd-fan.nix
       ./kernel.nix
       ./me.nix
       ./mounts.nix
@@ -22,7 +21,11 @@
   
   # Video.
   boot.earlyVconsoleSetup = true;
-  services.xserver.videoDrivers = [ "modesetting" "amdgpu" ];
+  services.xserver.videoDrivers = [ "amdgpu" ];
+  services.xserver.deviceSection = ''
+    Option "TearFree" "off"
+    Option "EnablePageFlip" "off"
+  '';
   boot.kernelParams = [ "consoleblank=300" "usb_storage.quirks=0bc2:ab38:" ];
 
   # Freeness (that is, not.)

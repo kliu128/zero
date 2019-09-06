@@ -49,6 +49,9 @@ in {
       mode = "repokey-blake2";
       passCommand = "cat /keys/gsuite-backup-password.txt";
     };
+    preHook = ''
+      borg break-lock /mnt/gsuite-root/gsuite-borg || true
+    '';
     extraCreateArgs = "--stats --progress -v";
     paths = "/mnt/storage/Kevin";
     repo = "/mnt/gsuite-root/gsuite-borg";

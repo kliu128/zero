@@ -52,7 +52,7 @@
     # System tools
     atop borgbackup cowsay dnsutils file fortune google-cloud-sdk hdparm htop iftop iotop lm_sensors lolcat man-pages opentimestamps-client p7zip schedtool smartmontools spectre-meltdown-checker stress-ng telnet thefuck tree vim wget
     # Desktop applications
-    calibre discord filezilla gpodder libreoffice-fresh liferea pavucontrol gnome3.pomodoro thunderbird tor-browser-bundle-bin transmission_gtk transgui veracrypt vscodium youtube-dl zoom-us
+    calibre discord filezilla gpodder krita libreoffice-fresh liferea pavucontrol gnome3.pomodoro thunderbird tor-browser-bundle-bin transmission_gtk transgui veracrypt vscodium youtube-dl zim zoom-us
     # Anki and related packages (for LaTeX support)
     anki polar-bookshelf 
     (texlive.combine {
@@ -216,8 +216,11 @@
     programs.zsh.enable = true;
     programs.zsh.oh-my-zsh = {
       enable = true;
-      theme = "gnzh";
-      plugins = [ "git" ];
+      theme = "agnoster";
+      plugins = [ "git" "tmux" ];
+    };
+    programs.zsh.localVariables = {
+      ZSH_TMUX_AUTOSTART = "true";
     };
     programs.zsh.initExtra = ''
       # Colorized man
@@ -230,8 +233,6 @@
           LESS_TERMCAP_us=$'\e[01;32m' \
           command man "$@"
       }
-
-      alias archive=/mnt/storage/Kevin/Personal/Code/ArchiveBox/archive
 
       export PATH=$HOME/.cargo/bin:$PATH:$HOME/bin:$HOME/Android/Sdk/ndk-bundle:$HOME/Android/Sdk/platform-tools:$HOME/.local/bin
       if [[ "$DISPLAY" ]]; then
