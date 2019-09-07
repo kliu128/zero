@@ -10,6 +10,7 @@
   
   defaults = {
     imports = [
+      ./common/dns.nix
       ./common/firewall.nix
       ./common/kernel.nix
       ./common/nix.nix
