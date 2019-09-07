@@ -220,7 +220,7 @@
       plugins = [ "git" "tmux" ];
     };
     programs.zsh.localVariables = {
-      ZSH_TMUX_AUTOSTART = "true";
+      #ZSH_TMUX_AUTOSTART = "true";
     };
     programs.zsh.initExtra = ''
       # Colorized man
