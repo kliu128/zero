@@ -4,7 +4,7 @@
   programs.sway.enable = true;
 
   environment.systemPackages = with pkgs; [
-    dunst grim slurp waybar kitty
+    dunst grim slurp waybar kitty redshift
   ];
 
   home-manager.users.kevin = {

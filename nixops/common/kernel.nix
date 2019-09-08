@@ -8,6 +8,6 @@
   };
 
   # Use latest kernel
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_5_2;
   boot.kernelParams = [ "threadirqs" "rqshare=none" ];
 }

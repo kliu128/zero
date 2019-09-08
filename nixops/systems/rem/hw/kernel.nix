@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 {
-  nixpkgs.config.packageOverrides = pkgs: rec {
+  nixpkgs.config.packageOverrides = pkgs: {
     kubernetes = pkgs.kubernetes.overrideAttrs (oldAttrs: rec {
       postPatch = ''
         ${oldAttrs.postPatch}
