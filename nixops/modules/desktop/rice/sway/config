@@ -258,4 +258,3 @@ for_window [class="Emacs"] opacity 0.9
 for_window [class="VSCodium"] opacity 0.9
 
 exec --no-startup-id dunst
-exec --no-startup-id redshift -r
