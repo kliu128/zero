@@ -1,0 +1,93 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: hack3-dashboard
+spec:
+  selector:
+    app: hack3-dashboard
+  ports:
+  - name: http
+    targetPort: 3000
+    port: 3000
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: hack3-dashboard
+spec:
+  selector:
+    matchLabels:
+      app: hack3-dashboard
+  template:
+    metadata:
+      labels:
+        app: hack3-dashboard
+    spec:
+      containers:
+        - name: dashboard
+          image: pneumaticat/hack3-dashboard
+          envFrom:
+          - secretRef:
+              name: hack3-dashboard
+          volumeMounts:
+            - name: data
+              mountPath: /data
+            - name: db-config
+              mountPath: /usr/src/app/config/database.yml
+              subPath: database.yml
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: hack3-dashboard-data
+        - name: db-config
+          configMap:
+            name: hack3-dashboard-db-config
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    app: hack3-dashboard
+  name: hack3-dashboard-data
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/tls-acme: 'true'
+  name: hack3-dashboard
+spec:
+  tls:
+    - secretName: hack3-dashboard-tls
+      hosts:
+        - dashboard.hack3.co
+  rules:
+  - host: dashboard.hack3.co
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: hack3-dashboard
+          servicePort: 3000
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hack3-dashboard-db-config
+data:
+  database.yml: |
+    default: &default
+      adapter: sqlite3
+      pool: 5
+      timeout: 5000
+
+    production:
+      <<: *default
+      database: /data/production.sqlite3
