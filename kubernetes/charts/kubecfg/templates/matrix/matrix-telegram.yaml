@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - name: telegram
-          image: tulir/mautrix-telegram
+          image: dock.mau.dev/tulir/mautrix-telegram
           imagePullPolicy: Always
           ports:
             - containerPort: 8080

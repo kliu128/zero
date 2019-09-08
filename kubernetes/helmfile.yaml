@@ -12,7 +12,7 @@ releases:
   - name: nginx-ingress
     namespace: kube-system
     chart: stable/nginx-ingress
-    version: 1.7.0
+    version: 1.19.1
     values:
       - ./values/nginx-ingress.yaml
   - name: nfs-client-provisioner

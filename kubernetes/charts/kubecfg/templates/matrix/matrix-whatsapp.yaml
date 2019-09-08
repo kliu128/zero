@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - name: whatsapp
-          image: tulir/mautrix-whatsapp
+          image: dock.mau.dev/tulir/mautrix-whatsapp
           imagePullPolicy: Always
           ports:
             - containerPort: 8080

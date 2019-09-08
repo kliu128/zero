@@ -12,9 +12,49 @@ metadata:
     heritage: {{ .Release.Service }}
 {{- with .Values.collabora.ingress.annotations }}
   annotations:
-    nginx.ingress.kubernetes.io/proxy-read-timeout: "36000"
-    nginx.ingress.kubernetes.io/proxy-send-timeout: "36000"
-    nginx.ingress.kubernetes.io/proxy-body-size: 1024m
+    nginx.ingress.kubernetes.io/server-snippet: |
+      # static files
+      location ^~ /loleaflet {
+          proxy_pass https://nextcloud-collabora-code.default.svc.cluster.local:9980;
+          proxy_set_header Host $http_host;
+      }
+
+      # WOPI discovery URL
+      location ^~ /hosting/discovery {
+          proxy_pass https://nextcloud-collabora-code.default.svc.cluster.local:9980;
+          proxy_set_header Host $http_host;
+      }
+
+      # Capabilities
+      location ^~ /hosting/capabilities {
+          proxy_pass https://nextcloud-collabora-code.default.svc.cluster.local:9980;
+          proxy_set_header Host $http_host;
+      }
+
+      # main websocket
+      location ~ ^/lool/(.*)/ws$ {
+          proxy_pass https://nextcloud-collabora-code.default.svc.cluster.local:9980;
+          proxy_set_header Upgrade $http_upgrade;
+          proxy_set_header Connection "Upgrade";
+          proxy_set_header Host $http_host;
+          proxy_read_timeout 36000s;
+      }
+
+      # download, presentation and image upload
+      location ~ ^/lool {
+          proxy_pass https://nextcloud-collabora-code.default.svc.cluster.local:9980;
+          proxy_set_header Host $http_host;
+      }
+
+      # Admin Console websocket
+      location ^~ /lool/adminws {
+          proxy_pass https://nextcloud-collabora-code.default.svc.cluster.local:9980;
+          proxy_set_header Upgrade $http_upgrade;
+          proxy_set_header Connection "Upgrade";
+          proxy_set_header Host $http_host;
+          proxy_read_timeout 36000s;
+      }
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
 {{ toYaml . | indent 4 }}
 {{- end }}
 spec:

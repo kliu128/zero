@@ -15,6 +15,7 @@ controller:
     hsts-preload: "true"
     ssl-protocols: "TLSv1.3 TLSv1.2"
     add-headers: default/headers
+    worker-shutdown-timeout: "86400s"
   service:
     type: NodePort
 rbac:
