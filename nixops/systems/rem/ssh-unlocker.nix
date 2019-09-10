@@ -47,7 +47,10 @@
     serviceConfig = {
       Type = "oneshot";
     };
-    startAt = "*-*-* 23:00:00";
+    startAt = [
+      "Mon..Fri 15:00"
+      "Sat,Sun 09:00"
+    ];
   };
 
 
