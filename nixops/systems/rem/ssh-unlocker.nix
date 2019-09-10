@@ -37,7 +37,10 @@
     serviceConfig = {
       Type = "oneshot";
     };
-    startAt = "*-*-* 09:00:00";
+    startAt = [
+      "Mon..Fri 15:00"
+      "Sat,Sun 09:00"
+    ];
   };
   systemd.services.ilo2-off = {
     path = [ pkgs.openssh ];
@@ -47,10 +50,7 @@
     serviceConfig = {
       Type = "oneshot";
     };
-    startAt = [
-      "Mon..Fri 15:00"
-      "Sat,Sun 09:00"
-    ];
+    startAt = "*-*-* 23:00:00";
   };
 
 
