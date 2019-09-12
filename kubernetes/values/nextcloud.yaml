@@ -7,7 +7,7 @@ lamp:
       kubernetes.io/tls-acme: 'true'
   mysql:
     repository: mariadb
-    tag: 10.3
+    tag: 10.4
     sockets: false
     user: nextcloud
     database: nextcloud
