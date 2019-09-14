@@ -6,8 +6,5 @@
     # BBR for better TCP speeds
     "net.ipv4.tcp_congestion_control" = "bbr";
   };
-
-  # Use latest kernel
-  boot.kernelPackages = pkgs.linuxPackages_5_2;
-  boot.kernelParams = [ "threadirqs" "rqshare=none" ];
+  boot.kernelParams = [ "threadirqs" ];
 }

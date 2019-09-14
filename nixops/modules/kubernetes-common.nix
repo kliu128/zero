@@ -36,6 +36,7 @@
   # Hardcode flannel configuration below
   services.kubernetes.kubelet.cni.config = lib.mkForce [];
   systemd.services.kubelet.preStart = lib.mkForce "sleep 1";
+
   # https://github.com/NixOS/nixpkgs/issues/60687
   systemd.services.kube-control-plane-online = {
     preStart = pkgs.lib.mkForce "";
@@ -48,4 +49,11 @@
 
   # Calico requires RP filter not to be set to "loose"
   boot.kernel.sysctl."net.ipv4.conf.all.rp_filter" = 1;
+
+  # Reduce CPU priority
+  systemd.services.kubelet.serviceConfig.CPUSchedulingPolicy = "idle";
+  systemd.services.kube-apiserver.serviceConfig.CPUSchedulingPolicy = "idle";
+  systemd.services.kube-addon-manager.serviceConfig.CPUSchedulingPolicy = "idle";
+  systemd.services.kube-controller-manager.serviceConfig.CPUSchedulingPolicy = "idle";
+  systemd.services.kube-scheduler.serviceConfig.CPUSchedulingPolicy = "idle";
 }

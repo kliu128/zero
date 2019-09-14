@@ -52,7 +52,7 @@
     # System tools
     atop borgbackup cowsay dnsutils file fortune google-cloud-sdk hdparm htop iftop iotop lm_sensors lolcat man-pages opentimestamps-client p7zip schedtool smartmontools spectre-meltdown-checker stress-ng telnet thefuck tree vim wget
     # Desktop applications
-    calibre discord filezilla gpodder krita libreoffice-fresh liferea pavucontrol gnome3.pomodoro thunderbird tor-browser-bundle-bin transmission_gtk transgui veracrypt vscodium youtube-dl zim zoom-us
+    calibre clementine discord filezilla gpodder krita libreoffice-fresh liferea pavucontrol gnome3.pomodoro thunderbird tor-browser-bundle-bin transmission_gtk transgui veracrypt vscodium youtube-dl zim zoom-us
     # Anki and related packages (for LaTeX support)
     anki polar-bookshelf 
     (texlive.combine {
