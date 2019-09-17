@@ -5,8 +5,8 @@ metadata:
 spec:
   ports:
   - protocol: TCP
-    port: 8443
-    targetPort: 8443
+    port: 8080
+    targetPort: 8080
     name: http
 ---
 kind: Endpoints
@@ -18,7 +18,7 @@ subsets:
     - ip: 10.99.0.1
     ports:
     - protocol: TCP
-      port: 8443
+      port: 8080
       name: http
 ---
 apiVersion: extensions/v1beta1
@@ -39,4 +39,4 @@ spec:
           - path: /
             backend:
               serviceName: coder
-              servicePort: 8443
+              servicePort: 8080

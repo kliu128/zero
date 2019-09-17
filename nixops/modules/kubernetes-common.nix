@@ -7,7 +7,6 @@
     masterAddress = "rem.i.potatofrom.space";
     apiserverAddress = "https://rem.i.potatofrom.space:6443";
     kubelet = {
-      allowPrivileged = true;
       # Disable swap warning, and make it so that pods aren't evacuated from nodes due 
       # to low disk space (I like running my computers to the edge :D)
       extraOpts = "--fail-swap-on=false --eviction-soft=nodefs.available<2% --eviction-hard=nodefs.available<1% --eviction-soft-grace-period=nodefs.available=1m30s --image-gc-high-threshold 99

@@ -15,7 +15,7 @@
   # Boot
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.initrd.kernelModules = [ "amdgpu" ]; # for early KMS
+  boot.initrd.kernelModules = [ "amdkfd" "amdgpu" ]; # for early KMS
   boot.initrd.availableKernelModules = [ "ehci_pci" "ahci" "xhci_pci" "usb_storage" "usbhid" "sd_mod" "sr_mod" "uas" ];
   boot.kernelModules = [ "kvm-intel" "it87" ];
   
@@ -98,6 +98,19 @@
     };
     startAt = "minutely";
   };
+  # Renice
+  systemd.services.renice = {
+    description = "Renice services";
+    path = with pkgs; [ utillinux procps ];
+    script = ''
+      chrt -p --rr -R -a 1 $(pidof sway) || true
+    '';
+    serviceConfig = {
+      Type = "oneshot";
+    };
+    startAt = "minutely";
+  };
+
 
   # Proper shutdown in a timely manner
   # See https://utcc.utoronto.ca/~cks/space/blog/linux/SystemdShutdownWatchdog

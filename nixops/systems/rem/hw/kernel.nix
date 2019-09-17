@@ -1,14 +1,14 @@
 { config, lib, pkgs, ... }:
 
 {
-  boot.kernelPackages = pkgs.linuxPackages_5_2;
-  nixpkgs.config.packageOverrides = pkgs: {
-    kubernetes = pkgs.kubernetes.overrideAttrs (oldAttrs: rec {
-      postPatch = ''
-        ${oldAttrs.postPatch}
-        substituteInPlace "pkg/kubelet/cm/container_manager_linux.go" --replace '"cpu", "cpuacct", "cpuset", "memory"' '"cpu", "cpuset", "memory"'
-      '';
-    });
-  };
-  systemd.services.kubelet.restartIfChanged = false;
+  boot.kernelPackages = pkgs.linuxPackages;
+  #nixpkgs.config.packageOverrides = pkgs: {
+  #  kubernetes = pkgs.kubernetes.overrideAttrs (oldAttrs: rec {
+  #    postPatch = ''
+  #      ${oldAttrs.postPatch}
+  #      substituteInPlace "pkg/kubelet/cm/container_manager_linux.go" --replace '"cpu", "cpuacct", "cpuset", "memory"' '"cpu", "cpuset", "memory"'
+  #     '';
+  #  });
+  #};
+  #systemd.services.kubelet.restartIfChanged = false;
 }

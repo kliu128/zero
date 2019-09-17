@@ -9,7 +9,7 @@
   '';
   boot.extraModulePackages = [ config.boot.kernelPackages.huawei-wmi ];
   systemd.tmpfiles.rules = [
-    "w /sys/devices/platform/huawei-wmi/charge_thresholds - - - - 82 85"
+    "w /sys/devices/platform/huawei-wmi/charge_thresholds - - - - 68 70"
   ];
 
   boot.kernelParams = [ "i915.enable_psr=0" ];

@@ -6,5 +6,4 @@
     # BBR for better TCP speeds
     "net.ipv4.tcp_congestion_control" = "bbr";
   };
-  boot.kernelParams = [ "threadirqs" ];
 }
