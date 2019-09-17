@@ -19,8 +19,6 @@ releases:
     namespace: kube-system
     chart: ./charts/nfs-client-provisioner
   - name: cert-manager
-    labels:
-      c: tru
     namespace: kube-system
     chart: jetstack/cert-manager
     version: 0.9.1
@@ -31,7 +29,7 @@ releases:
     labels:
       has-migrations: "true"
     chart: gitlab/gitlab
-    version: 1.9.1
+    version: 2.2.6
     values:
       - ./values/gitlab.yaml
       - ./values/gitlab.secret.yaml
