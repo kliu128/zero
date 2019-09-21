@@ -75,6 +75,10 @@ in {
     wantedBy = [ "multi-user.target" ];
   };
 
-  hardware.opengl.extraPackages = [ pkgs.rocm-opencl-icd pkgs.linuxPackages.nvidia_x11.out ];
-  environment.systemPackages = with pkgs; [ pkgs.rocm-opencl-runtime rocminfo pkgs.linuxPackages.nvidia_x11 ];
+  hardware.opengl.extraPackages = with pkgs; [
+    rocm-opencl-icd linuxPackages.nvidia_x11.out
+  ];
+  environment.systemPackages = with pkgs; [
+    pkgs.rocm-opencl-runtime rocminfo pkgs.linuxPackages.nvidia_x11 
+  ];
 }
