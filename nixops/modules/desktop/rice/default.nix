@@ -2,6 +2,9 @@
 
 {
   programs.sway.enable = true;
+  programs.sway.extraSessionCommands = ''
+    export MOZ_ENABLE_WAYLAND=1
+  '';
 
   environment.systemPackages = with pkgs; [
     dunst grim slurp waybar kitty redshift

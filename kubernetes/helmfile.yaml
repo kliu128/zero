@@ -47,6 +47,12 @@ releases:
     values:
       - ./values/mc.yaml
       - ./values/mc-aneesh-vanilla.yaml
+  - name: mc-rohan
+    namespace: default
+    chart: ./charts/minecraft
+    values:
+      - ./values/mc.yaml
+      - ./values/mc-rohan.yaml
   - name: mc-will-sf4
     namespace: default
     chart: ./charts/minecraft

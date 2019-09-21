@@ -10,12 +10,12 @@
     # slow due to memory fragmentation.
     "transparent_hugepage=never"
   ];
-  # Use vfio-pci for NVIDIA GTX 770
-  boot.extraModprobeConfig = ''
-    options vfio-pci ids=10de:1184,10de:0e0a
-  '';
-  boot.kernelModules = [ "vfio" "vfio_iommu_type1" "vfio_pci" "vfio_virqfd" ];
-  boot.blacklistedKernelModules = [ "nouveau" ];
+  # # Use vfio-pci for NVIDIA GTX 770
+  # boot.extraModprobeConfig = ''
+  #   options vfio-pci ids=10de:1184,10de:0e0a
+  # '';
+  # boot.kernelModules = [ "vfio" "vfio_iommu_type1" "vfio_pci" "vfio_virqfd" ];
+  # boot.blacklistedKernelModules = [ "nouveau" ];
   virtualisation.libvirtd.qemuVerbatimConfig = ''
     user = "kevin"
     group = "users"
