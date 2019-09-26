@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Application
-Exec=firefox --start-debugger-server %U
+#Exec=firefox --start-debugger-server %U
+Exec=firefox %U
 Terminal=false
 Name=Firefox
 Categories=Application;Network;WebBrowser;

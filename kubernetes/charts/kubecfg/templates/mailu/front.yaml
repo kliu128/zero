@@ -20,16 +20,13 @@ spec:
         component: ingress-controller
         type: nginx
     spec:
-      hostNetwork: true
-      nodeSelector:
-        kubernetes.io/hostname: rem
-      dnsPolicy: ClusterFirstWithHostNet
-      restartPolicy: Always
-      terminationGracePeriodSeconds: 60
+      # hostNetwork: true
+      # nodeSelector:
+      #   kubernetes.io/hostname: rem
+      # dnsPolicy: ClusterFirstWithHostNet
       containers:
       - name: front
-        image: mailu/nginx:master
-        imagePullPolicy: Always
+        image: mailu/nginx:1.7
         envFrom:
           - configMapRef:
               name: mailu-config

@@ -3,6 +3,7 @@
 {
   networking.useNetworkd = true;
   networking.useDHCP = true;
+  networking.usePredictableInterfaceNames = false;
   systemd.network.enable = true;
   systemd.network.networks = {
     "40-eth0" = {

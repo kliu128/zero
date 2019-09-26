@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: antispam
-        image: mailu/rspamd:master
+        image: mailu/rspamd:1.7
         imagePullPolicy: Always
         envFrom:
           - configMapRef:
