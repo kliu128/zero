@@ -21,7 +21,7 @@ spec:
         app: riot
     spec:
       containers:
-        - image: vectorim/riot-web:develop
+        - image: vectorim/riot-web:v1.4.0
           name: riot-web
           volumeMounts:
             - mountPath: /app/config.json
@@ -43,34 +43,29 @@ data:
     {
         "default_hs_url": "https://potatofrom.space",
         "default_is_url": "https://vector.im",
-        "brand": "Riot",
-        "integrations_ui_url": "https://scalar.vector.im/",
-        "integrations_rest_url": "https://scalar.vector.im/api",
-        "integrations_widgets_urls": [
-            "https://scalar-staging.vector.im/api",
-            "https://scalar.vector.im/api",
-            "https://scalar-staging.riot.im/scalar/api"
-        ],
-        "hosting_signup_link": "https://modular.im/?utm_source=riot-web&utm_medium=web",
-        "bug_report_endpoint_url": "https://riot.im/bugreports/submit",
-    "features": {
-        "feature_rich_quoting": "labs",
-        "feature_pinning": "labs",
-        "feature_presence_management": "labs",
-        "feature_sticker_messages": "labs",
-        "feature_jitsi": "labs",
-        "feature_tag_panel": "enable",
-        "feature_keybackup": "labs",
-        "feature_custom_status": "labs",
-        "feature_custom_tags": "labs",
-        "feature_lazyloading": "enable",
-        "feature_tabbed_settings": "labs",
-        "feature_sas": "labs",
-        "feature_room_breadcrumbs": "labs",
-        "feature_state_counters": "labs",
-        "feature_cider_composer": "labs",
-        "feature_many_integration_managers": "labs"
-    },
+        "brand": "Potatoriot",
+        "integrations_ui_url": "https://dimension.potatofrom.space/riot",
+        "integrations_rest_url": "https://dimension.potatofrom.space/api/v1/scalar",
+        "integrations_widgets_urls": ["https://dimension.potatofrom.space/widgets"],
+        "integrations_jitsi_widget_url": "https://dimension.potatofrom.space/widgets/jitsi",
+        "features": {
+            "feature_rich_quoting": "labs",
+            "feature_pinning": "labs",
+            "feature_presence_management": "labs",
+            "feature_sticker_messages": "labs",
+            "feature_jitsi": "labs",
+            "feature_tag_panel": "enable",
+            "feature_keybackup": "labs",
+            "feature_custom_status": "labs",
+            "feature_custom_tags": "labs",
+            "feature_lazyloading": "enable",
+            "feature_tabbed_settings": "labs",
+            "feature_sas": "labs",
+            "feature_room_breadcrumbs": "labs",
+            "feature_state_counters": "labs",
+            "feature_cider_composer": "labs",
+            "feature_many_integration_managers": "labs"
+        },
         "roomDirectory": {
             "servers": [
                 "matrix.org"
