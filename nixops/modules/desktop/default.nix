@@ -52,7 +52,7 @@
     # System tools
     atop borgbackup cowsay dnsutils file fortune google-cloud-sdk hdparm htop iftop iotop lm_sensors lolcat man-pages opentimestamps-client p7zip schedtool smartmontools spectre-meltdown-checker stress-ng telnet thefuck tree vim wget
     # Desktop applications
-    calibre clementine discord filezilla gpodder krita libreoffice-fresh liferea pavucontrol gnome3.pomodoro thunderbird tor-browser-bundle-bin transmission_gtk transgui veracrypt vscodium youtube-dl zim zoom-us
+    calibre clementine discord filezilla gpodder krita libreoffice-fresh liferea pavucontrol gnome3.pomodoro thunderbird tor-browser-bundle-bin transmission_gtk transgui veracrypt vscodium youtube-dl zim
     # Anki and related packages (for LaTeX support)
     anki polar-bookshelf 
     (texlive.combine {
@@ -111,21 +111,6 @@
     programs.ssh = {
       enable = true;
       matchBlocks = {
-        emilia = {
-          hostname = "192.168.1.6";
-          user = "kevin";
-          port = 22;
-        };
-        demonbeast = {
-          hostname = "demonbeast.lan";
-          user = "pi";
-          port = 22;
-        };
-        karmaxer = {
-          hostname = "server.scintillate.me";
-          user = "kevin";
-          port = 843;
-        };
         carta = {
           hostname = "potatofrom.space";
           user = "kevin";
@@ -135,6 +120,26 @@
           hostname = "rem.i.potatofrom.space";
           user = "kevin";
           port = 1843;
+        };
+        demonbeast = {
+          hostname = "demonbeast.lan";
+          user = "pi";
+          port = 22;
+        };
+        felix1 = {
+          hostname = "132.145.161.120";
+          user = "ubuntu";
+          port = 22;
+        };
+        felix2 = {
+          hostname = "129.213.162.194";
+          user = "ubuntu";
+          port = 22;
+        };
+        karmaxer = {
+          hostname = "server.scintillate.me";
+          user = "kevin";
+          port = 843;
         };
         puck = {
           hostname = "puck.i.potatofrom.space";

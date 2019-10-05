@@ -21,5 +21,5 @@ in {
   environment.etc."jdks/java8".source = pkgs.openjdk8;
 
   # Install IntelliJ
-  environment.systemPackages = with pkgs; [ eclipses.eclipse-sdk jetbrains.idea-community ];
+  environment.systemPackages = with pkgs; [ eclipses.eclipse-sdk jetbrains.idea-community maven ];
 }

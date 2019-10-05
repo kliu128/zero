@@ -74,6 +74,8 @@ spec:
           value: {{ .Values.minecraftServer.announcePlayerAchievements | quote }}
         - name: ENABLE_COMMAND_BLOCK
           value: {{ .Values.minecraftServer.enableCommandBlock | quote }}
+        - name: MEMORY
+          value: {{ .Values.minecraftServer.memory | quote }}
         - name: FORCE_gameMode
           value: {{ .Values.minecraftServer.forcegameMode | quote }}
         - name: GENERATE_STRUCTURES
@@ -124,8 +126,6 @@ spec:
           value: {{ .Values.minecraftServer.jvmOpts | quote }}
         - name: JVM_XX_OPTS
           value: {{ .Values.minecraftServer.jvmXxOpts | quote }}
-        - name: OVERRIDE_SERVER_PROPERTIES
-          value: "true"
         - name: SERVER_PORT
           value: {{ .Values.minecraftServer.port | quote }}
         - name: ALLOW_FLIGHT

@@ -48,11 +48,4 @@
 
   # Calico requires RP filter not to be set to "loose"
   boot.kernel.sysctl."net.ipv4.conf.all.rp_filter" = 1;
-
-  # Reduce CPU priority
-  systemd.services.kubelet.serviceConfig.CPUSchedulingPolicy = "idle";
-  systemd.services.kube-apiserver.serviceConfig.CPUSchedulingPolicy = "idle";
-  systemd.services.kube-addon-manager.serviceConfig.CPUSchedulingPolicy = "idle";
-  systemd.services.kube-controller-manager.serviceConfig.CPUSchedulingPolicy = "idle";
-  systemd.services.kube-scheduler.serviceConfig.CPUSchedulingPolicy = "idle";
 }

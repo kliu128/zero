@@ -66,6 +66,8 @@ in {
   # Disable ProtectSystem=strict since it appears to break borg when running
   # under rclone fuse mount
   systemd.services.borgbackup-job-gsuite.serviceConfig.ProtectSystem = lib.mkForce false;
+  systemd.services.borgbackup-job-gsuite.after = [ "gsuite-unencrypted-mount.service" ];
+  systemd.services.borgbackup-job-gsuite.wants = [ "gsuite-unencrypted-mount.service" ];
   deployment.keys."gsuite-backup-password.txt" = {
     permissions = "400";
     destDir = "/keys";
@@ -282,6 +284,23 @@ in {
       rclone --config /keys/rclone.conf \
         mount gsuite-school: /mnt/gschool \
         --drive-use-trash=false --read-only \
+        --allow-other --allow-non-empty --uid 1000 --gid 100
+    '';
+  };
+  systemd.services.dropbox-mount = {
+    description = "Dropbox Mount";
+    after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
+    wantedBy = [ "multi-user.target" ];
+    restartIfChanged = false;
+    path = [ pkgs.fuse pkgs.rclone ];
+    serviceConfig = {
+      Type = "notify";
+      NotifyAccess = "all";
+    };
+    script = ''
+      rclone --config /keys/rclone.conf \
+        mount dropbox: /mnt/dropbox \
         --allow-other --allow-non-empty --uid 1000 --gid 100
     '';
   };

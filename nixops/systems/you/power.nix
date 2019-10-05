@@ -2,6 +2,10 @@
 
 {
   services.tlp.enable = true; # For laptop
+  services.tlp.extraConfig = ''
+    CPU_BOOST_ON_AC=1
+    CPU_BOOST_ON_BAT=0
+  '';
   powerManagement.powertop.enable = true;
 
   boot.extraModprobeConfig = ''

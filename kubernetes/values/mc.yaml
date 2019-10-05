@@ -5,6 +5,7 @@ resources:
     cpu:
 minecraftServer:
   eula: "TRUE"
+  memory: 1G
   pvp: true
   serviceType: ClusterIP
   query:

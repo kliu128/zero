@@ -43,4 +43,19 @@
     device = "/srv/nfs/pvcs/default-mc-aneesh-vanilla-minecraft-datadir-pvc-e8ee47ba-c06c-11e9-a63b-74d435e2529b";
     options = [ "bind" ];
   };
+
+  services.tor = {
+    enable = true;
+    extraConfig = ''
+      ServerTransportListenAddr obfs4 0.0.0.0:32973
+      ExtORPort auto
+    '';
+    relay = {
+      enable = true;
+      port = 32972;
+      role = "bridge";
+      nickname = "pot8torelayrem";
+      contactInfo = "Kevin Liu <kevin@potatofrom.space>";
+    };
+  };
 }

@@ -1,7 +1,5 @@
 minecraftServer:
-  motd: "Vanilla / Kevloo Hosting"
-  jvmOpts: -Xmx1G
-  jvmXxOpts: "-XX:+UseG1GC"
+  motd: "Ralpheus Maximus"
   type: VANILLA
   version: 1.14.4
   difficulty: normal
@@ -10,5 +8,5 @@ minecraftServer:
     port: 25566
   ops: []
 securityContext:
-  runAsUser: 1007
+  runAsUser: 1000
   fsGroup: 100

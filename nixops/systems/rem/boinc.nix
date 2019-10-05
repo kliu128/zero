@@ -40,7 +40,9 @@ in {
     ];
   };
   systemd.services.boinc.after = [ "display-manager.service" ];
-  systemd.services.boinc.serviceConfig.CPUSchedulingPolicy = "idle";
+  systemd.services.boinc.serviceConfig = {
+    CPUSchedulingPolicy = "idle";
+  };
   systemd.services.nvidia-fan = {
     enable = true;
     path = with pkgs; [ xorg.xorgserver linuxPackages_ck.nvidia_x11.settings coreutils ];

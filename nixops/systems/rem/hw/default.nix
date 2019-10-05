@@ -21,11 +21,7 @@
   
   # Video.
   boot.earlyVconsoleSetup = true;
-  services.xserver.videoDrivers = [ "amdgpu" ];
-  services.xserver.deviceSection = ''
-    Option "TearFree" "off"
-    Option "EnablePageFlip" "off"
-  '';
+  services.xserver.videoDrivers = [ "modesetting" "amdgpu" ];
   boot.kernelParams = [ "consoleblank=300" "usb_storage.quirks=0bc2:ab38:" ];
 
   # Freeness (that is, not.)
@@ -104,7 +100,7 @@
     description = "Renice services";
     path = with pkgs; [ utillinux procps ];
     script = ''
-      chrt -p --rr -R -a 1 $(pidof sway) || true
+      chrt -p --rr -R -a 1 $(pidof gnome-shell sway X) || true
     '';
     serviceConfig = {
       Type = "oneshot";

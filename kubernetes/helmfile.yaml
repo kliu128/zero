@@ -41,12 +41,18 @@ releases:
     values:
       - ./values/mastodon.yaml
       - ./values/mastodon.secret.yaml
-  - name: mc-aneesh-vanilla
+  - name: mc-ralph
     namespace: default
     chart: ./charts/minecraft
     values:
       - ./values/mc.yaml
-      - ./values/mc-aneesh-vanilla.yaml
+      - ./values/mc-ralph.yaml
+  - name: mc-steveli
+    namespace: default
+    chart: ./charts/minecraft
+    values:
+      - ./values/mc.yaml
+      - ./values/mc-steveli.yaml
   - name: mc-rohan
     namespace: default
     chart: ./charts/minecraft

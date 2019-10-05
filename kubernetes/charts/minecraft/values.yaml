@@ -101,8 +101,8 @@ minecraftServer:
   # Check accounts against Minecraft account service.
   onlineMode: true
   # If you adjust this, you may need to adjust resources.requests above to match.
-  jvmOpts: "-Xmx512M -Xms512M"
-  jvmXxOpts: ""
+  # jvmOpts: "-Xmx512M -Xms512M"
+  # jvmXxOpts: ""
   serviceType: LoadBalancer
 
   query:

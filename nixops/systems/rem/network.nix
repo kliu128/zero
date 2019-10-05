@@ -5,6 +5,7 @@
   networking.useDHCP = true;
   networking.usePredictableInterfaceNames = false;
   systemd.network.enable = true;
+  services.resolved.dnssec = "false";
   systemd.network.networks = {
     "40-eth0" = {
       matchConfig = { Name = "eth0"; };

@@ -59,7 +59,7 @@
         ./systems/rem/android.nix
         ./systems/rem/backups.nix
         ./systems/rem/bluray.nix
-        ./systems/rem/boinc.nix
+        # ./systems/rem/boinc.nix
         ./systems/rem/coder.nix
         ./systems/rem/desktop.nix
         ./systems/rem/fusee-launcher.nix
@@ -90,7 +90,7 @@
         # Matrix
         8448
         # Tor
-        9001
+        32972 32973
         # Minecraft
         25565 25566 25567 25568 25569 25570
         # Factorio
