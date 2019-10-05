@@ -12,11 +12,6 @@
   ];
 
   services.xserver.windowManager.i3.enable = true;
-  services.xserver.windowManager.i3.extraSessionCommands = ''
-    xrandr --newmode "x11vnc" 83.50  1280 1352 1480 1680  800 803 809 831 -hsync +vsync
-    xrandr --addmode DP-1 x11vnc
-    xrandr --output DP-1 --mode x11vnc --right-of DVI-D-1
-  '';
   services.xserver.windowManager.i3.package = pkgs.i3-gaps;
 
   networking.firewall.allowedTCPPorts = [ 5901 24800 ];
@@ -25,14 +20,14 @@
     configFile = pkgs.writeText "synergy.conf" ''
       section: screens
         rem:
-        superolddell:
+        you:
       end
 
       section: links
         rem:
-          right = superolddell
-        superolddell:
-          left = rem
+          down = you
+        you:
+          up = rem
       end
     '';
   };
