@@ -127,4 +127,20 @@
 
       system.stateVersion = "19.09";
     };
+
+  karmaxer =
+    { config, pkgs, lib, ... }:
+    {
+      deployment.targetHost = "192.168.1.3";
+
+      imports = [
+        ./systems/karmaxer/hw.nix
+        ./systems/karmaxer/services.nix
+        ./systems/karmaxer/tinc.nix
+      ];
+
+      networking.hostName = "karmaxer";
+
+      system.stateVersion = "19.09";
+    };
 }
