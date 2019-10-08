@@ -11,7 +11,6 @@
     enableUnstable = false;
     requestEncryptionCredentials = true;
   };
-  # boot.kernelParams = [ "zfs.zfs_arc_max=2147483648" "zfs.zio_taskq_batch_pct=10" ];
   services.kubernetes.path = [ pkgs.zfs ];
   
   fileSystems."/" = {

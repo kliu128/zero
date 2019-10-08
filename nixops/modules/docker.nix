@@ -13,8 +13,8 @@
     liveRestore = false;
   };
   systemd.services.docker = {
-    after = [ "nfs-server.service" ];
-    wants = [ "nfs-server.service" ];
+    after = [ "nfs-server.service" "remote-fs.target" ];
+    wants = [ "nfs-server.service" "remote-fs.target" ];
     restartIfChanged = false;
     serviceConfig.CPUSchedulingPolicy = "idle";
   };

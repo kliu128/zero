@@ -15,7 +15,7 @@ spec:
         app: {{ template "nextcloud.name" . }}-collabora-code
     spec:
       containers:
-      - image: collabora/code
+      - image: collabora/code:4.2-snapshot
         env:
           - name: domain
             value: {{ .Values.lamp.ingress.domain | replace "." "\\." | quote }}
