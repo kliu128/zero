@@ -3,8 +3,8 @@
 let
   xconfig = pkgs.writeText "nvidia-xconfig" ''
     Section "Files"
-      ModulePath "${pkgs.linuxPackages_ck.nvidia_x11.bin}/lib/xorg/modules/drivers"
-      ModulePath "${pkgs.linuxPackages_ck.nvidia_x11.bin}/lib/xorg/modules/extensions"
+      ModulePath "${config.boot.kernelPackages.nvidia_x11.bin}/lib/xorg/modules/drivers"
+      ModulePath "${config.boot.kernelPackages.nvidia_x11.bin}/lib/xorg/modules/extensions"
       ModulePath "${pkgs.xorg.xorgserver}/lib/xorg/modules"
       #ModulePath "${pkgs.xorg.xorgserver}/lib/xorg/modules/extensions"
       #ModulePath "${pkgs.xorg.xorgserver}/lib/xorg/modules/drivers"
@@ -30,13 +30,12 @@ let
     EndSection
   '';
 in {
-  nixpkgs.overlays = [ (import (builtins.fetchTarball https://github.com/nixos-rocm/nixos-rocm/archive/master.tar.gz)) ];
   services.xserver.videoDrivers = [ "nvidia" ];
   services.boinc = {
     enable = true;
     allowRemoteGuiRpc = true;
     extraEnvPackages = with pkgs; [
-      ocl-icd linuxPackages_ck.nvidia_x11 rocm-opencl-icd cudatoolkit
+      ocl-icd config.boot.kernelPackages.nvidia_x11 cudatoolkit virtualbox
     ];
   };
   systemd.services.boinc.after = [ "display-manager.service" ];
@@ -44,8 +43,8 @@ in {
     CPUSchedulingPolicy = "idle";
   };
   systemd.services.nvidia-fan = {
-    enable = true;
-    path = with pkgs; [ xorg.xorgserver linuxPackages_ck.nvidia_x11.settings coreutils ];
+    enable = false;
+    path = with pkgs; [ xorg.xorgserver config.boot.kernelPackages.nvidia_x11.settings coreutils ];
     script = ''
       set -xeuo pipefail
 
@@ -57,10 +56,15 @@ in {
     wantedBy = [ "multi-user.target" ];
   };
 
+  # virtualisation.virtualbox.host = {
+  #   enable = true;
+  #   enableExtensionPack = true;
+  # };
+
   hardware.opengl.extraPackages = with pkgs; [
-    rocm-opencl-icd linuxPackages_ck.nvidia_x11.out
+    config.boot.kernelPackages.nvidia_x11.out
   ];
   environment.systemPackages = with pkgs; [
-    pkgs.rocm-opencl-runtime rocminfo pkgs.linuxPackages_ck.nvidia_x11 
+    config.boot.kernelPackages.nvidia_x11 
   ];
 }

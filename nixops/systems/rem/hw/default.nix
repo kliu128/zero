@@ -21,7 +21,7 @@
   
   # Video.
   boot.earlyVconsoleSetup = true;
-  services.xserver.videoDrivers = [ "modesetting" "amdgpu" ];
+  services.xserver.videoDrivers = ["modesetting" "amdgpu" ];
   boot.kernelParams = [ "consoleblank=300" "usb_storage.quirks=0bc2:ab38:" ];
 
   # Freeness (that is, not.)
@@ -98,9 +98,10 @@
   # Renice
   systemd.services.renice = {
     description = "Renice services";
-    path = with pkgs; [ utillinux procps ];
+    path = with pkgs; [ utillinux coreutils procps ];
     script = ''
-      chrt -p --rr -R -a 1 $(pidof gnome-shell sway X) || true
+      chrt -p --rr -R -a 99 $(pgrep X) || true
+      renice -n 5 -p $(pgrep z_wr_iss) $(pgrep z_rd_int) $(pgrep z_) $(pgrep spl_) $(pgrep nfs) $(pgrep xprtiod)
     '';
     serviceConfig = {
       Type = "oneshot";

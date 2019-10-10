@@ -55,12 +55,7 @@
     calibre clementine discord filezilla gpodder krita libreoffice-fresh liferea pavucontrol gnome3.pomodoro thunderbird tor-browser-bundle-bin transmission_gtk transgui veracrypt vscodium youtube-dl zim
     # Anki and related packages (for LaTeX support)
     anki polar-bookshelf 
-    (texlive.combine {
-      inherit (texlive)
-
-      scheme-basic
-      ;
-    })
+    texlive.combined.scheme-full
     # Desktop tools
     appimage-run
     # KDE applications

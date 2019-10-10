@@ -12,6 +12,7 @@
     requestEncryptionCredentials = true;
   };
   services.kubernetes.path = [ pkgs.zfs ];
+  boot.kernelParams = [ "spl.spl_taskq_thread_dynamic=0" ];
   
   fileSystems."/" = {
     device = "rpool/nixos/root"; 

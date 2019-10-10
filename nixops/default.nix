@@ -59,7 +59,7 @@
         ./systems/rem/android.nix
         ./systems/rem/backups.nix
         ./systems/rem/bluray.nix
-        # ./systems/rem/boinc.nix
+        ./systems/rem/boinc.nix
         ./systems/rem/coder.nix
         ./systems/rem/desktop.nix
         ./systems/rem/fusee-launcher.nix

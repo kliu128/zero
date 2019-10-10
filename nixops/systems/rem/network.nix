@@ -24,6 +24,9 @@
         MACAddress = "74:d4:35:e2:52:9b";
       };
     };
+    # "40-vbox" = {
+    #   linkConfig = { Unmanaged = true; };
+    # };
     "99-main" = {
       matchConfig = { Name = "*"; };
       linkConfig = { Unmanaged = true; };

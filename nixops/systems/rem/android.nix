@@ -1,20 +1,20 @@
 { config, lib, pkgs, ... }:
 
 {
-  # virtualisation.anbox.enable = true;
-  # systemd.network.netdevs.anbox-dummy = {
-  #   enable = true;
-  #   netdevConfig.Name = "anbox-dummy";
-  #   netdevConfig.Kind = "dummy";
-  # }; 
-  # systemd.network.networks.anbox-dummy = {
-  #   enable = true;
-  #   matchConfig.Name = "anbox-dummy";
-  #   networkConfig = {
-  #     Bridge = "anbox0";
-  #     DHCP = "no";
-  #   };
-  # };
+  #virtualisation.anbox.enable = true;
+  #systemd.network.netdevs.anbox-dummy = {
+  #  enable = true;
+  #  netdevConfig.Name = "anbox-dummy";
+  #  netdevConfig.Kind = "dummy";
+  #}; 
+  #systemd.network.networks.anbox-dummy = {
+  #  enable = true;
+  #  matchConfig.Name = "anbox-dummy";
+  # networkConfig = {
+  #    Bridge = "anbox0";
+  #    DHCP = "no";
+  #  };
+  #};
   # systemd.services.anbox-container-manager.unitConfig.PartOf = "anbox-session-manager.service";
   # systemd.services.anbox-session-manager = {
   #   enable = false;
