@@ -34,17 +34,6 @@
   services.kubernetes.kubelet.cni.configDir = "/etc/cni/net.d";
   # Hardcode flannel configuration below
   services.kubernetes.kubelet.cni.config = lib.mkForce [];
-  systemd.services.kubelet.preStart = lib.mkForce "sleep 1";
-
-  # https://github.com/NixOS/nixpkgs/issues/60687
-  systemd.services.kube-control-plane-online = {
-    preStart = pkgs.lib.mkForce "";
-  };
-  # this seems to depend on flannel
-  # TODO(q3k): file issue
-  systemd.services.kubelet-online = {
-    script = pkgs.lib.mkForce "sleep 1";
-  };
 
   # Calico requires RP filter not to be set to "loose"
   boot.kernel.sysctl."net.ipv4.conf.all.rp_filter" = 1;

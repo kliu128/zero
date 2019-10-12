@@ -29,29 +29,29 @@
   };
 
   # iLO 2 scheduled power on/off
-  systemd.services.ilo2-on = {
-    path = [ pkgs.openssh ];
-    script = ''
-      ssh -o BatchMode=yes -o StrictHostKeyChecking=no -i /keys/rebooter rebooter@192.168.1.2 'power on'
-    '';
-    serviceConfig = {
-      Type = "oneshot";
-    };
-    startAt = [
-      "Mon..Fri 15:00"
-      "Sat,Sun 09:00"
-    ];
-  };
-  systemd.services.ilo2-off = {
-    path = [ pkgs.openssh ];
-    script = ''
-      ssh -o BatchMode=yes -o StrictHostKeyChecking=no -i /keys/rebooter rebooter@192.168.1.2 'power off'
-    '';
-    serviceConfig = {
-      Type = "oneshot";
-    };
-    startAt = "*-*-* 23:00:00";
-  };
+  # systemd.services.ilo2-on = {
+  #   path = [ pkgs.openssh ];
+  #   script = ''
+  #     ssh -o BatchMode=yes -o StrictHostKeyChecking=no -i /keys/rebooter rebooter@192.168.1.2 'power on'
+  #   '';
+  #   serviceConfig = {
+  #     Type = "oneshot";
+  #   };
+  #   startAt = [
+  #     "Mon..Fri 15:00"
+  #     "Sat,Sun 09:00"
+  #   ];
+  # };
+  # systemd.services.ilo2-off = {
+  #   path = [ pkgs.openssh ];
+  #   script = ''
+  #     ssh -o BatchMode=yes -o StrictHostKeyChecking=no -i /keys/rebooter rebooter@192.168.1.2 'power off'
+  #   '';
+  #   serviceConfig = {
+  #     Type = "oneshot";
+  #   };
+  #   startAt = "*-*-* 23:00:00";
+  # };
 
 
   # SSH key with permissions for user rebooter to reboot system

@@ -5,6 +5,7 @@
     "10.99.0.1" = ["rem.i.potatofrom.space" "rem"];
     "10.99.0.3" = ["puck.i.potatofrom.space"];
     "10.99.0.4" = ["you.i.potatofrom.space"];
+    "10.99.0.5" = ["karmaxer.i.potatofrom.space"];
   };
   services.tinc.networks."omnimesh"= {
     interfaceType = "tap";
@@ -74,6 +75,23 @@
         stEdeUV3ytGyuPWp3kbf1UoLb2InD2pGYwIDAQAB
         -----END RSA PUBLIC KEY-----
         Ed25519PublicKey = MTcrqYlHJAZAu3NvePmF1R+2HKuOj5a6/zLXVz5Ic/C
+      '';
+      karmaxer = ''
+        Compression = 1
+        Ed25519PublicKey = lbHbBMQJvi8j/KkmMl/sGKu1R2M7mjsgS6t2nIO9vLJ
+        -----BEGIN RSA PUBLIC KEY-----
+        MIICCgKCAgEAwi31odnkHcex14Vn0XSe1gcZRXld+x3Ms4nAZ8poYW3DugInCRT+
+        e9gH4IZGDTXqEnQfDfCa29rUdwyP+gVoGanK0qYka+iKlTi/H8hjDj3X+172Oebt
+        sdj2uV/oGEdTGriDUTsuf9d6YRHdgOPqNlNw0kgeTC8fKjplPDIwyr17wH8TchHp
+        ubRmAqW3Za5FerdJdkrapTQx35ecLvOjw2DIB+YuUL5MiJ2jPOcLOXU4gfZRvDub
+        vCCGpmPvFzayISMD8avGByL5RCohBhMmcjpTrFVJuAJ17tviAnwQIbY0IhjOo1CT
+        KTk/SUOZtpXr8kCXTM5OsAwl6Pg8OyVcbpV14egeaqZ0GevK5hTgyhnPbqt4YLRX
+        nqd5ikIhVftq9yJlEqaA/yN9J7zPMNVuh33Qw9PF98VHiShjXMS0lt3y5tRYmk+e
+        kvwCciUeBo7J8uCT2oQhJu3djXkVqdFskjAIpk7L5eAMEq77fy8j9GuZNonGe5v4
+        reg+KkOp2mmqgcjHmWByBXZWjkyoiKFON5pLhYmjaVoy288OHxCF26sUWapjXx3K
+        yuMpjfEoXBmdX65Ym7oBrY/djJRXjc+vW7yIgP1RnhdtLPlRG2X8bwvFUN1wtKc+
+        fL3/bLePwsCzZokdW4ASKK5fk4HJ3uYKtRqAfIpT45ahDaFq0U8j5qUCAwEAAQ==
+        -----END RSA PUBLIC KEY-----
       '';
     };
   };

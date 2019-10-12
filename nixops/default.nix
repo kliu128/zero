@@ -134,6 +134,9 @@
       deployment.targetHost = "192.168.1.3";
 
       imports = [
+        ./modules/docker.nix
+        ./modules/kubernetes-common.nix
+        ./modules/kubernetes-node.nix
         ./systems/karmaxer/hw.nix
         ./systems/karmaxer/services.nix
         ./systems/karmaxer/tinc.nix
