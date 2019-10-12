@@ -1,6 +1,5 @@
 { config, lib, pkgs, ... }:
 
 {
-  # x
-  
+  networking.nameservers = [ "1.1.1.1" ];
 }

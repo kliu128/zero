@@ -17,6 +17,8 @@ spec:
         app: {{ template "minecraft.fullname" . }}
     spec:
       hostNetwork: true
+      nodeSelector:
+        kubernetes.io/hostname: rem
       securityContext:
         runAsUser: {{ .Values.securityContext.runAsUser }}
         fsGroup: {{ .Values.securityContext.fsGroup }}

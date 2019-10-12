@@ -1,11 +1,12 @@
 { config, lib, pkgs, ... }:
 
 {
+  # Short names required for Kubernetes log tailing
   networking.hosts = {
     "10.99.0.1" = ["rem.i.potatofrom.space" "rem"];
     "10.99.0.3" = ["puck.i.potatofrom.space"];
     "10.99.0.4" = ["you.i.potatofrom.space"];
-    "10.99.0.5" = ["karmaxer.i.potatofrom.space"];
+    "10.99.0.5" = ["karmaxer.i.potatofrom.space" "karmaxer"];
   };
   services.tinc.networks."omnimesh"= {
     interfaceType = "tap";

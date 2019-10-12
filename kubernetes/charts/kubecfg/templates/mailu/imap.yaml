@@ -12,6 +12,8 @@ spec:
         role: mail
         tier: backend
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: rem
       containers:
       - name: imap
         image: mailu/dovecot:1.7

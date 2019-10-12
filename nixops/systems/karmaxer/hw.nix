@@ -13,10 +13,6 @@
   # Define on which hard drive you want to install Grub.
   boot.loader.grub.device = "/dev/sda"; # or "nodev" for efi only
 
-  services.udev.extraRules = ''
-    ACTION=="add|change", SUBSYSTEM=="block", KERNEL=="sd?", ATTR{queue/scheduler}="kyber"
-  '';
-
   # Enable firmware for bnx2
   hardware.enableRedistributableFirmware = true;
 

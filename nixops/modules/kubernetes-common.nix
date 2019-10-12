@@ -2,6 +2,7 @@
 
 {
   # Kubernetes
+  boot.supportedFilesystems = [ "nfs" ];
   services.kubernetes = {
     easyCerts = true;
     masterAddress = "rem.i.potatofrom.space";
@@ -24,6 +25,8 @@
   };
   networking.firewall = {
     allowedTCPPorts = [
+      # Calico BGP port 179
+      179
       # Kubernetes - kubelet, etcd, apiserver
       10250 2379 2380 6443
       # Node Exporter

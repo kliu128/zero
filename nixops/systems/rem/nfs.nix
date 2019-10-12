@@ -10,7 +10,7 @@
     mountdPort = 4002;
     hostName = "192.168.1.5"; # Don't bind on all interfaces
     exports = ''
-      /srv/nfs 192.168.1.5(rw,fsid=0,sync,no_root_squash,crossmnt)
+      /srv/nfs 192.168.1.5(rw,fsid=0,sync,no_root_squash,crossmnt) 192.168.1.3(rw,fsid=0,sync,no_root_squash,crossmnt)
     '';
   };
   systemd.services.nfs-server.restartIfChanged = false;
