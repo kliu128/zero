@@ -1,0 +1,12 @@
+minecraftServer:
+  motd: Staging One
+  type: VANILLA
+  version: 1.14.4
+  difficulty: normal
+  port: 25568
+  query:
+    port: 25568
+  ops: ["Pneumaticat"]
+securityContext:
+  runAsUser: 1000
+  fsGroup: 100

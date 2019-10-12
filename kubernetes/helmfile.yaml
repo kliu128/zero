@@ -41,6 +41,12 @@ releases:
     values:
       - ./values/mastodon.yaml
       - ./values/mastodon.secret.yaml
+  - name: mc-staging1
+    namespace: default
+    chart: ./charts/minecraft
+    values:
+      - ./values/mc.yaml
+      - ./values/mc-staging1.yaml
   - name: mc-ralph
     namespace: default
     chart: ./charts/minecraft

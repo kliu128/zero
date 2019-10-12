@@ -43,7 +43,7 @@ in {
     CPUSchedulingPolicy = "idle";
   };
   systemd.services.nvidia-fan = {
-    enable = false;
+    enable = true;
     path = with pkgs; [ xorg.xorgserver config.boot.kernelPackages.nvidia_x11.settings coreutils ];
     script = ''
       set -xeuo pipefail

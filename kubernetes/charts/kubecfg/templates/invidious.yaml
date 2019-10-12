@@ -1,0 +1,59 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: invidious
+  name: invidious
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: invidious
+        postgresql-postgresql-client: "true"
+    spec:
+      containers:
+        - image: flourgaz/invidious
+          name: invidious
+          volumeMounts:
+            - mountPath: /invidious/config/config.yml
+              name: config
+              subPath: config.yml
+      volumes:
+        - name: config
+          secret:
+            secretName: invidious-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: invidious
+  name: invidious
+spec:
+  ports:
+    - name: http
+      port: 3000
+      targetPort: 3000
+  selector:
+    app: invidious
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/tls-acme: "true"
+  name: invidious
+spec:
+  tls:
+    - secretName: invidious-tls
+      hosts:
+        - v.potatofrom.space
+  rules:
+    - host: v.potatofrom.space
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: invidious
+              servicePort: http

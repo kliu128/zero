@@ -13,7 +13,6 @@ spec:
       labels:
         name: boinc-amd
     spec:
-      hostNetwork: true
       containers:
       - name: boinc-amd
         env:
