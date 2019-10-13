@@ -234,7 +234,7 @@
           command man "$@"
       }
 
-      export PATH=$HOME/.cargo/bin:$PATH:$HOME/bin:$HOME/Android/Sdk/ndk-bundle:$HOME/Android/Sdk/platform-tools:$HOME/.local/bin
+      export PATH=$HOME/.poetry/bin:$HOME/.cargo/bin:$PATH:$HOME/bin:$HOME/Android/Sdk/ndk-bundle:$HOME/Android/Sdk/platform-tools:$HOME/.local/bin
       if [[ "$DISPLAY" ]]; then
         # Use graphical emacs
         export EDITOR="emacsclient --socket-name=/tmp/emacs1000/server "

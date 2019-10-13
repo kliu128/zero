@@ -1,0 +1,114 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: kevinliu
+  name: kevinliu
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: kevinliu
+    spec:
+      containers:
+        - image: nginx
+          name: nginx
+          volumeMounts:
+            - mountPath: /usr/share/nginx/html/index.html
+              name: config
+              subPath: index.html
+      volumes:
+        - name: config
+          configMap:
+            name: kevinliu-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: kevinliu
+  name: kevinliu
+spec:
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+  selector:
+    app: kevinliu
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/tls-acme: "true"
+  name: kevinliu
+spec:
+  tls:
+    - secretName: kevinliu-tls
+      hosts:
+        - kevinliu.ml
+        - www.kevinliu.ml
+  rules:
+    - host: kevinliu.ml
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: kevinliu
+              servicePort: http
+    - host: www.kevinliu.ml
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: kevinliu
+              servicePort: http
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: kevinliu-config
+  labels:
+    app: kevinliu
+data:
+  index.html: |
+    <!DOCTYPE html>
+    <html>
+
+      <head>
+        <meta charset="utf-8">
+        <title>kevinliu</title>
+
+        <style>
+          html,
+          body {
+            color: #c5efcb;
+            background-color: #020402;
+            font-family: sans-serif;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+          }
+          
+          a {
+            color: #c5efcb;
+            background-color: #020402;
+          }
+        </style>
+      </head>
+
+      <body>
+        <div>
+          <h1>
+            Kevin Liu
+          </h1>
+          <p>
+            <a href="mailto:me@kevinliu.ml">email me</a>
+          </p>
+        </div>
+      </body>
+
+    </html>
