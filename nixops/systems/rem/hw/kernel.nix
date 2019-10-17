@@ -4,7 +4,6 @@
   boot.kernelPackages = pkgs.linuxPackages_ck;
   boot.kernelParams = [ "threadirqs" "amdgpu.vm_update_mode=3" ];
   boot.kernel.sysctl = {
-    "kernel.yield_type" = 2;
     "kernel.rr_interval" = 2;
   };
   nixpkgs.config.packageOverrides = pkgs: {

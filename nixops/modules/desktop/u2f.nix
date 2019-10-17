@@ -46,6 +46,8 @@
   security.pam.services.login.u2fAuth = true;
   security.pam.services.swaylock.u2fAuth = true;
   security.pam.services.i3lock.u2fAuth = true;
+  security.pam.services.kde.u2fAuth = true;
+  security.pam.services.sddm.u2fAuth = true;
   security.pam.services.sudo.u2fAuth = true;
   security.pam.u2f = {
     control = "sufficient";

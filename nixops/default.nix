@@ -91,8 +91,6 @@
         8448
         # Tor
         32972 32973
-        # Minecraft
-        25565 25566 25567 25568 25569 25570
         # Factorio
         34197 ];
       networking.firewall.allowedUDPPortRanges = [
@@ -145,5 +143,10 @@
       networking.hostName = "karmaxer";
 
       system.stateVersion = "19.09";
+
+      networking.firewall.allowedTCPPorts = [
+        # Minecraft
+        25565 25566 25567 25568 25569 25570
+      ];
     };
 }

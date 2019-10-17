@@ -14,6 +14,8 @@
   boot.kernelPackages = lib.mkForce pkgs.linuxPackages_latest;
   boot.extraModulePackages = [ ];
 
+  networking.networkmanager.enable = true;
+
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/b8b682fc-bc1b-4e19-9040-52100d0801be";
       fsType = "ext4";
