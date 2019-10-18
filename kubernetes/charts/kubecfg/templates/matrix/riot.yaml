@@ -21,7 +21,8 @@ spec:
         app: riot
     spec:
       containers:
-        - image: vectorim/riot-web:v1.4.0
+        - image: vectorim/riot-web:develop
+          imagePullPolicy: Always
           name: riot-web
           volumeMounts:
             - mountPath: /app/config.json
@@ -49,23 +50,23 @@ data:
         "integrations_widgets_urls": ["https://dimension.potatofrom.space/widgets"],
         "integrations_jitsi_widget_url": "https://dimension.potatofrom.space/widgets/jitsi",
         "features": {
-            "feature_rich_quoting": "labs",
-            "feature_pinning": "labs",
-            "feature_presence_management": "labs",
-            "feature_sticker_messages": "labs",
-            "feature_jitsi": "labs",
-            "feature_tag_panel": "enable",
-            "feature_keybackup": "labs",
-            "feature_custom_status": "labs",
-            "feature_custom_tags": "labs",
-            "feature_lazyloading": "enable",
-            "feature_tabbed_settings": "labs",
-            "feature_sas": "labs",
-            "feature_room_breadcrumbs": "labs",
-            "feature_state_counters": "labs",
-            "feature_cider_composer": "labs",
-            "feature_many_integration_managers": "labs"
-        },
+        "feature_rich_quoting": "labs",
+        "feature_pinning": "labs",
+        "feature_presence_management": "labs",
+        "feature_sticker_messages": "labs",
+        "feature_jitsi": "labs",
+        "feature_tag_panel": "enable",
+        "feature_keybackup": "labs",
+        "feature_custom_status": "labs",
+        "feature_custom_tags": "labs",
+        "feature_lazyloading": "enable",
+        "feature_tabbed_settings": "labs",
+        "feature_sas": "labs",
+        "feature_room_breadcrumbs": "labs",
+        "feature_state_counters": "labs",
+        "feature_cider_composer": "labs",
+        "feature_many_integration_managers": "labs"
+    },
         "roomDirectory": {
             "servers": [
                 "matrix.org"

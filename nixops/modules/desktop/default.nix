@@ -16,6 +16,7 @@
     ./fonts.nix
     ./games.nix
     ./gpg.nix
+    ./input.nix
     ./java.nix
     ./keybase.nix
     ./kubernetes.nix
@@ -45,8 +46,6 @@
   # Printing configuration
   services.printing.enable = true;
   services.printing.clientConf = "ServerName 10.99.0.1";
-
-  users.extraUsers.kevin.extraGroups = [ "input" ];
 
   environment.systemPackages = with pkgs; [
     # System tools
@@ -207,20 +206,12 @@
       CALIBRE_USE_SYSTEM_THEME = "true";
     };
 
-    # Keyboard
-    home.keyboard.layout = "us";
-    home.keyboard.variant = "altgr-intl";
-    home.keyboard.options = [ "ctrl:nocaps" ];
-
     # ZSH
     programs.zsh.enable = true;
     programs.zsh.oh-my-zsh = {
       enable = true;
       theme = "agnoster";
       plugins = [ "git" "tmux" ];
-    };
-    programs.zsh.localVariables = {
-      #ZSH_TMUX_AUTOSTART = "true";
     };
     programs.zsh.initExtra = ''
       # Colorized man

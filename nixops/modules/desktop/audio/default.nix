@@ -14,36 +14,4 @@
     enable = true;
     package = pkgs.bluezFull;
   };
-
-  home-manager.users.kevin.systemd.user.services.pulseaudio-mono = {
-    Unit = {
-      Description = "Pulseaudio Mono Daemon";
-      Requires = "pulseaudio.service";
-      After = "pulseaudio.service";
-    };
-
-    Service = {
-      ExecStart = "${pkgs.python3.withPackages(pkgs: [ pkgs.dbus-python pkgs.pygobject3 ])}/bin/python3 ${./pulseaudio-mono.py}";
-    };
-
-    Install = {
-      WantedBy = [ "default.target" ];
-    };
-  };
-
-  home-manager.users.kevin.systemd.user.services.bluetooth-fix-a2dp = {
-    Unit = {
-      Description = "Bluetooth: Fix A2DP";
-      Requires = "pulseaudio.service";
-      After = "pulseaudio.service";
-    };
-
-    Service = {
-      ExecStart = "${pkgs.python3.withPackages(pkgs: [ pkgs.dbus-python pkgs.pygobject3 ])}/bin/python3 ${./bluetooth-fix-a2dp.py}";
-    };
-
-    Install = {
-      WantedBy = [ "default.target" ];
-    };
-  };
 }

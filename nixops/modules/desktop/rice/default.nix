@@ -6,31 +6,16 @@
     export MOZ_ENABLE_WAYLAND=1
     export _JAVA_AWT_WM_NONREPARENTING=1
   '';
+  services.xserver.displayManager.extraSessionFilePackages = [ pkgs.sway ];
 
   environment.systemPackages = with pkgs; [
-    dunst grim slurp waybar kitty redshift xss-lock
+    dunst grim slurp waybar kitty redshift xss-lock networkmanagerapplet
   ];
 
   services.xserver.windowManager.i3.enable = true;
   services.xserver.windowManager.i3.package = pkgs.i3-gaps;
 
   networking.firewall.allowedTCPPorts = [ 5901 24800 ];
-  services.synergy.server = {
-    enable = true;
-    configFile = pkgs.writeText "synergy.conf" ''
-      section: screens
-        rem:
-        you:
-      end
-
-      section: links
-        rem:
-          down = you
-        you:
-          up = rem
-      end
-    '';
-  };
 
   home-manager.users.kevin = {
     services.redshift = {

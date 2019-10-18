@@ -19,12 +19,4 @@
       };
     };
   };
-
-  # See https://www.reddit.com/r/kde/comments/7ey774/cant_scroll_in_gtk_apps_like_firefox_after/
-  environment.variables = {
-    GDK_CORE_DEVICE_EVENTS = "1";
-  };
-
-  # Disable laggy services
-  # systemd.user.services.gvfs-udisks2-volume-monitor.enable = lib.mkForce false;
 }
