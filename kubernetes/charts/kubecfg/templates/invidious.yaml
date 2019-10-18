@@ -48,9 +48,9 @@ spec:
   tls:
     - secretName: invidious-tls
       hosts:
-        - v.potatofrom.space
+        - v.kliu.io
   rules:
-    - host: v.potatofrom.space
+    - host: v.kliu.io
       http:
         paths:
           - path: /

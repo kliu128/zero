@@ -20,7 +20,7 @@ spec:
             - name: SIGNUPS_ALLOWED
               value: "false"
             - name: DOMAIN
-              value: https://pw.potatofrom.space
+              value: https://pw.kliu.io
           livenessProbe:
             httpGet:
               path: /
@@ -84,9 +84,9 @@ spec:
   tls:
     - secretName: bitwarden-tls
       hosts:
-        - pw.potatofrom.space
+        - pw.kliu.io
   rules:
-    - host: pw.potatofrom.space
+    - host: pw.kliu.io
       http:
         paths:
           - path: /

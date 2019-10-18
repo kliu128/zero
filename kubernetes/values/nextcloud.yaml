@@ -1,7 +1,7 @@
 lamp:
   ingress:
     enabled: true
-    domain: cloud.potatofrom.space
+    domain: cloud.kliu.io
     ssl: true
     annotations:
       kubernetes.io/tls-acme: 'true'
@@ -22,10 +22,10 @@ collabora:
   ingress:
     enabled: true
     hosts: 
-      - office.potatofrom.space
+      - office.kliu.io
     tls:
       - secretName: collabora-code-tls
         hosts:
-          - office.potatofrom.space
+          - office.kliu.io
     annotations:
       kubernetes.io/tls-acme: 'true'

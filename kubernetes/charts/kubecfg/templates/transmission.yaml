@@ -102,9 +102,9 @@ spec:
   tls:
     - secretName: transmission-tls
       hosts:
-        - transmission.potatofrom.space
+        - transmission.kliu.io
   rules:
-    - host: transmission.potatofrom.space
+    - host: transmission.kliu.io
       http:
         paths:
           - path: /

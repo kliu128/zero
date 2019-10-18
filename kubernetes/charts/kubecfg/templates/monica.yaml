@@ -66,9 +66,9 @@ spec:
   tls:
     - secretName: monica-tls
       hosts:
-        - monica.potatofrom.space
+        - monica.kliu.io
   rules:
-    - host: monica.potatofrom.space
+    - host: monica.kliu.io
       http:
         paths:
           - path: /

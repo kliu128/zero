@@ -41,7 +41,7 @@ config:
   # If you want to use an SMTP server without authentication (e.g local Postfix relay)
   # then set SMTP_AUTH_METHOD and SMTP_OPENSSL_VERIFY_MODE to 'none' and
   # *comment* SMTP_LOGIN and SMTP_PASSWORD (leaving them blank is not enough).
-  SMTP_SERVER: mail.potatofrom.space
+  SMTP_SERVER: mail.kliu.io
   SMTP_PORT: '587'
   SMTP_FROM_ADDRESS: mastodon@potatofrom.space
   #SMTP_DOMAIN:  # defaults to LOCAL_DOMAIN

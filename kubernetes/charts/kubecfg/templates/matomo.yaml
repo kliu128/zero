@@ -70,9 +70,9 @@ spec:
   tls:
     - secretName: matomo-tls
       hosts:
-        - matomo.potatofrom.space
+        - matomo.kliu.io
   rules:
-    - host: matomo.potatofrom.space
+    - host: matomo.kliu.io
       http:
         paths:
           - path: /

@@ -101,9 +101,9 @@ spec:
   tls:
     - secretName: sonarr-tls
       hosts:
-        - sonarr.potatofrom.space
+        - sonarr.kliu.io
   rules:
-    - host: sonarr.potatofrom.space
+    - host: sonarr.kliu.io
       http:
         paths:
           - path: /

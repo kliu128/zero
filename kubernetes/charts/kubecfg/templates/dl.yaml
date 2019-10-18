@@ -71,9 +71,9 @@ spec:
   tls:
     - secretName: dl-tls
       hosts:
-        - dl.potatofrom.space
+        - dl.kliu.io
   rules:
-    - host: dl.potatofrom.space
+    - host: dl.kliu.io
       http:
         paths:
           - path: /

@@ -90,9 +90,9 @@ spec:
   tls:
     - secretName: emby-tls
       hosts:
-        - media.potatofrom.space
+        - media.kliu.io
   rules:
-    - host: media.potatofrom.space
+    - host: media.kliu.io
       http:
         paths:
           - path: /

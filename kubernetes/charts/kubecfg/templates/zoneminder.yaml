@@ -102,9 +102,9 @@ spec:
   tls:
     - secretName: zoneminder-tls
       hosts:
-        - zm.potatofrom.space
+        - zm.kliu.io
   rules:
-    - host: zm.potatofrom.space
+    - host: zm.kliu.io
       http:
         paths:
           - path: /

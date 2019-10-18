@@ -31,9 +31,9 @@ spec:
   tls:
     - secretName: calibre-web-tls
       hosts:
-        - books.potatofrom.space
+        - books.kliu.io
   rules:
-  - host: books.potatofrom.space
+  - host: books.kliu.io
     http:
       paths:
       - path: /

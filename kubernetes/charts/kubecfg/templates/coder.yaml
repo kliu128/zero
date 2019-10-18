@@ -31,9 +31,9 @@ spec:
   tls:
     - secretName: coder-tls
       hosts:
-        - code.potatofrom.space
+        - code.kliu.io
   rules:
-    - host: code.potatofrom.space
+    - host: code.kliu.io
       http:
         paths:
           - path: /

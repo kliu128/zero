@@ -20,7 +20,7 @@ spec:
             - name: COMMENTO_GZIP_STATIC
               value: "true"
             - name: COMMENTO_ORIGIN
-              value: "https://commento.potatofrom.space"
+              value: "https://commento.kliu.io"
             - name: COMMENTO_PORT
               value: "8080"
             - name: COMMENTO_POSTGRES
@@ -50,9 +50,9 @@ spec:
   tls:
     - secretName: commento-tls
       hosts:
-        - commento.potatofrom.space
+        - commento.kliu.io
   rules:
-    - host: commento.potatofrom.space
+    - host: commento.kliu.io
       http:
         paths:
           - path: /

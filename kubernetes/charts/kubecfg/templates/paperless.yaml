@@ -137,9 +137,9 @@ spec:
   tls:
     - secretName: paperless-tls
       hosts:
-        - paperless.potatofrom.space
+        - paperless.kliu.io
   rules:
-  - host: paperless.potatofrom.space
+  - host: paperless.kliu.io
     http:
       paths:
       - path: /
