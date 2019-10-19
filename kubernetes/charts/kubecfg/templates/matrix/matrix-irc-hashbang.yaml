@@ -14,7 +14,7 @@ spec:
       containers:
         - name: irc-hashbang
           args: [-c, config.yaml, -f, irc-hashbang-registration.yaml, -p, '9999']
-          image: registry.potatofrom.space/kevin/matrix-appservice-irc
+          image: registry.kliu.io/kevin/matrix-appservice-irc
           imagePullPolicy: Always
           volumeMounts:
             - name: config

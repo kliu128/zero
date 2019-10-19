@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - name: slack
-          image: registry.potatofrom.space/kevin/matrix-appservice-slack
+          image: registry.kliu.io/kevin/matrix-appservice-slack
           imagePullPolicy: Always
           volumeMounts:
             - name: config

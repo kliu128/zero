@@ -1,4 +1,4 @@
 mailu:
   hosts:
-    - mail.hack3.co
     - mail.kliu.io
+    - mail.hack3.co

@@ -17,7 +17,7 @@ spec:
       nodeSelector:
         kubernetes.io/hostname: rem
       containers:
-      - image: registry.potatofrom.space/kevin/cups:latest
+      - image: registry.kliu.io/kevin/cups:latest
         name: cups
         env:
           - name: CUPSADMIN

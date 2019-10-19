@@ -1,13 +1,13 @@
 global:
   edition: ce
   hosts:
-    domain: potatofrom.space
+    domain: kliu.io
   ingress:
     class: ""
   smtp:
     enabled: true
-    address: potatofrom.space
-    port: 10587
+    address: kliu.io
+    port: 587
     user_name: gitlab@potatofrom.space
     password:
       secret: gitlab-smtp
@@ -23,7 +23,7 @@ global:
 certmanager:
   install: false
 certmanager-issuer:
-  email: kevin@potatofrom.space
+  email: kevin@kliu.io
 gitlab-runner:
   runners:
     privileged: true
@@ -40,8 +40,6 @@ gitlab:
     maxUnavailable: 0
     maxReplicas: 1
     minReplicas: 1
-    nodeSelector:
-      kubernetes.io/hostname: rem
   # gitaly:
   #   image:
   #     tag: 0.129.0

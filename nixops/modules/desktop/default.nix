@@ -76,7 +76,7 @@
     programs.git = {
       enable = true;
       userName = "Kevin Liu";
-      userEmail = "kevin@potatofrom.space";
+      userEmail = "kevin@kliu.io";
       package = pkgs.gitAndTools.gitFull;
       extraConfig = {
         credential.helper = "libsecret";

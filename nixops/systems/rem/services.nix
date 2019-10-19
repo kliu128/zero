@@ -55,7 +55,7 @@
       port = 32972;
       role = "bridge";
       nickname = "pot8torelayrem";
-      contactInfo = "Kevin Liu <kevin@potatofrom.space>";
+      contactInfo = "Kevin Liu <kevin@kliu.io>";
     };
   };
 }
