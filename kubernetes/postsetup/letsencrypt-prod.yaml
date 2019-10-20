@@ -3,17 +3,18 @@ kind: ClusterIssuer
 metadata:
   name: letsencrypt-prod
   namespace: kube-system
+  resourceVersion: "100800329"
 spec:
   acme:
     server: https://acme-v02.api.letsencrypt.org/directory
     email: kevin@kliu.io
     privateKeySecretRef:
       name: letsencrypt-prod
-  ## Configure the challenge solvers.
-  solvers:
-  # An empty selector will 'match' all Certificate resources that
-  # reference this Issuer.
-  - selector: {}
-    http01:
-      ingress:
-        class: ""
+    ## Configure the challenge solvers.
+    solvers:
+    # An empty selector will 'match' all Certificate resources that
+    # reference this Issuer.
+    - selector: {}
+      http01:
+        ingress:
+          class: ""

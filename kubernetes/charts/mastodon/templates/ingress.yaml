@@ -36,3 +36,25 @@ spec:
           serviceName: {{ template "fullname" . }}-web
           servicePort: web
 {{- end }}
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/tls-acme: 'true'
+    nginx.ingress.kubernetes.io/rewrite-target: "/"
+    nginx.ingress.kubernetes.io/configuration-snippet: 'return 301 $scheme://mastodon.kliu.io$request_uri;'
+  name: mastodon-redirect
+spec:
+  tls:
+    - secretName: mastodon-redirect-tls
+      hosts:
+        - fedi.potatofrom.space
+  rules:
+  - host: fedi.potatofrom.space
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: {{ template "fullname" . }}-web
+          servicePort: web

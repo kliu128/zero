@@ -19,9 +19,9 @@ releases:
     namespace: kube-system
     chart: ./charts/nfs-client-provisioner
   - name: cert-manager
-    namespace: kube-system
+    namespace: cert-manager
     chart: jetstack/cert-manager
-    version: 0.9.1
+    version: 0.10.1
     values:
       - ./values/cert-manager.yaml
   - name: gitlab

@@ -15,7 +15,7 @@ global:
     starttls_auto: true
     openssl_verify_mode: none
   email:
-    from: gitlab@potatofrom.space
+    from: gitlab@kliu.io
   time_zone: America/New_York
   psql:
     database: gitlabhq_production

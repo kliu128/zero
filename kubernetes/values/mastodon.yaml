@@ -1,4 +1,4 @@
-image: tootsuite/mastodon:v2.9.3
+image: tootsuite/mastodon:v3.0.1
 persistence:
   size: 25Gi
 ingress:
@@ -16,13 +16,12 @@ config:
   # Federation
   # Note: Changing LOCAL_DOMAIN at a later time will cause unwanted side effects, including breaking all existing federation.
   # LOCAL_DOMAIN should *NOT* contain the protocol part of the domain e.g https://example.com.
-  LOCAL_DOMAIN: potatofrom.space
-  MAX_TOOT_CHARS: '2147483647'
+  LOCAL_DOMAIN: kliu.io
   # Changing LOCAL_HTTPS in production is no longer supported. (Mastodon will always serve https:// links)
   # Use this only if you need to run mastodon on a different domain than the one used for federation.
   # You can read more about this option on https://github.com/tootsuite/documentation/blob/master/Running-Mastodon/Serving_a_different_domain.md
   # DO *NOT* USE THIS UNLESS YOU KNOW *EXACTLY* WHAT YOU ARE DOING.
-  WEB_DOMAIN: fedi.potatofrom.space
+  WEB_DOMAIN: mastodon.kliu.io
   # Use this if you want to have several aliases handler@example1.com
   # handler@example2.com etc. for the same user. LOCAL_DOMAIN should not
   # be added. Comma separated values
@@ -43,7 +42,7 @@ config:
   # *comment* SMTP_LOGIN and SMTP_PASSWORD (leaving them blank is not enough).
   SMTP_SERVER: mail.kliu.io
   SMTP_PORT: '587'
-  SMTP_FROM_ADDRESS: mastodon@potatofrom.space
+  SMTP_FROM_ADDRESS: mastodon@kliu.io
   #SMTP_DOMAIN:  # defaults to LOCAL_DOMAIN
   # delivery method can also be sendmail
   #SMTP_DELIVERY_METHOD: smtp

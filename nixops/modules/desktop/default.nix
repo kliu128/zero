@@ -52,6 +52,8 @@
     atop borgbackup cowsay dnsutils file fortune google-cloud-sdk hdparm htop iftop iotop lm_sensors lolcat man-pages opentimestamps-client p7zip schedtool smartmontools spectre-meltdown-checker stress-ng telnet thefuck tree vim wget
     # Desktop applications
     calibre clementine discord filezilla gpodder krita libreoffice-fresh liferea pavucontrol gnome3.pomodoro thunderbird tor-browser-bundle-bin transmission_gtk transgui veracrypt vscodium youtube-dl zim
+    # Screen recording tools
+    ffmpeg-full kdenlive wf-recorder
     # Anki and related packages (for LaTeX support)
     anki polar-bookshelf 
     texlive.combined.scheme-full
@@ -63,6 +65,15 @@
     # VM and DevOps
     ansible vagrant virtmanager
   ];
+
+  nixpkgs.config.packageOverrides = pkgs: {
+     kdenlive = pkgs.kdenlive.overrideAttrs (oldAttrs: rec {
+         postInstall = ''
+          wrapProgram $out/bin/kdenlive --prefix FREI0R_PATH : ${pkgs.frei0r}/lib/frei0r-1
+        '';
+        nativeBuildInputs = oldAttrs.nativeBuildInputs or [] ++ [ pkgs.makeWrapper ];
+     });
+   };
   
   # Must be done on the system level (not the home-manager level) to install
   # zsh completion for packages in environment.systemPackages
