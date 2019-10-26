@@ -30,12 +30,15 @@ let
     EndSection
   '';
 in {
+  nixpkgs.overlays = [ (import (builtins.fetchTarball https://github.com/nixos-rocm/nixos-rocm/archive/master.tar.gz) ["gfx803"]) ];
+
   services.xserver.videoDrivers = [ "nvidia" ];
   services.boinc = {
     enable = true;
     allowRemoteGuiRpc = true;
     extraEnvPackages = with pkgs; [
-      ocl-icd config.boot.kernelPackages.nvidia_x11 cudatoolkit virtualbox
+      ocl-icd config.boot.kernelPackages.nvidia_x11 cudatoolkit
+      rocm-opencl-icd rocm-opencl-runtime
     ];
   };
   systemd.services.boinc.after = [ "display-manager.service" ];
@@ -56,15 +59,12 @@ in {
     wantedBy = [ "multi-user.target" ];
   };
 
-  # virtualisation.virtualbox.host = {
-  #   enable = true;
-  #   enableExtensionPack = true;
-  # };
-
   hardware.opengl.extraPackages = with pkgs; [
     config.boot.kernelPackages.nvidia_x11.out
+    rocm-opencl-icd
   ];
   environment.systemPackages = with pkgs; [
     config.boot.kernelPackages.nvidia_x11 
+    rocminfo rocm-opencl-runtime
   ];
 }

@@ -16,6 +16,7 @@ spec:
     spec:
       containers:
       - image: collabora/code:4.2-snapshot
+        imagePullPolicy: Always
         env:
           - name: domain
             value: {{ .Values.lamp.ingress.domain | replace "." "\\." | quote }}

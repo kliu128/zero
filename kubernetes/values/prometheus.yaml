@@ -1,0 +1,13 @@
+alertManager:
+  enabled: false
+grafana:
+  ingress:
+    enabled: true
+    hosts:
+    - grafana.kliu.io
+    annotations:
+      kubernetes.io/tls-acme: "true"
+    tls:
+    - secretName: grafana-tls
+      hosts:
+      - grafana.kliu.io

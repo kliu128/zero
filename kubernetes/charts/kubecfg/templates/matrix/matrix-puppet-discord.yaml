@@ -17,10 +17,10 @@ spec:
           volumeMounts:
             - name: config
               subPath: puppet-discord-registration.yaml
-              mountPath: /usr/src/app/discord-registration.yaml
+              mountPath: /data/discord-registration.yaml
             - name: config
               subPath: puppet-discord-config.yaml
-              mountPath: /usr/src/app/config.yaml
+              mountPath: /data/config.yaml
             - name: data
               mountPath: /data
       volumes:

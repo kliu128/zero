@@ -54,7 +54,7 @@
     calibre clementine discord filezilla gpodder krita libreoffice-fresh liferea pavucontrol gnome3.pomodoro thunderbird tor-browser-bundle-bin transmission_gtk transgui veracrypt vscodium youtube-dl zim
     # Screen recording tools
     ffmpeg-full kdenlive wf-recorder
-    # Anki and related packages (for LaTeX support)
+    # Anki and related packages (for LaTeX suppfort)
     anki polar-bookshelf 
     texlive.combined.scheme-full
     # Desktop tools

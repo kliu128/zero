@@ -18,11 +18,6 @@
   networking.firewall.allowedTCPPorts = [ 5901 24800 ];
 
   home-manager.users.kevin = {
-    services.redshift = {
-      enable = true;
-      latitude = "42";
-      longitude = "-71";
-    };
     home.file = {
       ".config/dunst/dunstrc".source = ./dunst/dunstrc;
       ".config/kitty/kitty.conf".source = ./kitty.conf;

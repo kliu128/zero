@@ -1,0 +1,80 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: onlyoffice-communityserver
+  name: onlyoffice-communityserver
+spec:
+  selector:
+    matchLabels:
+      app: onlyoffice-communityserver
+  template:
+    metadata:
+      labels:
+        app: onlyoffice-communityserver
+    spec:
+      containers:
+        - image: onlyoffice/communityserver
+          name: onlyoffice-communityserver
+          volumeMounts:
+            - mountPath: /var/log/onlyoffice
+              name: data
+              subPath: logs
+            - mountPath: /var/www/onlyoffice/Data
+              name: data
+              subPath: data
+      restartPolicy: Always
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: onlyoffice-communityserver-data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: onlyoffice-communityserver
+  name: onlyoffice-communityserver
+spec:
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: 80
+  selector:
+    app: onlyoffice-communityserver
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    app: onlyoffice-communityserver
+  name: onlyoffice-communityserver-data
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+status: {}
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: 4g
+  name: onlyoffice-communityserver
+spec:
+  tls:
+    - secretName: onlyoffice-communityserver-tls
+      hosts:
+        - oo.kliu.io
+  rules:
+    - host: oo.kliu.io
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: onlyoffice-communityserver
+              servicePort: 80

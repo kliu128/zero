@@ -24,6 +24,12 @@ releases:
     version: 0.10.1
     values:
       - ./values/cert-manager.yaml
+  - name: prometheus
+    namespace: monitoring
+    chart: stable/prometheus-operator
+    version: 6.20.3
+    values:
+      - ./values/prometheus.yaml
   - name: gitlab
     namespace: default
     labels:
