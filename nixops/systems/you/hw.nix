@@ -15,6 +15,8 @@
   boot.extraModulePackages = [ ];
 
   networking.networkmanager.enable = true;
+  networking.networkmanager.wifi.backend = "iwd";
+  users.users.kevin.extraGroups = [ "networkmanager" ];
 
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/b8b682fc-bc1b-4e19-9040-52100d0801be";
@@ -43,17 +45,8 @@
   i18n.consoleFont = lib.mkDefault "${pkgs.terminus_font}/share/consolefonts/ter-u28n.psf.gz";
   boot.earlyVconsoleSetup = true;
 
-  # Configure GRUB with hidpi support
-  boot.loader.grub = {
+  boot.loader.systemd-boot = {
     enable = true;
-    efiSupport = true;
-    useOSProber = true;
-    # Use an OpenType font (auto-converted to grub pf2) so that we can set a
-    # custom font size
-    font = "${pkgs.fira-code}/share/fonts/opentype/FiraCode-Regular.otf";
-    # Double the default font of 16 for 200% scaling
-    fontSize = 32;
-    device = "nodev"; # Disable MBR installation
   };
   boot.loader.efi.canTouchEfiVariables = true;
 

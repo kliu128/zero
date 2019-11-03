@@ -13,6 +13,8 @@ spec:
       labels:
         app: emby
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: rem
       containers:
         - image: jellyfin/jellyfin
           user: 1000

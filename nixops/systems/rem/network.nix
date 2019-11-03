@@ -2,7 +2,7 @@
 
 {
   networking.useNetworkd = true;
-  networking.useDHCP = true;
+  networking.useDHCP = false; # not supported by systemd-networkd
   networking.usePredictableInterfaceNames = false;
   systemd.network.enable = true;
   services.resolved.dnssec = "false";
@@ -17,16 +17,11 @@
       matchConfig = { Name = "br0"; };
       networkConfig = {
         DHCP = "ipv4";
-        # Avoid networkd crash with https://github.com/systemd/systemd/issues/12452
-        LinkLocalAddressing = "ipv4";
       };
       linkConfig = {
         MACAddress = "74:d4:35:e2:52:9b";
       };
     };
-    # "40-vbox" = {
-    #   linkConfig = { Unmanaged = true; };
-    # };
     "99-main" = {
       matchConfig = { Name = "*"; };
       linkConfig = { Unmanaged = true; };

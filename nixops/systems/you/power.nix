@@ -2,18 +2,20 @@
 
 {
   services.tlp.enable = true; # For laptop
+  services.tlp.extraConfig = ''
+    CPU_BOOST_ON_AC=1
+    CPU_BOOST_ON_BAT=0
+  '';
   powerManagement.powertop.enable = true;
 
   boot.extraModprobeConfig = ''
     options snd_hda_intel power_save=1
-    options iwlwifi power_save=1 d0i3_disable=0 uapsd_disable=0
-    options iwldvm force_cam=0
-    options i915 enable_guc=3 enable_fbc=1
   '';
+  boot.kernelParams = [ "i915.enable_psr=0" "i915.enable_guc=3" "i915.enable_fbc=1" ];
   boot.blacklistedKernelModules = [ "iTCO_wdt" ];
   boot.extraModulePackages = [ config.boot.kernelPackages.huawei-wmi ];
   systemd.tmpfiles.rules = [
-    "w /sys/devices/platform/huawei-wmi/charge_thresholds - - - - 68 70"
+    "w /sys/devices/platform/huawei-wmi/charge_thresholds - - - - 83 85"
   ];
 
   virtualisation.docker.enableOnBoot = false;

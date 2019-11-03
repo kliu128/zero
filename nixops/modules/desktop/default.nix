@@ -18,6 +18,7 @@
     ./gpg.nix
     ./input.nix
     ./java.nix
+    ./kdeconnect.nix
     ./keybase.nix
     ./kubernetes.nix
     ./nixops.nix
@@ -49,7 +50,7 @@
 
   environment.systemPackages = with pkgs; [
     # System tools
-    atop borgbackup cowsay dnsutils file fortune google-cloud-sdk hdparm htop iftop iotop lm_sensors lolcat man-pages opentimestamps-client p7zip schedtool smartmontools spectre-meltdown-checker stress-ng telnet thefuck tree vim wget
+    atop beets borgbackup cowsay dnsutils file fortune google-cloud-sdk hdparm htop iftop iotop lm_sensors lolcat man-pages opentimestamps-client p7zip schedtool smartmontools spectre-meltdown-checker stress-ng telnet thefuck tree vim wget
     # Desktop applications
     calibre clementine discord filezilla gpodder krita libreoffice-fresh liferea pavucontrol gnome3.pomodoro thunderbird tor-browser-bundle-bin transmission_gtk transgui veracrypt vscodium youtube-dl zim
     # Screen recording tools
@@ -59,7 +60,6 @@
     texlive.combined.scheme-full
     # Desktop tools
     appimage-run
-    # KDE applications
     # Development
     bfg-repo-cleaner docker docker_compose gcc git-crypt gnumake insomnia
     # VM and DevOps
@@ -142,7 +142,7 @@
           port = 22;
         };
         karmaxer = {
-          hostname = "server.scintillate.me";
+          hostname = "karmaxer.i.potatofrom.space";
           user = "kevin";
           port = 843;
         };

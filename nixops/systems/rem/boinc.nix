@@ -34,7 +34,7 @@ in {
 
   services.xserver.videoDrivers = [ "nvidia" ];
   services.boinc = {
-    enable = true;
+    enable = false;
     allowRemoteGuiRpc = true;
     extraEnvPackages = with pkgs; [
       ocl-icd config.boot.kernelPackages.nvidia_x11 cudatoolkit
@@ -46,7 +46,7 @@ in {
     CPUSchedulingPolicy = "idle";
   };
   systemd.services.nvidia-fan = {
-    enable = true;
+    enable = false;
     path = with pkgs; [ xorg.xorgserver config.boot.kernelPackages.nvidia_x11.settings coreutils ];
     script = ''
       set -xeuo pipefail

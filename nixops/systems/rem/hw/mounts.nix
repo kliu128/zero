@@ -8,11 +8,10 @@
   boot.zfs = {
     forceImportRoot = false;
     forceImportAll = false;
-    enableUnstable = false;
+    enableUnstable = true;
     requestEncryptionCredentials = true;
   };
   services.kubernetes.path = [ pkgs.zfs ];
-  boot.kernelParams = [ "spl.spl_taskq_thread_dynamic=0" ];
   
   fileSystems."/" = {
     device = "rpool/nixos/root"; 
@@ -100,12 +99,6 @@
     };
   };
 
-  services.btrfs.autoScrub = {
-    enable = true;
-    fileSystems = [ "/mnt/storage" ];
-    interval = "monthly";
-  };
-
   deployment.keys."keyfile-data3.bin" = {
     permissions = "400";
     destDir = "/keys";
@@ -166,9 +159,6 @@
     destDir = "/keys";
     keyFile = ../../../secrets/keys/keyfile-vms.bin;
   };
-
-  # ZFS backups image
-  #boot.zfs.extraPools = [ "backups" ];
 
   # Virtual drives
   systemd.services.gdrive-mount = {

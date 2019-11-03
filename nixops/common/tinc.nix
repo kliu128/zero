@@ -17,7 +17,6 @@
     '';
     hosts = {
       rem = ''
-        Compression = 1
         Subnet = 0.0.0.0/0
         Address = potatofrom.space 655
         Ed25519PublicKey = T7VbcnZFoMzNZh6mpP1m8hqMgdw7bDqrfrO/TFZZlAI
@@ -37,7 +36,6 @@
         -----END RSA PUBLIC KEY-----
       '';
       puck = ''
-        Compression = 1
         Ed25519PublicKey = V4//lY5FierUZvtbDt92cUIOS4pMf87Zm7HsTsj25TB
         -----BEGIN RSA PUBLIC KEY-----
         MIICCgKCAgEAreVL2TENzNGvKTg9r/hZSFUwGp/uF9oqVIMzyApI3mUMKM/7XJ2t
@@ -54,7 +52,6 @@
         -----END RSA PUBLIC KEY-----
       '';
       momo = ''
-        Compression = 1
         -----BEGIN RSA PUBLIC KEY-----
         MIIBCgKCAQEAoF/cvSKWBniIEOGQpZ56hug3Ticp7fgEq71mkCGpYk9o+5gm3qjo
         OpsNdPJ/RiEzrJsLRpvkj15J4fduh8XBsRNRR6VF6G+21SH5EA1OK/xKQqB4mvcN
@@ -66,7 +63,6 @@
         Ed25519PublicKey = Zexdm7zGAEakqj4JGYYKawKcyDm80iaCktt0k+Va66F
       '';
       you = ''
-        Compression = 1
         -----BEGIN RSA PUBLIC KEY-----
         MIIBCgKCAQEAvRMf+bEagxHtKFb9XtVyfqf2xyWJC6aeTQ74Fp+Rss0ZyifcWOQn
         +WwqsvLb0PIWrFouZIztSzQwRlOBWFq8TJJuQQFnubDslYxsMUcZLY72OKelB8SK
@@ -78,7 +74,6 @@
         Ed25519PublicKey = MTcrqYlHJAZAu3NvePmF1R+2HKuOj5a6/zLXVz5Ic/C
       '';
       karmaxer = ''
-        Compression = 1
         Ed25519PublicKey = lbHbBMQJvi8j/KkmMl/sGKu1R2M7mjsgS6t2nIO9vLJ
         -----BEGIN RSA PUBLIC KEY-----
         MIICCgKCAgEAwi31odnkHcex14Vn0XSe1gcZRXld+x3Ms4nAZ8poYW3DugInCRT+

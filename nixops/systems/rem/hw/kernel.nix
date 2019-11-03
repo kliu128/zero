@@ -2,10 +2,10 @@
 
 {
   boot.kernelPackages = pkgs.linuxPackages_ck;
-  boot.kernelParams = [ "amdgpu.vm_update_mode=3" "rqshare=smt" ];
   boot.kernel.sysctl = {
     "kernel.rr_interval" = 2;
     "kernel.yield_type" = 2;
+    "vm.min_free_kbytes" = 512000;
   };
   nixpkgs.config.packageOverrides = pkgs: {
    kubernetes = pkgs.kubernetes.overrideAttrs (oldAttrs: rec {
