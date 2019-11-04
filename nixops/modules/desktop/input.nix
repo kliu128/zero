@@ -9,7 +9,7 @@
   i18n.inputMethod = {
     enabled = "ibus";
     ibus = {
-      engines = with pkgs.ibus-engines; [ libpinyin ];
+      engines = with pkgs.ibus-engines; [ libpinyin table table-chinese ];
     };
   };
 }
