@@ -9,6 +9,7 @@
       ./kernel.nix
       ./me.nix
       ./mounts.nix
+      ./snapraid.nix
       ./swap.nix
     ];
 

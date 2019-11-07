@@ -24,5 +24,6 @@
   ];
   networking.firewall.allowedTCPPorts = [ 843 ];
 
-  environment.systemPackages = [ pkgs.htop ];
+  # Very basic useful system administration tools
+  environment.systemPackages = [ pkgs.htop pkgs.lsof ];
 }
