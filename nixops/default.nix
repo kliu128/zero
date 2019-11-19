@@ -59,7 +59,7 @@
         ./systems/rem/android.nix
         ./systems/rem/backups.nix
         ./systems/rem/bluray.nix
-        ./systems/rem/boinc.nix
+        # ./systems/rem/boinc.nix
         ./systems/rem/coder.nix
         ./systems/rem/desktop.nix
         ./systems/rem/fusee-launcher.nix
@@ -69,6 +69,7 @@
         ./systems/rem/network.nix
         ./systems/rem/nfs.nix
         ./systems/rem/nix.nix
+        ./systems/rem/openvpn.nix
         ./systems/rem/samba.nix
         ./systems/rem/scanner
         ./systems/rem/services.nix
@@ -103,7 +104,7 @@
       # compatible, in order to avoid breaking some software such as database
       # servers. You should change this only after NixOS release notes say you
       # should.
-      system.stateVersion = "unstable"; # Did you read the comment?
+      system.stateVersion = "19.09"; # Did you read the comment?
     };
   
   you =

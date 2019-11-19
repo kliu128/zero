@@ -2,16 +2,18 @@
 
 {
   environment.etc."snapraid.conf".text = ''
-    disk d1 /mnt/sda
-    disk d2 /mnt/sdb
-    disk d3 /mnt/sdc
-    disk d4 /mnt/sdd/I_only_want_to_backup_this_folder
-    parity /mnt/sde/SnapRAID.parity
-    content /mnt/sda/SnapRAID.content
-    content /mnt/sdb/SnapRAID.content
-    content /mnt/sdc/SnapRAID.content
-    content /var/snapraid/SnapRAID.content
-    exclude /lost+found/
+    disk d0 /mnt/data0/Kevin
+    disk d1 /mnt/data1/Kevin
+    disk d2 /mnt/data2/Kevin
+    disk d3 /mnt/data3/Kevin
+    disk d4 /mnt/data4/Kevin
+    disk d5 /mnt/wdgreen1tb
+    parity /mnt/parity0/SnapRAID.parity
+    content /mnt/data0/SnapRAID.content
+    content /mnt/data1/SnapRAID.content
+    content /mnt/data2/SnapRAID.content
+    content /mnt/data3/SnapRAID.content
+    exclude /Incoming/
   '';
   environment.systemPackages = with pkgs; [ snapraid ];
 }

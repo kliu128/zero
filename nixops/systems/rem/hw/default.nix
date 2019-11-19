@@ -71,7 +71,7 @@
         kubectl delete pod --wait=false "$pod"
       done
 
-      if kubectl logs matrix-puppet-discord-0 | grep "Unexpected token <"; then
+      if kubectl logs --tail 200 matrix-puppet-discord-0 | grep "Unexpected token <"; then
         kubectl delete pod --wait=false matrix-puppet-discord-0
       fi
     '';

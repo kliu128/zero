@@ -3,7 +3,14 @@
 {
   # Home manager
   imports = [
-    "${builtins.fetchTarball https://github.com/rycee/home-manager/archive/master.tar.gz}/nixos"
+    "${(builtins.fetchTarball {
+      url = "https://github.com/rycee/home-manager/archive/450571056552c9311fcb2894328696b535265593.tar.gz";
+      sha256 = "1rlv234m0bqj9x2y9wnl8z3yq8mixzq8332nqlb8fw9k8mazis6s";
+    })}/nixos"
+    (builtins.fetchTarball {
+      url = "https://github.com/msteen/nixos-vsliveshare/archive/e6ea0b04de290ade028d80d20625a58a3603b8d7.tar.gz";
+      sha256 = "12riba9dlchk0cvch2biqnikpbq4vs22gls82pr45c3vzc3vmwq9";
+    })
 
     ./android.nix
     ./audio
@@ -66,6 +73,13 @@
     ansible vagrant virtmanager
   ];
 
+  services.vsliveshare = {
+    enable = true;
+    enableWritableWorkaround = true;
+    enableDiagnosticsWorkaround = true;
+    extensionsDir = "/home/kevin/.vscode-oss/extensions";
+  };
+
   nixpkgs.config.packageOverrides = pkgs: {
      kdenlive = pkgs.kdenlive.overrideAttrs (oldAttrs: rec {
          postInstall = ''
@@ -83,6 +97,7 @@
 
   home-manager.users.kevin = {
     programs.home-manager.enable = true;
+    home.stateVersion = "18.09";
 
     programs.git = {
       enable = true;

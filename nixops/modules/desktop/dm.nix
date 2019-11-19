@@ -1,14 +1,15 @@
 { config, lib, pkgs, ... }:
 
 {
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.displayManager.gdm.wayland = false;
-  services.xserver.desktopManager.gnome3.enable = true;
+  services.xserver.displayManager.sddm.enable = true;
+  services.xserver.desktopManager.plasma5.enable = true;
 
   services.gnome3.tracker-miners.enable = false;
   services.gnome3.tracker.enable = false;
 
-  environment.systemPackages = [ pkgs.arc-theme pkgs.papirus-icon-theme ];
+  environment.systemPackages = with pkgs; [
+    arc-theme papirus-icon-theme gnome3.nautilus gnome3.gnome-screenshot gnome3.evince
+  ];
 
   home-manager.users.kevin = {
     gtk = {

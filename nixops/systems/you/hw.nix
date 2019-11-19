@@ -56,5 +56,5 @@
   # Windows dual-boot compatibility - time compat
   time.hardwareClockInLocalTime = true;
 
-  services.xserver.videoDrivers = [ "intel" ];
+  services.xserver.videoDrivers = [ "modesetting" "intel" ];
 }

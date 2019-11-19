@@ -2,7 +2,7 @@
 
 {
   # exfat support for Nintendo Switch / other SD cards
-  boot.supportedFilesystems = [ "btrfs" "ext4" "exfat" "zfs" ];
+  boot.supportedFilesystems = [ "ext4" "exfat" "zfs" ];
   boot.initrd.supportedFilesystems = [ "zfs" ];
 
   boot.zfs = {
@@ -40,8 +40,8 @@
     fsType = "ext4";
   };
 
-  fileSystems."data0" = {
-    device = "none";
+  fileSystems."/mnt/data0" = {
+    device = "/dev/mapper/data0";
     options = [ "nofail" ];
     encrypted = {
       enable = true;
@@ -56,8 +56,8 @@
     keyFile = ../../../secrets/keys/keyfile-data0.bin;
   };
 
-  fileSystems."data1" = {
-    device = "none";
+  fileSystems."/mnt/data1" = {
+    device = "/dev/mapper/data1";
     options = [ "nofail" ];
     encrypted = {
       enable = true;
@@ -72,8 +72,8 @@
     keyFile = ../../../secrets/keys/keyfile-data1.bin;
   };
 
-  fileSystems."data2" = {
-    device = "none";
+  fileSystems."/mnt/data2" = {
+    device = "/dev/mapper/data2";
     options = [ "nofail" ];
     encrypted = {
       enable = true;
@@ -88,9 +88,9 @@
     keyFile = ../../../secrets/keys/keyfile-data2.bin;
   };
 
-  fileSystems."/mnt/storage" = {
+  fileSystems."/mnt/data3" = {
     device = "/dev/mapper/data3";
-    options = [ "nofail" "compress=zstd" ];
+    options = [ "nofail" ];
     encrypted = {
       enable = true;
       blkDev = "/dev/disk/by-uuid/c4742594-f01c-4eee-927e-1535d9f222fc";
@@ -106,8 +106,8 @@
   };
 
   # Seagate Expansion external hard drive
-  fileSystems."data4" = {
-    device = "none";
+  fileSystems."/mnt/data4" = {
+    device = "/dev/mapper/data4";
     options = [ "nofail" ];
     encrypted = {
       enable = true;
@@ -122,8 +122,8 @@
     keyFile = ../../../secrets/keys/keyfile-data4.bin;
   };
   # External WD Green 1 TB
-  fileSystems."wdgreen1tb" = {
-    device = "none";
+  fileSystems."/mnt/wdgreen1tb" = {
+    device = "/dev/mapper/wdgreen1tb";
     options = [ "nofail" ];
     encrypted = {
       enable = true;
@@ -138,8 +138,8 @@
     keyFile = ../../../secrets/keys/keyfile-wdgreen1tb.bin;
   };
   # Seagate Backup Plus Hub
-  fileSystems."parity0" = {
-    device = "none";
+  fileSystems."/mnt/parity0" = {
+    device = "/dev/mapper/parity0";
     options = [ "nofail" ];
     encrypted = {
       enable = true;
@@ -152,6 +152,19 @@
     permissions = "400";
     destDir = "/keys";
     keyFile = ../../../secrets/keys/keyfile-parity0.bin;
+  };
+
+  systemd.services.storage = {
+    description = "MergerFS Storage Pool";
+    wantedBy = [ "multi-user.target" ];
+    restartIfChanged = false;
+    serviceConfig = {
+      Restart = "always";
+      Type = "forking";
+      ExecStart = ''
+        ${pkgs.mergerfs}/bin/mergerfs -o category.create=rand,use_ino,allow_other,nonempty,moveonenospc=true /mnt/data*:/mnt/wdgreen1tb /mnt/storage
+      '';
+    };
   };
 
   deployment.keys."keyfile-vms.bin" = {

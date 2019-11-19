@@ -42,32 +42,57 @@ in {
   };
 
   # G-Suite backup
-  services.borgbackup.jobs.gsuite = {
-    compression = "auto,zstd";
-    doInit = false;
-    encryption = {
-      mode = "repokey-blake2";
-      passCommand = "cat /keys/gsuite-backup-password.txt";
+  systemd.services.gsuite-backup = {
+    enable = false;
+    description = "G-Suite Backup";
+    path = [ pkgs.rclone pkgs.restic pkgs.gnugrep ];
+    serviceConfig = {
+      Nice = 19;
+      SyslogIdentifier = "gsuite-backup";
+      IPAccounting = true;
+      CPUAccounting = true;
     };
-    preHook = ''
-      borg break-lock /mnt/gsuite-root/gsuite-borg || true
+    script = ''
+      set -euo pipefail
+
+      # Backup with monthly backup dirs and revisioned suffixes in each
+
+      ${proxyConfig}
+
+      dir_format="+%Y-%m"
+      monthly_backup_dir="$(env TZ=Etc/UTC date "$dir_format")"
+      backup_suffix="$(env TZ=Etc/UTC date +"__%Y_%m_%d_%H%M%SZ")"
+      # Prune the backup dir from 6 months ago
+      prune_backup_dir="$(env TZ=Etc/UTC date --date="-6 months" "$dir_format")"
+
+      rclone --config /keys/rclone.conf \
+             sync /mnt/storage/Kevin gsuite-mysmccd-crypt:/Data/current \
+             --backup-dir "gsuite-mysmccd-crypt:/Data/old/$monthly_backup_dir" \
+             --bwlimit 8650k --transfers 8 \
+             --suffix "$backup_suffix" \
+             --exclude '/Computing/Data/**' \
+             --exclude '/Incoming/**' \
+             --exclude 'node_modules/**' \
+             --exclude '.fuse_hidden*' \
+             --delete-excluded -v --modify-window=1s --delete-during
+      rclone --config /keys/rclone.conf \
+             purge -v "gsuite-mysmccd-crypt:/Data/old/$prune_backup_dir" || true
+
+      # export RESTIC_PASSWORD_FILE=${../../secrets/gsuite-backup-password.txt}
+      # export XDG_CACHE_HOME=/var/cache/gsuite-backup
+      # export RCLONE_CONFIG=/keys/rclone.conf
+      # r() {
+      #   restic --option=rclone.args='serve restic --stdio --drive-use-trash=false' --repo=rclone:gsuite-mysmccd:restic $@
+      # }
+
+      # r backup /mnt/storage/Kevin \
+      #        --exclude '/mnt/storage/Kevin/Incoming/**/*'
+      # r forget \
+      #        --keep-daily 7 --keep-weekly 5 --keep-monthly 12 --keep-yearly 10 \
+      #        --prune
     '';
-    extraCreateArgs = "--stats --progress -v";
-    paths = "/mnt/storage/Kevin";
-    repo = "/mnt/gsuite-root/gsuite-borg";
-    privateTmp = false;
-    prune.keep = {
-      daily = 7;
-      weekly = 4;
-      monthly = 6;
-    };
-    startAt = wave-2;
+    startAt = wave-3;
   };
-  # Disable ProtectSystem=strict since it appears to break borg when running
-  # under rclone fuse mount
-  systemd.services.borgbackup-job-gsuite.serviceConfig.ProtectSystem = lib.mkForce false;
-  systemd.services.borgbackup-job-gsuite.after = [ "gsuite-unencrypted-mount.service" ];
-  systemd.services.borgbackup-job-gsuite.wants = [ "gsuite-unencrypted-mount.service" ];
   deployment.keys."gsuite-backup-password.txt" = {
     permissions = "400";
     destDir = "/keys";

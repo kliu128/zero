@@ -21,7 +21,7 @@ spec:
         app: riot
     spec:
       containers:
-        - image: vectorim/riot-web:develop
+        - image: vectorim/riot-web:latest
           imagePullPolicy: Always
           name: riot-web
           volumeMounts:

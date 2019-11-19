@@ -3,7 +3,7 @@
 {
   nixpkgs.overlays = [ (import ./nixpkgs-mozilla) ];
   environment.systemPackages = with pkgs; [
-    latest.firefox-nightly-bin
+    latest.firefox-nightly-bin brave
   ];
 
   # Enable remote debugger server by default
