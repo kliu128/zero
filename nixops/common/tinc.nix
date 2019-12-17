@@ -18,7 +18,7 @@
     hosts = {
       rem = ''
         Subnet = 0.0.0.0/0
-        Address = potatofrom.space 655
+        Address = kliu.io 655
         Ed25519PublicKey = T7VbcnZFoMzNZh6mpP1m8hqMgdw7bDqrfrO/TFZZlAI
 
         -----BEGIN RSA PUBLIC KEY-----

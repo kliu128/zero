@@ -59,11 +59,11 @@ data:
     homeserver:
       # The domain name of the homeserver. This is used in many places, such as with go-neb
       # setups, to identify the homeserver.
-      name: "potatofrom.space"
+      name: "kliu.io"
 
       # The URL that Dimension, go-neb, and other services provisioned by Dimension should
       # use to access the homeserver with.
-      clientServerUrl: "https://potatofrom.space"
+      clientServerUrl: "https://kliu.io"
 
       # The URL that Dimension should use when trying to communicate with federated APIs on
       # the homeserver. If not supplied or left empty Dimension will try to resolve the address
@@ -81,7 +81,7 @@ data:
     # These users can modify the integrations this Dimension supports.
     # To access the admin interface, open Dimension in Riot and click the settings icon.
     admins:
-      - "@kevin:potatofrom.space"
+      - "@kevin:kliu.io"
 
     # IPs and CIDR ranges listed here will be blocked from being widgets.
     # Note: Widgets may still be embedded with restricted content, although not through Dimension directly.
@@ -144,9 +144,9 @@ spec:
   tls:
     - secretName: matrix-dimension-tls
       hosts:
-        - dimension.potatofrom.space
+        - dimension.kliu.io
   rules:
-    - host: dimension.potatofrom.space
+    - host: dimension.kliu.io
       http:
         paths:
           - path: /

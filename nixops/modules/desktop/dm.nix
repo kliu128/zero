@@ -1,8 +1,9 @@
 { config, lib, pkgs, ... }:
 
 {
-  services.xserver.displayManager.sddm.enable = true;
-  services.xserver.desktopManager.plasma5.enable = true;
+  services.xserver.displayManager.gdm.enable = true;
+  services.xserver.displayManager.gdm.wayland = false;
+  services.xserver.desktopManager.gnome3.enable = true;
 
   services.gnome3.tracker-miners.enable = false;
   services.gnome3.tracker.enable = false;

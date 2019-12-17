@@ -25,13 +25,12 @@ spec:
             - name: config
               subPath: whatsapp-registration.yaml
               mountPath: /data/registration.yaml
-              # whatsapp config is in PVC
             - name: data
               mountPath: /data
       volumes:
         - name: config
           secret:
-            secretName: matrix-config
+            secretName: matrix2-config
         - name: data
           persistentVolumeClaim:
             claimName: matrix-whatsapp-data

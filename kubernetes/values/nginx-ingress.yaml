@@ -21,4 +21,9 @@ controller:
 rbac:
   create: true
 tcp:
-  113: default/matrix-irc-hashbang:113
+  22: internal/gitlab:22
+  2025: mailu/front:25
+  20143: mailu/front:143
+  20465: mailu/front:465
+  20587: mailu/front:587
+  20993: mailu/front:993

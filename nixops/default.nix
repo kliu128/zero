@@ -59,8 +59,7 @@
         ./systems/rem/android.nix
         ./systems/rem/backups.nix
         ./systems/rem/bluray.nix
-        # ./systems/rem/boinc.nix
-        ./systems/rem/coder.nix
+        ./systems/rem/ddns.nix
         ./systems/rem/desktop.nix
         ./systems/rem/fusee-launcher.nix
         ./systems/rem/hw
@@ -69,7 +68,8 @@
         ./systems/rem/network.nix
         ./systems/rem/nfs.nix
         ./systems/rem/nix.nix
-        ./systems/rem/openvpn.nix
+        ./systems/rem/wireguard.nix
+        ./systems/rem/pbx.nix
         ./systems/rem/samba.nix
         ./systems/rem/scanner
         ./systems/rem/services.nix
@@ -85,7 +85,7 @@
       networking.firewall.allowedTCPPorts = [
         22 80 113 443 631
         # Mail ports
-        25 110 143 587 993 995 4190
+        25 143 587 993 4190 # Sieve
         # TLS turn ports
         5349 5350
         # Matrix
@@ -93,7 +93,9 @@
         # Tor
         32972 32973
         # Factorio
-        34197 ];
+        34197
+        # Scintillating ports
+        2025 20143 20465 20587 20993 ];
       networking.firewall.allowedUDPPortRanges = [
         { from = 49152; to = 65535; } # TURN relay
       ];

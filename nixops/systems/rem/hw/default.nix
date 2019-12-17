@@ -16,14 +16,14 @@
   # Boot
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.initrd.kernelModules = [ "amdkfd" "amdgpu" ]; # for early KMS
+  boot.initrd.kernelModules = [ "amdgpu" ]; # for early KMS
   boot.initrd.availableKernelModules = [ "ehci_pci" "ahci" "xhci_pci" "usb_storage" "usbhid" "sd_mod" "sr_mod" "uas" ];
   boot.kernelModules = [ "kvm-intel" "it87" ];
   
   # Video.
   boot.earlyVconsoleSetup = true;
   services.xserver.videoDrivers = ["modesetting" "amdgpu" ];
-  boot.kernelParams = [ "consoleblank=300" "usb_storage.quirks=0bc2:ab38:" ];
+  boot.kernelParams = [ "consoleblank=300" ];
 
   # Freeness (that is, not.)
   hardware.enableRedistributableFirmware = true; # for amdgpu
@@ -81,6 +81,21 @@
     wants = [ "kubernetes.target" ];
     after = [ "kubernetes.target" ];
     startAt = "minutely";
+  };
+
+  systemd.services.matrix-facebook-restart = {
+    description = "Restart Matrix Facebook";
+    path = with pkgs; [ kubectl ];
+    script = ''
+      export KUBECONFIG=/etc/kubernetes/cluster-admin.kubeconfig
+      kubectl delete pod matrix-facebook-0
+    '';
+    serviceConfig = {
+      Type = "oneshot";
+    };
+    wants = [ "kubernetes.target" ];
+    after = [ "kubernetes.target" ];
+    startAt = "*-*-* 05:00:00";
   };
 
   # Run continuously since Kubelet tries to enable panic_on_oops

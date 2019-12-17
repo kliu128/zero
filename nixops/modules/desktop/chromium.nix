@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 
 {
-  environment.systemPackages = [ pkgs.chromium ];
+  environment.systemPackages = with pkgs; [ chromium ];
   nixpkgs.config.chromium.enablePepperFlash = true;
 }

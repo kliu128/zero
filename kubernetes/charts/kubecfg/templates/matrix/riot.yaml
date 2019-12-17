@@ -42,13 +42,18 @@ metadata:
 data:
   config.json: |
     {
-        "default_hs_url": "https://potatofrom.space",
+        "default_hs_url": "https://kliu.io",
         "default_is_url": "https://vector.im",
         "brand": "Potatoriot",
-        "integrations_ui_url": "https://dimension.potatofrom.space/riot",
-        "integrations_rest_url": "https://dimension.potatofrom.space/api/v1/scalar",
-        "integrations_widgets_urls": ["https://dimension.potatofrom.space/widgets"],
-        "integrations_jitsi_widget_url": "https://dimension.potatofrom.space/widgets/jitsi",
+        "integrations_ui_url": "https://scalar.vector.im/",
+        "integrations_rest_url": "https://scalar.vector.im/api",
+        "integrations_widgets_urls": [
+            "https://scalar.vector.im/_matrix/integrations/v1",
+            "https://scalar.vector.im/api",
+            "https://scalar-staging.vector.im/_matrix/integrations/v1",
+            "https://scalar-staging.vector.im/api",
+            "https://scalar-staging.riot.im/scalar/api"
+        ],
         "features": {
         "feature_rich_quoting": "labs",
         "feature_pinning": "labs",
@@ -77,7 +82,7 @@ data:
         },
         "terms_and_conditions_links": [
             {
-                "url": "https://potatofrom.space/_matrix/consent",
+                "url": "https://kliu.io/_matrix/consent",
                 "text": "Privacy Policy"
             }
         ]
@@ -93,8 +98,16 @@ spec:
   tls:
     - secretName: riot-tls
       hosts:
+        - riot.kliu.io
         - riot.potatofrom.space
   rules:
+    - host: riot.kliu.io
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: riot
+              servicePort: 80
     - host: riot.potatofrom.space
       http:
         paths:

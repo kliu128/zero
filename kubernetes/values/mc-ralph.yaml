@@ -1,7 +1,7 @@
 minecraftServer:
   motd: "Ralpheus Maximus"
   type: VANILLA
-  version: 1.14.4
+  version: 1.15
   difficulty: normal
   port: 25566
   query:

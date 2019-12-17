@@ -11,7 +11,7 @@
   boot.extraModprobeConfig = ''
     options snd_hda_intel power_save=1
   '';
-  boot.kernelParams = [ "i915.enable_psr=0" "i915.enable_guc=3" "i915.enable_fbc=1" ];
+  boot.kernelParams = [ "i915.enable_psr=0" ];
   boot.blacklistedKernelModules = [ "iTCO_wdt" ];
   boot.extraModulePackages = [ config.boot.kernelPackages.huawei-wmi ];
   systemd.tmpfiles.rules = [
@@ -19,9 +19,4 @@
   ];
 
   virtualisation.docker.enableOnBoot = false;
-
-  services.undervolt = {
-    enable = true;
-    coreOffset = "-120";
-  };
 }

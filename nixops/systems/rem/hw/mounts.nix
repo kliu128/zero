@@ -2,7 +2,7 @@
 
 {
   # exfat support for Nintendo Switch / other SD cards
-  boot.supportedFilesystems = [ "ext4" "exfat" "zfs" ];
+  boot.supportedFilesystems = [ "ext4" "exfat" "zfs" "btrfs" ];
   boot.initrd.supportedFilesystems = [ "zfs" ];
 
   boot.zfs = {
@@ -104,23 +104,7 @@
     destDir = "/keys";
     keyFile = ../../../secrets/keys/keyfile-data3.bin;
   };
-
-  # Seagate Expansion external hard drive
-  fileSystems."/mnt/data4" = {
-    device = "/dev/mapper/data4";
-    options = [ "nofail" ];
-    encrypted = {
-      enable = true;
-      blkDev = "/dev/disk/by-uuid/1351af37-7548-4787-a53f-594ad892b7e3";
-      keyFile = "/mnt-root/keys/keyfile-data4.bin";
-      label = "data4";
-    };
-  };
-  deployment.keys."keyfile-data4.bin" = {
-    permissions = "400";
-    destDir = "/keys";
-    keyFile = ../../../secrets/keys/keyfile-data4.bin;
-  };
+  
   # External WD Green 1 TB
   fileSystems."/mnt/wdgreen1tb" = {
     device = "/dev/mapper/wdgreen1tb";
@@ -140,7 +124,7 @@
   # Seagate Backup Plus Hub
   fileSystems."/mnt/parity0" = {
     device = "/dev/mapper/parity0";
-    options = [ "nofail" ];
+    options = [ "nofail" "errors=continue" ];
     encrypted = {
       enable = true;
       blkDev = "/dev/disk/by-uuid/b9eb89d2-c5f8-4eb1-b1c0-601af8b8877c";
@@ -162,7 +146,7 @@
       Restart = "always";
       Type = "forking";
       ExecStart = ''
-        ${pkgs.mergerfs}/bin/mergerfs -o category.create=rand,use_ino,allow_other,nonempty,moveonenospc=true /mnt/data*:/mnt/wdgreen1tb /mnt/storage
+        ${pkgs.mergerfs}/bin/mergerfs -o category.create=mfs,use_ino,allow_other,nonempty,moveonenospc=true,minfreespace=20G /mnt/data*:/mnt/wdgreen1tb /mnt/storage
       '';
     };
   };

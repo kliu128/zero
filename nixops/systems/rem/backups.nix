@@ -43,7 +43,7 @@ in {
 
   # G-Suite backup
   systemd.services.gsuite-backup = {
-    enable = false;
+    enable = true;
     description = "G-Suite Backup";
     path = [ pkgs.rclone pkgs.restic pkgs.gnugrep ];
     serviceConfig = {

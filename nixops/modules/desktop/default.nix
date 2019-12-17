@@ -14,6 +14,7 @@
 
     ./android.nix
     ./audio
+    ./brave.nix
     ./chromium.nix
     ./dm.nix
     ./dotnet.nix

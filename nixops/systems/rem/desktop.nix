@@ -5,8 +5,8 @@
   
   home-manager.users.kevin.services.redshift = {
     enable = true;
-    latitude = "-42";
-    longitude = "72";
+    latitude = "42";
+    longitude = "-72";
   };
 
   home-manager.users.kevin.home.file.".config/sway/config".text = ''
