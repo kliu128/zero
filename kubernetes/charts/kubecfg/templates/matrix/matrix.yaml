@@ -27,7 +27,7 @@ spec:
       containers:
         # Main matrix server
         - name: synapse
-          image: matrixdotorg/synapse:v1.5.0
+          image: matrixdotorg/synapse
           imagePullPolicy: Always
           resources:
             limits:

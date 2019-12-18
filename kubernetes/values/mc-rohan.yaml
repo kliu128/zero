@@ -1,13 +1,13 @@
 minecraftServer:
-  motd: "Kevloo Hosting"
+  motd: "Rohan - Kevloo Hosting"
   jvmOpts: -Xmx1G
   jvmXxOpts: "-XX:+UseG1GC"
   type: VANILLA
-  version: 1.14.4
+  version: 1.15.1
   difficulty: normal
-  port: 25567
+  port: 25565
   query:
-    port: 25567
+    port: 25565
   ops: []
 securityContext:
   runAsUser: 1007
