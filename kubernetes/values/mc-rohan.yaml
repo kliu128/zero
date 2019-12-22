@@ -1,7 +1,5 @@
 minecraftServer:
   motd: "Rohan - Kevloo Hosting"
-  jvmOpts: -Xmx1G
-  jvmXxOpts: "-XX:+UseG1GC"
   type: VANILLA
   version: 1.15.1
   difficulty: normal

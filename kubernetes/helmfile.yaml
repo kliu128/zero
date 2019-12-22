@@ -59,6 +59,12 @@ releases:
     values:
       - ./values/mc.yaml
       - ./values/mc-ralph.yaml
+  - name: mc-rlcraft
+    namespace: default
+    chart: ./charts/minecraft
+    values:
+      - ./values/mc.yaml
+      - ./values/mc-rlcraft.yaml
   - name: mc-steveli
     namespace: default
     chart: ./charts/minecraft
