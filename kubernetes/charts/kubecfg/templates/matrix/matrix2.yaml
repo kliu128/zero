@@ -56,8 +56,14 @@ spec:
               subPath: facebook-registration.yaml
               mountPath: /config/facebook-registration.yaml
             - name: config
+              subPath: hangouts-registration.yaml
+              mountPath: /config/hangouts-registration.yaml
+            - name: config
               subPath: whatsapp-registration.yaml
               mountPath: /config/whatsapp-registration.yaml
+            - name: config
+              subPath: puppet-discord-registration.yaml
+              mountPath: /config/puppet-discord-registration.yaml
             - name: data
               mountPath: /data
       volumes:

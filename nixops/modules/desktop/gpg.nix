@@ -2,6 +2,7 @@
 
 {
   environment.systemPackages = with pkgs; [ gnupg ];
+  programs.gnupg.agent.enable = true;
   home-manager.users.kevin = {
     services.gpg-agent = {
       enable = true;

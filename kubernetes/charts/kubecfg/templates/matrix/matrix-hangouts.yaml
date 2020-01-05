@@ -26,7 +26,7 @@ spec:
       volumes:
         - name: config
           secret:
-            secretName: matrix-config
+            secretName: matrix2-config
         - name: data
           persistentVolumeClaim:
             claimName: matrix-hangouts-data
@@ -66,9 +66,9 @@ spec:
   tls:
     - secretName: matrix-hangouts-tls
       hosts:
-        - hg.potatofrom.space
+        - hg.kliu.io
   rules:
-  - host: hg.potatofrom.space
+  - host: hg.kliu.io
     http:
       paths:
       - path: /login

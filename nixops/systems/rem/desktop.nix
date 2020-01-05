@@ -3,12 +3,6 @@
 {
   networking.networkmanager.enable = false;
   
-  home-manager.users.kevin.services.redshift = {
-    enable = true;
-    latitude = "42";
-    longitude = "-72";
-  };
-
   home-manager.users.kevin.home.file.".config/sway/config".text = ''
     output HDMI-A-2 mode 2560x1080@60Hz pos 1280,0
     output DVI-D-1 mode 1600x900@60Hz pos 3840,0

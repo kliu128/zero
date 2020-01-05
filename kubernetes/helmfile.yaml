@@ -12,7 +12,7 @@ releases:
   - name: nginx-ingress
     namespace: kube-system
     chart: stable/nginx-ingress
-    version: 1.19.1
+    version: 1.27.1
     values:
       - ./values/nginx-ingress.yaml
   - name: nfs-client-provisioner
@@ -47,12 +47,6 @@ releases:
     values:
       - ./values/mastodon.yaml
       - ./values/mastodon.secret.yaml
-  - name: mc-staging1
-    namespace: default
-    chart: ./charts/minecraft
-    values:
-      - ./values/mc.yaml
-      - ./values/mc-staging1.yaml
   - name: mc-ralph
     namespace: default
     chart: ./charts/minecraft
@@ -60,17 +54,20 @@ releases:
       - ./values/mc.yaml
       - ./values/mc-ralph.yaml
   - name: mc-rlcraft
+    labels:
+      x: "true"
     namespace: default
     chart: ./charts/minecraft
     values:
       - ./values/mc.yaml
       - ./values/mc-rlcraft.yaml
-  - name: mc-steveli
+    # Requested by Steven, Will 2019-12-23
+  - name: mc-ftb-academy
     namespace: default
     chart: ./charts/minecraft
     values:
       - ./values/mc.yaml
-      - ./values/mc-steveli.yaml
+      - ./values/mc-ftb-academy.yaml
   - name: mc-rohan
     namespace: default
     chart: ./charts/minecraft

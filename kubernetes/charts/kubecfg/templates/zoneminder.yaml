@@ -13,6 +13,8 @@ spec:
       labels:
         app: zoneminder
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: rem
       containers:
         - image: zoneminderhq/zoneminder:latest-ubuntu18.04
           imagePullPolicy: Always
@@ -134,12 +136,6 @@ spec:
       port: 80
   egress:
   # Allow egress to cameras
-  - to:
-    - ipBlock:
-        cidr: 192.168.1.6/32
-    ports:
-    - protocol: TCP
-      port: 8081
   - to:
     - ipBlock:
         cidr: 192.168.1.7/32

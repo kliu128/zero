@@ -11,7 +11,7 @@
   boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
-  boot.kernelPackages = lib.mkForce pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.extraModulePackages = [ ];
 
   networking.networkmanager.enable = true;
@@ -42,8 +42,8 @@
   nix.maxJobs = lib.mkDefault 8;
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   # High-DPI console
-  i18n.consoleFont = lib.mkDefault "${pkgs.terminus_font}/share/consolefonts/ter-u28n.psf.gz";
-  boot.earlyVconsoleSetup = true;
+  console.font = lib.mkDefault "${pkgs.terminus_font}/share/consolefonts/ter-u28n.psf.gz";
+  console.earlySetup = true;
 
   boot.loader.systemd-boot = {
     enable = true;
@@ -56,5 +56,5 @@
   # Windows dual-boot compatibility - time compat
   time.hardwareClockInLocalTime = true;
 
-  services.xserver.videoDrivers = [ "modesetting" "intel" ];
+  services.xserver.videoDrivers = [ "intel" ];
 }

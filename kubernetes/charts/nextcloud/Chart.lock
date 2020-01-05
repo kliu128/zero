@@ -1,0 +1,9 @@
+dependencies:
+- name: lamp
+  repository: https://kubernetes-charts.storage.googleapis.com
+  version: 1.1.0
+- name: redis
+  repository: https://kubernetes-charts.storage.googleapis.com
+  version: 6.4.4
+digest: sha256:64d4b8b12a0d05f65eb6b4cd72231308ede9266eee205c0ea2a9251ebc1e4342
+generated: "2020-01-04T21:45:03.142666679-05:00"

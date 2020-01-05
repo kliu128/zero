@@ -4,7 +4,7 @@
   services.gitlab-runner = {
     enable = true;
     configOptions = {
-      concurrent = 3;
+      concurrent = 1;
       runners = [
         {
           name = "docker-runner";

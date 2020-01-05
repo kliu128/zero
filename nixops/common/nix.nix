@@ -1,9 +1,6 @@
 { config, lib, pkgs, ... }:
-let
-    # This will point to whatever NIX_PATH states on the local machine,
-    # unless overwritten with -I.
-    hostNixpkgs = import <nixpkgs> {};
-in {
+
+{
   # Configure NixOS/nix
   nixpkgs.config.allowUnfree = true;
   nix.buildCores = 16; # use all available CPU cores
