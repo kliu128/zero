@@ -21,7 +21,7 @@
   boot.kernelModules = [ "kvm-intel" "it87" ];
   
   # Video.
-  console.earlySetup = true;
+  boot.earlyVconsoleSetup = true;
   services.xserver.videoDrivers = ["modesetting" "amdgpu" ];
   boot.kernelParams = [ "consoleblank=300" "amdgpu.dc=0" ];
 
@@ -117,7 +117,7 @@
     path = with pkgs; [ utillinux coreutils procps ];
     script = ''
       chrt -p --rr -R -a 99 $(pgrep X) || true
-      renice -n 5 -p $(pgrep z_wr_iss) $(pgrep z_rd_int) $(pgrep z_) $(pgrep spl_) $(pgrep nfs) $(pgrep xprtiod)
+      renice -n 5 -p $(pgrep z_wr_iss) $(pgrep z_rd_int) $(pgrep z_) $(pgrep spl_) $(pgrep nfs) $(pgrep xprtiod) || true
     '';
     serviceConfig = {
       Type = "oneshot";
@@ -125,6 +125,9 @@
     startAt = "minutely";
   };
 
+  services.udev.extraRules = ''
+    ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{power/control}="auto", ATTR{power/autosuspend}="300"
+  '';
 
   # Proper shutdown in a timely manner
   # See https://utcc.utoronto.ca/~cks/space/blog/linux/SystemdShutdownWatchdog

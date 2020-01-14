@@ -3,7 +3,7 @@
 {
   environment.systemPackages = with pkgs; [
     # Games
-    dolphinEmuMaster multimc steam steam-run-native
+    lutris multimc steam steam-run-native
     # Wine
     wineWowPackages.staging winetricks samba # for ntlm_auth
   ];

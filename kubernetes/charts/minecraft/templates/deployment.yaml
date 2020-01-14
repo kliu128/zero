@@ -1,5 +1,5 @@
 {{- if ne (printf "%s" .Values.minecraftServer.eula) "FALSE" }}
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ template "minecraft.fullname" . }}
@@ -9,6 +9,9 @@ metadata:
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
 spec:
+  selector:
+    matchLabels:
+      app: {{ template "minecraft.fullname" . }}
   strategy:
     type: Recreate
   template:
@@ -26,8 +29,6 @@ spec:
       - name: {{ template "minecraft.fullname" . }}
         image: "{{ .Values.image }}:{{ .Values.imageTag }}"
         imagePullPolicy: Always
-        resources:
-{{ toYaml .Values.resources | indent 10 }}
         env:
         - name: EULA
           value: {{ .Values.minecraftServer.eula | quote }}

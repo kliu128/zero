@@ -47,6 +47,12 @@ releases:
     values:
       - ./values/mastodon.yaml
       - ./values/mastodon.secret.yaml
+  - name: mc-carta
+    namespace: default
+    chart: ./charts/minecraft
+    values:
+      - ./values/mc.yaml
+      - ./values/mc-carta.yaml
   - name: mc-ralph
     namespace: default
     chart: ./charts/minecraft
@@ -54,8 +60,6 @@ releases:
       - ./values/mc.yaml
       - ./values/mc-ralph.yaml
   - name: mc-rlcraft
-    labels:
-      x: "true"
     namespace: default
     chart: ./charts/minecraft
     values:

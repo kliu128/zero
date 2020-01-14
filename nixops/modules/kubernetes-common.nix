@@ -23,6 +23,7 @@
     addons.dashboard.rbac.enable = true;
     addons.dns.enable = true;
   };
+
   networking.firewall = {
     allowedTCPPorts = [
       # Calico BGP port 179

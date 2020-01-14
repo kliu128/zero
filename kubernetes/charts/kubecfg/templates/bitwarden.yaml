@@ -14,7 +14,7 @@ spec:
         app: bitwarden
     spec:
       containers:
-        - image: bitwardenrs/server:1.10.0
+        - image: bitwardenrs/server:1.13.0
           name: bitwarden
           env:
             - name: SIGNUPS_ALLOWED
@@ -33,13 +33,6 @@ spec:
         - name: data
           persistentVolumeClaim:
             claimName: bitwarden-data
-        - name: tv
-          hostPath:
-            path: /mnt/storage/Kevin/Videos/TV Shows
-        - name: movies
-          hostPath:
-            path: /mnt/storage/Kevin/Videos/Movies
-status: {}
 ---
 apiVersion: v1
 kind: Service

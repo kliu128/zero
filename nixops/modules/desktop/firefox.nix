@@ -5,7 +5,7 @@
     (import ./nixpkgs-mozilla)
   ];
   environment.systemPackages = with pkgs; [
-    latest.firefox-nightly-bin
+    firefox
   ];
 
   environment.variables = {
