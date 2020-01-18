@@ -14,10 +14,15 @@
       --cni-bin-dir=/opt/cni/bin";
       networkPlugin = "cni";
     };
-    apiserver.allowPrivileged = true;
-    apiserver.securePort = 6443;
-    apiserver.bindAddress = "10.99.0.1";
-    apiserver.advertiseAddress = "10.99.0.1";
+    apiserver = {
+      allowPrivileged = true;
+      securePort = 6443;
+      bindAddress = "10.99.0.1";
+      advertiseAddress = "10.99.0.1";
+      # Re-enable legacy  api endpoints
+      # https://gitlab.com/gitlab-org/charts/gitlab/issues/1562
+      extraOpts = "--runtime-config=apps/v1beta1=true,apps/v1beta2=true,extensions/v1beta1/daemonsets=true,extensions/v1beta1/deployments=true,extensions/v1beta1/replicasets=true,extensions/v1beta1/networkpolicies=true,extensions/v1beta1/podsecuritypolicies=true";
+    };
     flannel.enable = false;
     addons.dashboard.enable = true;
     addons.dashboard.rbac.enable = true;

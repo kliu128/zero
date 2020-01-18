@@ -80,7 +80,7 @@
     extensionsDir = "/home/kevin/.vscode-oss/extensions";
   };
 
-  # Must be done on the system level (not the home-manager level) to install
+  # Must be done on the system level (not the homez-manager level) to install
   # zsh completion for packages in environment.systemPackages
   programs.zsh.enable = true;
 

@@ -21,7 +21,7 @@
   boot.kernelModules = [ "kvm-intel" "it87" ];
   
   # Video.
-  boot.earlyVconsoleSetup = true;
+  console.earlySetup = true;
   services.xserver.videoDrivers = ["modesetting" "amdgpu" ];
   boot.kernelParams = [ "consoleblank=300" "amdgpu.dc=0" ];
 
