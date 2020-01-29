@@ -5,6 +5,7 @@ metadata:
     app: cups
   name: cups
 spec:
+  serviceName: cups
   selector:
     matchLabels:
       app: cups
@@ -33,7 +34,6 @@ spec:
       - name: config
         persistentVolumeClaim:
           claimName: cups-config
-status: {}
 ---
 kind: Secret
 apiVersion: v1
@@ -71,4 +71,3 @@ spec:
   resources:
     requests:
       storage: 100Mi
-status: {}

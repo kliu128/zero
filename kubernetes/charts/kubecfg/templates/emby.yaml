@@ -5,6 +5,7 @@ metadata:
     app: emby
   name: emby
 spec:
+  serviceName: emby
   selector:
     matchLabels:
       app: emby
@@ -17,7 +18,6 @@ spec:
         kubernetes.io/hostname: rem
       containers:
         - image: jellyfin/jellyfin
-          user: 1000
           name: emby
           ports:
             - containerPort: 8096

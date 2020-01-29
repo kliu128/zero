@@ -34,8 +34,9 @@ releases:
     namespace: default
     labels:
       has-migrations: "true"
+      y: "true"
     chart: gitlab/gitlab
-    version: 2.2.6
+    version: 2.6.6
     values:
       - ./values/gitlab.yaml
       - ./values/gitlab.secret.yaml
@@ -61,6 +62,8 @@ releases:
       - ./values/mc-ralph.yaml
   - name: mc-rlcraft
     namespace: default
+    labels:
+      x: "true"
     chart: ./charts/minecraft
     values:
       - ./values/mc.yaml
@@ -84,6 +87,13 @@ releases:
     values:
       - ./values/mc.yaml
       - ./values/mc-will-sf4.yaml
+    # Will MC.Eternal
+  - name: mc-will-eternal
+    namespace: default
+    chart: ./charts/minecraft
+    values:
+      - ./values/mc.yaml
+      - ./values/mc-will-eternal.yaml
   - name: factorio
     namespace: default
     chart: stable/factorio

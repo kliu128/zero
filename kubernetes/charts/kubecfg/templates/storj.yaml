@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: storj
+  labels:
+    app: storj
+spec:
+  serviceName: storj
+  selector:
+    matchLabels:
+      name: storj
+  template:
+    metadata:
+      labels:
+        name: storj
+    spec:
+      hostNetwork: true
+      nodeSelector:
+        kubernetes.io/hostname: rem
+      containers:
+      - name: storj
+        image: storjlabs/storagenode:beta
+        env:
+        - name: WALLET
+          value: "0xA0fd60A944c1f86D529EEbEf19b34ca61294Ffe5"
+        - name: EMAIL
+          value: kevin@kliu.io
+        - name: ADDRESS
+          value: kliu.io:28967
+        - name: BANDWIDTH
+          value: 25TB
+        - name: STORAGE
+          value: 500GB
+        volumeMounts:
+        - mountPath: /app/identity
+          name: identity
+        - mountPath: /app/config
+          name: storage
+      volumes:
+      - name: identity
+        persistentVolumeClaim:
+          claimName: storj-identity
+      - name: storage
+        hostPath:
+          path: /mnt/storage/Kevin/Computing/StorjData
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    app: storj
+  name: storj-identity
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi

@@ -5,6 +5,7 @@ metadata:
     app: sonarr
   name: sonarr
 spec:
+  serviceName: sonarr
   selector:
     matchLabels:
       app: sonarr
@@ -69,7 +70,6 @@ spec:
         - name: tv
           hostPath:
             path: /mnt/storage/Kevin/Videos/TV Shows
-status: {}
 ---
 apiVersion: v1
 kind: Service
@@ -114,7 +114,6 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  creationTimestamp: null
   labels:
     app: sonarr
   name: sonarr-config
@@ -124,12 +123,10 @@ spec:
   resources:
     requests:
       storage: 20Gi
-status: {}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  creationTimestamp: null
   labels:
     app: sonarr
   name: jackett-config
@@ -139,4 +136,3 @@ spec:
   resources:
     requests:
       storage: 20Gi
-status: {}

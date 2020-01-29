@@ -5,6 +5,7 @@ metadata:
     app: matomo
   name: matomo
 spec:
+  serviceName: matomo
   selector:
     matchLabels:
       app: matomo

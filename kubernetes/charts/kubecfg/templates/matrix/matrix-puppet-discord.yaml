@@ -3,6 +3,7 @@ kind: StatefulSet
 metadata:
   name: matrix-puppet-discord
 spec:
+  serviceName: matrix-puppet-discord
   selector:
     matchLabels:
       app: matrix-puppet-discord

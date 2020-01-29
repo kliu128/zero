@@ -3,6 +3,7 @@ kind: StatefulSet
 metadata:
   name: matrix-whatsapp
 spec:
+  serviceName: matrix-whatsapp
   selector:
     matchLabels:
       app: matrix-whatsapp
@@ -38,7 +39,6 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  creationTimestamp: null
   labels:
     app: matrix-whatsapp
   name: matrix-whatsapp-data
@@ -48,7 +48,6 @@ spec:
   resources:
     requests:
       storage: 1Gi
-status: {}
 ---
 apiVersion: v1
 kind: Service

@@ -27,6 +27,7 @@
     script = ''
       set -xeuo pipefail
 
+      snapraid touch
       snapraid sync
       snapraid scrub
     '';

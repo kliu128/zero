@@ -5,6 +5,7 @@ metadata:
     app: monica
   name: monica
 spec:
+  serviceName: monica
   selector:
     matchLabels:
       app: monica
@@ -26,7 +27,6 @@ spec:
         - name: data
           persistentVolumeClaim:
             claimName: monica-data
-status: {}
 ---
 apiVersion: v1
 kind: Service
@@ -54,7 +54,6 @@ spec:
   resources:
     requests:
       storage: 2Gi
-status: {}
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress

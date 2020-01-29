@@ -3,6 +3,7 @@ kind: StatefulSet
 metadata:
   name: matrix-hangouts
 spec:
+  serviceName: matrix-hangouts
   selector:
     matchLabels:
       app: matrix-hangouts

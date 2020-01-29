@@ -15,6 +15,7 @@ kind: StatefulSet
 metadata:
   name: paperless
 spec:
+  serviceName: paperless
   selector:
     matchLabels:
       app: paperless
@@ -100,7 +101,6 @@ data:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  creationTimestamp: null
   labels:
     app: paperless
   name: paperless-data
@@ -110,12 +110,10 @@ spec:
   resources:
     requests:
       storage: 20Gi
-status: {}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  creationTimestamp: null
   labels:
     app: paperless
   name: paperless-media
@@ -125,7 +123,6 @@ spec:
   resources:
     requests:
       storage: 20Gi
-status: {}
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress

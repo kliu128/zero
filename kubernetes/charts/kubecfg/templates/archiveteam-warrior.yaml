@@ -5,6 +5,7 @@ metadata:
     app: archiveteam-warrior
   name: archiveteam-warrior
 spec:
+  serviceName: archiveteam-warrior
   selector:
     matchLabels:
       app: archiveteam-warrior

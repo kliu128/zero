@@ -23,7 +23,7 @@
   # Video.
   console.earlySetup = true;
   services.xserver.videoDrivers = ["modesetting" "amdgpu" ];
-  boot.kernelParams = [ "consoleblank=300" "amdgpu.dc=0" ];
+  boot.kernelParams = [ "consoleblank=300" ];
 
   # Freeness (that is, not.)
   hardware.enableRedistributableFirmware = true; # for amdgpu

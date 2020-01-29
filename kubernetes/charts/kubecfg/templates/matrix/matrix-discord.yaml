@@ -3,6 +3,7 @@ kind: StatefulSet
 metadata:
   name: matrix-discord
 spec:
+  serviceName: matrix-discord
   selector:
     matchLabels:
       app: matrix-discord
@@ -47,7 +48,6 @@ spec:
   resources:
     requests:
       storage: 1Gi
-status: {}
 ---
 apiVersion: v1
 kind: Service

@@ -1,0 +1,60 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: vbr
+  name: vbr
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: vbr
+    spec:
+      containers:
+        - image: pneumaticat/vbr-server
+          name: vbr
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: vbr
+  name: vbr
+spec:
+  ports:
+    - name: http
+      port: 4005
+      targetPort: 4005
+  selector:
+    app: vbr
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: vbr-config
+  labels:
+    app: vbr
+data:
+  # Enable autoindex
+  custom.conf: autoindex on;
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/tls-acme: "true"
+  name: vbr
+spec:
+  tls:
+    - secretName: vbr-tls
+      hosts:
+        - vbr.kliu.io
+  rules:
+    - host: vbr.kliu.io
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: vbr
+              servicePort: http

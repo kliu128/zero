@@ -5,6 +5,7 @@ metadata:
     app: onlyoffice-documentserver
   name: onlyoffice-documentserver
 spec:
+  serviceName: onlyoffice-documentserver
   selector:
     matchLabels:
       app: onlyoffice-documentserver
@@ -62,7 +63,6 @@ spec:
   resources:
     requests:
       storage: 100Mi
-status: {}
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress

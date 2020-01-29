@@ -3,6 +3,7 @@ kind: StatefulSet
 metadata:
   name: matrix-facebook
 spec:
+  serviceName: matrix-facebook
   selector:
     matchLabels:
       app: matrix-facebook

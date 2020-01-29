@@ -5,6 +5,7 @@ metadata:
     app: bitwarden
   name: bitwarden
 spec:
+  serviceName: bitwarden
   selector:
     matchLabels:
       app: bitwarden
@@ -65,7 +66,6 @@ spec:
   resources:
     requests:
       storage: 100Mi
-status: {}
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress

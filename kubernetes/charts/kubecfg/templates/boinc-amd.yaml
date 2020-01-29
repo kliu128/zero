@@ -5,6 +5,7 @@ metadata:
   labels:
     app: boinc-amd
 spec:
+  serviceName: boinc-amd
   selector:
     matchLabels:
       name: boinc-amd
@@ -27,7 +28,7 @@ spec:
         volumeMounts:
         - mountPath: /var/lib/boinc
           name: data
-        restartPolicy: Always
+      restartPolicy: Always
       volumes:
         - name: data
           persistentVolumeClaim:
@@ -45,4 +46,3 @@ spec:
   resources:
     requests:
       storage: 5Gi
-status: {}

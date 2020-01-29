@@ -7,6 +7,8 @@
     path = [ pkgs.systemd ];
     script = "systemd-nspawn -b -D /var/lib/machines/pbx";
     wantedBy = [ "multi-user.target" ];
+    wants = [ "network-online.target" ];
+    after = [ "network-online.target" ];
   };
   networking.firewall.allowedUDPPorts = [ 5060 ];
   networking.firewall.allowedTCPPorts = [ 5060 ];

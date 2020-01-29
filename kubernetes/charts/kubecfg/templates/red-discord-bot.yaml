@@ -5,6 +5,7 @@ metadata:
     app: red-discord-bot
   name: red-discord-bot
 spec:
+  serviceName: red-discord-bot
   selector:
     matchLabels:
       app: red-discord-bot
@@ -16,7 +17,6 @@ spec:
       containers:
         - image: calebj/red-discordbot
           name: red-discord-bot
-          resources: {}
           volumeMounts:
             - mountPath: /data/red/data
               name: data
@@ -35,7 +35,6 @@ spec:
         - name: cogs
           configMap:
             name: red-discord-bot-cogs
-status: {}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

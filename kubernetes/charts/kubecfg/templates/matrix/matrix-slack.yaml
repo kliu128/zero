@@ -3,6 +3,7 @@ kind: StatefulSet
 metadata:
   name: matrix-slack
 spec:
+  serviceName: matrix-slack
   selector:
     matchLabels:
       app: matrix-slack

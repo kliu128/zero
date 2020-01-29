@@ -15,6 +15,7 @@ kind: StatefulSet
 metadata:
   name: matrix
 spec:
+  serviceName: matrix
   selector:
     matchLabels:
       app: matrix
@@ -99,7 +100,6 @@ spec:
   resources:
     requests:
       storage: 20Gi
-status: {}
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress

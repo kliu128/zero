@@ -3,6 +3,7 @@ kind: StatefulSet
 metadata:
   name: matrix-irc-hashbang
 spec:
+  serviceName: matrix-irc-hashbang
   selector:
     matchLabels:
       app: matrix-irc-hashbang
@@ -46,7 +47,6 @@ spec:
   resources:
     requests:
       storage: 1Gi
-status: {}
 ---
 apiVersion: v1
 kind: Service

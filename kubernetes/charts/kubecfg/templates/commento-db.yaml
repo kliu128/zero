@@ -3,6 +3,7 @@ kind: StatefulSet
 metadata:
   name: commento-db
 spec:
+  serviceName: commento-db
   selector:
     matchLabels:
       app: commento-db
@@ -35,7 +36,6 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  creationTimestamp: null
   labels:
     app: commento
   name: commento-db
@@ -45,7 +45,6 @@ spec:
   resources:
     requests:
       storage: 20Gi
-status: {}
 ---
 apiVersion: v1
 kind: Service

@@ -95,7 +95,9 @@
         # Factorio
         34197
         # Scintillating ports
-        2025 20143 20465 20587 20993 ];
+        2025 20143 20465 20587 20993
+        # Storj
+        28967 ];
       networking.firewall.allowedUDPPortRanges = [
         { from = 49152; to = 65535; } # TURN relay
       ];

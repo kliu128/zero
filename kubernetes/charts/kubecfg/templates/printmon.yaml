@@ -3,6 +3,7 @@ kind: StatefulSet
 metadata:
   name: printmon
 spec:
+  serviceName: printmon
   selector:
     matchLabels:
       app: printmon

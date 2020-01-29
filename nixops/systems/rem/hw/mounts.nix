@@ -19,7 +19,6 @@
   };
   virtualisation.docker.storageDriver = "overlay2";
   services.fstrim.enable = true;
-  systemd.services.fstrim.serviceConfig.ExecStartPre = "${pkgs.zfs}/bin/zpool trim rpool";
 
   fileSystems."/var/lib/docker" =
     { device = "/dev/zvol/rpool/docker";

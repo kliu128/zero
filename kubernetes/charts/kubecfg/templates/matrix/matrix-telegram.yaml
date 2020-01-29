@@ -3,6 +3,7 @@ kind: StatefulSet
 metadata:
   name: matrix-telegram
 spec:
+  serviceName: matrix-telegram
   selector:
     matchLabels:
       app: matrix-telegram
@@ -46,7 +47,6 @@ spec:
   resources:
     requests:
       storage: 1Gi
-status: {}
 ---
 apiVersion: v1
 kind: Service
