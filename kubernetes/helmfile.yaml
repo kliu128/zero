@@ -1,12 +1,8 @@
 repositories:
   - name: stable
     url: https://kubernetes-charts.storage.googleapis.com
-  - name: coreos
-    url: https://s3-eu-west-1.amazonaws.com/coreos-charts/stable/
   - name: gitlab
     url: https://charts.gitlab.io
-  - name: jetstack
-    url: https://charts.jetstack.io
 
 releases:
   - name: nginx-ingress
@@ -34,9 +30,9 @@ releases:
     namespace: default
     labels:
       has-migrations: "true"
-      y: "true"
+      gitlab: "true"
     chart: gitlab/gitlab
-    version: 2.6.6
+    version: 2.6.7
     values:
       - ./values/gitlab.yaml
       - ./values/gitlab.secret.yaml

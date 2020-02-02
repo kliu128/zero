@@ -12,6 +12,16 @@
       ./snapraid.nix
       ./swap.nix
     ];
+  
+  # AMDGPU ROCM
+  nixpkgs.overlays = [ (import (builtins.fetchTarball https://github.com/nixos-rocm/nixos-rocm/archive/master.tar.gz)) ];
+
+  #hardware.opengl.extraPackages = with pkgs; [
+  #  rocm-opencl-icd
+  #];
+  #environment.systemPackages = with pkgs; [
+  #  rocminfo rocm-opencl-runtime
+  #];
 
   # Boot
   boot.loader.systemd-boot.enable = true;
