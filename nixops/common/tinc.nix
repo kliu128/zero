@@ -4,7 +4,6 @@
   # Short names required for Kubernetes log tailing
   networking.hosts = {
     "10.99.0.1" = ["rem.i.potatofrom.space" "rem"];
-    "10.99.0.3" = ["puck.i.potatofrom.space"];
     "10.99.0.4" = ["you.i.potatofrom.space"];
     "10.99.0.5" = ["karmaxer.i.potatofrom.space" "karmaxer"];
   };
@@ -33,22 +32,6 @@
         9V8pl4hn7HRNqWWqNtyCT2yAg026Ows1ph1dFT0pDUJeGH/LAJgLzWpi80yvURls
         4AJYUc9WHs0G9JtYln8saFCYaFXRVlD92bldthXuaUalH/BRcBvTvYCz+00Der4x
         iQB8PPr1bq2qqslUmYjAj5XUzniNohcilSs8v2oMbNtACDWoweNO9NMCAwEAAQ==
-        -----END RSA PUBLIC KEY-----
-      '';
-      puck = ''
-        Ed25519PublicKey = V4//lY5FierUZvtbDt92cUIOS4pMf87Zm7HsTsj25TB
-        -----BEGIN RSA PUBLIC KEY-----
-        MIICCgKCAgEAreVL2TENzNGvKTg9r/hZSFUwGp/uF9oqVIMzyApI3mUMKM/7XJ2t
-        lTMjSBqFMzplCkaVxiw5T4MwgMzwUWByUTKRKFZJS2nDZzZup6HPwMSctGP2B3as
-        5hZBvxjjogwfrJy5IqoHZ25OA6a3oqdv9et1W/zRN8Ar0WcleDR6Ugn6pGLWO/QO
-        wRRLmgBBlmOH6CM8QkJMSUYsviSF6PSvrBDzEOBZSFBoFgAQ2YW83+Bpq5byn+8M
-        V26ROj1+UzqZBFFvInOmHZe9ezpKpgCqQ35Tol8YGwIQnvkKwtVrYXb8hV+PMrxa
-        2W4uBEbZgY2ZUMdNV18f0DtvyOsrCX9sOffVBnnXWouyM9zLZpXpxDrxVh3at5nS
-        PCtBoyB2xwE/50Ot348nuqa2j8XVOVDVejReDGorSpQrOszvbedDuO3oa7iGawGl
-        it7/c7Z+URP/nx+zN2Nusr+v7WRpziUgucsUgp5XGQYh1hO1A5xNV8bjdbP187e9
-        yZdV7xxvZ3m8G4dHVwTipT7wtBg0pzflloDXGlXkdIsyAbG/MdvtIniRRaYK52DH
-        0y5I4dIpHxwbLO9+xZRi1dBJoiBNT7ynXSUztM7wa0RWGcKp3cf5GkRNBgL76a5F
-        MyrrG+I440h6hfUR5vkSdzVi7mpYqLCJEzhe2UgeXQMNRIUYkoy4J58CAwEAAQ==
         -----END RSA PUBLIC KEY-----
       '';
       momo = ''

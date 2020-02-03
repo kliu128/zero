@@ -34,20 +34,15 @@
 
   environment.etc."lock.sh".source = pkgs.writeScript "lock" ''
     #!${pkgs.stdenv.shell}
-    export PATH=${lib.makeBinPath [ pkgs.systemd pkgs.xorg.xset pkgs.sway ]}
+    export PATH=${lib.makeBinPath [ pkgs.systemd pkgs.xorg.xset ]}
 
     if [ ! -f /tmp/inhibit_yubikey_lock ]; then
       loginctl lock-sessions
     fi
-
-    SWAYSOCK=$(echo /run/user/1000/sway*.sock) swaylock
   '';
 
   security.pam.services.login.u2fAuth = true;
-  security.pam.services.swaylock.u2fAuth = true;
   security.pam.services.i3lock.u2fAuth = true;
-  security.pam.services.kde.u2fAuth = true;
-  security.pam.services.sddm.u2fAuth = true;
   security.pam.services.sudo.u2fAuth = true;
   security.pam.u2f = {
     control = "sufficient";

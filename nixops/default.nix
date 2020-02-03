@@ -23,27 +23,6 @@
     time.timeZone = "America/New_York";
   };
   
-  puck =
-    { config, pkgs, lib, ... }:
-    {
-      deployment.targetHost = "10.99.0.3";
-
-      imports = [
-        ./modules/desktop
-        ./modules/docker.nix
-        ./systems/puck/desktop.nix
-        ./systems/puck/hw.nix
-        ./systems/puck/power.nix
-        ./systems/puck/tinc.nix
-        ./systems/puck/wireless.nix
-      ];
-
-      networking.hostName = "puck";
-      networking.hostId = "0fc12bac";
-
-      system.stateVersion = "unstable";
-    };
-
   rem =
     { config, pkgs, lib, ... }:
     {
@@ -51,7 +30,6 @@
       deployment.hasFastConnection = true;
 
       imports = [
-        ./modules/cjdns.nix
         ./modules/desktop
         ./modules/docker.nix
         ./modules/kubernetes-common.nix
@@ -94,7 +72,7 @@
         32972 32973
         # Factorio
         34197
-        # Scintillating ports
+        # Scintillating mail server ports
         2025 20143 20465 20587 20993
         # Storj
         28967 ];

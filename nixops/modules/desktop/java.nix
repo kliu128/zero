@@ -20,6 +20,6 @@ in {
   environment.etc."jdks/intellij".source = pkgs.jetbrains.jdk;
   environment.etc."jdks/java8".source = pkgs.openjdk8;
 
-  # Install IntelliJ
+  # Install Java editors
   environment.systemPackages = with pkgs; [ eclipses.eclipse-sdk jetbrains.idea-community maven ];
 }

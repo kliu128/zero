@@ -4,8 +4,6 @@
   # Fonts
   fonts.fontconfig.allowBitmaps = false;
   fonts.fonts = with pkgs; [
-    # FA for Waybar
-    font-awesome_5
     # Microsoft replacements
     carlito caladea comic-neue liberation_ttf liberationsansnarrow
     

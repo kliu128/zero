@@ -34,7 +34,4 @@
       Kind = "bridge";
     };
   };
-
-  # Disable IPv6 to fix network changed error in chromium
-  boot.kernel.sysctl."net.ipv6.conf.all.disable_ipv6" = 1;
 }

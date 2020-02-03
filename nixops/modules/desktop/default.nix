@@ -7,10 +7,6 @@
       url = "https://github.com/rycee/home-manager/archive/450571056552c9311fcb2894328696b535265593.tar.gz";
       sha256 = "1rlv234m0bqj9x2y9wnl8z3yq8mixzq8332nqlb8fw9k8mazis6s";
     })}/nixos"
-    (builtins.fetchTarball {
-      url = "https://github.com/msteen/nixos-vsliveshare/archive/e6ea0b04de290ade028d80d20625a58a3603b8d7.tar.gz";
-      sha256 = "12riba9dlchk0cvch2biqnikpbq4vs22gls82pr45c3vzc3vmwq9";
-    })
 
     ./android.nix
     ./audio
@@ -25,12 +21,10 @@
     ./gpg.nix
     ./input.nix
     ./java.nix
-    ./kdeconnect.nix
     ./keybase.nix
     ./kubernetes.nix
     ./nixops.nix
     ./python.nix
-    ./rice
     ./rust.nix
     ./syncthing.nix
     ./trash.nix
@@ -59,26 +53,18 @@
     # System tools
     atop beets borgbackup cowsay dnsutils file fortune google-cloud-sdk hdparm htop iftop iotop lm_sensors lolcat man-pages opentimestamps-client p7zip schedtool smartmontools spectre-meltdown-checker stress-ng telnet thefuck tree vim wget
     # Desktop applications
-    calibre clementine discord filezilla gpodder krita libreoffice-fresh pavucontrol gnome3.pomodoro thunderbird transmission_gtk vscodium youtube-dl zim
+    discord filezilla gpodder krita libreoffice-fresh pavucontrol thunderbird transmission_gtk vscodium youtube-dl zim
     # Screen recording tools
-    ffmpeg-full kdenlive wf-recorder
+    ffmpeg-full kdenlive
     # Anki and related packages (for LaTeX suppfort)
-    anki polar-bookshelf 
-    texlive.combined.scheme-full
+    anki texlive.combined.scheme-full
     # Desktop tools
     appimage-run
     # Development
     bfg-repo-cleaner docker docker_compose gcc git-crypt gnumake insomnia
     # VM and DevOps
-    ansible vagrant virtmanager
+    virtmanager
   ];
-
-  services.vsliveshare = {
-    enable = true;
-    enableWritableWorkaround = true;
-    enableDiagnosticsWorkaround = true;
-    extensionsDir = "/home/kevin/.vscode-oss/extensions";
-  };
 
   # Must be done on the system level (not the homez-manager level) to install
   # zsh completion for packages in environment.systemPackages
@@ -149,11 +135,6 @@
         };
         karmaxer = {
           hostname = "karmaxer.i.potatofrom.space";
-          user = "kevin";
-          port = 843;
-        };
-        puck = {
-          hostname = "puck.i.potatofrom.space";
           user = "kevin";
           port = 843;
         };

@@ -13,7 +13,6 @@
   '';
   boot.kernelParams = [ "i915.enable_psr=0" ];
   boot.blacklistedKernelModules = [ "iTCO_wdt" ];
-  boot.extraModulePackages = [ config.boot.kernelPackages.huawei-wmi ];
   systemd.tmpfiles.rules = [
     "w /sys/devices/platform/huawei-wmi/charge_thresholds - - - - 83 85"
   ];
