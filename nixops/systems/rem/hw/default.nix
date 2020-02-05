@@ -16,12 +16,12 @@
   # AMDGPU ROCM
   nixpkgs.overlays = [ (import (builtins.fetchTarball https://github.com/nixos-rocm/nixos-rocm/archive/master.tar.gz)) ];
 
-  #hardware.opengl.extraPackages = with pkgs; [
-  #  rocm-opencl-icd
-  #];
-  #environment.systemPackages = with pkgs; [
-  #  rocminfo rocm-opencl-runtime
-  #];
+  hardware.opengl.extraPackages = with pkgs; [
+    rocm-opencl-icd
+  ];
+  environment.systemPackages = with pkgs; [
+    rocminfo rocm-smi rocm-opencl-runtime
+  ];
 
   # Boot
   boot.loader.systemd-boot.enable = true;
@@ -33,7 +33,7 @@
   # Video.
   console.earlySetup = true;
   services.xserver.videoDrivers = ["modesetting" "amdgpu" ];
-  boot.kernelParams = [ "consoleblank=300" ];
+  boot.kernelParams = [ "consoleblank=300" "amdgpu.dc=0" ];
 
   # Freeness (that is, not.)
   hardware.enableRedistributableFirmware = true; # for amdgpu
@@ -41,30 +41,6 @@
   
   boot.cleanTmpDir = true;
 
-  # Reset keyboard on bootup (Pok3r)
-  # Otherwise keys get dropped, for some reason
-  # Same with webcam - mic breaks
-  systemd.services.keyboard-webcam-reset = {
-    description = "Keyboard & Webcam Pro 9000 Reset";
-    script = ''
-      set -x
-      for X in /sys/bus/usb/devices/*
-      do
-          if [ -e "$X/idVendor" ] && [ -e "$X/idProduct" ] \
-          && [ 046d = $(cat "$X/idVendor") ] && [ 0809 = $(cat "$X/idProduct") ]
-          then
-              echo 0 >"$X/authorized"
-              sleep 1
-              echo 1 >"$X/authorized"
-          fi
-      done
-    '';
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-    };
-    wantedBy = [ "multi-user.target" ];
-  };
   systemd.services.kube-container-clearer = {
     description = "Clear Broken Kubernetes Pods";
     path = with pkgs; [ kubectl gnugrep coreutils ];

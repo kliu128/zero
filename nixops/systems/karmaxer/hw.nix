@@ -19,6 +19,7 @@
   boot.initrd.availableKernelModules = [ "uhci_hcd" "ehci_pci" "hpsa" "mpt3sas" "usb_storage" "usbhid" "sd_mod" "sr_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
+  boot.kernelParams = [ "console=ttyS0" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =

@@ -119,6 +119,7 @@
         ./modules/kubernetes-common.nix
         ./modules/kubernetes-node.nix
         ./systems/karmaxer/hw.nix
+        ./systems/karmaxer/network.nix
         ./systems/karmaxer/services.nix
         ./systems/karmaxer/tinc.nix
       ];

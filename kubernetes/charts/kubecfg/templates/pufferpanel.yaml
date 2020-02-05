@@ -15,7 +15,7 @@ metadata:
   name: pufferpanel
 subsets:
   - addresses:
-    - ip: 192.168.1.12
+    - ip: 192.168.1.6
     ports:
     - protocol: TCP
       port: 80
@@ -31,9 +31,9 @@ spec:
   tls:
     - secretName: pufferpanel-tls
       hosts:
-        - mc.potatofrom.space
+        - mc.kliu.io
   rules:
-    - host: mc.potatofrom.space
+    - host: mc.kliu.io
       http:
         paths:
           - path: /
