@@ -15,7 +15,7 @@
   systemd.user.services.gsd-housekeeping.enable = lib.mkForce false;
 
   environment.systemPackages = with pkgs; [
-    arc-theme papirus-icon-theme
+    arc-theme papirus-icon-theme gnome3.gnome-tweak-tool
   ];
 
   home-manager.users.kevin = {

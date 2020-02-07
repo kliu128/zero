@@ -14,7 +14,7 @@
   boot.kernelParams = [ "i915.enable_psr=0" ];
   boot.blacklistedKernelModules = [ "iTCO_wdt" ];
   systemd.tmpfiles.rules = [
-    "w /sys/devices/platform/huawei-wmi/charge_thresholds - - - - 83 85"
+    "w /sys/devices/platform/huawei-wmi/charge_control_thresholds - - - - 83 85"
   ];
 
   virtualisation.docker.enableOnBoot = false;

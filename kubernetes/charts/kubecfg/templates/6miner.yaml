@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: 6miner
+  labels:
+    app: 6miner
+spec:
+  serviceName: 6miner
+  selector:
+    matchLabels:
+      name: 6miner
+  template:
+    metadata:
+      labels:
+        name: 6miner
+    spec:
+      containers:
+      - name: 6miner
+        image: pneumaticat/6miner
+        args: [-a, hns/bl2bsha3, -o, "handshake.6block.com:7701", -u, pot8to.001, -p, x, -m, opencl, --opcl-vendor=amd]
+        resources:
+          limits:
+            amd.com/gpu: 1

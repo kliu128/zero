@@ -99,6 +99,7 @@
         ./modules/docker.nix
         ./systems/you/desktop.nix
         ./systems/you/hw.nix
+        ./systems/you/nix.nix
         ./systems/you/power.nix
         ./systems/you/tinc.nix
       ];
