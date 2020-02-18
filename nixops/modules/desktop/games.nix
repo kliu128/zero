@@ -5,7 +5,7 @@
     # Games
     lutris multimc steam steam-run-native
     # Wine
-    wineWowPackages.staging winetricks samba # for ntlm_auth
+    wineWowPackages.unstable winetricks samba # for ntlm_auth
   ];
 
   hardware.opengl.driSupport32Bit = true; # for steam and wine

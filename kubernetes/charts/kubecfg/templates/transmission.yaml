@@ -24,17 +24,14 @@ spec:
               value: "100"
             - name: TRANSMISSION_RATIO_LIMIT_ENABLED
               value: "false"
-            - name: TRANSMISSION_LPD_ENABLED
-              value: "false"
-            - name: TRANSMISSION_DHT_ENABLED
-              value: "true"
-            - name: TRANSMISSION_PEX_ENABLED
-              value: "false"
             - name: LOCAL_NETWORK
               value: 192.168.0.0/16
-          envFrom:
-            - secretRef:
-                name: transmission-pia-auth
+            - name: OPENVPN_PROVIDER
+              value: CUSTOM
+            - name: OPENVPN_USERNAME
+              value: vpn
+            - name: OPENVPN_PASSWORD
+              value: vpn
           image: haugene/transmission-openvpn:latest
           name: transmission
           securityContext:
@@ -46,6 +43,9 @@ spec:
               name: incomplete
             - mountPath: /data/transmission-home
               name: data
+            - mountPath: /etc/openvpn/custom/default.ovpn
+              name: data
+              subPath: default.ovpn
       restartPolicy: Always
       volumes:
         - name: completed

@@ -13,16 +13,6 @@
       ./swap.nix
     ];
   
-  # AMDGPU ROCM
-  nixpkgs.overlays = [ (import (builtins.fetchTarball https://github.com/nixos-rocm/nixos-rocm/archive/master.tar.gz)) ];
-
-  hardware.opengl.extraPackages = with pkgs; [
-    rocm-opencl-icd
-  ];
-  environment.systemPackages = with pkgs; [
-    rocminfo rocm-smi rocm-opencl-runtime
-  ];
-
   # Boot
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -32,8 +22,8 @@
   
   # Video.
   console.earlySetup = true;
-  services.xserver.videoDrivers = ["modesetting" "amdgpu" ];
-  boot.kernelParams = [ "consoleblank=300" "amdgpu.dc=0" ];
+  services.xserver.videoDrivers = [ "amdgpu" ];
+  boot.kernelParams = [ "consoleblank=300" ];
 
   # Freeness (that is, not.)
   hardware.enableRedistributableFirmware = true; # for amdgpu

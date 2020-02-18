@@ -17,5 +17,11 @@
   systemd.services.nfs-idmapd.restartIfChanged = false;
   systemd.services.nfs-mountd.restartIfChanged = false;
   systemd.services.rpc-statd.restartIfChanged = false;
+
+  fileSystems."/srv/nfs/vms" = {
+    fsType = "none";
+    device = "/mnt/data3/Kevin/Computing/VMs";
+    options = [ "bind" ];
+  };
 }
 

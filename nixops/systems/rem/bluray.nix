@@ -4,7 +4,7 @@
   # Blu-ray/disk system tools
   environment.systemPackages = with pkgs; [
     # Ripping
-    k3b makemkv dvdisaster rubyripper flac
+    makemkv dvdisaster
   ];
   home-manager.users.kevin.home.file.".local/bin/ripper" = {
     executable = true;

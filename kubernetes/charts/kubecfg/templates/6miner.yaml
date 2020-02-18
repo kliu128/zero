@@ -17,7 +17,7 @@ spec:
       containers:
       - name: 6miner
         image: pneumaticat/6miner
-        args: [-a, hns/bl2bsha3, -o, "handshake.6block.com:7701", -u, pot8to.001, -p, x, -m, opencl, --opcl-vendor=amd]
+        args: [-a, "hns/bl2bsha3", -o, "handshake.6block.com:7701", -u, testtest.1, -p, x, -m, opencl, --opcl-vendor=amd]
         resources:
           limits:
             amd.com/gpu: 1

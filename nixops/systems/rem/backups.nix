@@ -4,13 +4,6 @@ let
   wave-1 = "*-*-* 02:30:00";
   wave-2 = "*-*-* 03:00:00";
   wave-3 = "*-*-* 04:00:00";
-
-  proxyConfig = ''
-    export http_proxy="$(cat /keys/pia-proxy.txt)"
-    export https_proxy=$http_proxy
-    export HTTP_PROXY=$http_proxy
-    export HTTPS_PROXY=$http_proxy
-  '';
 in {
   systemd.services.cloud-emergency-backup = {
     enable = true;
@@ -56,8 +49,6 @@ in {
       set -euo pipefail
 
       # Backup with monthly backup dirs and revisioned suffixes in each
-
-      ${proxyConfig}
 
       dir_format="+%Y-%m"
       monthly_backup_dir="$(env TZ=Etc/UTC date "$dir_format")"
@@ -109,8 +100,6 @@ in {
     script = ''
       set -euo pipefail
 
-      ${proxyConfig}
-
       rclone --config /keys/rclone.conf \
              sync "gsuite-mysmccd:Cleartext/hbg/" "gsuite-mysmccd-crypt:/Extended/Switch ROMs" \
              -v --transfers=4 --modify-window=1s --delete-during
@@ -127,8 +116,6 @@ in {
     };
     script = ''
       set -euo pipefail
-
-      ${proxyConfig}
 
       rclone --config /keys/rclone.conf \
              sync "gsuite-mysmccd:Cleartext/Air Crash Investigation/" "/mnt/storage/Kevin/Videos/TV Shows/Air Crash Investigation/" \
@@ -244,7 +231,7 @@ in {
         sync \
         --verbose --drive-formats ods,odt,odp,svg \
         --drive-alternate-export \
-        "gdrive-batchfiles:Sci" "/mnt/storage/Kevin/Backups/Scintillating/Mirror"
+        "gdrive-batchfiles:Sci" "/mnt/storage/Kevin/Backups/Scintillating/Mirror" || true
     '';
     readWritePaths = [ "/mnt/storage/Kevin/Backups/Scintillating/Mirror" "/keys" ];
     repo = "/mnt/storage/Kevin/Backups/Scintillating/Borg";
@@ -268,7 +255,6 @@ in {
       NotifyAccess = "all";
     };
     script = ''
-      ${proxyConfig}
       rclone --config /keys/rclone.conf mount gsuite-mysmccd-crypt: \
         /mnt/gsuite --vfs-cache-mode minimal --drive-use-trash=false \
         --allow-other --uid 1000 --gid 100
@@ -286,7 +272,6 @@ in {
       NotifyAccess = "all";
     };
     script = ''
-      ${proxyConfig}
       rclone --config /keys/rclone.conf \
         mount gsuite-mysmccd: /mnt/gsuite-root \
         --drive-use-trash=false \
@@ -329,26 +314,6 @@ in {
         --allow-other --allow-non-empty --uid 1000 --gid 100
     '';
   };
-  services.borgbackup.jobs.gschool = {
-    compression = "auto,zstd";
-    doInit = true;
-    encryption = {
-      mode = "authenticated-blake2";
-      passphrase = "";
-    };
-    extraCreateArgs = "--stats --progress -v";
-    paths = [ "/mnt/gschool/ABRHS Communal Study" ];
-    repo = "/mnt/storage/Kevin/Backups/ABRHS Communal Study";
-    privateTmp = false;
-    prune.keep = {
-      daily = 7;
-      weekly = 4;
-      monthly = 6;
-    };
-    startAt = wave-2;
-  };
-  systemd.services.borgbackup-job-gschool.serviceConfig.ProtectSystem = lib.mkForce false;
-  systemd.services.borgbackup-job-gschool.serviceConfig.ReadWritePaths = lib.mkForce [];
 
   # Can't just include it into nix config because rclone modifies it
   # periodically
@@ -357,10 +322,5 @@ in {
     permissions = "600"; # rclone must be able to modify
     destDir = "/keys";
     text = builtins.readFile ../../secrets/rclone.conf.initial;
-  };
-  deployment.keys."pia-proxy.txt" = {
-    permissions = "400";
-    destDir = "/keys";
-    text = builtins.readFile ../../secrets/pia-proxy.txt;
   };
 }

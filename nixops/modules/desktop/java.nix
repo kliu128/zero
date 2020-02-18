@@ -22,4 +22,17 @@ in {
 
   # Install Java editors
   environment.systemPackages = with pkgs; [ eclipses.eclipse-sdk jetbrains.idea-community maven ];
+
+  # Use light theme for Eclipse (see: Gracia)
+  home-manager.users.kevin.home.file.".local/share/applications/Eclipse.desktop".text = ''
+    [Desktop Entry]
+    Type=Application
+    Exec=env GTK_THEME=Adwaita eclipse
+    Terminal=false
+    Name=Eclipse IDE
+    Categories=Application;Development;
+    Icon=eclipse
+    Comment=Integrated Development Environment
+    GenericName=Integrated Development Environment
+  '';
 }
