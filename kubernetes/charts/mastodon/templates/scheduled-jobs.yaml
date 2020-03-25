@@ -24,7 +24,7 @@ spec:
           - name: {{ template "fullname" . }}-daily
             image: {{ .Values.image | quote }}
             imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
-            args: ["tootctl", "media", "remove"]
+            args: [sh, -c, "tootctl media remove && tootctl preview_cards remove --days 30"]
             envFrom:
               - secretRef:
                   name: {{ template "fullname" . }}-secrets

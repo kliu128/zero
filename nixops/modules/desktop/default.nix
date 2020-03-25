@@ -53,7 +53,7 @@
     # System tools
     atop beets borgbackup cowsay dnsutils dtrx file fortune google-cloud-sdk hdparm htop iftop iotop lm_sensors lolcat man-pages opentimestamps-client p7zip schedtool smartmontools spectre-meltdown-checker stress-ng telnet thefuck tree vim wget
     # Desktop applications
-    discord filezilla gpodder krita libreoffice-fresh pavucontrol thunderbird transmission_gtk vscodium youtube-dl zim
+    discord filezilla gpodder krita libreoffice-fresh pavucontrol thunderbird transmission_gtk vscodium youtube-dl zim zoom-us
     # Screen recording tools
     ffmpeg-full kdenlive
     # Anki and related packages (for LaTeX suppfort)

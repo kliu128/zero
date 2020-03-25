@@ -32,11 +32,13 @@
       imports = [
         ./modules/desktop
         ./modules/docker.nix
+        #./modules/fah.nix
         ./modules/kubernetes-common.nix
         ./modules/kubernetes-master.nix
         ./systems/rem/android.nix
         ./systems/rem/backups.nix
         ./systems/rem/bluray.nix
+        ./systems/rem/boinc.nix
         ./systems/rem/ddns.nix
         ./systems/rem/desktop.nix
         ./systems/rem/fusee-launcher.nix
@@ -61,7 +63,7 @@
 
       # Options as Kubernetes entry node
       networking.firewall.allowedTCPPorts = [
-        22 80 113 443 631
+        22 80 113 443 631 8443
         # Mail ports
         25 143 587 993 4190 # Sieve
         # TLS turn ports
@@ -75,7 +77,8 @@
         # Scintillating mail server ports
         2025 20143 20465 20587 20993
         # Storj
-        28967 ];
+        28967 30303 ];
+      networking.firewall.allowedUDPPorts = [ 30303 ];
       networking.firewall.allowedUDPPortRanges = [
         { from = 49152; to = 65535; } # TURN relay
       ];
@@ -117,15 +120,18 @@
 
       imports = [
         ./modules/docker.nix
+        #./modules/fah.nix
         ./modules/kubernetes-common.nix
         ./modules/kubernetes-node.nix
         ./systems/karmaxer/hw.nix
         ./systems/karmaxer/network.nix
         ./systems/karmaxer/services.nix
         ./systems/karmaxer/tinc.nix
+        ./systems/karmaxer/znapzend.nix
       ];
 
       networking.hostName = "karmaxer";
+      networking.hostId = "630a0500";
 
       system.stateVersion = "19.09";
 

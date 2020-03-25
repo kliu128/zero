@@ -45,6 +45,6 @@ data:
       "stratum_user": "testtest.1",
       "stratum_pass": "123",
       "mode": "pool",
-      "poolDifficulty": 100,
+      "poolDifficulty": -1,
       "muteWinningFanfare": true
     }

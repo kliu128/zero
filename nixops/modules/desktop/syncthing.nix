@@ -17,8 +17,7 @@
           id = "RPLTW4L-XMQPMH3-U22OP4B-252EHUL-QJQB4RE-FQDRZNY-7VV6MAD-NOY5GAT";
         };
         you = {
-          id = "STZY4Y5-5MM6VLA-Q5B4QBY-G75FJSC-35DY67V-EJZL5FV-SANZUXT-NDGBRAL";
-          addresses = [ "dynamic" "tcp://10.99.0.4:22000" ];
+          id = "EZM3INK-XK464QB-HGVD7A6-BWHFHWG-BLXXH7V-HQXOD6J-CZHOTRU-GCDXOQH";
         };
       };
       folders = {
@@ -30,7 +29,7 @@
         "/home/kevin/Personal Documents" = {
           id = "skrpu-wk5qc";
           label = "Documents";
-          devices = [ "rem" "momo" "you" ];
+          devices = [ "rem" "you" ];
         };
         "/home/kevin/Personal Documents/Org Mode" = {
           id = "org-mode";
@@ -40,7 +39,7 @@
         "/mnt/storage/Kevin/Personal/Media/SYNCED OnePlus 6t Current Photos" = {
           id = "oneplus_a6010_81rt-photos";
           label = "Camera";
-          devices = [ "rem" "momo" ];
+          devices = [ "rem" ];
         };
       };
     };

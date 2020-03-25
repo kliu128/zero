@@ -4,7 +4,7 @@
   environment.systemPackages = [ pkgs.chromium ];
   programs.chromium.enable = true;
   nixpkgs.config.chromium = {
-    enablePepperFlash = true;
+    enablePepperFlash = false;
     enableWideVine = true;
   };
 }

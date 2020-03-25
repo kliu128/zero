@@ -62,6 +62,7 @@ in {
              --bwlimit 8650k --transfers 8 \
              --suffix "$backup_suffix" \
              --exclude '/Computing/Data/**' \
+             --exclude '/Computing/VMs/**' \
              --exclude '/Incoming/**' \
              --exclude 'node_modules/**' \
              --exclude '.fuse_hidden*' \

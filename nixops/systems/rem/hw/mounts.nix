@@ -8,7 +8,7 @@
   boot.zfs = {
     forceImportRoot = false;
     forceImportAll = false;
-    enableUnstable = true;
+    enableUnstable = false;
     requestEncryptionCredentials = true;
   };
   services.kubernetes.path = [ pkgs.zfs ];

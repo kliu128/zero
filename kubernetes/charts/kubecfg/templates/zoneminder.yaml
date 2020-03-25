@@ -17,9 +17,11 @@ spec:
       nodeSelector:
         kubernetes.io/hostname: rem
       containers:
-        - image: zoneminderhq/zoneminder:latest-ubuntu18.04
+        - image: dlandon/zoneminder
           imagePullPolicy: Always
           name: zoneminder
+          securityContext:
+            privileged: true
           livenessProbe:
             httpGet:
               path: /zm/
@@ -32,18 +34,9 @@ spec:
             - mountPath: /var/cache/zoneminder/events
               subPath: events
               name: vids
-            - mountPath: /var/lib/mysql
+            - mountPath: /config
               name: data
-            - mountPath: /dev/shm
-              name: shm
-            - mountPath: /etc/mysql/conf.d/checksums.cnf
-              name: config
-              subPath: checksums.cnf
-      restartPolicy: Always
       volumes:
-        - name: shm
-          emptyDir:
-            medium: Memory
         - name: config
           configMap:
             name: zoneminder-config
@@ -54,17 +47,6 @@ spec:
         - name: data
           persistentVolumeClaim:
             claimName: zoneminder-data
----
-kind: ConfigMap
-apiVersion: v1
-metadata:
-  name: zoneminder-config
-  labels:
-    app: zoneminder
-data:
-  checksums.cnf: |
-    [mysqld]
-    innodb_log_checksums = ON
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -112,32 +94,3 @@ spec:
             backend:
               serviceName: zoneminder
               servicePort: http
----
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-  name: zoneminder
-spec:
-  podSelector:
-    matchLabels:
-      app: zoneminder
-  policyTypes:
-  - Ingress
-  - Egress
-  ingress:
-  # nginx-ingress only
-  - from:
-    - podSelector:
-        matchLabels:
-          app: nginx-ingress
-    ports:
-    - protocol: TCP
-      port: 80
-  egress:
-  # Allow egress to cameras
-  - to:
-    - ipBlock:
-        cidr: 192.168.1.7/32
-    ports:
-    - protocol: TCP
-      port: 8081

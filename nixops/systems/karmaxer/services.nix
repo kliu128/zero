@@ -4,7 +4,7 @@
   services.gitlab-runner = {
     enable = true;
     configOptions = {
-      concurrent = 1;
+      concurrent = 2;
       runners = [
         {
           name = "docker-runner";
@@ -16,9 +16,12 @@
             image = "ruby:2.1";
             privileged = true;
             disable_cache = false;
-            volumes = ["/certs/client" "/builds:/dev/shm/gitlab-runner" "/cache" "/dev/shm:/dev/shm"];
-            shm_size = 0;
             network_mode = "host";
+            volumes = [
+              # Prevent cypress hangs
+              # see https://github.com/cypress-io/cypress/issues/350
+              "/dev/shm:/dev/shm"
+            ];
           };
         }
       ];

@@ -14,6 +14,11 @@
     content /mnt/data3/SnapRAID.content
     content /mnt/wdgreen1tb/SnapRAID.content
     exclude /Incoming/
+    exclude /Computing/VMs/
+    exclude /Computing/StorjData/
+    # Fails for some reason with "data change at <file> with position '0'"
+    # Not that essential so just exclude it.
+    exclude /Backups/Scintillating/
   '';
   environment.systemPackages = with pkgs; [ snapraid ];
 

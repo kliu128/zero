@@ -33,57 +33,12 @@ releases:
   - name: mastodon
     namespace: default
     labels:
+      mastodon: "true"
       has-migrations: "true"
     chart: ./charts/mastodon
     values:
       - ./values/mastodon.yaml
       - ./values/mastodon.secret.yaml
-  - name: mc-carta
-    namespace: default
-    chart: ./charts/minecraft
-    values:
-      - ./values/mc.yaml
-      - ./values/mc-carta.yaml
-  - name: mc-ralph
-    namespace: default
-    chart: ./charts/minecraft
-    values:
-      - ./values/mc.yaml
-      - ./values/mc-ralph.yaml
-  - name: mc-rlcraft
-    namespace: default
-    labels:
-      x: "true"
-    chart: ./charts/minecraft
-    values:
-      - ./values/mc.yaml
-      - ./values/mc-rlcraft.yaml
-    # Requested by Steven, Will 2019-12-23
-  - name: mc-ftb-academy
-    namespace: default
-    chart: ./charts/minecraft
-    values:
-      - ./values/mc.yaml
-      - ./values/mc-ftb-academy.yaml
-  - name: mc-rohan
-    namespace: default
-    chart: ./charts/minecraft
-    values:
-      - ./values/mc.yaml
-      - ./values/mc-rohan.yaml
-  - name: mc-will-sf4
-    namespace: default
-    chart: ./charts/minecraft
-    values:
-      - ./values/mc.yaml
-      - ./values/mc-will-sf4.yaml
-    # Will MC.Eternal
-  - name: mc-will-eternal
-    namespace: default
-    chart: ./charts/minecraft
-    values:
-      - ./values/mc.yaml
-      - ./values/mc-will-eternal.yaml
   - name: factorio
     namespace: default
     chart: stable/factorio
@@ -112,7 +67,7 @@ releases:
   - name: gitlab-runner
     namespace: default
     chart: gitlab/gitlab-runner
-    version: 0.9.0
+    version: 0.14.0
     values:
       - ./values/gitlab-runner.secret.yaml
   - name: kubecfg

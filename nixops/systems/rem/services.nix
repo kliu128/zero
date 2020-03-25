@@ -43,4 +43,16 @@
     device = "/srv/nfs/pvcs/default-mc-aneesh-vanilla-minecraft-datadir-pvc-e8ee47ba-c06c-11e9-a63b-74d435e2529b";
     options = [ "bind" ];
   };
+
+  services.sslh = {
+    enable = true;
+    port = 8443;
+    appendConfig = ''
+      protocols:
+      (
+        { name: "ssh"; service: "ssh"; host: "localhost"; port: "22"; probe: "builtin"; },
+        { name: "ssl"; host: "localhost"; port: "443"; probe: "builtin"; }
+      );
+    '';
+  };
 }

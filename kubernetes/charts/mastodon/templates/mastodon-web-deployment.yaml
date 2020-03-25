@@ -10,8 +10,6 @@ metadata:
 spec:
   strategy:
     type: RollingUpdate
-    maxSurge: 1
-    maxUnavailable: 0
   template:
     metadata:
       labels:
@@ -31,26 +29,6 @@ spec:
         ports:
         - name: web
           containerPort: 3000
-        livenessProbe:
-          httpGet:
-            path: /about
-            port: web
-            httpHeaders:
-            - name: X-Forwarded-Proto
-              value: "https"
-          initialDelaySeconds: 60
-          periodSeconds: 10
-          timeoutSeconds: 5
-        readinessProbe:
-          httpGet:
-            path: /about
-            port: web
-            httpHeaders:
-            - name: X-Forwarded-Proto
-              value: "https"
-          initialDelaySeconds: 3
-          periodSeconds: 10
-          timeoutSeconds: 5
         resources:
 {{ toYaml .Values.resources | indent 10 }}
         volumeMounts:

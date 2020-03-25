@@ -23,7 +23,7 @@
   # Video.
   console.earlySetup = true;
   services.xserver.videoDrivers = [ "amdgpu" ];
-  boot.kernelParams = [ "consoleblank=300" ];
+  boot.kernelParams = [ "amdgpu.dc=0" "consoleblank=300" ];
 
   # Freeness (that is, not.)
   hardware.enableRedistributableFirmware = true; # for amdgpu
@@ -87,19 +87,24 @@
     };
     startAt = "minutely";
   };
+  
   # Renice
   systemd.services.renice = {
     description = "Renice services";
     path = with pkgs; [ utillinux coreutils procps ];
     script = ''
-      chrt -p --rr -R -a 99 $(pgrep X) || true
+      chrt -p --rr -R -a 1 $(pidof gnome-shell) || true
       renice -n 5 -p $(pgrep z_wr_iss) $(pgrep z_rd_int) $(pgrep z_) $(pgrep spl_) $(pgrep nfs) $(pgrep xprtiod) || true
+      pkill winedevice.exe || true
+      schedtool -D $(pgrep -f ubuntu-nvidia) || true
     '';
     serviceConfig = {
       Type = "oneshot";
     };
     startAt = "minutely";
   };
+
+  services.udisks2.enable = lib.mkForce false;
 
   services.udev.extraRules = ''
     ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{power/control}="auto", ATTR{power/autosuspend}="300"

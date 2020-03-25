@@ -3,9 +3,10 @@
 {
   services.xserver.displayManager.gdm = {
     enable = true;
-    wayland = false;
+    wayland = true;
     autoSuspend = false;
   };
+  services.pipewire.enable = true;
   services.xserver.desktopManager.gnome3.enable = true;
 
   # Disable annoyances

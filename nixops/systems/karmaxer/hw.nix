@@ -22,10 +22,17 @@
   boot.kernelParams = [ "console=ttyS0" ];
   boot.extraModulePackages = [ ];
 
+  boot.supportedFilesystems = [ "zfs" ];
+
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/958db130-44d8-423d-a44e-0602a1a2700b";
       fsType = "ext4";
     };
+  
+  fileSystems."/var/lib/libvirt/images/hdd" = {
+    device = "vms/vms"; 
+    fsType = "zfs";
+  };
 
   swapDevices = [ ];
 
