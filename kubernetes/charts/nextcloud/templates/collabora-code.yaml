@@ -15,7 +15,7 @@ spec:
         app: {{ template "nextcloud.name" . }}-collabora-code
     spec:
       containers:
-      - image: collabora/code:4.2-snapshot
+      - image: collabora/code:latest
         imagePullPolicy: Always
         env:
           - name: domain

@@ -40,3 +40,132 @@ spec:
             backend:
               serviceName: pufferpanel
               servicePort: http
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: dynmap
+spec:
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8123
+    name: http
+---
+kind: Endpoints
+apiVersion: v1
+metadata:
+  name: dynmap
+subsets:
+  - addresses:
+    - ip: 192.168.1.6
+    ports:
+    - protocol: TCP
+      port: 8123
+      name: http
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/tls-acme: "true"
+  name: dynmap
+spec:
+  tls:
+    - secretName: dynmap-tls
+      hosts:
+        - dynmap.kliu.io
+  rules:
+    - host: dynmap.kliu.io
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: dynmap
+              servicePort: http
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: pterodactyl
+spec:
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+    name: http
+---
+kind: Endpoints
+apiVersion: v1
+metadata:
+  name: pterodactyl
+subsets:
+  - addresses:
+    - ip: 192.168.1.16
+    ports:
+    - protocol: TCP
+      port: 80
+      name: http
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/tls-acme: "true"
+  name: pterodactyl
+spec:
+  tls:
+    - secretName: pterodactyl-tls
+      hosts:
+        - pt.kliu.io
+  rules:
+    - host: pt.kliu.io
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: pterodactyl
+              servicePort: http
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: pterodactyl-node
+spec:
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+    name: http
+---
+kind: Endpoints
+apiVersion: v1
+metadata:
+  name: pterodactyl-node
+subsets:
+  - addresses:
+    - ip: 192.168.1.16
+    ports:
+    - protocol: TCP
+      port: 8080
+      name: http
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/tls-acme: "true"
+  name: pterodactyl-node
+spec:
+  tls:
+    - secretName: pterodactyl-node-tls
+      hosts:
+        - pt-node.kliu.io
+  rules:
+    - host: pt-node.kliu.io
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: pterodactyl-node
+              servicePort: http

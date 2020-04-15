@@ -8,4 +8,5 @@
   networking.firewall.rejectPackets = true;
   networking.firewall.logRefusedConnections = true;
   networking.firewall.logRefusedPackets = false;
+  networking.firewall.checkReversePath = false;
 }

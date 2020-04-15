@@ -7,6 +7,10 @@
       url = "https://github.com/rycee/home-manager/archive/450571056552c9311fcb2894328696b535265593.tar.gz";
       sha256 = "1rlv234m0bqj9x2y9wnl8z3yq8mixzq8332nqlb8fw9k8mazis6s";
     })}/nixos"
+    "${builtins.fetchGit {
+      url = "https://github.com/msteen/nixos-vsliveshare.git";
+      ref = "refs/heads/master";
+    }}"
 
     ./android.nix
     ./audio
@@ -65,6 +69,11 @@
     # VM and DevOps
     virtmanager
   ];
+
+  services.vsliveshare = {
+    enable = true;
+    extensionsDir = "$HOME/.vscode-oss/extensions";
+  };
 
   # Must be done on the system level (not the homez-manager level) to install
   # zsh completion for packages in environment.systemPackages

@@ -39,7 +39,7 @@
     fsType = "ext4";
   };
 
-  fileSystems."/mnt/data0" = {
+  fileSystems."data0" = {
     device = "/dev/mapper/data0";
     options = [ "nofail" ];
     encrypted = {
@@ -55,9 +55,9 @@
     keyFile = ../../../secrets/keys/keyfile-data0.bin;
   };
 
-  fileSystems."/mnt/data1" = {
+  fileSystems."/mnt/storage" = {
     device = "/dev/mapper/data1";
-    options = [ "nofail" ];
+    options = [ "nofail" "compress=zstd" ];
     encrypted = {
       enable = true;
       blkDev = "/dev/disk/by-uuid/dff62bd6-6e2f-4e77-b1b0-226a13aa0581";
@@ -71,7 +71,7 @@
     keyFile = ../../../secrets/keys/keyfile-data1.bin;
   };
 
-  fileSystems."/mnt/data2" = {
+  fileSystems."data2" = {
     device = "/dev/mapper/data2";
     options = [ "nofail" ];
     encrypted = {
@@ -87,7 +87,7 @@
     keyFile = ../../../secrets/keys/keyfile-data2.bin;
   };
 
-  fileSystems."/mnt/data3" = {
+  fileSystems."data3" = {
     device = "/dev/mapper/data3";
     options = [ "nofail" ];
     encrypted = {
@@ -105,7 +105,7 @@
   };
   
   # External WD Green 1 TB
-  fileSystems."/mnt/wdgreen1tb" = {
+  fileSystems."wdgreen1tb" = {
     device = "/dev/mapper/wdgreen1tb";
     options = [ "nofail" ];
     encrypted = {
@@ -120,40 +120,44 @@
     destDir = "/keys";
     keyFile = ../../../secrets/keys/keyfile-wdgreen1tb.bin;
   };
-  # Seagate Backup Plus Hub
-  fileSystems."/mnt/parity0" = {
-    device = "/dev/mapper/parity0";
-    options = [ "nofail" "errors=continue" ];
+
+  # External WD My Book 12TB
+  fileSystems."wd-my-book-12tb" = {
+    device = "/dev/mapper/wd-my-book-12tb";
+    options = [ "nofail" ];
     encrypted = {
       enable = true;
-      blkDev = "/dev/disk/by-uuid/b9eb89d2-c5f8-4eb1-b1c0-601af8b8877c";
-      keyFile = "/mnt-root/keys/keyfile-parity0.bin";
-      label = "parity0";
+      blkDev = "/dev/disk/by-uuid/cc16bf6f-78d4-4bb3-abd9-82efbcf68ddd";
+      keyFile = "/mnt-root/keys/keyfile-wd-my-book-12tb.bin";
+      label = "wd-my-book-12tb";
     };
   };
-  deployment.keys."keyfile-parity0.bin" = {
+  fileSystems."/mnt/overflow" = {
+    device = "overflow/overflow";
+    fsType = "zfs";
+    options = [ "nofail" ];
+  };
+  deployment.keys."keyfile-wd-my-book-12tb.bin" = {
     permissions = "400";
     destDir = "/keys";
-    keyFile = ../../../secrets/keys/keyfile-parity0.bin;
+    keyFile = ../../../secrets/keys/keyfile-wd-my-book-12tb.bin;
   };
 
-  systemd.services.storage = {
-    description = "MergerFS Storage Pool";
-    wantedBy = [ "multi-user.target" ];
-    restartIfChanged = false;
+  systemd.services.lvm-pv-activate = {
+    description = "Activate LVM Physical Volumes";
+    path = [ pkgs.lvm2 ];
+    script = ''
+      lvm vgchange -ay
+    '';
     serviceConfig = {
-      Restart = "always";
-      Type = "forking";
-      ExecStart = ''
-        ${pkgs.mergerfs}/bin/mergerfs -o category.create=mfs,use_ino,allow_other,nonempty,moveonenospc=true,minfreespace=20G /mnt/data*:/mnt/wdgreen1tb /mnt/storage
-      '';
+      Type = "oneshot";
+      RemainAfterExit = true;
     };
-  };
-
-  deployment.keys."keyfile-vms.bin" = {
-    permissions = "400";
-    destDir = "/keys";
-    keyFile = ../../../secrets/keys/keyfile-vms.bin;
+    unitConfig = {
+      DefaultDependencies = false;
+      Before = [ "local-fs-pre.target" ];
+    };
+    wantedBy = [ "local-fs-pre.target" ];
   };
 
   # Virtual drives

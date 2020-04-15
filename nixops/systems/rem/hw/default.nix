@@ -9,7 +9,6 @@
       ./kernel.nix
       ./me.nix
       ./mounts.nix
-      ./snapraid.nix
       ./swap.nix
     ];
   
@@ -23,7 +22,6 @@
   # Video.
   console.earlySetup = true;
   services.xserver.videoDrivers = [ "amdgpu" ];
-  boot.kernelParams = [ "amdgpu.dc=0" "consoleblank=300" ];
 
   # Freeness (that is, not.)
   hardware.enableRedistributableFirmware = true; # for amdgpu

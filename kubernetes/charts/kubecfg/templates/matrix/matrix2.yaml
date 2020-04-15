@@ -94,7 +94,7 @@ kind: Ingress
 metadata:
   annotations:
     kubernetes.io/tls-acme: "true"
-    nginx.ingress.kubernetes.io/proxy-body-size: 100m
+    nginx.ingress.kubernetes.io/proxy-body-size: 4000m
     nginx.ingress.kubernetes.io/proxy-connect-timeout: "14400"
     nginx.ingress.kubernetes.io/proxy-send-timeout: "14400"
     nginx.ingress.kubernetes.io/proxy-read-timeout: "14400"

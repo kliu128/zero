@@ -32,7 +32,7 @@
       imports = [
         ./modules/desktop
         ./modules/docker.nix
-        #./modules/fah.nix
+        ./modules/fah.nix
         ./modules/kubernetes-common.nix
         ./modules/kubernetes-master.nix
         ./systems/rem/android.nix
@@ -120,7 +120,7 @@
 
       imports = [
         ./modules/docker.nix
-        #./modules/fah.nix
+        ./modules/fah.nix
         ./modules/kubernetes-common.nix
         ./modules/kubernetes-node.nix
         ./systems/karmaxer/hw.nix

@@ -4,9 +4,10 @@ let
   wave-1 = "*-*-* 02:30:00";
   wave-2 = "*-*-* 03:00:00";
   wave-3 = "*-*-* 04:00:00";
+  enableBackups = false;
 in {
   systemd.services.cloud-emergency-backup = {
-    enable = true;
+    enable = enableBackups;
     description = "Cloud Emergency Backup";
     path = [ pkgs.rclone ];
     script = ''
@@ -36,7 +37,7 @@ in {
 
   # G-Suite backup
   systemd.services.gsuite-backup = {
-    enable = true;
+    enable = enableBackups;
     description = "G-Suite Backup";
     path = [ pkgs.rclone pkgs.restic pkgs.gnugrep ];
     serviceConfig = {
@@ -109,7 +110,7 @@ in {
     startAt = wave-2;
   };
   systemd.services.aci-sync = {
-    enable = true;
+    enable = enableBackups;
     path = [ pkgs.rclone ];
     serviceConfig = {
       Nice = 19;
@@ -147,7 +148,7 @@ in {
       weekly = 4;
       monthly = 6;
     };
-    startAt = wave-2;
+    startAt = (if enableBackups then wave-2 else []);
   };
 
   # Root filesystem backup
@@ -174,7 +175,7 @@ in {
       weekly = 4;
       monthly = 3;
     };
-    startAt = wave-1;
+    startAt = (if enableBackups then wave-1 else []);
   };
   systemd.services.borgbackup-job-root.serviceConfig.SuccessExitStatus = [ 1 ];
   environment.etc."keys/backups.borg-key" = {
@@ -192,7 +193,7 @@ in {
 
   # /boot backup
   systemd.services.boot-backup = {
-    enable = true;
+    enable = enableBackups;
     description = "/boot Backup";
     path = [ pkgs.rsync ];
     script = ''
@@ -219,7 +220,7 @@ in {
     unitConfig = {
       RequiresMountsFor = [ "/mnt/storage" ];
     };
-    startAt = wave-2;
+    startAt = (if enableBackups then wave-2 else []);
   };
   services.borgbackup.jobs.scintillating-backup = {
     paths = [ "/mnt/storage/Kevin/Backups/Scintillating/Mirror" ];
@@ -241,7 +242,7 @@ in {
       weekly = 4;
       monthly = 6;
     };
-    startAt = wave-2;
+    startAt = (if enableBackups then wave-2 else []);
   };
 
   systemd.services.gsuite-mount = {
