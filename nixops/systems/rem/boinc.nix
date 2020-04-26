@@ -5,8 +5,8 @@ let
 in {
   nixpkgs.overlays = [ nixos_rocm ];
   nixpkgs.config.rocmTargets = [ "gfx803" ];
-  hardware.opengl.extraPackages = with pkgs; [ rocm-opencl-icd ];
-  environment.systemPackages = with pkgs; [
-    rocminfo rocm-opencl-runtime fahviewer fahcontrol
-  ];
+  # hardware.opengl.extraPackages = with pkgs; [ rocm-opencl-icd ];
+  # environment.systemPackages = with pkgs; [
+  #  rocminfo rocm-opencl-runtime fahviewer fahcontrol
+  # ];
 }

@@ -4,7 +4,7 @@ let
   wave-1 = "*-*-* 02:30:00";
   wave-2 = "*-*-* 03:00:00";
   wave-3 = "*-*-* 04:00:00";
-  enableBackups = false;
+  enableBackups = true;
 in {
   systemd.services.cloud-emergency-backup = {
     enable = enableBackups;
@@ -39,7 +39,7 @@ in {
   systemd.services.gsuite-backup = {
     enable = enableBackups;
     description = "G-Suite Backup";
-    path = [ pkgs.rclone pkgs.restic pkgs.gnugrep ];
+    path = [ pkgs.rclone pkgs.gnugrep ];
     serviceConfig = {
       Nice = 19;
       SyslogIdentifier = "gsuite-backup";
@@ -152,43 +152,20 @@ in {
   };
 
   # Root filesystem backup
-  services.borgbackup.jobs.root = {
-    doInit = true;
-    compression = "auto,zstd";
-    encryption = {
-      mode = "repokey";
-      passphrase = builtins.readFile ../../secrets/storage-borg-password.txt;
+  services.znapzend = {
+    enable = false;
+    zetup.root = {
+      dataset = "rpool/nixos/root";
+      plan = 	"1h=>10min,1d=>1h,1w=>1d";
+      destinations.wd.dataset = "wd-my-book-12tb/backups/root";
     };
-    exclude = [
-      "sh:/home/*/.cache/*"
-      "sh:/var/lib/docker/*"
-      "sh:/var/lib/kubernetes/*"
-      "sh:/var/log/*"
-      "sh:/var/tmp/*"
-      "sh:/var/cache/*"
+  };
+  users.users.znapzend = {
+    isSystemUser = true;
+    shell = pkgs.bashInteractive;
+    openssh.authorizedKeys.keys = [
+      "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDObwE0sKBodUOIVnjB1apf5OLD3m2i5XinoIaY7wEjfYsI/XRN+j5omgJwqM85IWEhGdS4XmqsXn0ft8/igVjLgiLLVMg9NWNtPRjKstGiwl2tzsEwSFmHEsTeHQyneIOgYhbPUJS796YWsSwAUNkfgtubpJgGRcTXe/NlSnLoH+is/eE0w3+kUjC9r4aNP5Rh0+K17RwTx2eP4arY4IzPD1uQ/ui4s4Nqw1RsVM1sT3YvCU5V+hKrahFme9dYS6UDy+yjpomyEWOZJsTb8k6AbctMVzGrA1X73xkqZ82DTXA+cUAM01gOvFzt5RrwpA2GEDIfp+o9+ARuHtFpH7CM7uKnKWrtR4JfRbPcIWTwDqh0dTa7nY1xQF6U0nsOs/ywguqeJTS2ncTp9T+uO8QGgJjdh3N31Y9swpQml1DnIH2RawDsQOalt5U+3tPseT2+kYdHNO6UOnpXFsSdtVwY5F3LwjJRlrEiCA5HtX+zPO3nqExzhDPpNJ1U6ks/KR8= kevin@rem" # karmaxer znapzend ssh key
     ];
-    extraCreateArgs = "--one-file-system --stats";
-    paths = [ "/" ];
-    repo = "/mnt/storage/Kevin/Backups/Systems/storage-borg";
-    prune.keep = {
-      daily = 7;
-      weekly = 4;
-      monthly = 3;
-    };
-    startAt = (if enableBackups then wave-1 else []);
-  };
-  systemd.services.borgbackup-job-root.serviceConfig.SuccessExitStatus = [ 1 ];
-  environment.etc."keys/backups.borg-key" = {
-    mode = "400";
-    text = builtins.readFile ../../secrets/keys/backups.borg-key;
-  };
-
-  # Backup hosting for Scintillating
-  services.borgbackup.repos.scintillating = {
-    # Placeholder
-    authorizedKeys = [ (import ../../ssh-keys.nix).root-karmaxer ];
-    path = "/mnt/storage/Kevin/Backups/Systems/scintillating-borg";
-    quota = "250G";
   };
 
   # /boot backup

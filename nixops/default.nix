@@ -91,27 +91,6 @@
       # should.
       system.stateVersion = "19.09"; # Did you read the comment?
     };
-  
-  you =
-    { config, pkgs, lib, ... }:
-    {
-      deployment.targetHost = "10.99.0.4";
-
-      imports = [
-        ./modules/desktop
-        ./modules/docker.nix
-        ./systems/you/desktop.nix
-        ./systems/you/hw.nix
-        ./systems/you/nix.nix
-        ./systems/you/power.nix
-        ./systems/you/tinc.nix
-      ];
-
-      networking.hostName = "you";
-      networking.hostId = "b9123efc";
-
-      system.stateVersion = "19.09";
-    };
 
   karmaxer =
     { config, pkgs, lib, ... }:

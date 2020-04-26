@@ -33,4 +33,7 @@
       Kind = "bridge";
     };
   };
+
+  services.tailscale.enable = true;
+  environment.systemPackages = [ pkgs.tailscale ];
 }

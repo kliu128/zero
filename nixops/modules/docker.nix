@@ -16,7 +16,6 @@
     after = [ "nfs-server.service" "remote-fs.target" ];
     wants = [ "nfs-server.service" "remote-fs.target" ];
     restartIfChanged = false;
-    serviceConfig.Nice = 10;
   };
 
   systemd.services.docker-prune-enhanced = {

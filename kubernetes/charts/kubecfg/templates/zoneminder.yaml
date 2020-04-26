@@ -17,7 +17,7 @@ spec:
       nodeSelector:
         kubernetes.io/hostname: rem
       containers:
-        - image: dlandon/zoneminder
+        - image: arturol76/zoneminder:v7
           imagePullPolicy: Always
           name: zoneminder
           securityContext:

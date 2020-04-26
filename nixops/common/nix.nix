@@ -11,6 +11,7 @@
   nix.extraOptions = ''
     binary-caches-parallel-connections = 4
   '';
+  systemd.services.nix-daemon.serviceConfig.CPUSchedulingPolicy = "idle";
 
   # Increase open file limit to avoid running out of file descriptors when
   # deploying NixOS

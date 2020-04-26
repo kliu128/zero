@@ -1,49 +1,6 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: pufferpanel
-spec:
-  ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 80
-    name: http
----
-kind: Endpoints
-apiVersion: v1
-metadata:
-  name: pufferpanel
-subsets:
-  - addresses:
-    - ip: 192.168.1.6
-    ports:
-    - protocol: TCP
-      port: 80
-      name: http
----
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  annotations:
-    kubernetes.io/tls-acme: "true"
-  name: pufferpanel
-spec:
-  tls:
-    - secretName: pufferpanel-tls
-      hosts:
-        - mc.kliu.io
-  rules:
-    - host: mc.kliu.io
-      http:
-        paths:
-          - path: /
-            backend:
-              serviceName: pufferpanel
-              servicePort: http
----
-kind: Service
-apiVersion: v1
-metadata:
   name: dynmap
 spec:
   ports:
@@ -58,7 +15,7 @@ metadata:
   name: dynmap
 subsets:
   - addresses:
-    - ip: 192.168.1.6
+    - ip: 192.168.1.16
     ports:
     - protocol: TCP
       port: 8123

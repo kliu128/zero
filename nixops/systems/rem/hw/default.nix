@@ -9,6 +9,7 @@
       ./kernel.nix
       ./me.nix
       ./mounts.nix
+      ./snapraid.nix
       ./swap.nix
     ];
   
@@ -79,22 +80,6 @@
     script = ''
       sysctl -w kernel.panic_on_oops=0
       sysctl -w kernel.sysrq=1
-    '';
-    serviceConfig = {
-      Type = "oneshot";
-    };
-    startAt = "minutely";
-  };
-  
-  # Renice
-  systemd.services.renice = {
-    description = "Renice services";
-    path = with pkgs; [ utillinux coreutils procps ];
-    script = ''
-      chrt -p --rr -R -a 1 $(pidof gnome-shell) || true
-      renice -n 5 -p $(pgrep z_wr_iss) $(pgrep z_rd_int) $(pgrep z_) $(pgrep spl_) $(pgrep nfs) $(pgrep xprtiod) || true
-      pkill winedevice.exe || true
-      schedtool -D $(pgrep -f ubuntu-nvidia) || true
     '';
     serviceConfig = {
       Type = "oneshot";

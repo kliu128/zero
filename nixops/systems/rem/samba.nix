@@ -17,14 +17,7 @@
         "path" = "/mnt/storage";
         "read only" = false;
         "acl allow execute always" = true; # Allow executing EXEs from network
-        "allow hosts" = "192.168.1. 10.99.0.4";
-      };
-      home = {
-        "browseable" = "yes";
-        "path" = "/home/kevin";
-        "read only" = false;
-        "acl allow execute always" = true; # Allow executing EXEs from network
-        "allow hosts" = "10.99.0.4"; # you only
+        "allow hosts" = "192.168.1.";
       };
       pluralsight = {
         "browseable" = "yes";

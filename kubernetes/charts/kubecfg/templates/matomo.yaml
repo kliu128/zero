@@ -15,7 +15,7 @@ spec:
         app: matomo
     spec:
       containers:
-        - image: matomo:3.11.0
+        - image: matomo:3.13.4
           env:
             - name: MYSQL_USER
               value: matomo

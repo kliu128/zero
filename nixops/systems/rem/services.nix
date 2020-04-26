@@ -1,49 +1,6 @@
 { config, lib, pkgs, ... }:
 
 {
-  services.transmission.enable = true;
-
-  systemd.services.hack3bot = {
-    enable = false;
-    description = "Hack3 Bot";
-    path = [ pkgs.yarn ];
-    script = ''
-      export BOT_TOKEN=$(cat /keys/hack3bot.token)
-      cd /home/kevin/Projects/hack3bot
-      yarn start
-    '';
-    wants = [ "network-online.target" ];
-    after = [ "network-online.target" ];
-    wantedBy = [ "multi-user.target" ];
-  };
-  deployment.keys."hack3bot.token" = {
-    permissions = "600"; # rclone must be able to modify
-    destDir = "/keys";
-    text = builtins.readFile ../../secrets/hack3bot.token;
-  };
-  
-  users.users.aneesh = {
-    uid = 1007;
-    hashedPassword = "$6$UzrMih86A0guoL$n8XvA2W3cHzb89Hpu..WYlgJ464U.11wkxf.5qspj1H90U2c4CKukTISquOfGSAOj0KNmJ5ieYdXeOKxyNBSQ0";
-  };
-  services.openssh.allowSFTP = false;
-  services.openssh.extraConfig = ''
-    Subsystem sftp internal-sftp
-    Match User aneesh
-      ChrootDirectory /srv/chroot
-      AllowTCPForwarding no
-      X11Forwarding no
-      PasswordAuthentication yes
-      PubkeyAuthentication no
-      ForceCommand internal-sftp -d mc
-  '';
-  # Allow UNIX auth for password
-  security.pam.services.sshd.unixAuth = lib.mkForce true;
-  fileSystems."/srv/chroot/mc" = {
-    device = "/srv/nfs/pvcs/default-mc-aneesh-vanilla-minecraft-datadir-pvc-e8ee47ba-c06c-11e9-a63b-74d435e2529b";
-    options = [ "bind" ];
-  };
-
   services.sslh = {
     enable = true;
     port = 8443;
@@ -54,5 +11,62 @@
         { name: "ssl"; host: "localhost"; port: "443"; probe: "builtin"; }
       );
     '';
+  };
+
+  containers.trns = {
+    autoStart = true;
+    localAddress = "192.168.1.17/24";
+    hostBridge = "br0";
+    privateNetwork = true;
+    bindMounts = {
+      storage = {
+        hostPath = "/mnt/storage/Kevin/Incoming";
+        mountPoint = "/data";
+        isReadOnly = false;
+      };
+    };
+    config = {
+      # Container networking boilerplate
+      networking.useHostResolvConf = false;
+      networking.nameservers = [ "1.1.1.1" ];
+      networking.interfaces.eth0.ipv4.routes = [
+        { address = "0.0.0.0"; prefixLength = 0; via = "192.168.1.1"; }
+      ];
+
+      # Configure transmission
+      services.transmission = {
+        enable = true;
+        settings = {
+          download-dir = "/data";
+          rpc-authentication-required = true;
+          rpc-whitelist-enabled = false;
+          rpc-host-whitelist-enabled = false;
+          rpc-username = "kevin";
+          rpc-password = builtins.readFile ../../secrets/transmission-pwd.txt;
+        };
+      };
+      systemd.services.transmission.unitConfig = {
+        BindsTo = [ "wg-quick-warp.service" ];
+        After = lib.mkForce [ "wg-quick-warp.service" ];
+      };
+      networking.firewall.allowedTCPPorts = [ 9091 ];
+
+      # Cloudflare Warp setup
+      networking.wg-quick.interfaces.warp = {
+        privateKey = "cIZMwDyMm36+GZc6XW/huWaWS610WJUZJk9CAuxfbmE=";
+        address = [
+          "172.16.0.2/32"
+          "fd01:5ca1:ab1e:85a4:f932:35aa:1584:9b2b/128"
+        ];
+        dns = [ "1.1.1.1" ];
+        peers = [
+          {
+            publicKey = "bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo=";
+            allowedIPs = [ "0.0.0.0/0" "::/0" ];
+            endpoint = "engage.cloudflareclient.com:2408";
+          }
+        ];
+      };
+    };
   };
 }

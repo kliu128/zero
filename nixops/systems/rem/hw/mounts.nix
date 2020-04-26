@@ -8,7 +8,7 @@
   boot.zfs = {
     forceImportRoot = false;
     forceImportAll = false;
-    enableUnstable = false;
+    enableUnstable = true;
     requestEncryptionCredentials = true;
   };
   services.kubernetes.path = [ pkgs.zfs ];
@@ -17,14 +17,13 @@
     device = "rpool/nixos/root"; 
     fsType = "zfs";
   };
+  fileSystems."/var/lib/docker" = {
+    device = "/dev/zvol/rpool/docker";
+    fsType = "ext4";
+    options = [ "nofail" ];
+  };
   virtualisation.docker.storageDriver = "overlay2";
   services.fstrim.enable = true;
-
-  fileSystems."/var/lib/docker" =
-    { device = "/dev/zvol/rpool/docker";
-      fsType = "ext4";
-      options = [ "errors=remount-ro" ];
-    };
 
   fileSystems."/boot" =
     { device = "/dev/disk/by-uuid/6579-EA36";
@@ -39,8 +38,9 @@
     fsType = "ext4";
   };
 
-  fileSystems."data0" = {
-    device = "/dev/mapper/data0";
+  fileSystems."/mnt/data0" = {
+    device = "data0/root";
+    fsType = "zfs";
     options = [ "nofail" ];
     encrypted = {
       enable = true;
@@ -55,9 +55,10 @@
     keyFile = ../../../secrets/keys/keyfile-data0.bin;
   };
 
-  fileSystems."/mnt/storage" = {
-    device = "/dev/mapper/data1";
-    options = [ "nofail" "compress=zstd" ];
+  fileSystems."/mnt/data1" = {
+    device = "data1/root";
+    fsType = "zfs";
+    options = [ "nofail" ];
     encrypted = {
       enable = true;
       blkDev = "/dev/disk/by-uuid/dff62bd6-6e2f-4e77-b1b0-226a13aa0581";
@@ -71,8 +72,9 @@
     keyFile = ../../../secrets/keys/keyfile-data1.bin;
   };
 
-  fileSystems."data2" = {
-    device = "/dev/mapper/data2";
+  fileSystems."/mnt/data2" = {
+    device = "data2/root";
+    fsType = "zfs";
     options = [ "nofail" ];
     encrypted = {
       enable = true;
@@ -87,8 +89,9 @@
     keyFile = ../../../secrets/keys/keyfile-data2.bin;
   };
 
-  fileSystems."data3" = {
-    device = "/dev/mapper/data3";
+  fileSystems."/mnt/data3" = {
+    device = "data3/root";
+    fsType = "zfs";
     options = [ "nofail" ];
     encrypted = {
       enable = true;
@@ -105,8 +108,9 @@
   };
   
   # External WD Green 1 TB
-  fileSystems."wdgreen1tb" = {
-    device = "/dev/mapper/wdgreen1tb";
+  fileSystems."/mnt/wdgreen1tb" = {
+    device = "wdgreen1tb/root";
+    fsType = "zfs";
     options = [ "nofail" ];
     encrypted = {
       enable = true;
@@ -122,8 +126,9 @@
   };
 
   # External WD My Book 12TB
-  fileSystems."wd-my-book-12tb" = {
-    device = "/dev/mapper/wd-my-book-12tb";
+  fileSystems."/mnt/parity0" = {
+    device = "wd-my-book-12tb/parity";
+    fsType = "zfs";
     options = [ "nofail" ];
     encrypted = {
       enable = true;
@@ -133,7 +138,7 @@
     };
   };
   fileSystems."/mnt/overflow" = {
-    device = "overflow/overflow";
+    device = "wd-my-book-12tb/overflow";
     fsType = "zfs";
     options = [ "nofail" ];
   };
@@ -142,22 +147,17 @@
     destDir = "/keys";
     keyFile = ../../../secrets/keys/keyfile-wd-my-book-12tb.bin;
   };
-
-  systemd.services.lvm-pv-activate = {
-    description = "Activate LVM Physical Volumes";
-    path = [ pkgs.lvm2 ];
-    script = ''
-      lvm vgchange -ay
-    '';
+  
+  systemd.services.storage = {
+    path = [ pkgs.mergerfs ];
     serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
+      Type = "forking";
     };
-    unitConfig = {
-      DefaultDependencies = false;
-      Before = [ "local-fs-pre.target" ];
-    };
-    wantedBy = [ "local-fs-pre.target" ];
+    script = ''
+      mergerfs -o allow_other,minfreespace=50G,moveonenospc=true,use_ino,nonempty,cache.files=off,dropcacheonclose=true,category.create=mfs,func.getattr=newest /mnt/data*:/mnt/wdgreen1tb /mnt/storage
+    '';
+    wantedBy = [ "multi-user.target" ];
+    restartIfChanged = false;
   };
 
   # Virtual drives

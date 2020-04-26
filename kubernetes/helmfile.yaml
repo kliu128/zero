@@ -20,16 +20,6 @@ releases:
     version: 0.10.1
     values:
       - ./values/cert-manager.yaml
-  - name: gitlab
-    namespace: default
-    labels:
-      has-migrations: "true"
-      gitlab: "true"
-    chart: gitlab/gitlab
-    version: 2.6.7
-    values:
-      - ./values/gitlab.yaml
-      - ./values/gitlab.secret.yaml
   - name: mastodon
     namespace: default
     labels:
@@ -67,9 +57,15 @@ releases:
   - name: gitlab-runner
     namespace: default
     chart: gitlab/gitlab-runner
-    version: 0.14.0
+    version: 0.15.0
     values:
-      - ./values/gitlab-runner.secret.yaml
+      - ./values/scintillating-gitlab-runner.secret.yaml
+  - name: kliu-gitlab-runner
+    namespace: default
+    chart: gitlab/gitlab-runner
+    version: 0.15.0
+    values:
+      - ./values/kliu-gitlab-runner.secret.yaml
   - name: kubecfg
     namespace: default
     chart: ./charts/kubecfg
