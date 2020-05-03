@@ -1,16 +1,20 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
     app: invidious
   name: invidious
 spec:
+  selector:
+    matchLabels:
+      app: invidious
+      postgresql-client: "true"
   replicas: 1
   template:
     metadata:
       labels:
         app: invidious
-        postgresql-postgresql-client: "true"
+        postgresql-client: "true"
     spec:
       containers:
         - image: flourgaz/invidious
@@ -38,7 +42,7 @@ spec:
   selector:
     app: invidious
 ---
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   annotations:

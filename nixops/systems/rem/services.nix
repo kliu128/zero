@@ -1,18 +1,6 @@
 { config, lib, pkgs, ... }:
 
 {
-  services.sslh = {
-    enable = true;
-    port = 8443;
-    appendConfig = ''
-      protocols:
-      (
-        { name: "ssh"; service: "ssh"; host: "localhost"; port: "22"; probe: "builtin"; },
-        { name: "ssl"; host: "localhost"; port: "443"; probe: "builtin"; }
-      );
-    '';
-  };
-
   containers.trns = {
     autoStart = true;
     localAddress = "192.168.1.17/24";

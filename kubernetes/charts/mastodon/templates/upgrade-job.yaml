@@ -12,7 +12,7 @@ spec:
   template:
     metadata:
       labels:
-        postgresql-postgresql-client: "true"
+        postgresql-client: "true"
     spec:
       restartPolicy: OnFailure
       containers:

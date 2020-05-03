@@ -1,9 +1,9 @@
 dependencies:
 - name: lamp
   repository: https://kubernetes-charts.storage.googleapis.com
-  version: 1.1.0
+  version: 1.1.3
 - name: redis
-  repository: https://kubernetes-charts.storage.googleapis.com
-  version: 6.4.4
-digest: sha256:886777a4a26259722b8d5e37943713520b483f52ae3555704bc9c93b3bacc438
-generated: 2019-04-06T16:49:51.049095395-04:00
+  repository: https://charts.bitnami.com/bitnami
+  version: 10.6.10
+digest: sha256:07f31cf3dbc42329470b8fa608bb508fb7d95b5e218f0808c2fde4e076b5759c
+generated: "2020-04-27T00:20:09.538984735-04:00"

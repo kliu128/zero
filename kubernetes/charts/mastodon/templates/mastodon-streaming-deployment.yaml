@@ -1,4 +1,4 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ template "fullname" . }}-streaming
@@ -8,12 +8,15 @@ metadata:
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
 spec:
+  selector:
+    matchLabels:
+      app: {{ template "fullname" . }}-streaming
   strategy:
     type: RollingUpdate
   template:
     metadata:
       labels:
-        postgresql-postgresql-client: "true"
+        postgresql-client: "true"
         app: {{ template "fullname" . }}-streaming
     spec:
       containers:

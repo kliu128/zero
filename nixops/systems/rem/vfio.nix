@@ -14,27 +14,14 @@
   boot.extraModprobeConfig = ''
     options vfio-pci ids=10de:1184,10de:0e0a
   '';
-  boot.kernelModules = [ "vfio" "vfio_iommu_type1" "vfio_pci" "vfio_virqfd" ];
-  boot.blacklistedKernelModules = [ "nouveau" ];
   virtualisation.libvirtd.qemuVerbatimConfig = ''
     user = "kevin"
     group = "users"
     nographics_allow_host_audio = 1
   '';
+  boot.kernelModules = [ "vfio" "vfio_iommu_type1" "vfio_pci" "vfio_virqfd" ];
+  boot.blacklistedKernelModules = [ "nouveau" ];
   virtualisation.libvirtd.qemuRunAsRoot = true;
   # Allow kevin to manage libvirt
   users.extraUsers.kevin.extraGroups = [ "libvirtd" ];
-
-  programs.zsh.interactiveShellInit = ''
-    vm-start() {
-      touch /dev/shm/looking-glass || true
-      chown kevin:root /dev/shm/looking-glass
-      chmod 660 /dev/shm/looking-glass
-      sudo virsh start Windows
-    }
-
-    vm-stop() {
-      sudo virsh shutdown Windows
-    }
-  '';
 }

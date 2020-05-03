@@ -1,4 +1,4 @@
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: mailu-admin-ingress
@@ -28,7 +28,7 @@ spec:
           servicePort: 80
   {{- end }}
 ---
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: mailu-admin-ui-ingress
@@ -58,7 +58,7 @@ spec:
           servicePort: 80
   {{- end }}
 ---
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: mailu-admin-static-ingress

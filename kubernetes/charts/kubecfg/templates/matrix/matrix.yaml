@@ -23,7 +23,7 @@ spec:
     metadata:
       labels:
         app: matrix
-        postgresql-postgresql-client: "true"
+        postgresql-client: "true"
     spec:
       containers:
         # Main matrix server
@@ -101,7 +101,7 @@ spec:
     requests:
       storage: 20Gi
 ---
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   annotations:

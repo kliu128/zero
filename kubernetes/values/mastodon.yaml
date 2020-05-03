@@ -7,7 +7,7 @@ ingress:
 postgresql:
   user: mastodon
   database: mastodon
-  host: postgresql-postgresql
+  host: postgresql
 config:
   # Optional ElasticSearch configuration
   # ES_ENABLED: true

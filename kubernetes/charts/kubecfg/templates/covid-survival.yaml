@@ -2,21 +2,21 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: retro
-  name: retro
+    app: covid-survival
+  name: covid-survival
 spec:
   selector:
     matchLabels:
-      app: retro
-  replicas: 1
+      app: covid-survival
+  replicas: 2
   template:
     metadata:
       labels:
-        app: retro
+        app: covid-survival
     spec:
       containers:
-        - image: pneumaticat/retro
-          name: retro
+        - image: php:apache
+          name: covid-survival
           volumeMounts:
             - mountPath: /var/www/html
               name: files
@@ -24,28 +24,28 @@ spec:
       volumes:
         - name: files
           persistentVolumeClaim:
-            claimName: retro-data
+            claimName: covid-survival-data
 ---
 apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: retro
-  name: retro
+    app: covid-survival
+  name: covid-survival
 spec:
   ports:
     - name: http
       port: 80
       targetPort: 80
   selector:
-    app: retro
+    app: covid-survival
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   labels:
-    app: retro
-  name: retro-data
+    app: covid-survival
+  name: covid-survival-data
 spec:
   accessModes:
     - ReadWriteOnce
@@ -58,17 +58,17 @@ kind: Ingress
 metadata:
   annotations:
     kubernetes.io/tls-acme: "true"
-  name: retro
+  name: covid-survival
 spec:
   tls:
-    - secretName: retro-tls
+    - secretName: covid-survival-tls
       hosts:
-        - retro.kliu.io
+        - covidsurvival.guide
   rules:
-    - host: retro.kliu.io
+    - host: covidsurvival.guide
       http:
         paths:
           - path: /
             backend:
-              serviceName: retro
+              serviceName: covid-survival
               servicePort: 80

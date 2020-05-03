@@ -1,6 +1,6 @@
 # Client label
 
-`postgresql-postgresql-client=true`
+`postgresql-client=true`
 
 # Making new database
 

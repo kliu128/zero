@@ -73,6 +73,22 @@
     startAt = "*-*-* 05:00:00";
   };
 
+# Renice
+  systemd.services.renice = {
+    description = "Renice services";
+    path = with pkgs; [ utillinux coreutils procps ];
+    script = ''
+      chrt -p --rr -R -a 1 $(pidof gnome-shell) || true
+      renice -n 5 -p $(pgrep z_wr_iss) $(pgrep z_rd_int) $(pgrep z_) $(pgrep spl_) $(pgrep nfs) $(pgrep xprtiod) || true
+      pkill winedevice.exe || true
+      schedtool -D $(pgrep -f ubuntu-nvidia) || true
+    '';
+    serviceConfig = {
+      Type = "oneshot";
+    };
+    startAt = "minutely";
+  };
+
   # Run continuously since Kubelet tries to enable panic_on_oops
   systemd.services.sysctl-adjust = {
     description = "Adjust Sysctl";

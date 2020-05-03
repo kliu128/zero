@@ -3,6 +3,8 @@ repositories:
     url: https://kubernetes-charts.storage.googleapis.com
   - name: gitlab
     url: https://charts.gitlab.io
+  - name: bitnami
+    url: https://charts.bitnami.com/bitnami
 
 releases:
   - name: nginx-ingress
@@ -29,11 +31,6 @@ releases:
     values:
       - ./values/mastodon.yaml
       - ./values/mastodon.secret.yaml
-  - name: factorio
-    namespace: default
-    chart: stable/factorio
-    values:
-      - ./values/factorio.yaml
   - name: nextcloud
     namespace: default
     chart: ./charts/nextcloud
@@ -42,15 +39,15 @@ releases:
       - ./values/nextcloud.secret.yaml
   - name: postgresql
     namespace: default
-    chart: stable/postgresql
-    version: 5.3.10
+    chart: bitnami/postgresql
+    version: 8.9.2
     values:
       - ./values/postgresql.yaml
       - ./values/postgresql.secret.yaml
   - name: mariadb
     namespace: default
-    chart: stable/mariadb
-    version: 6.5.9
+    chart: bitnami/mariadb
+    version: 7.3.21
     values:
       - ./values/mariadb.yaml
       - ./values/mariadb.secret.yaml

@@ -9,6 +9,5 @@ in {
 
   environment.variables = {
     MOZ_USE_XINPUT2 = "1";
-    MOZ_ENABLE_WAYLAND = "true";
   };
 }
