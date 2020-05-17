@@ -15,6 +15,16 @@ spec:
       containers:
         - name: hangouts
           image: dock.mau.dev/tulir/mautrix-hangouts:latest
+          # Liveness probe: check if bot is connected to Google API servers
+          # through long-polling (ESTABLISHED) connection
+          livenessProbe:
+            exec:
+              command:
+              - sh
+              - -c
+              - netstat -anp | grep ':443' | grep ESTABLISHED
+            initialDelaySeconds: 30
+            periodSeconds: 30
           volumeMounts:
             - name: config
               subPath: hangouts-registration.yaml

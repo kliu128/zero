@@ -15,6 +15,15 @@ spec:
       containers:
         - name: facebook
           image: dock.mau.dev/tulir/mautrix-facebook
+          # Liveness probe: check if bot is connected to Facebook API servers
+          livenessProbe:
+            exec:
+              command:
+              - sh
+              - -c
+              - netstat | grep -q 'facebook.com'
+            initialDelaySeconds: 30
+            periodSeconds: 30
           volumeMounts:
             # config in PVC to avoid EROFS error
             - name: data

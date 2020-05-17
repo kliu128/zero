@@ -51,12 +51,6 @@ releases:
     values:
       - ./values/mariadb.yaml
       - ./values/mariadb.secret.yaml
-  - name: gitlab-runner
-    namespace: default
-    chart: gitlab/gitlab-runner
-    version: 0.15.0
-    values:
-      - ./values/scintillating-gitlab-runner.secret.yaml
   - name: kliu-gitlab-runner
     namespace: default
     chart: gitlab/gitlab-runner

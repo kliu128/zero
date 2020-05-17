@@ -17,7 +17,6 @@
   # # Liquorix sysctl
   # boot.kernel.sysctl = {
   #   "kernel.rr_interval" = 2;
-  #   "kernel.yield_type" = 0;
   # };
-  systemd.services.docker.serviceConfig.CPUSchedulingPolicy = "idle";
+  # systemd.services.docker.serviceConfig.CPUSchedulingPolicy = "idle";
 }

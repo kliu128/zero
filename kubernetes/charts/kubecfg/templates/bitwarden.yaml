@@ -15,13 +15,15 @@ spec:
         app: bitwarden
     spec:
       containers:
-        - image: bitwardenrs/server:1.13.0
+        - image: bitwardenrs/server:1.14.2
           name: bitwarden
           env:
             - name: SIGNUPS_ALLOWED
               value: "false"
             - name: DOMAIN
               value: https://pw.kliu.io
+            - name: ADMIN_TOKEN
+              value: {{ .Values.bitwarden }}
           livenessProbe:
             httpGet:
               path: /

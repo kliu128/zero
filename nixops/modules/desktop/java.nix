@@ -3,7 +3,7 @@
 # Java runtime and development
 
 let
-  jdk = pkgs.adoptopenjdk-openj9-bin-8;
+  jdk = pkgs.jdk14;
 in {
   # Use GTK theme, enable antialiasing
   environment.variables._JAVA_OPTIONS = ''

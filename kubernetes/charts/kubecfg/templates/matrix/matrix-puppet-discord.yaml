@@ -15,6 +15,14 @@ spec:
       containers:
         - name: discord
           image: pneumaticat/mx-puppet-discord
+          # Liveness probe: check if bot has an HTTPS connection to a server
+          # (We assume this is the Discord API server)
+          livenessProbe:
+            exec:
+              command:
+              - sh
+              - -c
+              - netstat | grep -q ':https'
           volumeMounts:
             - name: config
               subPath: puppet-discord-registration.yaml

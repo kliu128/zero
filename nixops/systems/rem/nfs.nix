@@ -17,11 +17,5 @@
   systemd.services.nfs-idmapd.restartIfChanged = false;
   systemd.services.nfs-mountd.restartIfChanged = false;
   systemd.services.rpc-statd.restartIfChanged = false;
-
-  fileSystems."/srv/nfs/overflow" = {
-    device = "wd-my-book-12tb/overflow";
-    fsType = "zfs";
-    options = [ "nofail" ];
-  };
 }
 

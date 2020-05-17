@@ -35,6 +35,7 @@
         ./modules/fah.nix
         ./modules/kubernetes-common.nix
         ./modules/kubernetes-master.nix
+        ./modules/tailscale.nix
         ./systems/rem/android.nix
         ./systems/rem/backups.nix
         ./systems/rem/bluray.nix
@@ -72,13 +73,15 @@
         8448
         # Tor
         32972 32973
+        # Stardew
+        24642
         # Factorio
         34197
         # Scintillating mail server ports
         2025 20143 20465 20587 20993
         # Storj
         28967 30303 ];
-      networking.firewall.allowedUDPPorts = [ 30303 ];
+      networking.firewall.allowedUDPPorts = [ 30303 24642 ];
       networking.firewall.allowedUDPPortRanges = [
         { from = 49152; to = 65535; } # TURN relay
       ];
@@ -90,16 +93,22 @@
       # servers. You should change this only after NixOS release notes say you
       # should.
       system.stateVersion = "19.09"; # Did you read the comment?
+
+      nixpkgs.config.permittedInsecurePackages = [
+        "p7zip-16.02"
+      ];
     };
 
   karmaxer =
     { config, pkgs, lib, ... }:
     {
-      deployment.targetHost = "192.168.1.3";
+      deployment.targetHost = "100.91.91.110";
+      deployment.hasFastConnection = true;
 
       imports = [
         ./modules/docker.nix
-        ./modules/fah.nix
+        # ./modules/fah.nix
+        ./modules/tailscale.nix
         ./modules/kubernetes-common.nix
         ./modules/kubernetes-node.nix
         ./systems/karmaxer/hw.nix

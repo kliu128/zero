@@ -3,29 +3,23 @@
 {
   services.gitlab-runner = {
     enable = true;
-    configOptions = {
-      concurrent = 2;
-      runners = [
-        {
-          name = "docker-runner";
-          url = "https://gitlab.scintillating.us/";
-          token = "CWrnm3xesq_U8NGFWxjd";
-          executor = "docker";
-          docker = {
-            tls_verify = false;
-            image = "ruby:2.1";
-            privileged = true;
-            disable_cache = false;
-            network_mode = "host";
-            volumes = [
-              # Prevent cypress hangs
-              # see https://github.com/cypress-io/cypress/issues/350
-              "/dev/shm:/dev/shm"
-            ];
-          };
-        }
-      ];
-    };
+    configFile = pkgs.writeText "config" ''
+      concurrent = 2
+
+      [[runners]]
+      executor = "docker"
+      name = "docker-runner"
+      token = "CWrnm3xesq_U8NGFWxjd"
+      url = "https://gitlab.scintillating.us/"
+
+      [runners.docker]
+      disable_cache = false
+      image = "ruby:2.1"
+      network_mode = "host"
+      privileged = true
+      tls_verify = false
+      volumes = ["/dev/shm:/dev/shm"]
+    '';
   };
 
   virtualisation.libvirtd.enable = true;
