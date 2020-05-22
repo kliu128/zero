@@ -5,9 +5,10 @@ let
 in {
   nixpkgs.overlays = [ moz_overlay ];
 
-  environment.systemPackages = with pkgs; [ latest.firefox-nightly-bin ];
+  environment.systemPackages = with pkgs; [ firefox ];
 
-  environment.variables = {
+  home-manager.users.kevin.home.sessionVariables = {
     MOZ_USE_XINPUT2 = "1";
+    MOZ_ENABLE_WAYLAND = "true";
   };
 }

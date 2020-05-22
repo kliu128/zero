@@ -24,6 +24,9 @@
   console.earlySetup = true;
   services.xserver.videoDrivers = [ "modesetting" "amdgpu" ];
 
+  # Wacom tablet.
+  services.xserver.digimend.enable = true;
+
   # Freeness (that is, not.)
   hardware.enableRedistributableFirmware = true; # for amdgpu
   hardware.cpu.intel.updateMicrocode = true;

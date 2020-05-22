@@ -1,4 +1,4 @@
-image: tootsuite/mastodon:v3.1.2
+image: tootsuite/mastodon:v3.1.4
 persistence:
   size: 25Gi
 ingress:
@@ -28,7 +28,7 @@ config:
   # ALTERNATE_DOMAINS: example1.com,example2.com
   # Registrations
   # Single user mode will disable registrations and redirect frontpage to the first profile
-  SINGLE_USER_MODE: "false"
+  SINGLE_USER_MODE: "true"
   # Prevent registrations with following e-mail domains
   # EMAIL_DOMAIN_BLACKLIST: example1.com|example2.de|etc
   # Only allow registrations with the following e-mail domains

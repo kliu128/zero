@@ -8,7 +8,7 @@
   boot.zfs = {
     forceImportRoot = false;
     forceImportAll = false;
-    enableUnstable = true;
+    enableUnstable = false;
     requestEncryptionCredentials = true;
   };
   services.kubernetes.path = [ pkgs.zfs ];
@@ -38,10 +38,9 @@
     fsType = "ext4";
   };
 
-  fileSystems."/mnt/data0" = {
-    device = "data0/root";
-    fsType = "zfs";
-    options = [ "nofail" ];
+  fileSystems."/mnt/storage" = {
+    device = "/dev/mapper/data0";
+    options = [ "nofail" "compress=zstd" ];
     encrypted = {
       enable = true;
       blkDev = "/dev/disk/by-uuid/6addfbee-f237-41b3-9a2b-8ced3d57f410";
@@ -55,9 +54,8 @@
     keyFile = ../../../secrets/keys/keyfile-data0.bin;
   };
 
-  fileSystems."/mnt/data1" = {
-    device = "data1/root";
-    fsType = "zfs";
+  fileSystems."data1" = {
+    device = "/dev/mapper/data1";
     options = [ "nofail" ];
     encrypted = {
       enable = true;
@@ -72,7 +70,7 @@
     keyFile = ../../../secrets/keys/keyfile-data1.bin;
   };
 
-  fileSystems."/mnt/data2" = {
+  fileSystems."data2" = {
     device = "data2/root";
     fsType = "zfs";
     options = [ "nofail" ];
@@ -89,9 +87,8 @@
     keyFile = ../../../secrets/keys/keyfile-data2.bin;
   };
 
-  fileSystems."/mnt/data3" = {
-    device = "data3/root";
-    fsType = "zfs";
+  fileSystems."data3" = {
+    device = "/dev/mapper/data3";
     options = [ "nofail" ];
     encrypted = {
       enable = true;
@@ -108,9 +105,8 @@
   };
   
   # External WD Green 1 TB
-  fileSystems."/mnt/wdgreen1tb" = {
-    device = "wdgreen1tb/root";
-    fsType = "zfs";
+  fileSystems."wdgreen1tb" = {
+    device = "/dev/mapper/wdgreen1tb";
     options = [ "nofail" ];
     encrypted = {
       enable = true;
@@ -126,9 +122,8 @@
   };
 
   # External WD My Book 12TB
-  fileSystems."/mnt/parity0" = {
-    device = "wd-my-book-12tb/parity";
-    fsType = "zfs";
+  fileSystems."wd-my-book-12tb" = {
+    device = "/dev/mapper/wd-my-book-12tb";
     options = [ "nofail" ];
     encrypted = {
       enable = true;
@@ -137,8 +132,26 @@
       label = "wd-my-book-12tb";
     };
   };
+
+  systemd.services.lvm-pv-activate = {
+    description = "Activate LVM Physical Volumes";
+    path = [ pkgs.lvm2 ];
+    script = ''
+      lvm vgchange -ay
+    '';
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+    };
+    unitConfig = {
+      DefaultDependencies = false;
+      Before = [ "local-fs-pre.target" ];
+    };
+    wantedBy = [ "local-fs-pre.target" ];
+  };
+
   fileSystems."/mnt/overflow" = {
-    device = "wd-my-book-12tb/overflow";
+    device = "overflow/overflow";
     fsType = "zfs";
     options = [ "nofail" ];
   };
@@ -146,18 +159,6 @@
     permissions = "400";
     destDir = "/keys";
     keyFile = ../../../secrets/keys/keyfile-wd-my-book-12tb.bin;
-  };
-  
-  systemd.services.storage = {
-    path = [ pkgs.mergerfs ];
-    serviceConfig = {
-      Type = "forking";
-    };
-    script = ''
-      mergerfs -o allow_other,minfreespace=50G,moveonenospc=true,use_ino,nonempty,cache.files=off,dropcacheonclose=true,category.create=mfs,func.getattr=newest /mnt/data*:/mnt/wdgreen1tb /mnt/storage
-    '';
-    wantedBy = [ "multi-user.target" ];
-    restartIfChanged = false;
   };
 
   # Virtual drives

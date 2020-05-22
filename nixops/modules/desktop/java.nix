@@ -6,7 +6,7 @@ let
   jdk = pkgs.jdk14;
 in {
   # Use GTK theme, enable antialiasing
-  environment.variables._JAVA_OPTIONS = ''
+  home-manager.users.kevin.home.sessionVariables._JAVA_OPTIONS = ''
     -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel
     -Dawt.useSystemAAFontSettings=on
   '';

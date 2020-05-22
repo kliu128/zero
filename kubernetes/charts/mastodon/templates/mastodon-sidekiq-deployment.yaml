@@ -10,7 +10,8 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: {{ template "fullname" . }}-web
+      postgresql-client: "true"
+      app: {{ template "fullname" . }}-sidekiq
   strategy:
     type: Recreate
   template:

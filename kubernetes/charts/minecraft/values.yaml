@@ -14,7 +14,7 @@ securityContext:
   # Security context settings
   runAsUser: 1000
   fsGroup: 2000
-# Most of these map to environment variables. See Minecraft for details:
+# Most of these map to home-manager.users.kevin.home.sessionVariables. See Minecraft for details:
 # https://hub.docker.com/r/itzg/minecraft-server/
 minecraftServer:
   # This must be overridden, since we can't accept this for the user.

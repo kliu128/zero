@@ -15,44 +15,28 @@ spec:
         app: red-discord-bot
     spec:
       containers:
-        - image: calebj/red-discordbot
+        - image: phasecorex/red-discordbot
           name: red-discord-bot
+          envFrom:
+          - secretRef:
+              name: red-discord-bot-secret
           volumeMounts:
-            - mountPath: /data/red/data
+            - mountPath: /data
               name: data
-              subPath: data
-            - mountPath: /data/red/cogs
-              name: data
-              subPath: cogs
-            - mountPath: /data/red/cogs/everyone-bot.py
-              name: cogs
-              subPath: everyone-bot.py
-      restartPolicy: Always
       volumes:
         - name: data
           persistentVolumeClaim:
-            claimName: red-discord-bot-data
-        - name: cogs
-          configMap:
-            name: red-discord-bot-cogs
+            claimName: red-discord-bot
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   labels:
     app: red-discord-bot
-  name: red-discord-bot-data
+  name: red-discord-bot
 spec:
   accessModes:
   - ReadWriteOnce
   resources:
     requests:
       storage: 20Gi
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: red-discord-bot-cogs
-data:
-  everyone-bot.py: |-
-{{ .Files.Get "everyone-bot.py" | indent 4 }}
