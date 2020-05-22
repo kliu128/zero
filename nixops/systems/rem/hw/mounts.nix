@@ -38,9 +38,9 @@
     fsType = "ext4";
   };
 
-  fileSystems."/mnt/storage" = {
+  fileSystems."/mnt/storage2" = {
     device = "/dev/mapper/data0";
-    options = [ "nofail" "compress=zstd" ];
+    options = [ "nofail" "skip_balance" "compress=zstd" "ro" "nologreplay" "clear_cache" ];
     encrypted = {
       enable = true;
       blkDev = "/dev/disk/by-uuid/6addfbee-f237-41b3-9a2b-8ced3d57f410";
@@ -71,8 +71,7 @@
   };
 
   fileSystems."data2" = {
-    device = "data2/root";
-    fsType = "zfs";
+    device = "/dev/mapper/data2";
     options = [ "nofail" ];
     encrypted = {
       enable = true;

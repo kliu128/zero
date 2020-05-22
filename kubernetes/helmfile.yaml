@@ -57,6 +57,12 @@ releases:
     version: 0.15.0
     values:
       - ./values/kliu-gitlab-runner.secret.yaml
+  - name: scintillating-gitlab-runner
+    namespace: default
+    chart: gitlab/gitlab-runner
+    version: 0.15.0
+    values:
+      - ./values/scintillating-gitlab-runner.secret.yaml
   - name: kubecfg
     namespace: default
     chart: ./charts/kubecfg
