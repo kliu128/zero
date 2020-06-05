@@ -15,8 +15,6 @@ spec:
         role: mail
         tier: backend
     spec:
-      nodeSelector:
-        kubernetes.io/hostname: rem
       containers:
       - name: imap
         image: mailu/dovecot:1.7
@@ -54,8 +52,8 @@ spec:
             cpu: 1000m
       volumes:
         - name: maildata
-          hostPath:
-            path: /srv/nfs/pvcs/default-mail-storage-pvc-dc7d9793-ae19-11e9-9d16-74d435e2529b
+          persistentVolumeClaim:
+            claimName: mail-storage
 ---
 apiVersion: v1
 kind: Service

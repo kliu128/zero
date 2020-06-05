@@ -15,8 +15,6 @@ spec:
         app: cups
     spec:
       hostNetwork: true
-      nodeSelector:
-        kubernetes.io/hostname: rem
       containers:
       - image: registry.kliu.io/kevin/cups:latest
         name: cups

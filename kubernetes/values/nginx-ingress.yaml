@@ -1,8 +1,6 @@
 controller:
   hostNetwork: true
   dnsPolicy: ClusterFirstWithHostNet
-  nodeSelector:
-    kubernetes.io/hostname: rem
   config:
     # HACK: GitLab registry push fails over HTTP/2. Can't disable it for only
     # one ingress, so we have to disable it globally.
@@ -18,11 +16,7 @@ controller:
     worker-shutdown-timeout: "86400s"
   service:
     type: NodePort
-    clusterIP: 10.0.0.199
-defaultBackend:
-  service:
-    clusterIP: 10.0.0.193
 rbac:
   create: true
 tcp:
-  22: internal/gitlab:22
+  2022: internal/gitlab:22

@@ -24,8 +24,6 @@ spec:
       labels:
         app: paperless
     spec:
-      nodeSelector:
-        kubernetes.io/hostname: rem
       containers:
         # Main paperless server
         - name: webserver

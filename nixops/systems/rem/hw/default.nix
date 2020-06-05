@@ -48,10 +48,6 @@
       for pod in $(kubectl get pod | grep ImagePullBackOff | cut -d " " -f1); do
         kubectl delete pod --wait=false "$pod"
       done
-
-      if kubectl logs --tail 200 matrix-puppet-discord-0 | grep "Unexpected token <"; then
-        kubectl delete pod --wait=false matrix-puppet-discord-0
-      fi
     '';
     serviceConfig = {
       Type = "oneshot";
@@ -76,22 +72,6 @@
     startAt = "*-*-* 05:00:00";
   };
 
-# Renice
-  systemd.services.renice = {
-    description = "Renice services";
-    path = with pkgs; [ utillinux coreutils procps ];
-    script = ''
-      chrt -p --rr -R -a 1 $(pidof gnome-shell) || true
-      renice -n 5 -p $(pgrep z_wr_iss) $(pgrep z_rd_int) $(pgrep z_) $(pgrep spl_) $(pgrep nfs) $(pgrep xprtiod) || true
-      pkill winedevice.exe || true
-      schedtool -D $(pgrep -f ubuntu-nvidia) || true
-    '';
-    serviceConfig = {
-      Type = "oneshot";
-    };
-    startAt = "minutely";
-  };
-
   # Run continuously since Kubelet tries to enable panic_on_oops
   systemd.services.sysctl-adjust = {
     description = "Adjust Sysctl";
@@ -107,10 +87,6 @@
   };
 
   services.udisks2.enable = lib.mkForce false;
-
-  services.udev.extraRules = ''
-    ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{power/control}="auto", ATTR{power/autosuspend}="300"
-  '';
 
   # Proper shutdown in a timely manner
   # See https://utcc.utoronto.ca/~cks/space/blog/linux/SystemdShutdownWatchdog

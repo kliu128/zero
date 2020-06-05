@@ -14,10 +14,9 @@ spec:
       labels:
         app: emby
     spec:
-      nodeSelector:
-        kubernetes.io/hostname: rem
       containers:
-        - image: jellyfin/jellyfin
+        - image: jellyfin/jellyfin:nightly-20200529
+          imagePullPolicy: Always
           name: emby
           ports:
             - containerPort: 8096

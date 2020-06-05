@@ -28,9 +28,9 @@ spec:
         - name: ADDRESS
           value: kliu.io:28967
         - name: BANDWIDTH
-          value: 25TB
+          value: 250TB
         - name: STORAGE
-          value: 500GB
+          value: 4000GB
         volumeMounts:
         - mountPath: /app/identity
           name: identity

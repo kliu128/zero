@@ -1,6 +1,22 @@
 { config, lib, pkgs, ... }:
 
 {
+  services.tor = {
+    enable = true;
+    relay = {
+      enable = true;
+      port = 32972;
+      role = "relay";
+      nickname = "potatorelay2";
+      contactInfo = "kevin@kliu.io";
+    };
+    extraConfig = ''
+      DirPort 32973
+      ControlPort 9051
+    '';
+  };
+  environment.systemPackages = with pkgs; [ nyx ];
+
   containers.trns = {
     autoStart = true;
     localAddress = "192.168.1.17/24";

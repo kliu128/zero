@@ -38,9 +38,10 @@
     fsType = "ext4";
   };
 
-  fileSystems."/mnt/storage2" = {
+  fileSystems."/mnt/data0" = {
     device = "/dev/mapper/data0";
-    options = [ "nofail" "skip_balance" "compress=zstd" "ro" "nologreplay" "clear_cache" ];
+    fsType = "ext4";
+    options = [ "nofail" ];
     encrypted = {
       enable = true;
       blkDev = "/dev/disk/by-uuid/6addfbee-f237-41b3-9a2b-8ced3d57f410";
@@ -54,8 +55,9 @@
     keyFile = ../../../secrets/keys/keyfile-data0.bin;
   };
 
-  fileSystems."data1" = {
+  fileSystems."/mnt/data1" = {
     device = "/dev/mapper/data1";
+    fsType = "ext4";
     options = [ "nofail" ];
     encrypted = {
       enable = true;
@@ -70,8 +72,9 @@
     keyFile = ../../../secrets/keys/keyfile-data1.bin;
   };
 
-  fileSystems."data2" = {
+  fileSystems."/mnt/data2" = {
     device = "/dev/mapper/data2";
+    fsType = "ext4";
     options = [ "nofail" ];
     encrypted = {
       enable = true;
@@ -86,8 +89,9 @@
     keyFile = ../../../secrets/keys/keyfile-data2.bin;
   };
 
-  fileSystems."data3" = {
+  fileSystems."/mnt/data3" = {
     device = "/dev/mapper/data3";
+    fsType = "ext4";
     options = [ "nofail" ];
     encrypted = {
       enable = true;
@@ -104,8 +108,9 @@
   };
   
   # External WD Green 1 TB
-  fileSystems."wdgreen1tb" = {
+  fileSystems."/mnt/wdgreen1tb" = {
     device = "/dev/mapper/wdgreen1tb";
+    fsType = "ext4";
     options = [ "nofail" ];
     encrypted = {
       enable = true;
@@ -121,8 +126,9 @@
   };
 
   # External WD My Book 12TB
-  fileSystems."wd-my-book-12tb" = {
-    device = "/dev/mapper/wd-my-book-12tb";
+  fileSystems."/mnt/parity0" = {
+    device = "/dev/wd-my-book-12tb/parity";
+    fsType = "ext4";
     options = [ "nofail" ];
     encrypted = {
       enable = true;
@@ -131,7 +137,6 @@
       label = "wd-my-book-12tb";
     };
   };
-
   systemd.services.lvm-pv-activate = {
     description = "Activate LVM Physical Volumes";
     path = [ pkgs.lvm2 ];
@@ -147,6 +152,18 @@
       Before = [ "local-fs-pre.target" ];
     };
     wantedBy = [ "local-fs-pre.target" ];
+  };
+
+  systemd.services.storage = {
+    path = [ pkgs.mergerfs ];
+    serviceConfig = {
+      Type = "forking";
+    };
+    script = ''
+      mergerfs -o allow_other,minfreespace=50G,moveonenospc=true,use_ino,nonempty,cache.files=partial,dropcacheonclose=true,category.create=mfs,func.getattr=newest,xattr=nosys /mnt/data*:/mnt/wdgreen1tb /mnt/storage
+    '';
+    wantedBy = [ "multi-user.target" ];
+    restartIfChanged = false;
   };
 
   fileSystems."/mnt/overflow" = {

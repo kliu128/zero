@@ -15,8 +15,6 @@ spec:
         app: geth
     spec:
       hostNetwork: true
-      nodeSelector:
-        kubernetes.io/hostname: rem
       containers:
       - image: ethereum/client-go
         name: geth

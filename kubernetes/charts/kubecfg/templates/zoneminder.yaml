@@ -14,8 +14,6 @@ spec:
       labels:
         app: zoneminder
     spec:
-      nodeSelector:
-        kubernetes.io/hostname: rem
       containers:
         - image: arturol76/zoneminder:v7
           imagePullPolicy: Always

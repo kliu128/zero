@@ -35,98 +35,30 @@ in {
     startAt = wave-1;
   };
 
-  # G-Suite backup
-  systemd.services.gsuite-backup = {
+  systemd.services.restic = {
     enable = enableBackups;
-    description = "G-Suite Backup";
-    path = [ pkgs.rclone pkgs.gnugrep ];
+    description = "Restic Backup";
+    path = [ pkgs.restic pkgs.rclone ];
     serviceConfig = {
       Nice = 19;
-      SyslogIdentifier = "gsuite-backup";
-      IPAccounting = true;
-      CPUAccounting = true;
+      IOSchedulingClass = "idle";
+      WorkingDirectory = "/mnt/storage/Kevin";
+      SyslogIdentifier = "restic";
     };
     script = ''
       set -euo pipefail
 
-      # Backup with monthly backup dirs and revisioned suffixes in each
-
-      dir_format="+%Y-%m"
-      monthly_backup_dir="$(env TZ=Etc/UTC date "$dir_format")"
-      backup_suffix="$(env TZ=Etc/UTC date +"__%Y_%m_%d_%H%M%SZ")"
-      # Prune the backup dir from 6 months ago
-      prune_backup_dir="$(env TZ=Etc/UTC date --date="-6 months" "$dir_format")"
-
-      rclone --config /keys/rclone.conf \
-             sync /mnt/storage/Kevin gsuite-mysmccd-crypt:/Data/current \
-             --backup-dir "gsuite-mysmccd-crypt:/Data/old/$monthly_backup_dir" \
-             --bwlimit 8650k --transfers 8 \
-             --suffix "$backup_suffix" \
-             --exclude '/Computing/Data/**' \
-             --exclude '/Computing/VMs/**' \
-             --exclude '/Incoming/**' \
-             --exclude 'node_modules/**' \
-             --exclude '.fuse_hidden*' \
-             --delete-excluded -v --modify-window=1s --delete-during
-      rclone --config /keys/rclone.conf \
-             purge -v "gsuite-mysmccd-crypt:/Data/old/$prune_backup_dir" || true
-
-      # export RESTIC_PASSWORD_FILE=${../../secrets/gsuite-backup-password.txt}
-      # export XDG_CACHE_HOME=/var/cache/gsuite-backup
-      # export RCLONE_CONFIG=/keys/rclone.conf
-      # r() {
-      #   restic --option=rclone.args='serve restic --stdio --drive-use-trash=false' --repo=rclone:gsuite-mysmccd:restic $@
-      # }
-
-      # r backup /mnt/storage/Kevin \
-      #        --exclude '/mnt/storage/Kevin/Incoming/**/*'
-      # r forget \
-      #        --keep-daily 7 --keep-weekly 5 --keep-monthly 12 --keep-yearly 10 \
-      #        --prune
+      export RCLONE_CONFIG=/keys/rclone.conf
+      export RESTIC_PASSWORD_FILE=/keys/restic-password.txt
+      export RESTIC_REPOSITORY=rclone:gsuite-stanford:restic
+      export RESTIC_CACHE_DIR=/var/cache/restic
+      
+      restic backup /mnt/storage/Kevin -o rclone.args="serve restic --stdio --b2-hard-delete --drive-use-trash=false -v --transfers=8"
     '';
     startAt = wave-3;
   };
-  deployment.keys."gsuite-backup-password.txt" = {
-    permissions = "400";
-    destDir = "/keys";
-    text = builtins.readFile ../../secrets/gsuite-backup-password.txt;
-  };
+  environment.systemPackages = [ pkgs.restic ];
 
-  systemd.services.switch-sync = {
-    enable = false;
-    path = [ pkgs.rclone ];
-    serviceConfig = {
-      Nice = 19;
-      SyslogIdentifier = "switch-sync";
-    };
-    script = ''
-      set -euo pipefail
-
-      rclone --config /keys/rclone.conf \
-             sync "gsuite-mysmccd:Cleartext/hbg/" "gsuite-mysmccd-crypt:/Extended/Switch ROMs" \
-             -v --transfers=4 --modify-window=1s --delete-during
-      chown -R kevin:users "/mnt/storage/Kevin/Computing/ROMs/Nintendo Switch"
-    '';
-    startAt = wave-2;
-  };
-  systemd.services.aci-sync = {
-    enable = enableBackups;
-    path = [ pkgs.rclone ];
-    serviceConfig = {
-      Nice = 19;
-      SyslogIdentifier = "aci-sync";
-    };
-    script = ''
-      set -euo pipefail
-
-      rclone --config /keys/rclone.conf \
-             sync "gsuite-mysmccd:Cleartext/Air Crash Investigation/" "/mnt/storage/Kevin/Videos/TV Shows/Air Crash Investigation/" \
-             -v --transfers=4 --modify-window=1s
-      chown -R kevin:users "/mnt/storage/Kevin/Videos/TV Shows/Air Crash Investigation/"
-    '';
-    startAt = wave-2;
-  };
-  
   # BorgBackup jobs
   services.borgbackup.jobs.emergency-backup = {
     repo = "/mnt/emergency-backup/emergency-borg";
@@ -151,13 +83,15 @@ in {
     startAt = (if enableBackups then wave-2 else []);
   };
 
+  services.duplicati.enable = true;
+
   # Root filesystem backup
   services.znapzend = {
-    enable = false;
+    enable = true;
     zetup.root = {
       dataset = "rpool/nixos/root";
       plan = 	"1h=>10min,1d=>1h,1w=>1d";
-      destinations.wd.dataset = "wd-my-book-12tb/backups/root";
+      destinations.wd.dataset = "overflow/backups/root";
     };
   };
   users.users.znapzend = {
@@ -180,25 +114,6 @@ in {
   };
   
   # Mirror services
-  systemd.services.gas-leak-mirror = {
-    description = "Google Drive Gas Leak Data Mirroring";
-    path = [ pkgs.rclone ];
-    script = ''
-      rclone --config /keys/rclone.conf sync --verbose --drive-formats ods,odt,odp,svg "gsuite-school:Acton Gas Leak Area Data" "/mnt/storage/Kevin/Backups/Acton Gas Leak Data Mirror"
-      chown -R kevin:users "/mnt/storage/Kevin/Backups/Acton Gas Leak Data Mirror"
-    '';
-    after = [ "network-online.target" ];
-    wants = [ "network-online.target" ];
-    serviceConfig = {
-      CPUSchedulingPolicy = "idle";
-      IOSchedulingClass = "idle";
-      SyslogIdentifier = "gas-leak-mirror";
-    };
-    unitConfig = {
-      RequiresMountsFor = [ "/mnt/storage" ];
-    };
-    startAt = (if enableBackups then wave-2 else []);
-  };
   services.borgbackup.jobs.scintillating-backup = {
     paths = [ "/mnt/storage/Kevin/Backups/Scintillating/Mirror" ];
     encryption.mode = "none";
@@ -222,78 +137,6 @@ in {
     startAt = (if enableBackups then wave-2 else []);
   };
 
-  systemd.services.gsuite-mount = {
-    description = "G-Suite rclone FUSE mount";
-    after = [ "network-online.target" ];
-    wants = [ "network-online.target" ];
-    wantedBy = [ "multi-user.target" ];
-    restartIfChanged = false;
-    path = [ pkgs.fuse pkgs.rclone ];
-    serviceConfig = {
-      Type = "notify";
-      NotifyAccess = "all";
-    };
-    script = ''
-      rclone --config /keys/rclone.conf mount gsuite-mysmccd-crypt: \
-        /mnt/gsuite --vfs-cache-mode minimal --drive-use-trash=false \
-        --allow-other --uid 1000 --gid 100
-    '';
-  };
-  systemd.services.gsuite-unencrypted-mount = {
-    description = "G-Suite rclone FUSE mount (unencrypted)";
-    after = [ "network-online.target" ];
-    wants = [ "network-online.target" ];
-    wantedBy = [ "multi-user.target" ];
-    restartIfChanged = false;
-    path = [ pkgs.fuse pkgs.rclone ];
-    serviceConfig = {
-      Type = "notify";
-      NotifyAccess = "all";
-    };
-    script = ''
-      rclone --config /keys/rclone.conf \
-        mount gsuite-mysmccd: /mnt/gsuite-root \
-        --drive-use-trash=false \
-        --vfs-cache-mode writes --vfs-cache-max-size 5G --cache-dir /mnt/storage/tmp \
-        --allow-other --allow-non-empty --uid 1000 --gid 100
-    '';
-  };
-  systemd.services.gschool-mount = {
-    description = "School Google Drive Mount";
-    after = [ "network-online.target" ];
-    wants = [ "network-online.target" ];
-    wantedBy = [ "multi-user.target" ];
-    restartIfChanged = false;
-    path = [ pkgs.fuse pkgs.rclone ];
-    serviceConfig = {
-      Type = "notify";
-      NotifyAccess = "all";
-    };
-    script = ''
-      rclone --config /keys/rclone.conf \
-        mount gsuite-school: /mnt/gschool \
-        --drive-use-trash=false --read-only \
-        --allow-other --allow-non-empty --uid 1000 --gid 100
-    '';
-  };
-  systemd.services.dropbox-mount = {
-    description = "Dropbox Mount";
-    after = [ "network-online.target" ];
-    wants = [ "network-online.target" ];
-    wantedBy = [ "multi-user.target" ];
-    restartIfChanged = false;
-    path = [ pkgs.fuse pkgs.rclone ];
-    serviceConfig = {
-      Type = "notify";
-      NotifyAccess = "all";
-    };
-    script = ''
-      rclone --config /keys/rclone.conf \
-        mount dropbox: /mnt/dropbox \
-        --allow-other --allow-non-empty --uid 1000 --gid 100
-    '';
-  };
-
   # Can't just include it into nix config because rclone modifies it
   # periodically
   # also that's bad for passwords
@@ -301,5 +144,10 @@ in {
     permissions = "600"; # rclone must be able to modify
     destDir = "/keys";
     text = builtins.readFile ../../secrets/rclone.conf.initial;
+  };
+  deployment.keys."restic-password.txt" = {
+    permissions = "600"; # rclone must be able to modify
+    destDir = "/keys";
+    text = builtins.readFile ../../secrets/restic-password.txt;
   };
 }
