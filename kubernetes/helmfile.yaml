@@ -35,12 +35,6 @@ releases:
     values:
       - ./values/mastodon.yaml
       - ./values/mastodon.secret.yaml
-  - name: nextcloud
-    namespace: default
-    chart: ./charts/nextcloud
-    values:
-      - ./values/nextcloud.yaml
-      - ./values/nextcloud.secret.yaml
   - name: postgresql
     namespace: default
     chart: bitnami/postgresql
