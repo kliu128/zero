@@ -1,0 +1,2 @@
+- src: https://github.com/jnv/ansible-role-unattended-upgrades
+  name: jnv.unattended-upgrades

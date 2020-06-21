@@ -15,13 +15,12 @@ spec:
         app: emby
     spec:
       containers:
-        - image: jellyfin/jellyfin:nightly-20200529
+        - image: jellyfin/jellyfin:nightly
           imagePullPolicy: Always
           name: emby
           ports:
             - containerPort: 8096
               name: http
-          resources: {}
           livenessProbe:
             httpGet:
               path: /web/index.html
