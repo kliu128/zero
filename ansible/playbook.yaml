@@ -27,7 +27,7 @@
       state: present
   - name: add NFS mount to fstab
     mount:
-      src: rem.i.kliu.io:/storage
+      src: 192.168.1.5:/storage
       path: /mnt/storage
       fstype: nfs
       opts: retry=10000
