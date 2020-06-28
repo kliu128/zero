@@ -1,4 +1,4 @@
-rem.i.kliu.io
+rem.i.kliu.io ansible_python_interpreter=/usr/bin/python3
 karmaxer.i.kliu.io
 homelab-cluster.i.kliu.io
 root@transmission.i.kliu.io
