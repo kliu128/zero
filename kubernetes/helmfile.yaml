@@ -15,9 +15,6 @@ releases:
     version: 1.39.1
     values:
       - ./values/nginx-ingress.yaml
-  # - name: nfs-client-provisioner
-  #   namespace: kube-system
-  #   chart: ./charts/nfs-client-provisioner
   - name: cert-manager
     namespace: cert-manager
     chart: jetstack/cert-manager
@@ -67,3 +64,10 @@ releases:
     values:
       - ./values/kubecfg.yaml
       - ./values/kubecfg.secret.yaml
+  - name: prometheus
+    namespace: monitoring
+    chart: stable/prometheus-operator
+    version: 8.15.6
+    values:
+      - ./values/prometheus.yaml
+      - ./values/prometheus.secret.yaml
