@@ -1,0 +1,6 @@
+[Unit]
+Description=SnapRAID sync and scrub
+OnFailure=status-email-user@%n.service
+
+[Service]
+ExecStart=/bin/bash -c "snapraid sync && snapraid scrub"

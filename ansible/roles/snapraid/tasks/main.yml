@@ -1,0 +1,26 @@
+- name: Install snapraid service
+  copy:
+    src: ../files/snapraid.service
+    dest: /etc/systemd/system
+    mode: 0644
+    owner: root
+    group: root
+- name: Install snapraid timer
+  copy:
+    src: ../files/snapraid.timer
+    dest: /etc/systemd/system
+    mode: 0644
+    owner: root
+    group: root
+- name: Install snapraid configuration
+  copy:
+    src: ../files/snapraid.conf
+    dest: /etc/
+    mode: 0644
+    owner: root
+    group: root
+- name: Enable snapraid timer
+  systemd:
+    name: snapraid.timer
+    state: started
+    enabled: yes

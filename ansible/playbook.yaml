@@ -2,6 +2,7 @@
   become: yes
   roles:
   - duplicacy
+  - snapraid
   - nfs-server
 - hosts: nfs_clients
   become: yes
