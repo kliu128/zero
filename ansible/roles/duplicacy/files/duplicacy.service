@@ -1,5 +1,6 @@
 [Unit]
 Name=Duplicacy Backup
+OnFailure=status-email-user@%n.service
 
 [Service]
 ExecStart=/usr/local/bin/duplicacy backup
