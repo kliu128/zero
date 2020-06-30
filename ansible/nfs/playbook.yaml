@@ -13,7 +13,7 @@
       opts: bind
       state: mounted
   - name: copy /etc/exports
-    template: src=files/exports.j2 dest=/etc/exports owner=root group=root
+    template: src=exports.j2 dest=/etc/exports owner=root group=root
     notify: [re-export NFS filesystems]
   handlers:
   - name: re-export NFS filesystems

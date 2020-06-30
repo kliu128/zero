@@ -1,0 +1,6 @@
+[Unit]
+Name=Duplicacy Backup
+
+[Service]
+ExecStart=/usr/local/bin/duplicacy backup
+WorkingDirectory=/mnt/storage/Kevin

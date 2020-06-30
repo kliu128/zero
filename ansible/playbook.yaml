@@ -1,1 +1,2 @@
-- import_playbook: nfs.yaml
+- import_playbook: duplicacy/playbook.yaml
+- import_playbook: nfs/playbook.yaml

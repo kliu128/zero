@@ -1,0 +1,8 @@
+[Unit]
+Name=Duplicacy Backup
+
+[Timer]
+OnCalendar=daily
+
+[Install]
+WantedBy=timers.target
