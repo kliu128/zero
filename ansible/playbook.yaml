@@ -1,2 +1,9 @@
-- import_playbook: duplicacy/playbook.yaml
-- import_playbook: nfs/playbook.yaml
+- hosts: rem.i.kliu.io
+  become: yes
+  roles:
+  - duplicacy
+  - nfs-server
+- hosts: nfs_clients
+  become: yes
+  roles:
+  - nfs-client

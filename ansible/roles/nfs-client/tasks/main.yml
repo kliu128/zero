@@ -1,0 +1,11 @@
+- name: install NFS mount utils
+  apt:
+    name: nfs-common
+    state: present
+- name: add NFS mount to fstab
+  mount:
+    src: 192.168.1.5:/storage
+    path: /mnt/storage
+    fstype: nfs
+    opts: defaults,noauto,x-systemd.automount,soft,x-systemd.timeout=1
+    state: mounted

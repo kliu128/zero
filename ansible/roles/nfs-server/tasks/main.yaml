@@ -1,0 +1,14 @@
+- name: Ensure NFS utilities are installed
+  apt:
+    name: nfs-kernel-server
+    state: present
+- name: add NFS bind mount
+  mount:
+    src: /mnt/storage
+    path: /srv/nfs4/storage
+    fstype: none
+    opts: bind
+    state: mounted
+- name: copy /etc/exports
+  template: src=../files/exports.j2 dest=/etc/exports owner=root group=root
+  notify: [re-export NFS filesystems]
