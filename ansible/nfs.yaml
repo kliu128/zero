@@ -1,0 +1,34 @@
+- hosts: rem.i.kliu.io
+  become: yes
+  tasks:
+  - name: Ensure NFS utilities are installed
+    apt:
+      name: nfs-kernel-server
+      state: present
+  - name: add NFS bind mount
+    mount:
+      src: /mnt/storage
+      path: /srv/nfs4/storage
+      fstype: none
+      opts: bind
+      state: mounted
+  - name: copy /etc/exports
+    template: src=files/exports.j2 dest=/etc/exports owner=root group=root
+    notify: [re-export NFS filesystems]
+  handlers:
+  - name: re-export NFS filesystems
+    command: exportfs -ra
+- hosts: nfs_clients
+  become: yes
+  tasks:
+  - name: install NFS mount utils
+    apt:
+      name: nfs-common
+      state: present
+  - name: add NFS mount to fstab
+    mount:
+      src: 192.168.1.5:/storage
+      path: /mnt/storage
+      fstype: nfs
+      opts: defaults,noauto,x-systemd.automount,soft,x-systemd.timeout=1
+      state: mounted
