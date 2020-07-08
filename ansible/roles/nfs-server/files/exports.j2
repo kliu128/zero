@@ -9,5 +9,5 @@
 # /srv/nfs4/homes  gss/krb5i(rw,sync,no_subtree_check)
 #
 # 100.64.0.0/10 = tailscale
-/srv/nfs4 192.168.1.0/24(rw,sync,fsid=0,crossmnt,no_subtree_check) 100.64.0.0/10(rw,sync,fsid=0,crossmnt,no_subtree_check)
-/srv/nfs4/storage 192.168.1.0/24(rw,sync,fsid=1,no_subtree_check) 100.64.0.0/10(rw,sync,fsid=1,no_subtree_check)
+/srv/nfs4 192.168.1.0/24(rw,sync,fsid=0,crossmnt,no_subtree_check,no_root_squash) 100.64.0.0/10(rw,sync,fsid=0,crossmnt,no_subtree_check,no_root_squash)
+/srv/nfs4/storage 192.168.1.0/24(rw,sync,fsid=1,no_subtree_check,no_root_squash) 100.64.0.0/10(rw,sync,fsid=1,no_subtree_check,no_root_squash)
