@@ -4,6 +4,7 @@
   - duplicacy
   - snapraid
   - nfs-server
+  - borg-server
 - hosts: nfs_clients
   become: yes
   roles:

@@ -1,0 +1,7 @@
+user: backup
+group: backup
+home: /mnt/storage/Kevin/Backups/Borg
+pool: "{{ home }}/repos"
+auth_users:
+  - host: you
+    key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDG2IMb5gieo3/d5ZqfQxRyqfzBBDIl/N9bA5E/Qu2BQYNcK/Yq8U1ZG5/D9L/UjYBc4V8wnNYu7CJsvBXHpKxClqTk5N+RgOwfbFHqrmQBhnQAFbG/IN7Y0msdJ6Ufj2V43fqrSAI8aPUaM3Awypr9AhbxzJmtYT0s7G01aaAgL51aGJWnYI6XQzeQ+F2opl0H2vOErpxhQ3DsBfyA8CMCHUmsnmnmqCyeYxN8y6PnawShKRWbSww/776ayploXNO/BzoRRrWdAyQGI8tO4y1nwLKKW0UspMk9aBhZlih8KJDLYYAv242nJ0SC1hWg+z0zUGXPT9dTZvS+6lyxd0Q6sZpHv0P2u7//S6RsbIX4HSgfzs7VQK4EnpcNItbYMWthmkx/mAGCMtiZTVZXU4K+fUZedvD93Ig9u7xMsJepqvjbLg0RImuVBotCv/WpXSHUb/PUNyDqvbX5xcBztdMPv7myTITCoN5oQyDTp9PxKChUH/ML7vrrYalXWYNk/rc= root@you
