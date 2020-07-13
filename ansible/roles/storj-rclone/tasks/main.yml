@@ -1,0 +1,19 @@
+- name: Install rclone
+  apt:
+    name: rclone
+    state: present
+- name: Copy rclone.conf
+  copy:
+    src: ../files/rclone.secret.conf
+    dest: /root/.config/rclone/rclone.conf
+    mode: 0600
+- name: Copy gsuite service
+  copy:
+    src: ../files/gsuite.service
+    dest: /etc/systemd/system/
+    mode: 0644
+  notify: Restart G-Suite mount
+- name: Ensure /mnt/gsuite exists
+  file:
+    path: /mnt/gsuite
+    state: directory

@@ -13,3 +13,7 @@
   become: yes
   roles:
   - nfs-client
+- hosts: homelab-cluster.i.kliu.io
+  become: yes
+  roles:
+  - storj-rclone
