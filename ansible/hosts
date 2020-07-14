@@ -4,3 +4,6 @@ karmaxer.i.kliu.io
 [nfs_clients]
 homelab-cluster.i.kliu.io
 192.168.1.156
+
+[storj_nodes]
+ubuntu@132.145.161.120 ansible_python_interpreter=/usr/bin/python3

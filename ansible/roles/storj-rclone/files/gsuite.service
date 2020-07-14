@@ -5,7 +5,7 @@ After=network-online.target
 
 [Service]
 Type=notify
-ExecStart=/usr/bin/rclone mount ccsf1: /mnt/gsuite --vfs-cache-mode writes --allow-other
+ExecStart=/usr/bin/rclone mount gsuite: /mnt/gsuite --vfs-cache-mode writes --allow-other
 
 [Install]
 WantedBy=multi-user.target

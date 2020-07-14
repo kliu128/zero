@@ -1,19 +1,15 @@
-- hosts: all
-  become: yes
-  roles:
-  - mosh
-- hosts: rem.i.kliu.io
-  become: yes
-  roles:
-  - duplicacy
-  - snapraid
-  - nfs-server
-  - borg-server
-- hosts: nfs_clients
-  become: yes
-  roles:
-  - nfs-client
-- hosts: homelab-cluster.i.kliu.io
+# - hosts: all
+#   become: yes
+#   roles:
+#   - mosh
+# - hosts: rem.i.kliu.io
+#   become: yes
+#   roles:
+#   - duplicacy
+#   - snapraid
+#   - nfs-server
+#   - borg-server
+- hosts: storj_nodes
   become: yes
   roles:
   - storj-rclone

@@ -2,18 +2,83 @@
   apt:
     name: rclone
     state: present
+- file:
+    path: /root/.config/rclone
+    state: directory
 - name: Copy rclone.conf
   copy:
-    src: ../files/rclone.secret.conf
+    src: rclone.secret.conf
     dest: /root/.config/rclone/rclone.conf
     mode: 0600
 - name: Copy gsuite service
   copy:
-    src: ../files/gsuite.service
+    src: gsuite.service
     dest: /etc/systemd/system/
     mode: 0644
-  notify: Restart G-Suite mount
 - name: Ensure /mnt/gsuite exists
   file:
     path: /mnt/gsuite
     state: directory
+- name: Ensure G-Suite mount is started
+  systemd:
+    daemon_reload: yes
+    name: gsuite.service
+    state: started
+- name: Install docker
+  apt:
+    name: docker.io
+    state: present
+- name: Install python3-docker
+  apt:
+    name: python3-docker
+    state: present
+- name: Copy storj identity
+  copy:
+    src: secret/identity/{{ ansible_hostname }}/
+    dest: /var/lib/storj-identity
+    owner: root
+    group: root
+    directory_mode: 0700
+- name: Create Storj folders
+  file:
+    path: "{{ item }}"
+    state: directory
+  loop:
+    - /var/lib/storj
+    - /mnt/gsuite/Storj/{{ ansible_hostname }}/storage
+- name: Open Storj firewall ports (Oracle VM)
+  lineinfile:
+    path: /etc/iptables/rules.v4
+    regexp: '^{{ item }}'
+    line: "{{ item }}"
+    insertafter: '^-A INPUT'
+    firstmatch: yes
+    state: present
+  loop:
+    - -A INPUT -p tcp -m state --state NEW -m tcp --dport 14002 -j ACCEPT
+    - -A INPUT -p tcp -m state --state NEW -m tcp --dport 28967 -j ACCEPT
+- name: Start Storj docker container
+  docker_container:
+    timeout: 300
+    name: storj
+    image: storjlabs/storagenode:latest
+    command: [--storage2.database-dir, /storage-db]
+    env:
+      WALLET: "0xA0fd60A944c1f86D529EEbEf19b34ca61294Ffe5"
+      EMAIL: kevin@kliu.io
+      # TODO
+      ADDRESS: "{{ ansible_hostname }}.storj.kliu.io:28967"
+      STORAGE: 500TB
+    network_mode: host
+    restart: yes
+    restart_policy: unless-stopped
+    mounts:
+      - source: /var/lib/storj-identity
+        target: /app/identity
+        type: bind
+      - source: /var/lib/storj
+        target: /storage-db
+        type: bind
+      - source: /mnt/gsuite/Storj/{{ ansible_hostname }}/storage
+        target: /app/config/storage
+        type: bind
