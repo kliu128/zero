@@ -46,6 +46,10 @@
   loop:
     - /var/lib/storj
     - /mnt/gsuite/Storj/{{ ansible_hostname }}/storage
+- name: Check that the iptables file exists
+  stat:
+    path: /etc/iptables/rules.v4
+  register: stat_result
 - name: Open Storj firewall ports (Oracle VM)
   lineinfile:
     path: /etc/iptables/rules.v4
@@ -54,6 +58,7 @@
     insertafter: '^-A INPUT'
     firstmatch: yes
     state: present
+  when: stat_result.stat.exists
   loop:
     - -A INPUT -p tcp -m state --state NEW -m tcp --dport 14002 -j ACCEPT
     - -A INPUT -p tcp -m state --state NEW -m tcp --dport 28967 -j ACCEPT

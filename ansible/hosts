@@ -7,3 +7,4 @@ homelab-cluster.i.kliu.io
 
 [storj_nodes]
 ubuntu@132.145.161.120 ansible_python_interpreter=/usr/bin/python3
+root@167.99.84.231 ansible_python_interpreter=/usr/bin/python3
