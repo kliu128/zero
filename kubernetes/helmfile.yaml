@@ -21,15 +21,6 @@ releases:
     version: 0.15.1
     values:
       - ./values/cert-manager.yaml
-  - name: mastodon
-    namespace: default
-    labels:
-      mastodon: "true"
-      has-migrations: "true"
-    chart: ./charts/mastodon
-    values:
-      - ./values/mastodon.yaml
-      - ./values/mastodon.secret.yaml
   - name: postgresql
     namespace: default
     chart: bitnami/postgresql
