@@ -1,7 +1,12 @@
-- name: Install rclone
+- name: Uninstall rclone from apt
   apt:
     name: rclone
-    state: present
+    state: absent
+- name: Install rclone from curl
+  shell:
+    cmd: curl https://rclone.org/install.sh | bash
+    creates: /usr/bin/rclone
+    warn: false
 - file:
     path: /root/.config/rclone
     state: directory
@@ -10,6 +15,13 @@
     src: rclone.secret.conf
     dest: /root/.config/rclone/rclone.conf
     mode: 0600
+- name: Copy rclone service account
+  copy:
+    src: secret/serviceaccount/{{ ansible_hostname }}.json
+    dest: /var/lib/storj-sa.json
+    owner: root
+    group: root
+    mode: 0400
 - name: Copy gsuite service
   copy:
     src: gsuite.service
@@ -18,6 +30,10 @@
 - name: Ensure /mnt/gsuite exists
   file:
     path: /mnt/gsuite
+    state: directory
+- name: Ensure /var/cache/storj exists
+  file:
+    path: /var/cache/storj
     state: directory
 - name: Ensure G-Suite mount is started
   systemd:
@@ -67,7 +83,7 @@
     timeout: 300
     name: storj
     image: storjlabs/storagenode:latest
-    command: [--storage2.database-dir, /storage-db]
+    command: [--storage2.database-dir, /storage-db, --storage2.max-concurrent-requests, '6']
     env:
       WALLET: "0xA0fd60A944c1f86D529EEbEf19b34ca61294Ffe5"
       EMAIL: kevin@kliu.io
@@ -75,7 +91,6 @@
       ADDRESS: "{{ ansible_hostname }}.storj.kliu.io:28967"
       STORAGE: 500TB
     network_mode: host
-    restart: yes
     restart_policy: unless-stopped
     mounts:
       - source: /var/lib/storj-identity

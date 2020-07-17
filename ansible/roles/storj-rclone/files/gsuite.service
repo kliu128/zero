@@ -5,7 +5,7 @@ After=network-online.target
 
 [Service]
 Type=notify
-ExecStart=/usr/bin/rclone mount gsuite: /mnt/gsuite --vfs-cache-mode writes --allow-other
+ExecStart=/usr/bin/rclone --drive-impersonate admin@kliu.io mount gsuite: /mnt/gsuite --allow-other -vv --transfers=32 --fast-list --vfs-cache-mode writes --write-back-cache
 
 [Install]
 WantedBy=multi-user.target
