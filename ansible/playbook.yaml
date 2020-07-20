@@ -1,16 +1,19 @@
 - hosts: all
   become: yes
   roles:
-  - mosh
+    - mosh
+- hosts: homelab-cluster.i.kliu.io
+  become: yes
+  roles: [ddns]
 - hosts: rem.i.kliu.io
   become: yes
   roles:
-  - ethminer
-  - duplicacy
-  - snapraid
-  - nfs-server
-  - borg-server
+    - ethminer
+    - duplicacy
+    - snapraid
+    - nfs-server
+    - borg-server
 - hosts: storj_nodes
   become: yes
   roles:
-  - storj-rclone
+    - storj-rclone

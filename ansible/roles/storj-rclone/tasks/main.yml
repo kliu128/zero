@@ -15,6 +15,7 @@
     src: rclone.secret.conf
     dest: /root/.config/rclone/rclone.conf
     mode: 0600
+    force: no
 - name: Copy rclone service account
   copy:
     src: secret/serviceaccount/{{ ansible_hostname }}.json
@@ -30,10 +31,6 @@
 - name: Ensure /mnt/gsuite exists
   file:
     path: /mnt/gsuite
-    state: directory
-- name: Ensure /var/cache/storj exists
-  file:
-    path: /var/cache/storj
     state: directory
 - name: Ensure G-Suite mount is started
   systemd:
