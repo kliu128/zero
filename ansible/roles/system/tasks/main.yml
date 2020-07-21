@@ -1,0 +1,27 @@
+- name: Enable runtime watchdog for systemd
+  lineinfile:
+    path: /etc/systemd/system.conf
+    regexp: '^RuntimeWatchdogSec='
+    line: RuntimeWatchdogSec=60
+  notify: [restart systemd]
+- name: Check for iTCO-wdt
+  command: modinfo iTCO-wdt
+  register: result
+  ignore_errors: yes
+- name: Load watchdog driver
+  modprobe:
+    name: iTCO-wdt
+    state: present
+  when: result is succeeded
+- name: Load watchdog driver on boot
+  copy:
+    dest: /etc/modules-load.d/itco-wdt
+    content: |
+      iTCO-wdt
+  when: result is succeeded
+- name: Stop watchdog-mux service if present
+  systemd:
+    name: watchdog-mux
+    state: stopped
+    enabled: no
+  ignore_errors: True

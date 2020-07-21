@@ -2,7 +2,7 @@
   docker_container:
     timeout: 600
     name: ethminer
-    state: absent
+    state: present
     image: cryptojunkies/claymore:eth-amd-latest
     command:
       [

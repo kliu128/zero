@@ -2,6 +2,7 @@
   become: yes
   roles:
     - mosh
+    - system
 - hosts: homelab-cluster.i.kliu.io
   become: yes
   roles: [ddns]
