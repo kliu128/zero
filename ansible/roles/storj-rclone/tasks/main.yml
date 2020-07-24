@@ -1,12 +1,11 @@
-- name: Uninstall rclone from apt
-  apt:
-    name: rclone
-    state: absent
 - name: Install rclone from curl
   shell:
     cmd: curl https://rclone.org/install.sh | bash
     creates: /usr/bin/rclone
     warn: false
+- name: Install dependencies
+  apt:
+    pkg: [docker.io, python3-docker, unionfs-fuse]
 - file:
     path: /root/.config/rclone
     state: directory
@@ -23,28 +22,27 @@
     owner: root
     group: root
     mode: 0400
-- name: Copy gsuite service
+- name: Copy services
   copy:
-    src: gsuite.service
-    dest: /etc/systemd/system/
+    src: "{{ item }}"
+    dest: /etc/systemd/system
     mode: 0644
-- name: Ensure /mnt/gsuite exists
+  loop:
+    - gsuite.service
+  notify: Restart G-Suite service
+- name: Ensure mount directories exist
   file:
-    path: /mnt/gsuite
+    path: "{{ item }}"
     state: directory
-- name: Ensure G-Suite mount is started
+  loop:
+    - /mnt/gsuite
+- name: Ensure mounts are started
   systemd:
     daemon_reload: yes
-    name: gsuite.service
+    name: "{{ item }}.service"
     state: started
-- name: Install docker
-  apt:
-    name: docker.io
-    state: present
-- name: Install python3-docker
-  apt:
-    name: python3-docker
-    state: present
+  loop:
+    - gsuite
 - name: Copy storj identity
   copy:
     src: secret/identity/{{ ansible_hostname }}/
@@ -58,7 +56,7 @@
     state: directory
   loop:
     - /var/lib/storj
-    - /mnt/gsuite/Storj/{{ ansible_hostname }}/storage
+    - /mnt/union/Storj/{{ ansible_hostname }}/storage
 - name: Check that the iptables file exists
   stat:
     path: /etc/iptables/rules.v4
@@ -80,7 +78,7 @@
     timeout: 300
     name: storj
     image: storjlabs/storagenode:latest
-    command: [--storage2.database-dir, /storage-db, --storage2.max-concurrent-requests, '6']
+    command: [--storage2.database-dir, /storage-db, --storage2.max-concurrent-requests, '8']
     env:
       WALLET: "0xA0fd60A944c1f86D529EEbEf19b34ca61294Ffe5"
       EMAIL: kevin@kliu.io

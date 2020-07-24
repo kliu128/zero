@@ -17,4 +17,5 @@
 - hosts: storj_nodes
   become: yes
   roles:
-    - storj-rclone
+    - role: storj-rclone
+      tags: storj
