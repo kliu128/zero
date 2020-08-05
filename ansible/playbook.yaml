@@ -1,8 +1,11 @@
 - hosts: all
   become: yes
   roles:
-    - mosh
     - system
+    - mosh
+- hosts: homelab-cluster.i.kliu.io,transmission.i.kliu.io
+  become: yes
+  roles: [storage-mount]
 - hosts: homelab-cluster.i.kliu.io
   become: yes
   roles: [ddns]

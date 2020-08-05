@@ -1,3 +1,13 @@
+- name: Install latest mergerfs package
+  apt:
+    deb: https://github.com/trapexit/mergerfs/releases/download/2.29.0/mergerfs_2.29.0.debian-buster_amd64.deb
+- name: Initialize mergerfs mount
+  mount:
+    src: /mnt/data*:/mnt/wdgreen1tb
+    path: /mnt/storage
+    fstype: fuse.mergerfs
+    opts: use_ino,cache.files=partial,dropcacheonclose=true,allow_other,category.create=mfs,noforget
+    state: present
 - name: Install snapraid service
   copy:
     src: ../files/snapraid.service

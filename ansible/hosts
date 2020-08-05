@@ -1,5 +1,6 @@
 rem.i.kliu.io ansible_python_interpreter=/usr/bin/python3
 karmaxer.i.kliu.io
+transmission.i.kliu.io
 
 [nfs_clients]
 homelab-cluster.i.kliu.io

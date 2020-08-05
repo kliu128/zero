@@ -7,5 +7,5 @@
   cron:
     name: ddns
     minute: "*/5"
-    job: "/bin/sh /usr/local/sbin/ddns.sh"
+    job: "/bin/bash /usr/local/sbin/ddns.sh"
     state: present

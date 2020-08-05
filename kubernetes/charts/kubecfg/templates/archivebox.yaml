@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: archivebox
+  name: archivebox
+spec:
+  serviceName: archivebox
+  selector:
+    matchLabels:
+      app: archivebox
+  template:
+    metadata:
+      labels:
+        app: archivebox
+    spec:
+      containers:
+        - image: nikisweeting/archivebox:latest
+          name: archivebox
+          stdin: true
+          tty: true
+          args: [server, "0.0.0.0:8080"]
+          ports:
+            - containerPort: 8080
+              name: http
+          volumeMounts:
+            - mountPath: /data/
+              name: data
+      volumes:
+        - name: data
+          hostPath:
+            path: /mnt/storage/Kevin/Computing/Data/ArchiveBox
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: archivebox
+  name: archivebox
+spec:
+  ports:
+    - name: http
+      port: 8080
+      targetPort: http
+  selector:
+    app: archivebox
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/tls-acme: "true"
+  name: archivebox
+spec:
+  tls:
+    - secretName: archivebox-tls
+      hosts:
+        - archive.kliu.io
+  rules:
+    - host: archive.kliu.io
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: archivebox
+              servicePort: http

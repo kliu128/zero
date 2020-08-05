@@ -1,0 +1,18 @@
+- name: Copy SMB credentials
+  copy:
+    src: smbcredentials.secret.txt
+    dest: /.smbcredentials
+    owner: root
+    group: root
+    mode: 0400
+- name: Install CIFS mounting programs
+  apt:
+    name: cifs-utils
+    state: present
+- name: add storage SMB mount
+  mount:
+    src: //192.168.1.5/storage
+    path: /mnt/storage
+    fstype: cifs
+    opts: defaults,noauto,x-systemd.automount,credentials=/.smbcredentials,uid=kevin,gid=users
+    state: mounted

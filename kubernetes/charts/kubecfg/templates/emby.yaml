@@ -15,7 +15,7 @@ spec:
         app: emby
     spec:
       containers:
-        - image: jellyfin/jellyfin:nightly
+        - image: jellyfin/jellyfin
           imagePullPolicy: Always
           name: emby
           ports:
