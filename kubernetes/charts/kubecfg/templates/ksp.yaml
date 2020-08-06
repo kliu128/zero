@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: ksp
+  name: ksp
+spec:
+  serviceName: ksp
+  selector:
+    matchLabels:
+      app: ksp
+  template:
+    metadata:
+      labels:
+        app: ksp
+    spec:
+      hostNetwork: true
+      containers:
+        - image: pneumaticat/dmp
+          name: ksp
+          volumeMounts:
+            - mountPath: /opt/dmp/Universe
+              name: data
+              subPath: universe
+            - mountPath: /opt/dmp/Config
+              name: data
+              subPath: config
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: ksp-data
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    app: ksp
+  name: ksp-data
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
