@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: matrix-puppet-discord
+  name: matrix-puppet-slack
 spec:
-  serviceName: matrix-puppet-discord
+  serviceName: matrix-puppet-slack
   selector:
     matchLabels:
-      app: matrix-puppet-discord
+      app: matrix-puppet-slack
   template:
     metadata:
       labels:
-        app: matrix-puppet-discord
+        app: matrix-puppet-slack
     spec:
       containers:
-        - name: discord
-          image: sorunome/mx-puppet-discord
+        - name: slack
+          image: sorunome/mx-puppet-slack
           # Liveness probe: check if bot has an HTTPS connection to a server
-          # (We assume this is the Discord API server)
+          # (We assume this is the Slack API server)
           livenessProbe:
             exec:
               command:
@@ -25,10 +25,10 @@ spec:
               - netstat | grep -q ':https'
           volumeMounts:
             - name: config
-              subPath: puppet-discord-registration.yaml
-              mountPath: /data/discord-registration.yaml
+              subPath: slack-registration.yaml
+              mountPath: /data/slack-registration.yaml
             - name: config
-              subPath: puppet-discord-config.yaml
+              subPath: slack-config.yaml
               mountPath: /data/config.yaml
             - name: data
               mountPath: /data
@@ -38,14 +38,14 @@ spec:
             secretName: matrix2-config
         - name: data
           persistentVolumeClaim:
-            claimName: matrix-puppet-discord-data
+            claimName: matrix-puppet-slack-data
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   labels:
     app: matrix
-  name: matrix-puppet-discord-data
+  name: matrix-puppet-slack-data
 spec:
   accessModes:
     - ReadWriteOnce
@@ -56,11 +56,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: matrix-puppet-discord
+  name: matrix-puppet-slack
 spec:
   selector:
-    app: matrix-puppet-discord
+    app: matrix-puppet-slack
   ports:
     - name: http
-      targetPort: 8434
-      port: 8434
+      targetPort: 8432
+      port: 8432

@@ -63,6 +63,9 @@ spec:
               subPath: whatsapp-registration.yaml
               mountPath: /config/whatsapp-registration.yaml
             - name: config
+              subPath: slack-registration.yaml
+              mountPath: /config/slack-registration.yaml
+            - name: config
               subPath: puppet-discord-registration.yaml
               mountPath: /config/puppet-discord-registration.yaml
             - name: data
