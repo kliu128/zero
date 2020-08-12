@@ -16,13 +16,13 @@ spec:
     spec:
       hostNetwork: true
       containers:
-        - image: pneumaticat/dmp
+        - image: pneumaticat/lmp
           name: ksp
           volumeMounts:
-            - mountPath: /opt/dmp/Universe
+            - mountPath: /LMPServer/Universe
               name: data
               subPath: universe
-            - mountPath: /opt/dmp/Config
+            - mountPath: /LMPServer/Config
               name: data
               subPath: config
       volumes:
