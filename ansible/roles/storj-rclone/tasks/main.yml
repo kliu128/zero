@@ -14,14 +14,7 @@
     src: rclone.secret.conf
     dest: /root/.config/rclone/rclone.conf
     mode: 0600
-    force: no
-- name: Copy rclone service account
-  copy:
-    src: secret/serviceaccount/{{ ansible_hostname }}.json
-    dest: /var/lib/storj-sa.json
-    owner: root
-    group: root
-    mode: 0400
+    force: yes
 - name: Copy services
   copy:
     src: "{{ item }}"
@@ -56,7 +49,7 @@
     state: directory
   loop:
     - /var/lib/storj
-    - /mnt/union/Storj/{{ ansible_hostname }}/storage
+    - /mnt/gsuite/Storj/{{ ansible_hostname }}/storage
 - name: Check that the iptables file exists
   stat:
     path: /etc/iptables/rules.v4
@@ -78,13 +71,14 @@
     timeout: 300
     name: storj
     image: storjlabs/storagenode:latest
+    pull: yes # Always pull latest version
     command: [--storage2.database-dir, /storage-db, --storage2.max-concurrent-requests, '8']
     env:
       WALLET: "0xA0fd60A944c1f86D529EEbEf19b34ca61294Ffe5"
       EMAIL: kevin@kliu.io
       # TODO
       ADDRESS: "{{ ansible_hostname }}.storj.kliu.io:28967"
-      STORAGE: 500TB
+      STORAGE: 5TB
     network_mode: host
     restart_policy: unless-stopped
     mounts:
