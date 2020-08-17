@@ -1,0 +1,10 @@
+- name: Install monit
+  apt:
+    name: monit
+    state: present
+- name: Copy monit configuration
+  copy:
+    src: monit.secret.conf
+    dest: /etc/monit/conf.d/disk
+    mode: 0600
+  notify: [reload monit]

@@ -10,5 +10,3 @@ homelab-cluster.i.kliu.io
 rem.i.kliu.io ansible_python_interpreter=/usr/bin/python3
 ubuntu@132.145.161.120 ansible_python_interpreter=/usr/bin/python3
 root@167.99.84.231 ansible_python_interpreter=/usr/bin/python3
-ubuntu@storj-ovh-01.storj.kliu.io ansible_python_interpreter=/usr/bin/python3
-ubuntu@storj-ovh-02.storj.kliu.io ansible_python_interpreter=/usr/bin/python3

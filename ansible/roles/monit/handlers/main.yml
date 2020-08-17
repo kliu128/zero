@@ -1,0 +1,2 @@
+- name: reload monit
+  command: systemctl reload monit

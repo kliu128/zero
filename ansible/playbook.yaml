@@ -2,6 +2,7 @@
   become: yes
   roles:
     - system
+    - monit
     - mosh
 - hosts: homelab-cluster.i.kliu.io,transmission.i.kliu.io
   become: yes

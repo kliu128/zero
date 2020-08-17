@@ -27,7 +27,7 @@ spec:
       containers:
         # Main paperless server
         - name: webserver
-          image: danielquinn/paperless
+          image: thepaperlessproject/paperless
           args:
             - runserver
             - --insecure
@@ -60,14 +60,12 @@ spec:
                 name: paperless-passphrase
             - configMapRef:
                 name: paperless-config
-          image: danielquinn/paperless
+          image: thepaperlessproject/paperless
           volumeMounts:
             - name: data
               mountPath: /usr/src/paperless/data
             - name: media
               mountPath: /usr/src/paperless/media
-            - name: consume
-              mountPath: /consume
       volumes:
         # Stores SSL keys, media_store
         - name: data
@@ -76,10 +74,6 @@ spec:
         - name: media
           persistentVolumeClaim:
             claimName: paperless-media
-        - name: consume
-          hostPath:
-            path: /srv/paperless-consume
-            type: Directory
 ---
 kind: ConfigMap
 apiVersion: v1
