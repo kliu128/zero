@@ -1,0 +1,86 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: afriendlyml
+  name: afriendlyml
+spec:
+  serviceName: afriendlyml
+  selector:
+    matchLabels:
+      app: afriendlyml
+  template:
+    metadata:
+      labels:
+        app: afriendlyml
+    spec:
+      containers:
+        - image: pneumaticat/afriendlyml
+          name: afriendlyml
+          env:
+          - name: RAILS_ENV
+            value: production
+          - name: RAILS_SERVE_STATIC_FILES
+            value: "true"
+          volumeMounts:
+            - mountPath: /data
+              name: data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: afriendlyml-data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: afriendlyml
+  name: afriendlyml
+spec:
+  ports:
+    - name: http
+      port: 3000
+      targetPort: 3000
+  selector:
+    app: afriendlyml
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    app: afriendlyml
+  name: afriendlyml-data
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/tls-acme: "true"
+  name: afriendlyml
+spec:
+  tls:
+    - secretName: afriendlyml-tls
+      hosts:
+        - afriendly.ml
+        - www.afriendly.ml
+  rules:
+    - host: afriendly.ml
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: afriendlyml
+              servicePort: 3000
+    - host: www.afriendly.ml
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: afriendlyml
+              servicePort: 3000
