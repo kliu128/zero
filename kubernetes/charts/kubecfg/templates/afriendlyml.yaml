@@ -3,6 +3,10 @@ kind: StatefulSet
 metadata:
   labels:
     app: afriendlyml
+    # force policy will ensure that deployment is updated
+    # even when tag is unchanged (latest remains)
+    keel.sh/policy: force
+    keel.sh/trigger: poll
   name: afriendlyml
 spec:
   serviceName: afriendlyml
@@ -17,6 +21,9 @@ spec:
       containers:
         - image: pneumaticat/afriendlyml
           name: afriendlyml
+          envFrom:
+          - secretRef:
+              name: afriendlyml-config
           env:
           - name: RAILS_ENV
             value: production
