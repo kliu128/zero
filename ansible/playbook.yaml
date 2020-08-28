@@ -12,12 +12,15 @@
   roles: [ddns]
 - hosts: rem.i.kliu.io
   become: yes
+  vars_files:
+  - vars/main.secret.yml
   roles:
     - ethminer
     - duplicacy
     - snapraid
     - nfs-server
     - borg-server
+    - { role: riemers.gitlab-runner }
 - hosts: storj_nodes
   become: yes
   roles:

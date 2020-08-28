@@ -1,2 +1,3 @@
 - src: https://github.com/jnv/ansible-role-unattended-upgrades
   name: jnv.unattended-upgrades
+- name: riemers.gitlab-runner
