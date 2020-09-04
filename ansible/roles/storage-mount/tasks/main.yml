@@ -11,8 +11,8 @@
     state: present
 - name: add storage NFS mount
   mount:
-    src: 192.168.1.5:/storage
+    src: karmaxer.fios-router.home:/storage
     fstype: nfs
     path: /mnt/storage
-    opts: defaults,noauto,x-systemd.automount
+    opts: defaults,nofail
     state: mounted

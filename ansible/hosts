@@ -1,12 +1,6 @@
-rem.i.kliu.io ansible_python_interpreter=/usr/bin/python3
 karmaxer.i.kliu.io
-transmission.i.kliu.io
+#transmission.i.kliu.io
 ubuntu@dailydosenews.i.kliu.io
 
 [nfs_clients]
 homelab-cluster.i.kliu.io
-
-[storj_nodes]
-rem.i.kliu.io ansible_python_interpreter=/usr/bin/python3
-ubuntu@132.145.161.120 ansible_python_interpreter=/usr/bin/python3
-root@167.99.84.231 ansible_python_interpreter=/usr/bin/python3

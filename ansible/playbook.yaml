@@ -4,23 +4,21 @@
     - system
     - monit
     - mosh
-- hosts: homelab-cluster.i.kliu.io,transmission.i.kliu.io
-  become: yes
-  roles: [storage-mount]
 - hosts: homelab-cluster.i.kliu.io
   become: yes
   roles: [ddns]
-- hosts: rem.i.kliu.io
+- hosts: karmaxer.i.kliu.io
   become: yes
   vars_files:
   - vars/main.secret.yml
   roles:
-    - ethminer
     - duplicacy
     - snapraid
     - nfs-server
     - borg-server
-    - { role: riemers.gitlab-runner }
+- hosts: homelab-cluster.i.kliu.io,transmission.i.kliu.io
+  become: yes
+  roles: [storage-mount]
 - hosts: storj_nodes
   become: yes
   roles:
