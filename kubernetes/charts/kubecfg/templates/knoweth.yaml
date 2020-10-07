@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: knoweth
+    # force policy will ensure that deployment is updated
+    # even when tag is unchanged (latest remains)
+    keel.sh/policy: force
+    keel.sh/trigger: poll
+  name: knoweth
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: knoweth
+  template:
+    metadata:
+      labels:
+        app: knoweth
+    spec:
+      containers:
+        - image: quay.io/kliu128/knoweth:master
+          imagePullPolicy: Always
+          name: knoweth
+          envFrom:
+            - secretRef:
+                name: knoweth-config
+          env:
+            - name: RAILS_ENV
+              value: production
+            - name: RAILS_SERVE_STATIC_FILES
+              value: "true"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: knoweth
+  name: knoweth
+spec:
+  ports:
+    - name: http
+      port: 3000
+      targetPort: 3000
+  selector:
+    app: knoweth
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/tls-acme: "true"
+  name: knoweth
+spec:
+  tls:
+    - secretName: knoweth-tls
+      hosts:
+        - www.knoweth.ml
+        - knoweth.ml
+  rules:
+    - host: knoweth.ml
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: knoweth
+              servicePort: 3000
+    - host: www.knoweth.ml
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: knoweth
+              servicePort: 3000

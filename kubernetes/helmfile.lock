@@ -1,0 +1,28 @@
+version: v0.130.1
+dependencies:
+- name: cert-manager
+  repository: https://charts.jetstack.io
+  version: v0.15.1
+- name: gitlab-runner
+  repository: https://charts.gitlab.io
+  version: 0.19.1
+- name: gitlab-runner
+  repository: https://charts.gitlab.io
+  version: 0.19.1
+- name: keel
+  repository: https://charts.keel.sh
+  version: 0.9.4
+- name: mariadb
+  repository: https://charts.bitnami.com/bitnami
+  version: 7.5.1
+- name: nginx-ingress
+  repository: https://kubernetes-charts.storage.googleapis.com
+  version: 1.39.1
+- name: postgresql
+  repository: https://charts.bitnami.com/bitnami
+  version: 8.10.5
+- name: prometheus-operator
+  repository: https://kubernetes-charts.storage.googleapis.com
+  version: 8.15.6
+digest: sha256:a8bd63aaf65ac8bd6228d6b33652b5e8615608b0de68fbc60e8540aa570dd733
+generated: "2020-10-05T12:10:58.101505966-04:00"

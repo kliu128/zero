@@ -25,6 +25,9 @@ spec:
             - mountPath: /LMPServer/Config
               name: data
               subPath: config
+            - mountPath: /LMPServer/LMPModControl.xml
+              name: data
+              subPath: config/LMPModControl.xml
       volumes:
         - name: data
           persistentVolumeClaim:

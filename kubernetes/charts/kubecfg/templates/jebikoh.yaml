@@ -19,6 +19,9 @@ subsets:
     - protocol: TCP
       port: 80
       name: http
+    - protocol: TCP
+      port: 2000
+      name: http2
 ---
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
@@ -31,8 +34,24 @@ spec:
     - secretName: jebikoh-tls
       hosts:
         - lk.jebikoh.com
+        - lk.jkoh.io
+        - dokku.jkoh.io
   rules:
     - host: lk.jebikoh.com
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: jebikoh
+              servicePort: 80
+    - host: lk.jkoh.io
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: jebikoh
+              servicePort: 80
+    - host: dokku.jkoh.io
       http:
         paths:
           - path: /

@@ -29,9 +29,6 @@ spec:
         - name: gitlab-data
           mountPath: /var/opt/gitlab
           subPath: data
-        - name: gitlab-data
-          mountPath: /var/log/gitlab
-          subPath: logs
       volumes:
       - name: gitlab-data
         persistentVolumeClaim:
