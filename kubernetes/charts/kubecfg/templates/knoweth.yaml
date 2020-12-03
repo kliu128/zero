@@ -19,7 +19,7 @@ spec:
         app: knoweth
     spec:
       containers:
-        - image: quay.io/kliu128/knoweth:master
+        - image: pneumaticat/knoweth
           imagePullPolicy: Always
           name: knoweth
           envFrom:

@@ -15,7 +15,7 @@ spec:
         app: bitwarden
     spec:
       containers:
-        - image: bitwardenrs/server:1.14.2
+        - image: bitwardenrs/server
           name: bitwarden
           env:
             - name: SIGNUPS_ALLOWED
