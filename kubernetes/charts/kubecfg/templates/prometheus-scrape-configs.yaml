@@ -1,7 +1,0 @@
-kind: Secret
-apiVersion: v1
-metadata:
-  name: prometheus-scrape-configs
-  namespace: monitoring
-stringData:
-  additional.yaml: ""

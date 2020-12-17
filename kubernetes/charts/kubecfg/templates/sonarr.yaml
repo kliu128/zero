@@ -39,7 +39,7 @@ spec:
               name: sonarr-config
             - mountPath: /tv
               name: tv
-            - mountPath: /data
+            - mountPath: /mnt/storage/Kevin/Incoming
               name: sonarr-data
         - env:
             - name: PGID

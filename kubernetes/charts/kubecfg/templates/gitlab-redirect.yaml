@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    nginx.ingress.kubernetes.io/permanent-redirect: https://github.com/kliu128
+  name: gitlab-redirect
+  namespace: kube-system
+spec:
+  tls:
+    - secretName: gitlab-redirect-tls
+      hosts:
+        - gitlab.kliu.io
+  rules:
+    - host: gitlab.kliu.io
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: nginx-ingress-default-backend
+              servicePort: 80
