@@ -1,7 +1,0 @@
-imageTag: 0.16.51
-
-factorioServer:
-  name: PotatoFactorio
-  description: Factorio on potatofrom.space
-  port: 34197
-  serviceType: NodePort
