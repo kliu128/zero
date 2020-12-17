@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: blog
+    # force policy will ensure that deployment is updated
+    # even when tag is unchanged (latest remains)
+    keel.sh/policy: force
+    keel.sh/trigger: poll
+  name: blog
+spec:
+  selector:
+    matchLabels:
+      app: blog
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: blog
+    spec:
+      containers:
+        - image: ghcr.io/kliu128/blog:latest
+          name: blog
