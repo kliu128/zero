@@ -1,6 +1,7 @@
-karmaxer.i.kliu.io
-#transmission.i.kliu.io
-ubuntu@dailydosenews.i.kliu.io
+rem
+karmaxer
+#transmission
+ubuntu@dailydosenews
 
 [nfs_clients]
-homelab-cluster.i.kliu.io
+homelab-cluster

@@ -5,3 +5,14 @@
   with_items:
     - { name: "net.core.default_qdisc", value: "fq" }
     - { name: "net.ipv4.tcp_congestion_control", value: "bbr" }
+- name: Configure sshd
+  copy:
+    src: sshd_config
+    dest: /etc/ssh/sshd_config
+  notify:
+    - restart sshd
+- name: Set authorized keys for kevin
+  authorized_key:
+    user: kevin
+    state: present
+    key: https://github.com/kliu128.keys

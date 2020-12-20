@@ -1,2 +1,4 @@
 - name: restart systemd
   command: systemctl daemon-reexec
+- name: restart sshd
+  command: systemctl reload sshd

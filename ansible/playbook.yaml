@@ -1,22 +1,23 @@
 - hosts: all
   become: yes
+  tags: [start]
   roles:
     - system
-    - monit
     - mosh
-- hosts: homelab-cluster.i.kliu.io
+- hosts: homelab-cluster
   become: yes
-  roles: [ddns]
-- hosts: karmaxer.i.kliu.io
+  roles: [ddns, monit]
+- hosts: karmaxer
   become: yes
   vars_files:
-  - vars/main.secret.yml
+    - vars/main.secret.yml
   roles:
     - duplicacy
     - snapraid
     - nfs-server
     - borg-server
-- hosts: homelab-cluster.i.kliu.io,transmission.i.kliu.io
+    - monit
+- hosts: homelab-cluster,transmission
   become: yes
   roles: [storage-mount]
 - hosts: storj_nodes
