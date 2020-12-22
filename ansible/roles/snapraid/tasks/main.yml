@@ -1,6 +1,6 @@
 - name: Install latest mergerfs package
   apt:
-    deb: https://github.com/trapexit/mergerfs/releases/download/2.29.0/mergerfs_2.29.0.debian-buster_amd64.deb
+    deb: https://github.com/trapexit/mergerfs/releases/download/2.32.1/mergerfs_2.32.1.debian-buster_amd64.deb
 - name: Initialize mergerfs mount
   mount:
     src: /mnt/data*:/mnt/wdgreen1tb

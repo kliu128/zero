@@ -1,7 +1,7 @@
 rem
 karmaxer
 #transmission
-ubuntu@dailydosenews
+#ubuntu@dailydosenews
 
 [nfs_clients]
 homelab-cluster
