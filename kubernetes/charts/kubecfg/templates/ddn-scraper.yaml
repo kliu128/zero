@@ -1,0 +1,42 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: ddn-scraper
+spec:
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+      name: http
+---
+kind: Endpoints
+apiVersion: v1
+metadata:
+  name: ddn-scraper
+subsets:
+  - addresses:
+      - ip: 192.168.1.17
+    ports:
+      - protocol: TCP
+        port: 3000
+        name: http
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/tls-acme: "true"
+  name: ddn-scraper
+spec:
+  tls:
+    - secretName: ddn-scraper-tls
+      hosts:
+        - ddn-scraper.kliu.io
+  rules:
+    - host: ddn-scraper.kliu.io
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: ddn-scraper
+              servicePort: http
