@@ -9,17 +9,18 @@ repositories:
     url: https://charts.jetstack.io
   - name: keel
     url: https://charts.keel.sh
+  - name: ingress-nginx
+    url: https://kubernetes.github.io/ingress-nginx
 
 releases:
   - name: keel
     namespace: kube-system
     chart: keel/keel
-  - name: nginx-ingress
-    namespace: kube-system
-    chart: stable/nginx-ingress
-    version: 1.39.1
-    values:
-      - ./values/nginx-ingress.yaml
+  # - name: ingress-nginx
+  #   namespace: kube-system
+  #   chart: ingress-nginx/ingress-nginx
+  #   values:
+  #     - ./values/nginx-ingress.yaml
   - name: cert-manager
     namespace: cert-manager
     chart: jetstack/cert-manager

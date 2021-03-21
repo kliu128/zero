@@ -2,47 +2,41 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   labels:
-    app: emby
-  name: emby
+    app: plex
+  name: plex
 spec:
-  serviceName: emby
+  serviceName: plex
   selector:
     matchLabels:
-      app: emby
+      app: plex
   template:
     metadata:
       labels:
-        app: emby
+        app: plex
     spec:
       containers:
-        - image: jellyfin/jellyfin
-          imagePullPolicy: Always
-          name: emby
-          ports:
-            - containerPort: 8096
-              name: http
-          livenessProbe:
-            httpGet:
-              path: /web/index.html
-              port: 8096
-            initialDelaySeconds: 60
-            periodSeconds: 3
+        - image: linuxserver/plex
+          name: plex
+          env:
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+            - name: VERSION
+              value: "docker"
           volumeMounts:
-            - mountPath: /data/tv-shows
+            - mountPath: /tv
               name: tv
               readOnly: true
-            - mountPath: /data/movies
+            - mountPath: /movies
               name: movies
-              readOnly: true
-            - mountPath: /data/music
-              name: music
               readOnly: true
             - mountPath: /config
               name: config
       volumes:
         - name: config
           persistentVolumeClaim:
-            claimName: emby-config
+            claimName: plex-config
         - name: tv
           hostPath:
             path: /mnt/storage/Kevin/Videos/TV Shows
@@ -57,22 +51,22 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: emby
-  name: emby
+    app: plex
+  name: plex
 spec:
   ports:
     - name: http
-      port: 8096
-      targetPort: http
+      port: 32400
+      targetPort: 32400
   selector:
-    app: emby
+    app: plex
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   labels:
-    app: emby
-  name: emby-config
+    app: plex
+  name: plex-config
 spec:
   accessModes:
     - ReadWriteOnce
@@ -80,22 +74,26 @@ spec:
     requests:
       storage: 20Gi
 ---
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   annotations:
     kubernetes.io/tls-acme: "true"
-  name: emby
+  name: plex
 spec:
+  ingressClassName: nginx
   tls:
-    - secretName: emby-tls
+    - secretName: plex-tls
       hosts:
-        - media.kliu.io
+        - plex.kliu.io
   rules:
-    - host: media.kliu.io
+    - host: plex.kliu.io
       http:
         paths:
           - path: /
+            pathType: Prefix
             backend:
-              serviceName: emby
-              servicePort: 8096
+              service:
+                name: plex
+                port:
+                  number: 32400
