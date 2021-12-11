@@ -1,2 +1,0 @@
-- name: Restart G-Suite service
-  shell: systemctl daemon-reload && docker stop storj && systemctl restart gsuite && docker start storj

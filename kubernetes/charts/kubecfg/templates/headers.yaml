@@ -1,6 +1,0 @@
-apiVersion: v1
-data:
-  X-Clacks-Overhead: GNU Terry Pratchett, GNU Jacob Goyette, ... too many to name. Everyone who died and didn't have to.
-kind: ConfigMap
-metadata:
-  name: headers

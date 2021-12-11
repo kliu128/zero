@@ -1,7 +1,0 @@
-[Unit]
-Name=Duplicacy Backup
-OnFailure=status-email-user@%n.service
-
-[Service]
-ExecStart=/bin/sh -c "duplicacy backup && duplicacy prune -keep 0:360 -keep 30:180 -keep 7:30 -keep 1:7"
-WorkingDirectory=/mnt/storage/Kevin

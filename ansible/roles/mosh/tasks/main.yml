@@ -1,4 +1,0 @@
-- name: install mosh server
-  apt:
-    name: mosh
-    state: present

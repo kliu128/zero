@@ -1,6 +1,0 @@
-image:
-  tag: 11-debian-9
-
-networkPolicy:
-  enabled: true
-  allowExternal: false

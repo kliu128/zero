@@ -1,2 +1,0 @@
-- name: re-export NFS filesystems
-  command: exportfs -ra

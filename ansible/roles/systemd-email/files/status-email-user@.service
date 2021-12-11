@@ -1,8 +1,0 @@
-[Unit]
-Description=status email for %i to user
-
-[Service]
-Type=oneshot
-ExecStart=/usr/local/bin/systemd-email kevin@kliu.io %i
-User=root
-Group=systemd-journal
