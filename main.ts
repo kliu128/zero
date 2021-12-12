@@ -16,10 +16,37 @@ const webServices: { [name: string]: WebServiceOptions } = {
         size: Quantity.fromString("1Gi"),
       },
     ],
-    additionalOptions: {
-      name: "sonarr",
-      // TODO volume mounts
-    },
+    hostPaths: [
+      {
+        name: "tv",
+        containerPath: "/tv",
+        hostPath: "/mnt/storage/Kevin/Videos/TV Shows",
+      },
+    ],
+  },
+  plex: {
+    image: "linuxserver/plex",
+    port: 32400,
+    host: "plex.kliu.io",
+    volumes: [
+      {
+        name: "config",
+        path: "/config",
+        size: Quantity.fromString("1Gi"),
+      },
+    ],
+    hostPaths: [
+      {
+        name: "tv",
+        containerPath: "/tv",
+        hostPath: "/mnt/storage/Kevin/Videos/TV Shows",
+      },
+      {
+        name: "movies",
+        containerPath: "/movies",
+        hostPath: "/mnt/storage/Kevin/Videos/Movies",
+      },
+    ],
   },
 };
 

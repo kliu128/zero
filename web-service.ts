@@ -5,6 +5,7 @@ import {
   KubePersistentVolumeClaimProps,
   VolumeMount,
   Container,
+  Volume,
 } from "./imports/k8s";
 import { Construct } from "constructs";
 
@@ -13,6 +14,7 @@ export type WebServiceOptions = {
   port: number;
   host: string;
   volumes: { name: string; path: string; size: Quantity }[];
+  hostPaths?: { name: string; containerPath: string; hostPath: string }[];
   additionalOptions?: Container;
 };
 
@@ -50,6 +52,23 @@ export class WebService extends Construct {
       volumeMounts.push(volumeMount);
       volumeClaimTemplates.push(claimTemplate);
     });
+    const volumes: Volume[] = [];
+
+    for (const { hostPath, containerPath, name } of options.hostPaths || []) {
+      const volumeMount = {
+        mountPath: containerPath,
+        name,
+      };
+      volumeMounts.push(volumeMount);
+      volumes.push({
+        name,
+        hostPath: {
+          path: hostPath,
+          type: "Directory",
+        },
+      });
+    }
+
     if (options.additionalOptions?.volumeMounts) {
       volumeMounts.push(...options.additionalOptions.volumeMounts);
     }
@@ -76,6 +95,7 @@ export class WebService extends Construct {
                 ...options.additionalOptions,
               },
             ],
+            volumes,
           },
         },
         volumeClaimTemplates,
