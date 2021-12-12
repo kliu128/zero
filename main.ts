@@ -47,6 +47,19 @@ const webServices: { [name: string]: WebServiceOptions } = {
         hostPath: "/mnt/storage/Kevin/Videos/Movies",
       },
     ],
+    additionalOptions: {
+      name: "plex",
+      env: [
+        {
+          name: "PUID",
+          value: "1000",
+        },
+        {
+          name: "PGID",
+          value: "100",
+        },
+      ],
+    },
   },
 };
 
