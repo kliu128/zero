@@ -3,6 +3,7 @@ import { App, Chart, ChartProps } from "cdk8s";
 import { WebService, WebServiceOptions } from "./web-service";
 import { Quantity } from "cdk8s-plus-22/lib/imports/k8s";
 import { CertManager } from "./cert-manager.secret";
+import { MinecraftServer, MinecraftServerProps } from "./minecraft-server";
 
 const webServices: { [name: string]: WebServiceOptions } = {
   sonarr: {
@@ -63,6 +64,15 @@ const webServices: { [name: string]: WebServiceOptions } = {
   },
 };
 
+const minecraftServers: { [name: string]: MinecraftServerProps } = {
+  "mc-test": {
+    type: "VANILLA",
+    version: "1.18.1",
+    port: 25565,
+    memory: 2048,
+  },
+};
+
 export class Zero extends Chart {
   constructor(
     scope: Construct,
@@ -78,6 +88,10 @@ export class Zero extends Chart {
 
     for (const [name, opts] of Object.entries(webServices)) {
       new WebService(this, name, opts);
+    }
+
+    for (const [name, opts] of Object.entries(minecraftServers)) {
+      new MinecraftServer(this, name, opts);
     }
   }
 }

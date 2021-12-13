@@ -2,9 +2,12 @@ import { Construct } from "constructs";
 import { KubeStatefulSet, Quantity } from "./imports/k8s";
 
 export type MinecraftServerProps = {
+  type: "FORGE" | "PAPER" | "VANILLA";
   version: string;
-  memory: string;
+  // in MB
+  memory: number;
   port: number;
+  javaVersion?: string;
 };
 
 export class MinecraftServer extends Construct {
@@ -35,9 +38,30 @@ export class MinecraftServer extends Construct {
           spec: {
             containers: [
               {
-                name: id,
+                name: "minecraft",
                 tty: true,
-                image: "itzg/minecraft-server",
+                stdin: true,
+                image:
+                  "itzg/minecraft-server:" + (options.javaVersion ?? "latest"),
+                env: [
+                  {
+                    name: "EULA",
+                    value: "TRUE",
+                  },
+                  {
+                    name: "VERSION",
+                    value: options.version,
+                  },
+                  {
+                    name: "MEMORY",
+                    value: options.memory + "M",
+                  },
+                ],
+                resources: {
+                  limits: {
+                    memory: Quantity.fromString(options.memory + "Mi"),
+                  },
+                },
                 ports: [
                   {
                     containerPort: 25565,
@@ -61,9 +85,10 @@ export class MinecraftServer extends Construct {
               name: volName,
             },
             spec: {
+              accessModes: ["ReadWriteOnce"],
               resources: {
                 requests: {
-                  storage: Quantity.fromString("10Gb"),
+                  storage: Quantity.fromString("10Gi"),
                 },
               },
             },
