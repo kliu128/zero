@@ -4,6 +4,7 @@ import { WebService, WebServiceOptions } from "./web-service";
 import { Quantity } from "cdk8s-plus-22/lib/imports/k8s";
 import { CertManager } from "./cert-manager.secret";
 import { MinecraftServer, MinecraftServerProps } from "./minecraft-server";
+import { CloudflareDDNS } from "./cloudflare-ddns.secret";
 
 const webServices: { [name: string]: WebServiceOptions } = {
   sonarr: {
@@ -85,6 +86,7 @@ export class Zero extends Chart {
   ) {
     super(scope, id, props);
     new CertManager(this, "cert-manager");
+    new CloudflareDDNS(this, "cloudflare-ddns");
 
     for (const [name, opts] of Object.entries(webServices)) {
       new WebService(this, name, opts);
