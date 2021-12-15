@@ -6,6 +6,7 @@ export type MinecraftServerProps = {
   version: string;
   // in MB
   memory: number;
+  motd: string;
   port: number;
   javaVersion?: string;
 };
@@ -47,6 +48,18 @@ export class MinecraftServer extends Construct {
                   {
                     name: "EULA",
                     value: "TRUE",
+                  },
+                  {
+                    name: "ENABLE_QUERY",
+                    value: "TRUE",
+                  },
+                  {
+                    name: "OPS",
+                    value: "Pneumaticat",
+                  },
+                  {
+                    name: "MOTD",
+                    value: options.motd,
                   },
                   {
                     name: "VERSION",
