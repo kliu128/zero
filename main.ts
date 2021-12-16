@@ -1,10 +1,10 @@
 import { Construct } from "constructs";
 import { App, Chart, ChartProps } from "cdk8s";
 import { WebService, WebServiceOptions } from "./web-service";
-import { KubeEndpoints, Quantity } from "cdk8s-plus-22/lib/imports/k8s";
+import { Quantity } from "cdk8s-plus-22/lib/imports/k8s";
 import { CertManager } from "./cert-manager.secret";
 import { CloudflareDDNS } from "./cloudflare-ddns.secret";
-import { Ingress, IngressBackend, Service } from "cdk8s-plus-22";
+import { ExternalService } from "./external-service";
 
 const webServices: { [name: string]: WebServiceOptions } = {
   sonarr: {
@@ -79,81 +79,15 @@ export class Zero extends Chart {
     new CertManager(this, "cert-manager");
     new CloudflareDDNS(this, "cloudflare-ddns");
 
-    const pt = new Service(this, "pterodactyl", {
-      clusterIP: "None",
-      ports: [{ port: 80 }],
+    new ExternalService(this, "pterodactyl", {
+      ip: "192.168.1.16",
+      port: 80,
+      host: "pt.kliu.io",
     });
-    new KubeEndpoints(this, "pterodactyl-endpoint", {
-      metadata: {
-        name: pt.name,
-      },
-      subsets: [
-        {
-          addresses: [{ ip: "192.168.1.16" }],
-          ports: [{ port: 80 }],
-        },
-      ],
-    });
-    const ptNode = new Service(this, "pterodactyl-node", {
-      clusterIP: "None",
-      ports: [{ port: 80, targetPort: 8080 }],
-    });
-    new KubeEndpoints(this, "pt-node-endpoint", {
-      metadata: {
-        name: ptNode.name,
-      },
-      subsets: [
-        {
-          addresses: [{ ip: "192.168.1.16" }],
-          ports: [{ port: 8080 }],
-        },
-      ],
-    });
-    new Ingress(this, `pterodactyl-ingress`, {
-      metadata: {
-        annotations: {
-          "cert-manager.io/cluster-issuer":
-            "cert-manager-letsencrypt-cluster-issuer",
-          "kubernetes.io/ingress.class": "public",
-        },
-      },
-
-      rules: [
-        {
-          host: "pt.kliu.io",
-          path: "/",
-          backend: IngressBackend.fromService(pt),
-        },
-      ],
-      tls: [
-        {
-          hosts: ["pt.kliu.io"],
-          secret: { name: `pterodactyl-ingress-tls` },
-        },
-      ],
-    });
-    new Ingress(this, `pterodactyl-node-ingress`, {
-      metadata: {
-        annotations: {
-          "cert-manager.io/cluster-issuer":
-            "cert-manager-letsencrypt-cluster-issuer",
-          "kubernetes.io/ingress.class": "public",
-        },
-      },
-
-      rules: [
-        {
-          host: "pt-node.kliu.io",
-          path: "/",
-          backend: IngressBackend.fromService(ptNode),
-        },
-      ],
-      tls: [
-        {
-          hosts: ["pt-node.kliu.io"],
-          secret: { name: `pterodactyl-node-ingress-tls` },
-        },
-      ],
+    new ExternalService(this, "pterodactyl-node", {
+      ip: "192.168.1.16",
+      port: 8080,
+      host: "pt-node.kliu.io",
     });
 
     for (const [name, opts] of Object.entries(webServices)) {

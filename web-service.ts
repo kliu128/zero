@@ -1,4 +1,4 @@
-import { Ingress, IngressBackend, Service } from "cdk8s-plus-22";
+import { Service } from "cdk8s-plus-22";
 import {
   Quantity,
   KubeStatefulSet,
@@ -8,6 +8,7 @@ import {
   Volume,
 } from "./imports/k8s";
 import { Construct } from "constructs";
+import { TlsIngress } from "./tls-ingress";
 
 export type WebServiceOptions = {
   image: string;
@@ -106,28 +107,9 @@ export class WebService extends Construct {
       ports: [{ port: options.port }],
     });
     svc.addSelector("app", id);
-
-    new Ingress(this, `${id}-ingress`, {
-      metadata: {
-        annotations: {
-          "cert-manager.io/cluster-issuer":
-            "cert-manager-letsencrypt-cluster-issuer",
-          "kubernetes.io/ingress.class": "public",
-        },
-      },
-      rules: [
-        {
-          host: options.host,
-          path: "/",
-          backend: IngressBackend.fromService(svc),
-        },
-      ],
-      tls: [
-        {
-          hosts: [options.host],
-          secret: { name: `${id}-ingress-tls` },
-        },
-      ],
+    new TlsIngress(this, "tls-ingress", {
+      hosts: [options.host],
+      svc,
     });
   }
 }
