@@ -63,6 +63,25 @@ const webServices: { [name: string]: WebServiceOptions } = {
       ],
     },
   },
+  "archiveteam-warrior": {
+    image: "atdr.meo.ws/archiveteam/warrior-dockerfile",
+    port: 8001,
+    host: "warrior.kliu.io",
+    volumes: [],
+    additionalOptions: {
+      name: "warrior",
+      env: [
+        {
+          name: "DOWNLOADER",
+          value: "kliu128",
+        },
+        {
+          name: "SELECTED_PROJECT",
+          value: "auto",
+        },
+      ],
+    },
+  },
 };
 
 export class Zero extends Chart {
