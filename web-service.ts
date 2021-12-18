@@ -6,9 +6,11 @@ import {
   VolumeMount,
   Container,
   Volume,
+  PodSpec,
 } from "./imports/k8s";
 import { Construct } from "constructs";
 import { TlsIngress } from "./tls-ingress";
+import { isArray, mergeWith } from "lodash";
 
 export type WebServiceOptions = {
   image: string;
@@ -16,8 +18,22 @@ export type WebServiceOptions = {
   host: string;
   volumes: { name: string; path: string; size: Quantity }[];
   hostPaths?: { name: string; containerPath: string; hostPath: string }[];
-  additionalOptions?: Container;
+  additionalOptions?: Partial<Container>;
+  additionalPodOptions?: Partial<PodSpec>;
 };
+
+/**
+ * Merges the given objects into a single object while preserving individual
+ * objects if they are in an array.
+ */
+function mergeArrayConcat(object: any, ...sources: any[]) {
+  return mergeWith(object, ...sources, (objValue: any, srcValue: any) => {
+    if (isArray(objValue)) {
+      return objValue.concat(srcValue);
+    }
+    return undefined;
+  });
+}
 
 export class WebService extends Construct {
   constructor(scope: Construct, id: string, options: WebServiceOptions) {
@@ -70,9 +86,22 @@ export class WebService extends Construct {
       });
     }
 
-    if (options.additionalOptions?.volumeMounts) {
-      volumeMounts.push(...options.additionalOptions.volumeMounts);
-    }
+    const ctrSpec: Container = mergeArrayConcat(
+      {
+        name: id,
+        image: options.image,
+        volumeMounts,
+      },
+      options.additionalOptions
+    );
+    const podSpec: PodSpec = mergeArrayConcat(
+      {
+        containers: [ctrSpec],
+        volumes,
+      },
+      options.additionalPodOptions
+    );
+
     new KubeStatefulSet(this, id + "-statefulset", {
       metadata: {
         labels,
@@ -87,17 +116,7 @@ export class WebService extends Construct {
           metadata: {
             labels,
           },
-          spec: {
-            containers: [
-              {
-                name: id,
-                image: options.image,
-                volumeMounts,
-                ...options.additionalOptions,
-              },
-            ],
-            volumes,
-          },
+          spec: podSpec,
         },
         volumeClaimTemplates,
       },

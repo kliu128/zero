@@ -2,9 +2,11 @@ import { Construct } from "constructs";
 import { App, Chart, ChartProps } from "cdk8s";
 import { WebService, WebServiceOptions } from "./web-service";
 import { Quantity } from "cdk8s-plus-22/lib/imports/k8s";
-import { CertManager } from "./cert-manager.secret";
-import { CloudflareDDNS } from "./cloudflare-ddns.secret";
+import { CertManager } from "./cert-manager";
+import { CloudflareDDNS } from "./cloudflare-ddns";
 import { ExternalService } from "./external-service";
+import { Transmission } from "./transmission";
+import { makeEnvObject } from "./util";
 
 const webServices: { [name: string]: WebServiceOptions } = {
   sonarr: {
@@ -50,17 +52,10 @@ const webServices: { [name: string]: WebServiceOptions } = {
       },
     ],
     additionalOptions: {
-      name: "plex",
-      env: [
-        {
-          name: "PUID",
-          value: "1000",
-        },
-        {
-          name: "PGID",
-          value: "100",
-        },
-      ],
+      env: makeEnvObject({
+        PUID: "1000",
+        PGID: "100",
+      }),
     },
   },
   "archiveteam-warrior": {
@@ -69,17 +64,10 @@ const webServices: { [name: string]: WebServiceOptions } = {
     host: "warrior.kliu.io",
     volumes: [],
     additionalOptions: {
-      name: "warrior",
-      env: [
-        {
-          name: "DOWNLOADER",
-          value: "kliu128",
-        },
-        {
-          name: "SELECTED_PROJECT",
-          value: "auto",
-        },
-      ],
+      env: makeEnvObject({
+        DOWNLOADER: "kliu128",
+        SELECTED_PROJECT: "auto",
+      }),
     },
   },
 };
@@ -97,6 +85,7 @@ export class Zero extends Chart {
     super(scope, id, props);
     new CertManager(this, "cert-manager");
     new CloudflareDDNS(this, "cloudflare-ddns");
+    new Transmission(this, "transmission");
 
     new ExternalService(this, "pterodactyl", {
       ip: "192.168.1.16",

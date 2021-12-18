@@ -17,6 +17,7 @@ export class TlsIngress extends Construct {
           "cert-manager.io/cluster-issuer":
             "cert-manager-letsencrypt-cluster-issuer",
           "kubernetes.io/ingress.class": "public",
+          "nginx.ingress.kubernetes.io/proxy-body-size": "4000m",
         },
       },
       rules: options.hosts.map((host) => ({
