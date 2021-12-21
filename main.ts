@@ -70,6 +70,24 @@ const webServices: { [name: string]: WebServiceOptions } = {
       }),
     },
   },
+  bitwarden: {
+    image: "vaultwarden/server:latest",
+    port: 80,
+    host: "pw.kliu.io",
+    volumes: [
+      {
+        name: "data",
+        path: "/data",
+        size: Quantity.fromString("5Gi"),
+      },
+    ],
+    additionalOptions: {
+      env: makeEnvObject({
+        DOMAIN: "https://pw.kliu.io",
+        SIGNUPS_ALLOWED: "false",
+      }),
+    },
+  },
 };
 
 export class Zero extends Chart {
