@@ -10,7 +10,7 @@ import { makeEnvObject } from "./util";
 
 const webServices: { [name: string]: WebServiceOptions } = {
   sonarr: {
-    image: "linuxserver/sonarr",
+    image: "lscr.io/linuxserver/sonarr",
     port: 8989,
     host: "sonarr.kliu.io",
     volumes: [
@@ -26,7 +26,60 @@ const webServices: { [name: string]: WebServiceOptions } = {
         containerPath: "/tv",
         hostPath: "/mnt/storage/Kevin/Videos/TV Shows",
       },
+      {
+        name: "incoming",
+        containerPath: "/incoming",
+        hostPath: "/mnt/storage/Kevin/Incoming",
+      },
     ],
+    additionalOptions: {
+      env: makeEnvObject({
+        PUID: "1000",
+        PGID: "100",
+      }),
+    },
+  },
+  jackett: {
+    image: "lscr.io/linuxserver/jackett",
+    port: 9117,
+    host: "jackett.kliu.io",
+    volumes: [
+      {
+        name: "config",
+        path: "/config",
+        size: Quantity.fromString("1Gi"),
+      },
+    ],
+  },
+  radarr: {
+    image: "lscr.io/linuxserver/radarr",
+    port: 7878,
+    host: "radarr.kliu.io",
+    volumes: [
+      {
+        name: "config",
+        path: "/config",
+        size: Quantity.fromString("1Gi"),
+      },
+    ],
+    hostPaths: [
+      {
+        name: "movies",
+        containerPath: "/movies",
+        hostPath: "/mnt/storage/Kevin/Videos/Movies",
+      },
+      {
+        name: "incoming",
+        containerPath: "/incoming",
+        hostPath: "/mnt/storage/Kevin/Incoming",
+      },
+    ],
+    additionalOptions: {
+      env: makeEnvObject({
+        PUID: "1000",
+        PGID: "100",
+      }),
+    },
   },
   plex: {
     image: "linuxserver/plex",
