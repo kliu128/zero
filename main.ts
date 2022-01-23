@@ -7,6 +7,7 @@ import { CloudflareDDNS } from "./cloudflare-ddns";
 import { ExternalService } from "./external-service";
 import { Transmission } from "./transmission";
 import { makeEnvObject } from "./util";
+import { config } from "./config.secret";
 
 const webServices: { [name: string]: WebServiceOptions } = {
   sonarr: {
@@ -138,6 +139,31 @@ const webServices: { [name: string]: WebServiceOptions } = {
       env: makeEnvObject({
         DOMAIN: "https://pw.kliu.io",
         SIGNUPS_ALLOWED: "false",
+      }),
+    },
+  },
+  photoprism: {
+    image: "photoprism/photoprism",
+    port: 2342,
+    host: "photos.kliu.io",
+    volumes: [
+      {
+        name: "storage",
+        path: "/photoprism/storage",
+        size: Quantity.fromString("10Gi"),
+      },
+    ],
+    hostPaths: [
+      {
+        name: "originals",
+        containerPath: "/photoprism/originals",
+        hostPath: "/mnt/storage/Kevin/Personal/Media",
+      },
+    ],
+    additionalOptions: {
+      env: makeEnvObject({
+        PHOTOPRISM_UPLOAD_NSFW: "true",
+        PHOTOPRISM_ADMIN_PASSWORD: config.photoprismAdmin,
       }),
     },
   },

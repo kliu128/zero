@@ -1,7 +1,7 @@
 import { Secret } from "cdk8s-plus-22";
 import { Construct } from "constructs";
 import { config } from "./config.secret";
-import { secretFrom } from "./util";
+import { makeEnvObject, secretFrom } from "./util";
 import { WebService } from "./web-service";
 
 export class Transmission extends Construct {
@@ -25,16 +25,12 @@ export class Transmission extends Construct {
       ],
       volumes: [],
       additionalOptions: {
-        env: [
-          {
-            name: "VPN_PROTOCOL",
-            value: "wireguard",
-          },
-          {
-            name: "LOCAL_NETWORK",
-            value: "10.1.0.0/16",
-          },
-        ],
+        env: makeEnvObject({
+          VPN_PROTOCOL: "wireguard",
+          LOCAL_NETWORK: "10.1.0.0/16",
+          TRANSMISSION_RATIO_LIMIT: "2",
+          TRANSMISSION_RATIO_LIMIT_ENABLED: "true",
+        }),
         envFrom: [
           {
             secretRef: {
