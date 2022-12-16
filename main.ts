@@ -2,12 +2,10 @@ import { Construct } from "constructs";
 import { App, Chart, ChartProps } from "cdk8s";
 import { WebService, WebServiceOptions } from "./web-service";
 import { Quantity } from "cdk8s-plus-22/lib/imports/k8s";
-import { CertManager } from "./cert-manager";
 import { CloudflareDDNS } from "./cloudflare-ddns";
 import { ExternalService } from "./external-service";
 import { Transmission } from "./transmission";
 import { makeEnvObject } from "./util";
-import { config } from "./config.secret";
 
 const webServices: { [name: string]: WebServiceOptions } = {
   sonarr: {
@@ -25,18 +23,18 @@ const webServices: { [name: string]: WebServiceOptions } = {
       {
         name: "tv",
         containerPath: "/tv",
-        hostPath: "/mnt/storage/Kevin/Videos/TV Shows",
+        hostPath: "/mnt/stor/Videos/TV Shows",
       },
       {
         name: "incoming",
-        containerPath: "/incoming",
+        containerPath: "/data",
         hostPath: "/mnt/storage/Kevin/Incoming",
       },
     ],
     additionalOptions: {
       env: makeEnvObject({
-        PUID: "1000",
-        PGID: "100",
+        PUID: "0",
+        PGID: "0",
       }),
     },
   },
@@ -67,18 +65,18 @@ const webServices: { [name: string]: WebServiceOptions } = {
       {
         name: "movies",
         containerPath: "/movies",
-        hostPath: "/mnt/storage/Kevin/Videos/Movies",
+        hostPath: "/mnt/stor/Videos/Movies",
       },
       {
         name: "incoming",
-        containerPath: "/incoming",
+        containerPath: "/data",
         hostPath: "/mnt/storage/Kevin/Incoming",
       },
     ],
     additionalOptions: {
       env: makeEnvObject({
-        PUID: "1000",
-        PGID: "100",
+        PUID: "0",
+        PGID: "0",
       }),
     },
   },
@@ -97,30 +95,18 @@ const webServices: { [name: string]: WebServiceOptions } = {
       {
         name: "tv",
         containerPath: "/tv",
-        hostPath: "/mnt/storage/Kevin/Videos/TV Shows",
+        hostPath: "/mnt/stor/Videos/TV Shows",
       },
       {
         name: "movies",
         containerPath: "/movies",
-        hostPath: "/mnt/storage/Kevin/Videos/Movies",
+        hostPath: "/mnt/stor/Videos/Movies",
       },
     ],
     additionalOptions: {
       env: makeEnvObject({
         PUID: "1000",
         PGID: "100",
-      }),
-    },
-  },
-  "archiveteam-warrior": {
-    image: "atdr.meo.ws/archiveteam/warrior-dockerfile",
-    port: 8001,
-    host: "warrior.kliu.io",
-    volumes: [],
-    additionalOptions: {
-      env: makeEnvObject({
-        DOWNLOADER: "kliu128",
-        SELECTED_PROJECT: "auto",
       }),
     },
   },
@@ -142,29 +128,24 @@ const webServices: { [name: string]: WebServiceOptions } = {
       }),
     },
   },
-  photoprism: {
-    image: "photoprism/photoprism",
-    port: 2342,
-    host: "photos.kliu.io",
+  homeassistant: {
+    image: "ghcr.io/home-assistant/home-assistant:stable",
+    port: 8123,
+    host: "home.kliu.io",
     volumes: [
       {
-        name: "storage",
-        path: "/photoprism/storage",
-        size: Quantity.fromString("10Gi"),
+        name: "config",
+        path: "/config",
+        size: Quantity.fromString("5Gi"),
       },
     ],
-    hostPaths: [
-      {
-        name: "originals",
-        containerPath: "/photoprism/originals",
-        hostPath: "/mnt/storage/Kevin/Personal/Media",
-      },
-    ],
+    additionalPodOptions: {
+      hostNetwork: true,
+    },
     additionalOptions: {
-      env: makeEnvObject({
-        PHOTOPRISM_UPLOAD_NSFW: "true",
-        PHOTOPRISM_ADMIN_PASSWORD: config.photoprismAdmin,
-      }),
+      securityContext: {
+        privileged: true,
+      },
     },
   },
 };
@@ -180,17 +161,16 @@ export class Zero extends Chart {
     }
   ) {
     super(scope, id, props);
-    new CertManager(this, "cert-manager");
     new CloudflareDDNS(this, "cloudflare-ddns");
     new Transmission(this, "transmission");
 
     new ExternalService(this, "pterodactyl", {
-      ip: "192.168.1.16",
+      ip: "100.101.47.79",
       port: 80,
       host: "pt.kliu.io",
     });
     new ExternalService(this, "pterodactyl-node", {
-      ip: "192.168.1.16",
+      ip: "100.101.47.79", // tailscale
       port: 8080,
       host: "pt-node.kliu.io",
     });

@@ -22,6 +22,11 @@ export class Transmission extends Construct {
           hostPath: "/mnt/storage/Kevin/Incoming",
           containerPath: "/data",
         },
+        {
+          name: "completed",
+          hostPath: "/mnt/stor/Inbox",
+          containerPath: "/completed",
+        },
       ],
       volumes: [],
       additionalOptions: {

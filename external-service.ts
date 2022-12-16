@@ -21,7 +21,7 @@ export class ExternalService extends Construct {
       },
       subsets: [
         {
-          addresses: [{ ip: "192.168.1.16" }],
+          addresses: [{ ip: options.ip }],
           ports: [{ port: options.port }],
         },
       ],
