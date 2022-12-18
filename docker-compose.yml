@@ -124,15 +124,27 @@ services:
     restart: unless-stopped
   transmission:
     image: haugene/transmission-openvpn:wireguard
+    networks:
+      - caddy
+    labels:
+      caddy: transmission.kliu.io
+      caddy.reverse_proxy: "{{upstreams 9091}}"
+    cap_add:
+      - NET_ADMIN
     environment:
       VPN_PROTOCOL: wireguard
       LOCAL_NETWORK: "172.0.0.0/8"
       TRANSMISSION_RATIO_LIMIT: "2"
       TRANSMISSION_RATIO_LIMIT_ENABLED: "true"
+      TRANSMISSION_RPC_AUTHENTICATION_REQUIRED: "true"
+      TRANSMISSION_RPC_ENABLED: "true"
+      TRANSMISSION_RPC_PASSWORD: $TRANSMISSION_RPC_PASSWORD
+      TRANSMISSION_RPC_USERNAME: kevin
     volumes:
       - $D/transmission/config:/config
       - $D/transmission/wireguard:/etc/transmission-vpn/wireguard:ro
       - /mnt/storage/Kevin/Incoming:/data
       - /mnt/stor/Inbox:/completed
+    restart: unless-stopped
 networks:
   caddy:
