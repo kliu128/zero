@@ -1,0 +1,138 @@
+version: "3"
+services:
+  cloudflare-ddns:
+    image: oznu/cloudflare-ddns:latest
+    restart: unless-stopped
+    environment:
+      - API_KEY=$CLOUDFLARE_DDNS_API_KEY
+      - ZONE=kliu.io
+      - SUBDOMAIN=ext
+      - PROXIED=false
+  caddy:
+    image: lucaslorentz/caddy-docker-proxy:ci-alpine
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      - caddy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - $D/caddy/data:/data
+    restart: unless-stopped
+  whoami:
+    image: containous/whoami
+    networks:
+      - caddy
+    labels:
+      caddy: whoami.kliu.io
+      caddy.reverse_proxy: "{{upstreams 80}}"
+    restart: unless-stopped
+  sonarr:
+    image: linuxserver/sonarr
+    networks:
+      - caddy
+    labels:
+      caddy: sonarr.kliu.io
+      caddy.reverse_proxy: "{{upstreams 8989}}"
+    restart: unless-stopped
+    environment:
+      - PUID=0
+      - PGID=0
+    volumes:
+      - $D/sonarr/config:/config
+      - /mnt/stor/Videos/TV Shows:/tv
+      - /mnt/storage/Kevin/Incoming:/data
+  jackett:
+    image: linuxserver/jackett
+    networks:
+      - caddy
+    labels:
+      caddy: jackett.kliu.io
+      caddy.reverse_proxy: "{{upstreams 9117}}"
+    restart: unless-stopped
+    volumes:
+      - $D/jackett/config:/config
+  radarr:
+    image: linuxserver/radarr
+    networks:
+      - caddy
+    labels:
+      caddy: radarr.kliu.io
+      caddy.reverse_proxy: "{{upstreams 7878}}"
+    restart: unless-stopped
+    volumes:
+      - $D/radarr/config:/config
+      - /mnt/stor/Videos/Movies:/movies
+      - /mnt/storage/Kevin/Incoming:/data
+    environment:
+      - PUID=0
+      - PGID=0
+  plex:
+    image: linuxserver/plex
+    networks:
+      - caddy
+    labels:
+      caddy: plex.kliu.io
+      caddy.reverse_proxy: "{{upstreams 32400}}"
+    restart: unless-stopped
+    volumes:
+      - $D/plex/config:/config
+      - /mnt/stor/Videos/TV Shows:/tv
+      - /mnt/stor/Videos/Movies:/movies
+    environment:
+      - PUID=1000
+      - PGID=100
+  bitwarden:
+    image: vaultwarden/server:latest
+    networks:
+      - caddy
+    labels:
+      caddy: pw.kliu.io
+      caddy.reverse_proxy: "{{upstreams 80}}"
+    restart: unless-stopped
+    volumes:
+      - $D/bitwarden/data:/data
+    environment:
+      - SIGNUPS_ALLOWED=false
+      - DOMAIN=https://pw.kliu.io
+  homeassistant:
+    image: ghcr.io/home-assistant/home-assistant:stable
+    labels:
+      caddy: home.kliu.io
+      caddy.reverse_proxy: "{{upstreams 8123}}"
+    restart: unless-stopped
+    privileged: true
+    network_mode: host
+    volumes:
+      - $D/homeassistant/config:/config
+      - /etc/localtime:/etc/localtime:ro
+  pterodactyl:
+    image: google/pause
+    networks:
+      - caddy
+    labels:
+      caddy: pt.kliu.io
+      caddy.reverse_proxy: "http://100.101.47.79:80"
+    restart: unless-stopped
+  pterodactyl-node:
+    image: google/pause
+    networks:
+      - caddy
+    labels:
+      caddy: pt-node.kliu.io
+      caddy.reverse_proxy: "http://100.101.47.79:8080"
+    restart: unless-stopped
+  transmission:
+    image: haugene/transmission-openvpn:wireguard
+    environment:
+      VPN_PROTOCOL: wireguard
+      LOCAL_NETWORK: "172.0.0.0/8"
+      TRANSMISSION_RATIO_LIMIT: "2"
+      TRANSMISSION_RATIO_LIMIT_ENABLED: "true"
+    volumes:
+      - $D/transmission/config:/config
+      - $D/transmission/wireguard:/etc/transmission-vpn/wireguard:ro
+      - /mnt/storage/Kevin/Incoming:/data
+      - /mnt/stor/Inbox:/completed
+networks:
+  caddy:
