@@ -19,6 +19,18 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - $D/caddy/data:/data
     restart: unless-stopped
+  ksp:
+    build:
+      context: ./ksp
+      dockerfile: Dockerfile
+      args:
+        DMP_VERSION: v0.3.8.3
+    volumes:
+      - $D/ksp/config:/DMPServer/Config
+      - $D/ksp/universe:/DMPServer/Universe
+    restart: unless-stopped
+    ports:
+      - 6702:6702
   whoami:
     image: containous/whoami
     networks:
@@ -52,6 +64,16 @@ services:
     restart: unless-stopped
     volumes:
       - $D/jackett/config:/config
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:develop
+    networks:
+      - caddy
+    labels:
+      caddy: prowlarr.kliu.io
+      caddy.reverse_proxy: "{{upstreams 9696}}"
+    restart: unless-stopped
+    volumes:
+      - $D/prowlarr/config:/config
   radarr:
     image: linuxserver/radarr
     networks:
@@ -99,7 +121,7 @@ services:
     image: ghcr.io/home-assistant/home-assistant:stable
     labels:
       caddy: home.kliu.io
-      caddy.reverse_proxy: "{{upstreams 8123}}"
+      caddy.reverse_proxy: "http://100.83.110.78:8123"
     restart: unless-stopped
     privileged: true
     network_mode: host
